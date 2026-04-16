@@ -248,6 +248,28 @@
               Premium residences curated for visionaries, connoisseurs & those
               who demand the exceptional.
             </p>
+            <!-- BUY / RENT TOGGLE -->
+            <div class="mb-3 max-w-xl hero-anim">
+              <div
+                class="bg-white/10 backdrop-blur-md rounded-full p-1 flex gap-1 border border-white/20 w-fit"
+              >
+                <button
+                  id="buyBtn"
+                  class="px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition"
+                  onclick="setMode('buy')"
+                >
+                  Buy
+                </button>
+
+                <button
+                  id="rentBtn"
+                  class="px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 hover:text-white transition"
+                  onclick="setMode('rent')"
+                >
+                  Rent
+                </button>
+              </div>
+            </div>
             <div
               class="glass-card rounded-xl p-1.5 flex flex-col md:flex-row items-stretch gap-1.5 shadow-2xl max-w-xl hero-anim"
             >
@@ -897,6 +919,37 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      let mode = null;
+
+      function setMode(selected) {
+        mode = selected;
+
+        const buyBtn = document.getElementById("buyBtn");
+        const rentBtn = document.getElementById("rentBtn");
+        const stateBox = document.getElementById("stateBox");
+        const lgaBox = document.getElementById("lgaBox");
+
+        if (selected === "buy") {
+          buyBtn.classList.add("bg-white", "text-[#0D316D]");
+          buyBtn.classList.remove("text-white/80");
+
+          rentBtn.classList.remove("bg-white", "text-[#0D316D]");
+          rentBtn.classList.add("text-white/80");
+        } else {
+          rentBtn.classList.add("bg-white", "text-[#0D316D]");
+          rentBtn.classList.remove("text-white/80");
+
+          buyBtn.classList.remove("bg-white", "text-[#0D316D]");
+          buyBtn.classList.add("text-white/80");
+        }
+
+        // enable filters after selection
+        stateBox.classList.remove("opacity-50", "pointer-events-none");
+        lgaBox.classList.remove("opacity-50", "pointer-events-none");
+      }
+    </script>
 
     <script>
       // Initialize Lucide icons
