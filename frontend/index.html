@@ -236,27 +236,32 @@
           class="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 py-16 lg:py-24"
         >
           <div class="max-w-2xl lg:max-w-xl">
-            <span class="material-symbols-outlined text-yellow-400 text-sm"
+            <span
+              class="material-symbols-outlined text-yellow-400 text-sm hero-anim"
               >diamond</span
             >
-            <span class="text-[11px] font-semibold text-white tracking-wide">
+            <span
+              class="text-[11px] font-semibold text-white tracking-wide hero-anim"
+            >
               PREMIUM PROPERTY EXPERIENCE
             </span>
+
             <h1
-              class="font-headline text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.15] mb-5"
+              class="font-headline text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.15] mb-5 hero-anim"
             >
               Where <span class="text-tertiary-fixed">Legacy</span><br />
               Meets Horizon
             </h1>
+
             <p
-              class="text-white/85 text-base md:text-lg max-w-lg mb-8 leading-relaxed"
+              class="text-white/85 text-base md:text-lg max-w-lg mb-8 leading-relaxed hero-anim"
             >
               Premium residences curated for visionaries, connoisseurs & those
               who demand the exceptional.
             </p>
 
             <div
-              class="glass-card rounded-xl p-1.5 flex flex-col md:flex-row items-stretch gap-1.5 shadow-2xl max-w-xl"
+              class="glass-card rounded-xl p-1.5 flex flex-col md:flex-row items-stretch gap-1.5 shadow-2xl max-w-xl hero-anim"
             >
               <div
                 class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
@@ -955,6 +960,18 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        gsap.from(".hero-anim", {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+          stagger: 0.15,
+        });
+      });
+    </script>
 
     <script>
       gsap.registerPlugin(ScrollTrigger);
