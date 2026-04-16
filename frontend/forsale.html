@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Resident | Estates for Sale - Nigeria's Finest Real Estate</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .font-headline {
+        font-family: "Manrope", system-ui, sans-serif;
+      }
+      .hover-lift {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+      }
+      .lucide {
+        width: 1.25rem;
+        height: 1.25rem;
+        stroke-width: 1.75;
+      }
+      .filter-active {
+        background-color: #c5aa23;
+        color: #001c4a;
+        border-color: #c5aa23;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+    <style>
+      /* custom overrides */
+      .bg-surface {
+        background-color: #f9f9fc;
+      }
+      .text-primary {
+        color: #001c4a;
+      }
+      .border-tertiary {
+        border-color: #c5aa23;
+      }
+      .bg-tertiary-container {
+        background-color: #c5aa23;
+      }
+      .hover\:bg-tertiary-fixed:hover {
+        background-color: #ffe260;
+      }
+      .text-tertiary {
+        color: #6e5d00;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-[#1a1c1e] antialiased">
+    <!-- Navigation (matching main site style) -->
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="index.html" class="flex-shrink-0">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML =
+                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>RESIDENT</span>';
+              "
+            />
+          </a>
+
+          <div>
+            <button
+              class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
+            >
+              Schedule Tour
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Page Hero -->
+      <section
+        class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden"
+      >
+        <div class="absolute inset-0 opacity-20">
+          <img
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&h=400&fit=crop"
+            alt="Luxury homes background"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
+          <h1
+            class="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4"
+          >
+            Houses for Sale
+          </h1>
+          <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
+            Discover exceptional homes where legacy meets modern luxury.
+            Carefully curated properties across Nigeria's prime locations.
+          </p>
+        </div>
+      </section>
+
+      <!-- Filter Bar - Dropdown version (matching landing page style) -->
+      <div
+        class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm"
+      >
+        <div class="max-w-7xl mx-auto px-5 md:px-8">
+          <!-- MOBILE: 3 in a row | DESKTOP: original flex layout -->
+          <div
+            class="grid grid-cols-3 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3"
+          >
+            <!-- State Dropdown -->
+            <div
+              class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
+              <i
+                data-lucide="map-pin"
+                class="text-tertiary w-5 h-5 shrink-0"
+              ></i>
+              <select
+                id="stateFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
+              >
+                <option value="all">States</option>
+                <option value="lagos">Lagos</option>
+                <option value="abuja">Abuja</option>
+                <option value="rivers">Port Harcourt</option>
+              </select>
+            </div>
+
+            <!-- LGA Dropdown -->
+            <div
+              class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
+              <i data-lucide="map" class="text-tertiary w-5 h-5 shrink-0"></i>
+              <select
+                id="lgaFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
+              >
+                <option value="all">LGA</option>
+              </select>
+            </div>
+
+            <!-- Search Button -->
+            <button
+              id="searchBtn"
+              class="bg-tertiary-container text-primary px-3 md:px-6 py-2.5 rounded-xl font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-xs md:text-sm whitespace-nowrap w-full"
+            >
+              <i data-lucide="search" class="w-4 h-4"></i>
+              <span class="hidden sm:inline">Search</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Properties Grid: 6 luxury homes under ₦100M -->
+      <section class="py-16 lg:py-20 px-5 md:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="flex justify-between items-end mb-10 flex-wrap gap-3">
+            <div>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+                >Signature Collection</span
+              >
+              <h2
+                class="text-2xl md:text-3xl font-headline font-extrabold text-primary mt-1"
+              >
+                Featured Estates
+              </h2>
+            </div>
+          </div>
+
+          <div
+            id="propertiesContainer"
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
+          >
+            <!-- Property 1 - Lekki Lagos -->
+            <div
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              data-location="lagos"
+              data-name="The Pearl Haven Lekki"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop"
+                  alt="Luxury villa Lekki"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  For Sale
+                </div>
+                <div
+                  class="absolute bottom-4 right-4 bg-white/90 backdrop-blur rounded-full px-2 py-1 text-xs font-semibold flex items-center gap-1"
+                >
+                  <i data-lucide="camera" class="w-3 h-3"></i> 8
+                </div>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
+                >
+                  <i data-lucide="map-pin" class="w-3 h-3"></i> Lekki Phase 1,
+                  Lagos
+                </div>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  The Pearl Haven
+                </h3>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="text-primary font-headline text-2xl font-bold"
+                    >₦78,500,000</span
+                  ><span class="text-xs text-[#747781]"></span>
+                </div>
+                <div
+                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
+                >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i>4 Beds</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i>4 Baths</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i>320m²</span
+                  >
+                </div>
+                <button
+                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                >
+                  Request Details
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Property 2 - Maitama Abuja -->
+            <div
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              data-location="abuja"
+              data-name="Serene Gardens Maitama"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop"
+                  alt="Modern home Abuja"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  Featured
+                </div>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
+                >
+                  <i data-lucide="map-pin" class="w-3 h-3"></i> Maitama, Abuja
+                </div>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  Serene Gardens Villa
+                </h3>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="text-primary font-headline text-2xl font-bold"
+                    >₦92,000,000</span
+                  >
+                </div>
+                <div
+                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
+                >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i>5 Beds</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i>5 Baths</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i>410m²</span
+                  >
+                </div>
+                <button
+                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                >
+                  Request Details
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Property 3 - Old GRA PH -->
+            <div
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              data-location="rivers"
+              data-name="Golden Crest GRA"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=600&h=400&fit=crop"
+                  alt="Luxury home Port Harcourt"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  Hot Offer
+                </div>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
+                >
+                  <i data-lucide="map-pin" class="w-3 h-3"></i> Old GRA, Port
+                  Harcourt
+                </div>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  Golden Crest Manor
+                </h3>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="text-primary font-headline text-2xl font-bold"
+                    >₦65,500,000</span
+                  >
+                </div>
+                <div
+                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
+                >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i>4 Beds</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i>3.5 Baths</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i>295m²</span
+                  >
+                </div>
+                <button
+                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                >
+                  Request Details
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Property 4 - Ikoyi Lagos -->
+            <div
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              data-location="lagos"
+              data-name="Ikoyi Oasis Residence"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&h=400&fit=crop"
+                  alt="Ikoyi luxury apartment"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  New
+                </div>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
+                >
+                  <i data-lucide="map-pin" class="w-3 h-3"></i> Ikoyi, Lagos
+                </div>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  Ikoyi Oasis
+                </h3>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="text-primary font-headline text-2xl font-bold"
+                    >₦98,750,000</span
+                  >
+                </div>
+                <div
+                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
+                >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i>3 Beds</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i>3 Baths</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i>250m²</span
+                  >
+                </div>
+                <button
+                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                >
+                  Request Details
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Property 5 - Gwarimpa Abuja -->
+            <div
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              data-location="abuja"
+              data-name="Gwarimpa Signature Villa"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=400&fit=crop"
+                  alt="Spacious home Abuja"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  Just Listed
+                </div>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
+                >
+                  <i data-lucide="map-pin" class="w-3 h-3"></i> Gwarimpa, Abuja
+                </div>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  Gwarimpa Signature
+                </h3>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="text-primary font-headline text-2xl font-bold"
+                    >₦84,200,000</span
+                  >
+                </div>
+                <div
+                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
+                >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i>5 Beds</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i>4 Baths</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i>380m²</span
+                  >
+                </div>
+                <button
+                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                >
+                  Request Details
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Property 6 - Trans Amadi PH -->
+            <div
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              data-location="rivers"
+              data-name="Trans Amadi Luxe Residency"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop"
+                  alt="Modern home PH"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  Reduced
+                </div>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
+                >
+                  <i data-lucide="map-pin" class="w-3 h-3"></i> Trans Amadi,
+                  Port Harcourt
+                </div>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  Trans Amadi Luxe
+                </h3>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="text-primary font-headline text-2xl font-bold"
+                    >₦59,900,000</span
+                  >
+                </div>
+                <div
+                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
+                >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i>4 Beds</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i>3 Baths</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i>310m²</span
+                  >
+                </div>
+                <button
+                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                >
+                  Request Details
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty state (hidden by default) -->
+          <div
+            id="emptyState"
+            class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8"
+          >
+            <i
+              data-lucide="home"
+              class="w-16 h-16 text-[#c4c6d1] mx-auto mb-4"
+            ></i>
+            <h3 class="text-xl font-headline font-semibold text-primary">
+              No matching properties
+            </h3>
+            <p class="text-[#444650] text-sm mt-1">
+              Try adjusting your search or filter.
+            </p>
+            <button
+              id="resetFiltersBtn"
+              class="mt-4 bg-tertiary-container text-primary px-5 py-2 rounded-full text-sm font-semibold"
+            >
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section - Matching main brand -->
+      <section class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white">
+        <div class="max-w-4xl mx-auto text-center">
+          <i
+            data-lucide="phone-call"
+            class="w-10 h-10 text-tertiary-container mx-auto mb-4"
+          ></i>
+          <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">
+            Not finding your dream home?
+          </h2>
+          <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">
+            Speak with a Resident curator for exclusive off-market listings
+            tailored to your lifestyle.
+          </p>
+          <button
+            class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm"
+          >
+            Request Private Consultation
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8">
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
+      >
+        <div>
+          <img
+            src="images/logo.png"
+            alt="Resident"
+            class="h-8 mb-3"
+            onerror="
+              this.style.display = 'none';
+              this.parentElement.innerHTML +=
+                '<span class=\'text-xl font-black text-primary\'>RESIDENT</span>';
+            "
+          />
+          <p class="text-xs text-[#444650] max-w-xs">
+            Redefining luxury real estate through precision, trust and
+            uncompromising standard.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Discover</h4>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Buy Properties</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Rent Properties</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Off-market Listings</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Company</h4>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >About Resident</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Concierge Team</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Careers</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Insights</h4>
+          <p class="text-xs text-[#444650] mb-2">
+            Access exclusive off-market opportunities
+          </p>
+          <div class="flex">
+            <input
+              type="email"
+              placeholder="Email address"
+              class="bg-[#f3f3f6] border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-tertiary"
+            /><button
+              class="bg-[#001c4a] text-white px-4 rounded-r-lg text-xs font-semibold"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="max-w-7xl mx-auto pt-8 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-[#444650]"
+      >
+        <p>© 2025 Resident Luxury — All rights reserved.</p>
+        <div class="flex gap-5">
+          <a href="#" class="hover:text-primary transition">Privacy Policy</a
+          ><a href="#" class="hover:text-primary transition"
+            >Terms of Service</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+
+      // Filter and search functionality
+      const cards = document.querySelectorAll(".property-card");
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const searchInput = document.getElementById("searchInput");
+      const resultSpan = document.getElementById("resultCount");
+      const emptyStateDiv = document.getElementById("emptyState");
+      const container = document.getElementById("propertiesContainer");
+      const resetBtn = document.getElementById("resetFiltersBtn");
+
+      let currentFilter = "all";
+      let currentSearch = "";
+
+      function updateResults() {
+        let visibleCount = 0;
+        cards.forEach((card) => {
+          const location = card.dataset.location;
+          const title =
+            card.dataset.name?.toLowerCase() ||
+            card.querySelector("h3")?.innerText.toLowerCase() ||
+            "";
+          const locationText =
+            card
+              .querySelector(".flex.items-center.gap-1.text-\\[\\#545e78\\]")
+              ?.innerText.toLowerCase() || "";
+          const matchesFilter =
+            currentFilter === "all" || location === currentFilter;
+          const matchesSearch =
+            title.includes(currentSearch) ||
+            locationText.includes(currentSearch);
+
+          if (matchesFilter && matchesSearch) {
+            card.style.display = "";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        resultSpan.innerText = visibleCount;
+        if (visibleCount === 0) {
+          emptyStateDiv.classList.remove("hidden");
+        } else {
+          emptyStateDiv.classList.add("hidden");
+        }
+      }
+
+      function setActiveFilter(selected) {
+        filterBtns.forEach((btn) => {
+          const filterVal = btn.dataset.filter;
+          if (filterVal === selected) {
+            btn.classList.add(
+              "bg-tertiary-container",
+              "text-primary",
+              "shadow-sm",
+            );
+            btn.classList.remove(
+              "bg-white",
+              "border",
+              "border-[#c4c6d1]",
+              "text-[#444650]",
+            );
+          } else {
+            btn.classList.remove(
+              "bg-tertiary-container",
+              "text-primary",
+              "shadow-sm",
+            );
+            btn.classList.add(
+              "bg-white",
+              "border",
+              "border-[#c4c6d1]",
+              "text-[#444650]",
+            );
+          }
+        });
+      }
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          currentFilter = btn.dataset.filter;
+          setActiveFilter(currentFilter);
+          updateResults();
+        });
+      });
+
+      searchInput.addEventListener("input", (e) => {
+        currentSearch = e.target.value.toLowerCase().trim();
+        updateResults();
+      });
+
+      if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+          currentFilter = "all";
+          currentSearch = "";
+          searchInput.value = "";
+          setActiveFilter("all");
+          updateResults();
+        });
+      }
+
+      // Request Details buttons simulation
+      document.querySelectorAll(".property-card button").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const card = btn.closest(".property-card");
+          const title = card.querySelector("h3")?.innerText;
+          alert(
+            `✨ Thank you! A Resident luxury advisor will reach out about "${title}" shortly.`,
+          );
+        });
+      });
+
+      // CTA consultation
+      document
+        .querySelector(".bg-tertiary-container.text-primary.px-6.py-3")
+        ?.addEventListener("click", () => {
+          alert(
+            "Connect with our concierge team: +234 (0) 123 456 7890 or hello@resident.ng",
+          );
+        });
+
+      // Schedule tour button
+      document
+        .querySelector(".inline-flex.bg-\\[\\#001c4a\\].text-white")
+        ?.addEventListener("click", () => {
+          alert(
+            "Schedule a private tour of our premium portfolio. One of our agents will contact you.",
+          );
+        });
+    </script>
+  </body>
+</html>
