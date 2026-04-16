@@ -92,6 +92,18 @@
       html {
         scroll-behavior: smooth;
       }
+      /* Fade-in animation for scroll reveal */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+          transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      }
+      .fade-up.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
     </style>
     <style>
       /* custom overrides */
@@ -149,7 +161,7 @@
     <main>
       <!-- Page Hero -->
       <section
-        class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden"
+        class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden fade-up"
       >
         <div class="absolute inset-0 opacity-20">
           <img
@@ -173,7 +185,7 @@
 
       <!-- Filter Bar - Dropdown version (matching landing page style) -->
       <div
-        class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm"
+        class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
       >
         <div class="max-w-7xl mx-auto px-5 md:px-8">
           <!-- MOBILE: 3 in a row | DESKTOP: original flex layout -->
@@ -207,9 +219,7 @@
               <select
                 id="lgaFilter"
                 class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
-              >
-                <option value="all">LGA</option>
-              </select>
+              ></select>
             </div>
 
             <!-- Search Button -->
@@ -227,7 +237,9 @@
       <!-- Properties Grid: 6 luxury homes under ₦100M -->
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
-          <div class="flex justify-between items-end mb-10 flex-wrap gap-3">
+          <div
+            class="flex justify-between items-end mb-10 flex-wrap gap-3 fade-up"
+          >
             <div>
               <span
                 class="text-tertiary font-bold uppercase tracking-widest text-xs"
@@ -247,7 +259,7 @@
           >
             <!-- Property 1 - Lekki Lagos -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
               data-location="lagos"
               data-name="The Pearl Haven Lekki"
             >
@@ -305,7 +317,7 @@
 
             <!-- Property 2 - Maitama Abuja -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
               data-location="abuja"
               data-name="Serene Gardens Maitama"
             >
@@ -352,7 +364,7 @@
 
             <!-- Property 3 - Old GRA PH -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
               data-location="rivers"
               data-name="Golden Crest GRA"
             >
@@ -400,7 +412,7 @@
 
             <!-- Property 4 - Ikoyi Lagos -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
               data-location="lagos"
               data-name="Ikoyi Oasis Residence"
             >
@@ -452,7 +464,7 @@
 
             <!-- Property 5 - Gwarimpa Abuja -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
               data-location="abuja"
               data-name="Gwarimpa Signature Villa"
             >
@@ -499,7 +511,7 @@
 
             <!-- Property 6 - Trans Amadi PH -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300"
+              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
               data-location="rivers"
               data-name="Trans Amadi Luxe Residency"
             >
@@ -557,7 +569,7 @@
           <!-- Empty state (hidden by default) -->
           <div
             id="emptyState"
-            class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8"
+            class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8 fade-up"
           >
             <i
               data-lucide="home"
@@ -580,7 +592,9 @@
       </section>
 
       <!-- CTA Section - Matching main brand -->
-      <section class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white">
+      <section
+        class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
+      >
         <div class="max-w-4xl mx-auto text-center">
           <i
             data-lucide="phone-call"
@@ -607,7 +621,7 @@
       <div
         class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
       >
-        <div>
+        <div class="fade-up">
           <img
             src="images/logo.png"
             alt="Resident"
@@ -623,7 +637,7 @@
             uncompromising standard.
           </p>
         </div>
-        <div>
+        <div class="fade-up">
           <h4 class="font-bold text-primary mb-4 text-sm">Discover</h4>
           <ul class="space-y-2 text-xs">
             <li>
@@ -643,7 +657,7 @@
             </li>
           </ul>
         </div>
-        <div>
+        <div class="fade-up">
           <h4 class="font-bold text-primary mb-4 text-sm">Company</h4>
           <ul class="space-y-2 text-xs">
             <li>
@@ -663,7 +677,7 @@
             </li>
           </ul>
         </div>
-        <div>
+        <div class="fade-up">
           <h4 class="font-bold text-primary mb-4 text-sm">Insights</h4>
           <p class="text-xs text-[#444650] mb-2">
             Access exclusive off-market opportunities
@@ -697,37 +711,99 @@
     <script>
       lucide.createIcons();
 
-      // Filter and search functionality
+      // Smooth scroll fade-in animation (Intersection Observer)
+      const fadeElements = document.querySelectorAll(".fade-up");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              // Optional: unobserve after reveal to reduce overhead
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -20px 0px" },
+      );
+
+      fadeElements.forEach((el) => observer.observe(el));
+
+      // --- FILTER & SEARCH LOGIC (PRESERVED & ENHANCED WITH LGA dropdown dynamic)---
       const cards = document.querySelectorAll(".property-card");
-      const filterBtns = document.querySelectorAll(".filter-btn");
-      const searchInput = document.getElementById("searchInput");
-      const resultSpan = document.getElementById("resultCount");
+      const stateSelect = document.getElementById("stateFilter");
+      const lgaSelect = document.getElementById("lgaFilter");
+      const searchBtn = document.getElementById("searchBtn");
+      const resetFiltersBtn = document.getElementById("resetFiltersBtn");
       const emptyStateDiv = document.getElementById("emptyState");
-      const container = document.getElementById("propertiesContainer");
-      const resetBtn = document.getElementById("resetFiltersBtn");
 
-      let currentFilter = "all";
-      let currentSearch = "";
+      // Data mapping for LGA options (static mapping based on states)
+      const lgaMap = {
+        lagos: ["Lekki Phase 1", "Ikoyi", "Victoria Island"],
+        abuja: ["Maitama", "Gwarimpa", "Asokoro"],
+        rivers: ["Old GRA", "Trans Amadi", "New GRA"],
+      };
 
-      function updateResults() {
+      // Property specific LGA data (for filtering)
+      const propertyLGA = {
+        "The Pearl Haven": "Lekki Phase 1",
+        "Serene Gardens Villa": "Maitama",
+        "Golden Crest Manor": "Old GRA",
+        "Ikoyi Oasis": "Ikoyi",
+        "Gwarimpa Signature": "Gwarimpa",
+        "Trans Amadi Luxe": "Trans Amadi",
+      };
+
+      function populateLGA(selectedState) {
+        lgaSelect.innerHTML = '<option value="all">LGA</option>';
+        if (selectedState !== "all" && lgaMap[selectedState]) {
+          lgaMap[selectedState].forEach((lga) => {
+            const option = document.createElement("option");
+            option.value =
+              lga === "All LGAs" ? "all" : lga.toLowerCase().replace(/\s/g, "");
+            option.textContent = lga;
+            lgaSelect.appendChild(option);
+          });
+        } else {
+          lgaSelect.innerHTML = '<option value="all">LGA</option>';
+        }
+        lgaSelect.value = "all";
+      }
+
+      function filterProperties() {
+        const selectedState = stateSelect.value;
+        const selectedLGA = lgaSelect.value;
         let visibleCount = 0;
+
         cards.forEach((card) => {
           const location = card.dataset.location;
-          const title =
-            card.dataset.name?.toLowerCase() ||
-            card.querySelector("h3")?.innerText.toLowerCase() ||
-            "";
-          const locationText =
-            card
-              .querySelector(".flex.items-center.gap-1.text-\\[\\#545e78\\]")
-              ?.innerText.toLowerCase() || "";
-          const matchesFilter =
-            currentFilter === "all" || location === currentFilter;
-          const matchesSearch =
-            title.includes(currentSearch) ||
-            locationText.includes(currentSearch);
+          const titleElem = card.querySelector("h3");
+          const title = titleElem ? titleElem.innerText : "";
+          const propertySpecificLGA = propertyLGA[title] || "";
 
-          if (matchesFilter && matchesSearch) {
+          let stateMatch =
+            selectedState === "all" || location === selectedState;
+          let lgaMatch = true;
+          if (selectedLGA !== "all" && selectedState !== "all") {
+            // compare normalized LGA string (lowercase, no spaces)
+            const normalizedSelected = selectedLGA
+              .toLowerCase()
+              .replace(/\s/g, "");
+            const normalizedPropLGA = propertySpecificLGA
+              .toLowerCase()
+              .replace(/\s/g, "");
+            lgaMatch = normalizedPropLGA === normalizedSelected;
+          } else if (selectedLGA !== "all" && selectedState === "all") {
+            // if no state selected but LGA selected, match by property LGA
+            const normalizedSelected = selectedLGA
+              .toLowerCase()
+              .replace(/\s/g, "");
+            const normalizedPropLGA = propertySpecificLGA
+              .toLowerCase()
+              .replace(/\s/g, "");
+            lgaMatch = normalizedPropLGA === normalizedSelected;
+          }
+
+          if (stateMatch && lgaMatch) {
             card.style.display = "";
             visibleCount++;
           } else {
@@ -735,7 +811,6 @@
           }
         });
 
-        resultSpan.innerText = visibleCount;
         if (visibleCount === 0) {
           emptyStateDiv.classList.remove("hidden");
         } else {
@@ -743,61 +818,28 @@
         }
       }
 
-      function setActiveFilter(selected) {
-        filterBtns.forEach((btn) => {
-          const filterVal = btn.dataset.filter;
-          if (filterVal === selected) {
-            btn.classList.add(
-              "bg-tertiary-container",
-              "text-primary",
-              "shadow-sm",
-            );
-            btn.classList.remove(
-              "bg-white",
-              "border",
-              "border-[#c4c6d1]",
-              "text-[#444650]",
-            );
-          } else {
-            btn.classList.remove(
-              "bg-tertiary-container",
-              "text-primary",
-              "shadow-sm",
-            );
-            btn.classList.add(
-              "bg-white",
-              "border",
-              "border-[#c4c6d1]",
-              "text-[#444650]",
-            );
-          }
+      // Event listeners
+      stateSelect.addEventListener("change", () => {
+        populateLGA(stateSelect.value);
+        filterProperties();
+      });
+
+      lgaSelect.addEventListener("change", filterProperties);
+      searchBtn.addEventListener("click", filterProperties);
+
+      if (resetFiltersBtn) {
+        resetFiltersBtn.addEventListener("click", () => {
+          stateSelect.value = "all";
+          populateLGA("all");
+          lgaSelect.value = "all";
+          filterProperties();
         });
       }
 
-      filterBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          currentFilter = btn.dataset.filter;
-          setActiveFilter(currentFilter);
-          updateResults();
-        });
-      });
+      // Initial LGA population
+      populateLGA("all");
 
-      searchInput.addEventListener("input", (e) => {
-        currentSearch = e.target.value.toLowerCase().trim();
-        updateResults();
-      });
-
-      if (resetBtn) {
-        resetBtn.addEventListener("click", () => {
-          currentFilter = "all";
-          currentSearch = "";
-          searchInput.value = "";
-          setActiveFilter("all");
-          updateResults();
-        });
-      }
-
-      // Request Details buttons simulation
+      // Request Details buttons simulation (preserved)
       document.querySelectorAll(".property-card button").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
@@ -810,22 +852,31 @@
       });
 
       // CTA consultation
-      document
-        .querySelector(".bg-tertiary-container.text-primary.px-6.py-3")
-        ?.addEventListener("click", () => {
+      const consultBtn = document.querySelector(
+        ".bg-tertiary-container.text-primary.px-6.py-3",
+      );
+      if (consultBtn) {
+        consultBtn.addEventListener("click", () => {
           alert(
             "Connect with our concierge team: +234 (0) 123 456 7890 or hello@resident.ng",
           );
         });
+      }
 
       // Schedule tour button
-      document
-        .querySelector(".inline-flex.bg-\\[\\#001c4a\\].text-white")
-        ?.addEventListener("click", () => {
+      const scheduleBtn = document.querySelector(
+        ".inline-flex.bg-\\[\\#001c4a\\].text-white",
+      );
+      if (scheduleBtn) {
+        scheduleBtn.addEventListener("click", () => {
           alert(
             "Schedule a private tour of our premium portfolio. One of our agents will contact you.",
           );
         });
+      }
+
+      // Re-run lucide icons for any dynamic content (optional)
+      setTimeout(() => lucide.createIcons(), 100);
     </script>
   </body>
 </html>
