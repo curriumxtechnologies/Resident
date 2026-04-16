@@ -263,7 +263,7 @@
 
                 <button
                   id="rentBtn"
-                  class="px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 hover:text-white transition"
+                  class="px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition"
                   onclick="setMode('rent')"
                 >
                   Rent
@@ -919,7 +919,6 @@
         </div>
       </div>
     </footer>
-
     <script>
       let mode = null;
 
@@ -931,23 +930,32 @@
         const stateBox = document.getElementById("stateBox");
         const lgaBox = document.getElementById("lgaBox");
 
+        // 1. Define the active and inactive styles
+        const activeClasses = ["bg-white", "text-[#0D316D]"];
+        const inactiveClasses = ["text-white/80"];
+
         if (selected === "buy") {
-          buyBtn.classList.add("bg-white", "text-[#0D316D]");
-          buyBtn.classList.remove("text-white/80");
+          // Set Buy to Active
+          buyBtn.classList.add(...activeClasses);
+          buyBtn.classList.remove(...inactiveClasses);
 
-          rentBtn.classList.remove("bg-white", "text-[#0D316D]");
-          rentBtn.classList.add("text-white/80");
+          // Set Rent to Inactive
+          rentBtn.classList.remove(...activeClasses);
+          rentBtn.classList.add(...inactiveClasses);
         } else {
-          rentBtn.classList.add("bg-white", "text-[#0D316D]");
-          rentBtn.classList.remove("text-white/80");
+          // Set Rent to Active
+          rentBtn.classList.add(...activeClasses);
+          rentBtn.classList.remove(...inactiveClasses);
 
-          buyBtn.classList.remove("bg-white", "text-[#0D316D]");
-          buyBtn.classList.add("text-white/80");
+          // Set Buy to Inactive
+          buyBtn.classList.remove(...activeClasses);
+          buyBtn.classList.add(...inactiveClasses);
         }
 
-        // enable filters after selection
-        stateBox.classList.remove("opacity-50", "pointer-events-none");
-        lgaBox.classList.remove("opacity-50", "pointer-events-none");
+        // Enable filters
+        [stateBox, lgaBox].forEach((el) => {
+          if (el) el.classList.remove("opacity-50", "pointer-events-none");
+        });
       }
     </script>
 
