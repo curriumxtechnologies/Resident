@@ -20,6 +20,8 @@
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
       tailwind.config = {
         darkMode: "class",
@@ -675,15 +677,17 @@
       </section>
 
       <!-- ========== STATS SECTION ========= -->
-      <div class="bg-primary py-14 lg:py-20">
+      <div class="bg-primary py-14 lg:py-20 stats-section">
         <div
           class="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
         >
-          <div>
+          <!-- Stat 1 -->
+          <div class="stat">
             <div
-              class="text-3xl lg:text-4xl font-headline font-black text-white"
+              class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
+              data-value="1000"
             >
-              1,000+
+              0
             </div>
             <div
               class="text-primary-fixed text-[11px] font-semibold tracking-wider mt-1"
@@ -691,11 +695,14 @@
               PREMIUM HOMES
             </div>
           </div>
-          <div>
+
+          <!-- Stat 2 -->
+          <div class="stat">
             <div
-              class="text-3xl lg:text-4xl font-headline font-black text-white"
+              class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
+              data-value="500"
             >
-              500+
+              0
             </div>
             <div
               class="text-primary-fixed text-[11px] font-semibold tracking-wider mt-1"
@@ -703,11 +710,16 @@
               HAPPY CLIENTS
             </div>
           </div>
-          <div>
+
+          <!-- Stat 3 -->
+          <div class="stat">
             <div
-              class="text-3xl lg:text-4xl font-headline font-black text-white"
+              class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
+              data-value="450"
+              data-prefix="₦"
+              data-suffix="B"
             >
-              ₦450B
+              0
             </div>
             <div
               class="text-primary-fixed text-[11px] font-semibold tracking-wider mt-1"
@@ -715,11 +727,14 @@
               ASSETS MANAGED
             </div>
           </div>
-          <div>
+
+          <!-- Stat 4 -->
+          <div class="stat">
             <div
-              class="text-3xl lg:text-4xl font-headline font-black text-white"
+              class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
+              data-value="12"
             >
-              12+
+              0
             </div>
             <div
               class="text-primary-fixed text-[11px] font-semibold tracking-wider mt-1"
@@ -940,6 +955,52 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Animate cards (fade + slide up)
+      gsap.from(".stat", {
+        scrollTrigger: {
+          trigger: ".bg-primary",
+          start: "top 80%",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+      });
+
+      // Counter animation
+      document.querySelectorAll(".stat-number").forEach((el) => {
+        let value = +el.getAttribute("data-value");
+
+        gsap.fromTo(
+          el,
+          { innerText: 0 },
+          {
+            innerText: value,
+            duration: 2,
+            ease: "power1.out",
+            snap: { innerText: 1 },
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+            },
+            onUpdate: function () {
+              if (el.getAttribute("data-value") == "450") {
+                el.innerText = "₦" + Math.floor(el.innerText) + "B";
+              } else if (value >= 1000) {
+                el.innerText = Math.floor(el.innerText).toLocaleString() + "+";
+              } else {
+                el.innerText = Math.floor(el.innerText) + "+";
+              }
+            },
+          },
+        );
+      });
+    </script>
 
     <script>
       (function () {
