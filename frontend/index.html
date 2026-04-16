@@ -1,439 +1,1019 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Resident | Premium Nigerian Real Estate</title>
-    <!-- Tailwind CSS + Google Fonts + Font Awesome -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- GSAP & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- Font Awesome 6 (free) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Custom overrides -->
+<!doctype html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Resident | Nigeria's Finest Real Estate</title>
+    <!-- Google Fonts (Refined) -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "on-secondary-container": "#58627c",
+              "primary-fixed-dim": "#afc6ff",
+              "primary-fixed": "#d9e2ff",
+              "secondary-fixed": "#d9e2ff",
+              "tertiary-container": "#c5aa23",
+              "surface-container-low": "#f3f3f6",
+              "primary-container": "#0d316d",
+              "surface-container-highest": "#e2e2e5",
+              "surface-container": "#eeeef0",
+              outline: "#747781",
+              "inverse-surface": "#2f3133",
+              "surface-dim": "#dadadc",
+              "on-tertiary-container": "#4b3f00",
+              "secondary-fixed-dim": "#bcc6e4",
+              "on-error": "#ffffff",
+              "outline-variant": "#c4c6d1",
+              "on-primary-fixed-variant": "#264581",
+              "on-primary-fixed": "#001944",
+              "surface-tint": "#405d9b",
+              "on-surface": "#1a1c1e",
+              "surface-container-high": "#e8e8ea",
+              "on-secondary-fixed": "#111b32",
+              "secondary-container": "#d5dffe",
+              "inverse-primary": "#afc6ff",
+              "on-primary": "#ffffff",
+              surface: "#f9f9fc",
+              "on-background": "#1a1c1e",
+              secondary: "#545e78",
+              "on-primary-container": "#7f9bdd",
+              "surface-bright": "#f9f9fc",
+              "on-secondary-fixed-variant": "#3c465f",
+              tertiary: "#6e5d00",
+              "inverse-on-surface": "#f0f0f3",
+              "on-tertiary-fixed": "#221b00",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#444650",
+              "surface-variant": "#e2e2e5",
+              error: "#ba1a1a",
+              "on-tertiary-fixed-variant": "#534600",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffe260",
+              "tertiary-fixed-dim": "#e2c53f",
+              "error-container": "#ffdad6",
+              background: "#f9f9fc",
+              "on-tertiary": "#ffffff",
+              "on-error-container": "#93000a",
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              "2xl": "1rem",
+              "3xl": "1.5rem",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+            letterSpacing: {
+              tightest: "-0.02em",
+              tighter: "-0.01em",
+            },
+          },
+        },
+      };
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+      }
+      @media (max-width: 768px) {
+        html {
+          scroll-padding-top: 70px;
         }
-        body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
-            background-color: #FFFFFF;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+      }
+      .hero-radial-mask {
+        background: radial-gradient(
+          circle at 70% 30%,
+          rgba(0, 28, 74, 0.2) 0%,
+          rgba(0, 28, 74, 0.7) 90%,
+          #001c4a 100%
+        );
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+      .hover-lift {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+      }
+      .nav-active {
+        color: #001c4a;
+        font-weight: 600;
+        border-bottom: 2px solid #c5aa23;
+      }
+      /* improved typography scaling - balanced and refined */
+      @media (max-width: 640px) {
+        .hero-headline {
+          font-size: 2.75rem !important;
+          line-height: 1.2 !important;
         }
-        /* Custom luxury gold accent classes */
-        .gold-accent {
-            color: #F7D951;
+        .section-title {
+          font-size: 2rem !important;
         }
-        .gold-border {
-            border-color: #F7D951;
+        .card-title {
+          font-size: 1.35rem !important;
         }
-        .gold-bg {
-            background-color: #F7D951;
-        }
-        .gold-bg-light {
-            background-color: rgba(247, 217, 81, 0.1);
-        }
-        .btn-gold {
-            background-color: #F7D951;
-            color: #0D316D;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        .btn-gold:hover {
-            background-color: #e5c842;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(247, 217, 81, 0.3);
-        }
-        .btn-outline-gold {
-            border: 1px solid #F7D951;
-            color: #F7D951;
-            background: transparent;
-            transition: all 0.3s ease;
-        }
-        .btn-outline-gold:hover {
-            background: #F7D951;
-            color: #0D316D;
-            transform: translateY(-2px);
-        }
-        /* Sticky nav transition */
-        .nav-sticky {
-            background: rgba(13, 49, 109, 0.92);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border-bottom: 1px solid rgba(247,217,81,0.2);
-        }
-        .nav-transparent {
-            background: transparent;
-        }
-        /* property card zoom */
-        .property-card {
-            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow 0.4s ease;
-        }
-        .property-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25);
-        }
-        .img-zoom {
-            overflow: hidden;
-        }
-        .img-zoom img {
-            transition: transform 0.7s ease;
-        }
-        .property-card:hover .img-zoom img {
-            transform: scale(1.08);
-        }
-        /* Split card hover */
-        .split-card {
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            transform-origin: center;
-        }
-        .split-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 30px 40px -20px rgba(0,0,0,0.3);
-        }
-        /* gold underline effect */
-        .gold-underline {
-            position: relative;
-        }
-        .gold-underline:after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: #F7D951;
-            border-radius: 4px;
-        }
-        /* counter number styling */
-        .stat-number {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #0D316D;
-        }
-        /* custom glassmorphism for testimonials */
-        .glass-card {
-            background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(247,217,81,0.25);
-        }
-        /* floating animation subtle */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-            100% { transform: translateY(0px); }
-        }
-        .float-icon {
-            animation: float 4s ease-in-out infinite;
-        }
-        input, select {
-            outline: none;
-        }
-        ::selection {
-            background: #F7D951;
-            color: #0D316D;
-        }
+      }
     </style>
-</head>
-<body class="antialiased">
+  </head>
+  <body
+    class="bg-surface text-on-surface font-body antialiased overflow-x-hidden"
+  >
+    <!-- ========== REIMAGINED NAVIGATION ========= -->
+    <header
+      class="sticky top-0 w-full z-50 bg-white/85 backdrop-blur-xl shadow-sm transition-all duration-300 border-b border-surface-container/50"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <div class="flex-shrink-0">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML =
+                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>RESIDENT</span>';
+              "
+            />
+          </div>
+          <div class="hidden lg:flex items-center space-x-8">
+            <a
+              href="#discover"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
+              >Discover</a
+            >
+            <a
+              href="#portfolio"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
+              >Portfolio</a
+            >
+            <a
+              href="#experience"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
+              >Experience</a
+            >
+            <a
+              href="#journey"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
+              >Journey</a
+            >
+            <a
+              href="#connect"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
+              >Connect</a
+            >
+          </div>
+          <div>
+            <button
+              class="hidden lg:inline-flex bg-primary text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-primary-container transition-all duration-300"
+            >
+              Schedule Tour
+            </button>
+            <button
+              id="mobileMenuBtn"
+              class="lg:hidden flex items-center justify-center p-2 rounded-md text-primary focus:outline-none"
+            >
+              <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
 
-    <!-- STICKY NAVIGATION -->
-    <nav id="mainNav" class="fixed w-full z-50 transition-all duration-500 py-5 nav-transparent">
-        <div class="container mx-auto px-6 lg:px-12 flex items-center justify-between">
-            <div class="text-2xl font-bold tracking-tighter">
-                <span class="text-white">RESIDENT</span>
-                <span class="text-[#F7D951]">.</span>
+    <main>
+      <!-- ========== HERO SECTION - refined typography ========= -->
+      <section
+        id="discover"
+        class="relative min-h-[85vh] lg:min-h-[90vh] flex items-center overflow-hidden"
+      >
+        <div class="absolute inset-0 z-0">
+          <img
+            src="images/hero.avif"
+            alt="Lagos Skyline"
+            class="w-full h-full object-cover brightness-[0.65] saturate-110"
+          />
+          <div
+            class="absolute inset-0 hero-radial-mask mix-blend-multiply"
+          ></div>
+        </div>
+        <div
+          class="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 py-16 lg:py-24"
+        >
+          <div class="max-w-2xl lg:max-w-xl">
+            <div
+              class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 mb-5 border border-white/20"
+            >
+              <span
+                class="w-1.5 h-1.5 bg-tertiary-fixed rounded-full animate-pulse"
+              ></span>
+              <span class="text-[11px] font-medium text-white tracking-wide"
+                >NIGERIA'S PREMIER LUXURY ESTATE</span
+              >
             </div>
-            <div class="hidden md:flex space-x-8 text-white font-medium">
-                <a href="#" class="hover:text-[#F7D951] transition">Home</a>
-                <a href="#" class="hover:text-[#F7D951] transition">Buy</a>
-                <a href="#" class="hover:text-[#F7D951] transition">Rent</a>
-                <a href="#" class="hover:text-[#F7D951] transition">About</a>
-                <a href="#" class="hover:text-[#F7D951] transition">Contact</a>
+            <h1
+              class="font-headline text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.15] mb-5"
+            >
+              Where <span class="text-tertiary-fixed">Legacy</span><br />
+              Meets Horizon
+            </h1>
+            <p
+              class="text-white/85 text-base md:text-lg max-w-lg mb-8 leading-relaxed"
+            >
+              Premium residences curated for visionaries, connoisseurs & those
+              who demand the exceptional.
+            </p>
+
+            <div
+              class="glass-card rounded-xl p-1.5 flex flex-col md:flex-row items-stretch gap-1.5 shadow-2xl max-w-xl"
+            >
+              <div
+                class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
+              >
+                <span
+                  class="material-symbols-outlined text-tertiary-fixed text-xl"
+                  >location_on</span
+                >
+                <select
+                  class="w-full bg-transparent border-none focus:ring-0 text-white font-medium text-sm outline-none"
+                >
+                  <option class="text-black">Select State</option>
+                  <option>Lagos</option>
+                  <option>Abuja</option>
+                  <option>Rivers</option>
+                </select>
+              </div>
+              <div class="hidden md:block w-px h-6 bg-white/30"></div>
+              <div
+                class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
+              >
+                <span
+                  class="material-symbols-outlined text-tertiary-fixed text-xl"
+                  >map</span
+                >
+                <select
+                  class="w-full bg-transparent border-none focus:ring-0 text-white font-medium text-sm outline-none"
+                >
+                  <option class="text-black">Select LGA</option>
+                  <option>Ikeja</option>
+                  <option>Maitama</option>
+                  <option>GRA PH</option>
+                </select>
+              </div>
+              <button
+                class="bg-tertiary-container text-primary px-6 py-2.5 rounded-lg font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-1 text-sm"
+              >
+                Search
+                <span class="material-symbols-outlined text-sm"
+                  >arrow_forward</span
+                >
+              </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== DUAL PATH SECTION (Buy/Rent) ========= -->
+      <section id="portfolio" class="py-20 lg:py-28 bg-surface px-5 md:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="text-center lg:text-left lg:flex lg:justify-between lg:items-end mb-12 gap-6"
+          >
             <div>
-                <button class="btn-gold px-5 py-2 rounded-full text-sm font-semibold shadow-md">List Your Property</button>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+                >Curated portfolio</span
+              >
+              <h2
+                class="text-3xl md:text-4xl lg:text-5xl font-headline font-extrabold text-primary mt-2 leading-tight"
+              >
+                Invest or Indulge
+              </h2>
             </div>
+            <p class="text-on-surface-variant text-sm max-w-md mt-3 lg:mt-0">
+              Two paths, one promise of uncompromised quality.
+            </p>
+          </div>
+          <div class="grid lg:grid-cols-2 gap-7 lg:gap-10">
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 h-[460px] lg:h-[520px]"
+            >
+              <img
+                src="images/forsale.avif"
+                alt="Luxury Villa"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent"
+              ></div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-7 lg:p-9 text-white"
+              >
+                <div class="mb-2">
+                  <span
+                    class="bg-tertiary-container/90 text-primary text-[11px] font-bold px-2.5 py-0.5 rounded-full"
+                    >ACQUISITION</span
+                  >
+                </div>
+                <h3 class="text-2xl lg:text-3xl font-headline font-bold mb-1">
+                  Investment Legacy
+                </h3>
+                <p class="text-white/80 text-sm max-w-md mb-5">
+                  Own architectural masterpieces & penthouses in prime
+                  districts.
+                </p>
+                <button
+                  class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/40 px-5 py-2 rounded-full font-semibold text-sm hover:bg-white hover:text-primary transition"
+                >
+                  Explore Estates
+                  <span class="material-symbols-outlined text-sm">east</span>
+                </button>
+              </div>
+            </div>
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 h-[460px] lg:h-[520px]"
+            >
+              <img
+                src="images/forrent.avif"
+                alt="Luxury Rental"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent"
+              ></div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-7 lg:p-9 text-white"
+              >
+                <div class="mb-2">
+                  <span
+                    class="bg-tertiary-container/90 text-primary text-[11px] font-bold px-2.5 py-0.5 rounded-full"
+                    >LIFESTYLE</span
+                  >
+                </div>
+                <h3 class="text-2xl lg:text-3xl font-headline font-bold mb-1">
+                  Curated Rentals
+                </h3>
+                <p class="text-white/80 text-sm max-w-md mb-5">
+                  Live luxuriously with flexible terms and white-glove
+                  concierge.
+                </p>
+                <button
+                  class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/40 px-5 py-2 rounded-full font-semibold text-sm hover:bg-white hover:text-primary transition"
+                >
+                  Discover Rentals
+                  <span class="material-symbols-outlined text-sm">east</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    </nav>
+      </section>
 
-    <!-- 1. HERO SECTION (CINEMATIC) -->
-    <section class="relative h-screen w-full overflow-hidden">
-        <!-- video/image background: aerial lagos view premium -->
-        <div class="absolute inset-0">
-            <img src="https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Luxury Lagos skyline" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0D316D]/70 to-[#0D316D]/30"></div>
-        </div>
-        <div class="relative z-10 flex flex-col justify-center items-center h-full text-center px-6">
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight animate-fade-in-up">Find Where You <span class="text-[#F7D951]">Truly Belong</span></h1>
-            <p class="text-white/90 text-xl md:text-2xl mt-6 max-w-2xl mx-auto font-light">Premium homes for rent and sale across Nigeria, curated for your lifestyle.</p>
-            <div class="flex flex-wrap justify-center gap-5 mt-10">
-                <a href="#" class="btn-gold px-8 py-4 rounded-full text-lg font-semibold shadow-xl transition">🏠 Buy a Home</a>
-                <a href="#" class="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#F7D951] hover:text-[#0D316D] transition-all">🔑 Rent a Home</a>
+      <!-- ========== FEATURED PROPERTIES ========= -->
+      <section class="py-20 lg:py-28 bg-surface-container-low px-5 md:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-3"
+          >
+            <div>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+                >The Signature Collection</span
+              >
+              <h2
+                class="text-3xl md:text-4xl font-headline font-extrabold text-primary mt-1"
+              >
+                Featured Residences
+              </h2>
             </div>
-            <!-- smart search bar premium -->
-            <div class="mt-12 w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-2 md:p-3 flex flex-col md:flex-row items-center gap-2">
-                <div class="flex-1 w-full px-4 py-3 flex items-center gap-2 border-b md:border-b-0 md:border-r border-gray-200">
-                    <i class="fas fa-map-marker-alt text-[#F7D951]"></i>
-                    <input type="text" placeholder="Location: Lekki, VI, Abuja..." class="w-full bg-transparent focus:outline-none text-gray-800 font-medium">
+            <a
+              href="#"
+              class="group flex items-center gap-1 text-primary font-semibold border-b border-tertiary pb-0.5 text-sm hover:gap-2 transition-all"
+              >View all
+              <span class="material-symbols-outlined text-sm"
+                >arrow_forward</span
+              ></a
+            >
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8">
+            <div
+              class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover-lift transition-all duration-400"
+            >
+              <div class="relative h-72 overflow-hidden">
+                <img
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC851fE3037ZbaHUdWC72l5imFiJjA1v45W2PJBdog-mYtySRRmToEhA_7mGYEuWOyRpoJc4ftnrA_UkhBv3dN-07ABQeAiO3sLye5MOnaFBnKRaaJCEHDjvb24rLfmMGBkCroxH-zc-weRohQTJj6kBvKLX-nQcHC7hrObH4_HtzTRIdw99qRcCRfFYGG4cpimmt6yR5N65HBEliXCgE0JUuy4SjxNVFBudnbhE9zMrqRGd8i5-zN1Dir9fhtQK67jV7wPY1A1ldc"
+                  alt="Lekki Villa"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  Exclusive
                 </div>
-                <div class="flex-1 w-full px-4 py-3 flex items-center gap-2 border-b md:border-b-0 md:border-r border-gray-200">
-                    <i class="fas fa-chart-line text-[#F7D951]"></i>
-                    <select class="w-full bg-transparent focus:outline-none text-gray-800 font-medium">
-                        <option>Price Range</option>
-                        <option>₦50M - ₦150M</option>
-                        <option>₦150M - ₦300M</option>
-                        <option>₦300M+</option>
-                    </select>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-secondary text-xs mb-1.5"
+                >
+                  <span class="material-symbols-outlined text-xs"
+                    >location_on</span
+                  >
+                  Lekki Phase 1, Lagos
                 </div>
-                <div class="flex-1 w-full px-4 py-3 flex items-center gap-2">
-                    <i class="fas fa-building text-[#F7D951]"></i>
-                    <select class="w-full bg-transparent focus:outline-none text-gray-800 font-medium">
-                        <option>Property Type</option>
-                        <option>Luxury Apartment</option>
-                        <option>Duplex</option>
-                        <option>Penthouse</option>
-                        <option>Mansion</option>
-                    </select>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  The Obsidian Villa
+                </h3>
+                <p class="text-primary font-headline text-xl font-bold mb-3">
+                  ₦245,000,000
+                </p>
+                <div
+                  class="flex gap-5 pt-3 border-t border-surface-container text-sm"
+                >
+                  <span class="flex items-center gap-1"
+                    ><span class="material-symbols-outlined text-sm">bed</span
+                    >5</span
+                  ><span class="flex items-center gap-1"
+                    ><span class="material-symbols-outlined text-sm"
+                      >bathtub</span
+                    >6</span
+                  ><span class="flex items-center gap-1"
+                    ><span class="material-symbols-outlined text-sm"
+                      >square_foot</span
+                    >450m²</span
+                  >
                 </div>
-                <button class="bg-[#0D316D] text-white px-8 py-3 rounded-xl font-bold w-full md:w-auto hover:bg-[#0a2757] transition">Search</button>
+              </div>
             </div>
+            <div
+              class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover-lift"
+            >
+              <div class="relative h-72 overflow-hidden">
+                <img
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTeCftafsNLd1y6HqAHyzGBJQ8pUROMtyiKa8P28gXfsY14DyC8fWyOMpGwbL9XKMXHzb7YZdU0oidh9JBX0QhhZJm-z_2pr2nQPIT-vUHfYRbacbiLio9pjApc4BAyA5oSnD-Svm-xVRWf8WwNx2GoKbZ5TisCFoHkEK2NG9-4TubjNsPe2fNtwWxvKGmjxuar80OGSCc9WHY2UqXvTcp2lVE3sCdMM4z0tXg7qWFgLW1_qCroAdWhqPQ_HO5j3-wHHfhviprHqM"
+                  alt="Abuja Penthouse"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-primary text-white text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  New Listing
+                </div>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-secondary text-xs mb-1.5"
+                >
+                  <span class="material-symbols-outlined text-xs"
+                    >location_on</span
+                  >
+                  Maitama, Abuja
+                </div>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  Skyline Penthouse
+                </h3>
+                <p class="text-primary font-headline text-xl font-bold mb-3">
+                  ₦180,000,000
+                </p>
+                <div class="flex gap-5 pt-3 border-t">
+                  <span class="flex items-center gap-1 text-sm"
+                    ><span class="material-symbols-outlined text-sm">bed</span
+                    >3</span
+                  ><span class="flex items-center gap-1 text-sm"
+                    ><span class="material-symbols-outlined text-sm"
+                      >bathtub</span
+                    >4</span
+                  ><span class="flex items-center gap-1 text-sm"
+                    ><span class="material-symbols-outlined text-sm"
+                      >square_foot</span
+                    >320m²</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover-lift"
+            >
+              <div class="relative h-72 overflow-hidden">
+                <img
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNYLCt4vEKOTFUEihS719pueVClyPovDbmlJPF-nLmfLgyUxZ9jQVUdtJkcnwPlYHlCiTXsElRKHylFEq5glzvotDNeXaGuqInm5XdSifCr48t9l_MBcQ0BsvWMcCi9Ga5_FvYGXTLHWKdfT65P9aEVluSaGmeDfCOeAnTjrHpFhYxAgIQH7ZmFcWeq4Q412hco9Tk7aQzWolYmLUfKtzyQLRkfxlDMQq6iRY8u-22z1W8g3PNHvc1a6imjKEIQfOJb5WJ1B6DdIc"
+                  alt="PH Waterfront"
+                />
+                <div
+                  class="absolute top-4 left-4 bg-tertiary text-white text-[11px] font-bold px-2.5 py-1 rounded-full"
+                >
+                  Premium
+                </div>
+              </div>
+              <div class="p-5">
+                <div
+                  class="flex items-center gap-1 text-secondary text-xs mb-1.5"
+                >
+                  <span class="material-symbols-outlined text-xs"
+                    >location_on</span
+                  >
+                  Old GRA, Port Harcourt
+                </div>
+                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+                  Azura Waterfront
+                </h3>
+                <p class="text-primary font-headline text-xl font-bold mb-3">
+                  ₦120,000,000
+                </p>
+                <div class="flex gap-5 pt-3 border-t">
+                  <span class="flex items-center gap-1 text-sm"
+                    ><span class="material-symbols-outlined text-sm">bed</span
+                    >4</span
+                  ><span class="flex items-center gap-1 text-sm"
+                    ><span class="material-symbols-outlined text-sm"
+                      >bathtub</span
+                    >5</span
+                  ><span class="flex items-center gap-1 text-sm"
+                    ><span class="material-symbols-outlined text-sm"
+                      >square_foot</span
+                    >380m²</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i class="fas fa-chevron-down text-white text-2xl opacity-70"></i>
-        </div>
-    </section>
+      </section>
 
-    <!-- 2. DUAL PATH SPLIT SECTION (Buy / Rent Experience) -->
-    <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-[#0D316D]">Your journey, your choice</h2>
-            <div class="w-24 h-1 gold-bg mx-auto mt-4 rounded-full"></div>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
-            <!-- Left: Buy a Home -->
-            <div class="split-card rounded-3xl overflow-hidden shadow-2xl group cursor-pointer relative">
-                <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Luxury home" class="w-full h-[420px] object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#0D316D]/80 to-transparent flex flex-col justify-end p-8">
-                    <h3 class="text-3xl font-bold text-white">Buy a Home</h3>
-                    <p class="text-white/80 mt-2">Own your dream property in prime Nigerian locations.</p>
-                    <button class="mt-5 bg-[#F7D951] text-[#0D316D] px-6 py-3 rounded-full font-bold w-fit hover:shadow-xl transition">Explore Listings →</button>
-                </div>
+      <!-- ========== WHY RESIDENT (Experience) ========= -->
+      <section id="experience" class="py-20 lg:py-28 px-5 md:px-8 bg-surface">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div class="order-2 lg:order-1">
+            <span
+              class="text-tertiary font-bold uppercase tracking-widest text-xs"
+              >The Resident standard</span
+            >
+            <h2
+              class="text-3xl md:text-4xl lg:text-5xl font-headline font-extrabold text-primary mt-3 mb-5 leading-tight"
+            >
+              Beyond property. A legacy of trust.
+            </h2>
+            <p class="text-on-surface-variant text-base mb-8">
+              We don't just list homes — we engineer experiences where prestige
+              meets transparency.
+            </p>
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <span
+                  class="material-symbols-outlined text-2xl text-tertiary mb-2"
+                  >verified</span
+                >
+                <h4 class="font-bold text-primary mb-0.5 text-base">
+                  Blockchain Title
+                </h4>
+                <p class="text-xs text-on-surface-variant">
+                  Immutable ownership records & smart contracts.
+                </p>
+              </div>
+              <div>
+                <span
+                  class="material-symbols-outlined text-2xl text-tertiary mb-2"
+                  >concierge</span
+                >
+                <h4 class="font-bold text-primary mb-0.5 text-base">
+                  White-Glove Service
+                </h4>
+                <p class="text-xs text-on-surface-variant">
+                  Dedicated advisors from search to handover.
+                </p>
+              </div>
+              <div>
+                <span
+                  class="material-symbols-outlined text-2xl text-tertiary mb-2"
+                  >lock</span
+                >
+                <h4 class="font-bold text-primary mb-0.5 text-base">
+                  Secure Escrow
+                </h4>
+                <p class="text-xs text-on-surface-variant">
+                  Bank-backed payment protection.
+                </p>
+              </div>
+              <div>
+                <span
+                  class="material-symbols-outlined text-2xl text-tertiary mb-2"
+                  >auto_awesome</span
+                >
+                <h4 class="font-bold text-primary mb-0.5 text-base">
+                  Off-market Access
+                </h4>
+                <p class="text-xs text-on-surface-variant">
+                  Unlisted trophy assets.
+                </p>
+              </div>
             </div>
-            <!-- Right: Rent a Home -->
-            <div class="split-card rounded-3xl overflow-hidden shadow-2xl group cursor-pointer relative">
-                <img src="https://images.pexels.com/photos/2587054/pexels-photo-2587054.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Modern rental apartment" class="w-full h-[420px] object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#0D316D]/80 to-transparent flex flex-col justify-end p-8">
-                    <h3 class="text-3xl font-bold text-white">Rent a Home</h3>
-                    <p class="text-white/80 mt-2">Flexible luxury rentals, from Ikoyi to Port Harcourt.</p>
-                    <button class="mt-5 bg-[#F7D951] text-[#0D316D] px-6 py-3 rounded-full font-bold w-fit hover:shadow-xl transition">Discover Rentals →</button>
+          </div>
+          <div
+            class="order-1 lg:order-2 relative rounded-xl overflow-hidden shadow-xl min-h-[420px]"
+          >
+            <img
+              class="w-full h-full object-cover absolute inset-0 grayscale-[0.2]"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCacIRNLzMfGyyPpaIu2t5qpOQXFqI_CfMGgdrq1Xwgh6XbdgLmYIGKjBLjfvfxKRE_6OfaiASKwDIIwQM86RzJ6Z257kHRaNW_D2eG1Y2QtnLJQgrD_kV2I9C0dukYg2Tu6e8gtCu8IXdKjGw-MM01FMMK2fiCxb9Wjwk4Z7mVM5mBLE77IpVEoiF3pc_IfApTgyfKIIyRoYvEJndNav7IEnKbcrbCTYvx3CL-5OktPqh6xElKPN8uzuSVWzyv-Hp_83QDn8Moex4"
+              alt="Luxury Consult"
+            />
+            <div
+              class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-5 rounded-lg shadow-lg"
+            >
+              <p class="font-headline italic text-primary text-sm mb-2">
+                "Flawless curation. Resident turned my real estate vision into a
+                tangible, appreciating asset."
+              </p>
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs"
+                >
+                  SO
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. FEATURED PROPERTIES (Luxury Grid) -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="flex justify-between items-end mb-12">
                 <div>
-                    <h2 class="text-4xl font-bold text-[#0D316D]">Curated for you</h2>
-                    <p class="text-gray-500 mt-2">Exceptional properties, handpicked.</p>
+                  <h5 class="font-bold text-primary text-sm">Segun Olusegun</h5>
+                  <p class="text-[11px] text-on-surface-variant">
+                    Founder, Olusegun Holdings
+                  </p>
                 </div>
-                <a href="#" class="text-[#F7D951] font-semibold border-b border-[#F7D951]">View all →</a>
+              </div>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg property-card">
-                    <div class="img-zoom h-64"><img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-full h-full object-cover" alt="Luxury property"></div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start"><span class="text-2xl font-bold text-[#0D316D]">₦120,000,000</span><span class="bg-gold-bg-light text-[#F7D951] text-sm px-3 py-1 rounded-full">For Sale</span></div>
-                        <p class="text-gray-700 mt-2 font-medium">📍 Lekki Phase 1, Lagos</p>
-                        <div class="flex gap-4 mt-3 text-gray-500 text-sm"><span><i class="fas fa-bed"></i> 4 Beds</span><span><i class="fas fa-bath"></i> 4 Baths</span><span><i class="fas fa-ruler-combined"></i> 350 sqm</span></div>
-                        <button class="mt-5 w-full border border-[#0D316D] text-[#0D316D] py-2 rounded-full font-semibold hover:bg-[#0D316D] hover:text-white transition">View Details</button>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg property-card">
-                    <div class="img-zoom h-64"><img src="https://images.pexels.com/photos/280221/pexels-photo-280221.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-full h-full object-cover" alt="Penthouse"></div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start"><span class="text-2xl font-bold text-[#0D316D]">₦250,000,000</span><span class="bg-gold-bg-light text-[#F7D951] text-sm px-3 py-1 rounded-full">For Sale</span></div>
-                        <p class="text-gray-700 mt-2 font-medium">📍 Victoria Island, Lagos</p>
-                        <div class="flex gap-4 mt-3 text-gray-500 text-sm"><span><i class="fas fa-bed"></i> 5 Beds</span><span><i class="fas fa-bath"></i> 6 Baths</span><span><i class="fas fa-ruler-combined"></i> 520 sqm</span></div>
-                        <button class="mt-5 w-full border border-[#0D316D] text-[#0D316D] py-2 rounded-full font-semibold hover:bg-[#0D316D] hover:text-white transition">View Details</button>
-                    </div>
-                </div>
-                <!-- Card 3 Luxury rental -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg property-card">
-                    <div class="img-zoom h-64"><img src="https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-full h-full object-cover" alt="Apartment"></div>
-                    <div class="p-5">
-                        <div class="flex justify-between items-start"><span class="text-2xl font-bold text-[#0D316D]">₦8,500,000/year</span><span class="bg-gold-bg-light text-[#F7D951] text-sm px-3 py-1 rounded-full">For Rent</span></div>
-                        <p class="text-gray-700 mt-2 font-medium">📍 Abuja, Wuse 2</p>
-                        <div class="flex gap-4 mt-3 text-gray-500 text-sm"><span><i class="fas fa-bed"></i> 3 Beds</span><span><i class="fas fa-bath"></i> 3 Baths</span><span><i class="fas fa-ruler-combined"></i> 210 sqm</span></div>
-                        <button class="mt-5 w-full border border-[#0D316D] text-[#0D316D] py-2 rounded-full font-semibold hover:bg-[#0D316D] hover:text-white transition">View Details</button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- 4. EXPLORE BY LOCATION (Nigerian Focus) -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="text-center mb-14">
-                <h2 class="text-4xl font-bold text-[#0D316D]">Discover Premium Neighbourhoods</h2>
-                <p class="text-gray-500 mt-2">Iconic Nigerian addresses</p>
+      <!-- ========== STATS SECTION ========= -->
+      <div class="bg-primary py-14 lg:py-20">
+        <div
+          class="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+        >
+          <div>
+            <div
+              class="text-3xl lg:text-4xl font-headline font-black text-white"
+            >
+              1,000+
             </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="group relative rounded-2xl overflow-hidden shadow-xl h-64"><img src="https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-black/30 flex items-end p-5"><h3 class="text-white text-2xl font-bold">Lekki</h3></div></div>
-                <div class="group relative rounded-2xl overflow-hidden shadow-xl h-64"><img src="https://images.pexels.com/photos/280193/pexels-photo-280193.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-black/30 flex items-end p-5"><h3 class="text-white text-2xl font-bold">Victoria Island</h3></div></div>
-                <div class="group relative rounded-2xl overflow-hidden shadow-xl h-64"><img src="https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-black/30 flex items-end p-5"><h3 class="text-white text-2xl font-bold">Abuja</h3></div></div>
-                <div class="group relative rounded-2xl overflow-hidden shadow-xl h-64"><img src="https://images.pexels.com/photos/1268855/pexels-photo-1268855.jpeg?auto=compress&cs=tinysrgb&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-black/30 flex items-end p-5"><h3 class="text-white text-2xl font-bold">Port Harcourt</h3></div></div>
+            <div
+              class="text-primary-fixed text-[11px] font-semibold tracking-wider mt-1"
+            >
+              PREMIUM HOMES
             </div>
-        </div>
-    </section>
-
-    <!-- 5. WHY RESIDENT (Trust + Premium) -->
-    <section class="py-20 bg-[#0D316D] text-white">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold">Why Resident stands apart</h2>
-            <div class="w-20 h-1 gold-bg mx-auto mt-4 mb-16"></div>
-            <div class="grid md:grid-cols-4 gap-8">
-                <div class="flex flex-col items-center"><i class="fas fa-shield-alt text-5xl gold-accent float-icon"></i><h3 class="text-xl font-bold mt-4">Verified Listings Only</h3><p class="text-white/70 text-sm">Every property authenticated.</p></div>
-                <div class="flex flex-col items-center"><i class="fas fa-handshake text-5xl gold-accent float-icon"></i><h3 class="text-xl font-bold mt-4">Trusted Local Agents</h3><p class="text-white/70 text-sm">Top-tier professionals.</p></div>
-                <div class="flex flex-col items-center"><i class="fas fa-chart-line text-5xl gold-accent float-icon"></i><h3 class="text-xl font-bold mt-4">Seamless Transactions</h3><p class="text-white/70 text-sm">Legal & financial clarity.</p></div>
-                <div class="flex flex-col items-center"><i class="fas fa-gem text-5xl gold-accent float-icon"></i><h3 class="text-xl font-bold mt-4">Premium Selection</h3><p class="text-white/70 text-sm">Only the finest homes.</p></div>
+          </div>
+          <div>
+            <div
+              class="text-3xl lg:text-4xl font-headline font-black text-white"
+            >
+              500+
             </div>
-        </div>
-    </section>
-
-    <!-- 6. SOCIAL PROOF + STATS (animated counters) -->
-    <section class="py-16 border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-            <div><div class="stat-number counter" data-target="1200">0</div><p class="text-gray-500 text-lg mt-2">+ Homes Listed</p></div>
-            <div><div class="stat-number counter" data-target="580">0</div><p class="text-gray-500 text-lg mt-2">Happy Clients</p></div>
-            <div><div class="stat-number counter" data-target="12">0</div><p class="text-gray-500 text-lg mt-2">Cities Covered</p></div>
-        </div>
-    </section>
-
-    <!-- 7. TESTIMONIALS (glassmorphism) -->
-    <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center text-[#0D316D]">Kind words, elevated living</h2>
-            <div class="grid md:grid-cols-2 gap-8 mt-14">
-                <div class="glass-card p-8 rounded-2xl shadow-lg"><i class="fas fa-quote-left text-3xl text-[#F7D951] opacity-50"></i><p class="mt-4 text-gray-700 italic">Resident made buying my Lekki penthouse effortless. The team is world-class.</p><div class="mt-6 flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#0D316D] flex items-center justify-center text-white font-bold">AA</div><div><h4 class="font-bold">Adaobi O.</h4><p class="text-sm text-gray-500">Homeowner, Lagos</p></div></div></div>
-                <div class="glass-card p-8 rounded-2xl shadow-lg"><i class="fas fa-quote-left text-3xl text-[#F7D951] opacity-50"></i><p class="mt-4 text-gray-700 italic">I found a premium rental in Abuja within days. Trustworthy and fast.</p><div class="mt-6 flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#0D316D] flex items-center justify-center text-white font-bold">TC</div><div><h4 class="font-bold">Tunde C.</h4><p class="text-sm text-gray-500">Renter, Abuja</p></div></div></div>
+            <div
+              class="text-primary-fixed text-[11px] font-semibold tracking-wider mt-1"
+            >
+              HAPPY CLIENTS
             </div>
-        </div>
-    </section>
-
-    <!-- 8. HOW IT WORKS (3-step) -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold text-[#0D316D]">Simple, transparent, luxurious</h2>
-            <div class="grid md:grid-cols-3 gap-12 mt-16">
-                <div><div class="w-20 h-20 rounded-full gold-bg flex items-center justify-center text-2xl font-black text-[#0D316D] mx-auto">1</div><h3 class="text-xl font-bold mt-5">Search properties</h3><p class="text-gray-500">Browse premium listings across Nigeria.</p></div>
-                <div><div class="w-20 h-20 rounded-full gold-bg flex items-center justify-center text-2xl font-black text-[#0D316D] mx-auto">2</div><h3 class="text-xl font-bold mt-5">Connect with agent</h3><p class="text-gray-500">Get personalized walkthroughs.</p></div>
-                <div><div class="w-20 h-20 rounded-full gold-bg flex items-center justify-center text-2xl font-black text-[#0D316D] mx-auto">3</div><h3 class="text-xl font-bold mt-5">Secure your home</h3><p class="text-gray-500">Legal & seamless closing process.</p></div>
+          </div>
+          <div>
+            <div
+              class="text-3xl lg:text-4xl font-headline font-black text-white"
+            >
+              ₦450B
             </div>
-        </div>
-    </section>
-
-    <!-- 9. FINAL CTA (Conversion) -->
-    <section class="py-24 bg-[#0D316D] relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-96 h-96 bg-[#F7D951] opacity-5 rounded-full blur-3xl"></div>
-        <div class="max-w-4xl mx-auto text-center px-6 relative z-2">
-            <h2 class="text-5xl md:text-6xl font-bold text-white">Your Next Home is <span class="text-[#F7D951]">One Click Away</span></h2>
-            <div class="flex flex-wrap justify-center gap-5 mt-10">
-                <a href="#" class="btn-gold px-8 py-4 rounded-full text-lg font-bold shadow-xl">Browse Properties</a>
-                <a href="#" class="bg-transparent border border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white hover:text-[#0D316D] transition">Contact Us</a>
+            <div
+              class="text-primary-fixed text-[11px] font-semibold tracking-wider mt-1"
+            >
+              ASSETS MANAGED
             </div>
+          </div>
+          <div>
+            <div
+              class="text-3xl lg:text-4xl font-headline font-black text-white"
+            >
+              12+
+            </div>
+            <div
+              class="text-primary-fixed text-[11px] font-semibold tracking-wider mt-1"
+            >
+              CITY CENTERS
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- 10. FOOTER -->
-    <footer class="bg-[#0A2540] text-gray-300 py-16 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-            <div><div class="text-2xl font-bold text-white">RESIDENT<span class="text-[#F7D951]">.</span></div><p class="mt-3 text-sm">Redefining luxury real estate in Nigeria with transparency and elegance.</p></div>
-            <div><h4 class="text-white font-semibold mb-4">Quick Links</h4><ul class="space-y-2"><li><a href="#" class="hover:text-[#F7D951]">Buy</a></li><li><a href="#" class="hover:text-[#F7D951]">Rent</a></li><li><a href="#" class="hover:text-[#F7D951]">Agents</a></li></ul></div>
-            <div><h4 class="text-white font-semibold mb-4">Contact</h4><p><i class="fas fa-phone-alt mr-2 gold-accent"></i> +234 812 345 6789</p><p class="mt-2"><i class="fas fa-envelope mr-2 gold-accent"></i> hello@resident.ng</p><div class="flex space-x-4 mt-4"><i class="fab fa-instagram text-xl hover:text-[#F7D951] cursor-pointer"></i><i class="fab fa-twitter text-xl hover:text-[#F7D951] cursor-pointer"></i><i class="fab fa-linkedin text-xl hover:text-[#F7D951] cursor-pointer"></i></div></div>
-            <div><h4 class="text-white font-semibold mb-4">Newsletter</h4><div class="flex"><input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-md bg-white/10 border border-white/20 focus:outline-none"><button class="bg-[#F7D951] text-[#0D316D] px-4 rounded-r-md font-bold">→</button></div></div>
+      <!-- ========== JOURNEY SECTION ========= -->
+      <section
+        id="journey"
+        class="py-20 lg:py-28 px-5 md:px-8 bg-surface-container-low"
+      >
+        <div class="max-w-7xl mx-auto text-center mb-12">
+          <h2
+            class="text-3xl md:text-4xl font-headline font-extrabold text-primary mb-2"
+          >
+            The Resident Path
+          </h2>
+          <p class="text-on-surface-variant text-sm">
+            Effortless, elevated, secure — from discovery to closing.
+          </p>
         </div>
-        <div class="text-center text-gray-500 text-sm pt-12 border-t border-white/10 mt-10">© 2025 Resident. Luxury Nigerian real estate.</div>
+        <div class="grid md:grid-cols-3 gap-10 lg:gap-12">
+          <div class="text-center group">
+            <div
+              class="w-16 h-16 mx-auto rounded-full bg-white shadow-md flex items-center justify-center mb-4 group-hover:bg-primary-container transition-all duration-300"
+            >
+              <span class="material-symbols-outlined text-2xl text-primary"
+                >search_insights</span
+              >
+            </div>
+            <h3 class="text-lg font-bold text-primary mb-1">
+              1. Curated Discovery
+            </h3>
+            <p class="text-on-surface-variant text-sm">
+              AI-matched recommendations & private previews.
+            </p>
+          </div>
+          <div class="text-center group">
+            <div
+              class="w-16 h-16 mx-auto rounded-full bg-white shadow-md flex items-center justify-center mb-4 group-hover:bg-primary-container transition-all"
+            >
+              <span class="material-symbols-outlined text-2xl text-primary"
+                >handshake</span
+              >
+            </div>
+            <h3 class="text-lg font-bold text-primary mb-1">
+              2. Private Concierge
+            </h3>
+            <p class="text-on-surface-variant text-sm">
+              Tailored viewings, negotiation, and legal support.
+            </p>
+          </div>
+          <div class="text-center group">
+            <div
+              class="w-16 h-16 mx-auto rounded-full bg-white shadow-md flex items-center justify-center mb-4 group-hover:bg-primary-container transition-all"
+            >
+              <span class="material-symbols-outlined text-2xl text-primary"
+                >encrypted</span
+              >
+            </div>
+            <h3 class="text-lg font-bold text-primary mb-1">
+              3. Seamless Transfer
+            </h3>
+            <p class="text-on-surface-variant text-sm">
+              Digital closing, title insurance & key handover.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FINAL CTA SECTION ========= -->
+      <section
+        id="connect"
+        class="py-20 lg:py-28 px-5 md:px-8 relative overflow-hidden"
+      >
+        <div class="absolute inset-0">
+          <img
+            class="w-full h-full object-cover brightness-50"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVdyTehyTsonbnBpEDpnQg_xYbXvRaQf26OdNLtkdZnoWqWE-Su_pdJUHLIp4HLhL1ydvs5Hy7eOQdbkyxh_LQH4YZ-5LSwNmwjX5UBbOHQk4xfAcNJOqg9wkhSYF-QRxlFoFpVeLa1Mqrs8p21TnEKnii8YtMV5A3_tFzpq6aNehTA2hkHJDrLT_sDnMDw6kzNPHkFmBxGAptMwpugopcV-7Y-D8qO-L1dv0xLw-SyaPkx_cSpPzf9qUUaBZ9v_swPmGrsdI3T9w"
+            alt="Luxury Estate"
+          />
+        </div>
+        <div class="relative z-10 max-w-3xl mx-auto text-center">
+          <span
+            class="inline-block bg-white/10 backdrop-blur px-3 py-0.5 rounded-full text-white text-xs mb-4"
+            >Begin your chapter</span
+          >
+          <h2
+            class="text-3xl md:text-5xl font-headline font-extrabold text-white mb-4 leading-tight"
+          >
+            Reserve Your Legacy
+          </h2>
+          <p class="text-white/80 text-sm mb-8 max-w-xl mx-auto">
+            Speak with a senior estate curator or schedule a private tour of our
+            signature portfolio.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              class="bg-tertiary-container text-primary px-6 py-3 rounded-lg font-bold hover:bg-tertiary-fixed transition shadow-md text-sm"
+            >
+              Start Your Search</button
+            ><button
+              class="bg-white/10 backdrop-blur border border-white/40 text-white px-6 py-3 rounded-lg font-bold hover:bg-white hover:text-primary transition text-sm"
+            >
+              Speak to an Agent
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========== FOOTER ========= -->
+    <footer
+      class="bg-white border-t border-surface-container pt-12 pb-6 px-5 md:px-8"
+    >
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
+      >
+        <div>
+          <img
+            src="images/logo.png"
+            alt="Resident"
+            class="h-8 mb-3"
+            onerror="
+              this.style.display = 'none';
+              this.parentElement.innerHTML +=
+                '<span class=\'text-xl font-black text-primary\'>RESIDENT</span>';
+            "
+          />
+          <p class="text-xs text-on-surface-variant max-w-xs">
+            Redefining luxury real estate through precision, trust and an
+            uncompromising standard.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Discover</h4>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a
+                href="#"
+                class="text-on-surface-variant hover:text-primary transition"
+                >Buy Properties</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-on-surface-variant hover:text-primary transition"
+                >Rent Properties</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-on-surface-variant hover:text-primary transition"
+                >Off-market Listings</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Company</h4>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a
+                href="#"
+                class="text-on-surface-variant hover:text-primary transition"
+                >About Resident</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-on-surface-variant hover:text-primary transition"
+                >Concierge Team</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-on-surface-variant hover:text-primary transition"
+                >Careers</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Insights</h4>
+          <p class="text-xs text-on-surface-variant mb-2">
+            Access exclusive off-market opportunities
+          </p>
+          <div class="flex">
+            <input
+              type="email"
+              placeholder="Email address"
+              class="bg-surface-container-high border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-primary"
+            /><button
+              class="bg-primary text-white px-4 rounded-r-lg text-xs font-semibold"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="max-w-7xl mx-auto pt-8 mt-6 border-t border-surface-container flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-on-surface-variant"
+      >
+        <p>© 2025 Resident Luxury — All rights reserved.</p>
+        <div class="flex gap-5">
+          <a href="#" class="hover:text-primary transition">Privacy Policy</a
+          ><a href="#" class="hover:text-primary transition"
+            >Terms of Service</a
+          >
+        </div>
+      </div>
     </footer>
 
     <script>
-        // GSAP Scroll Animations + counter
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // fade-up for hero, sections
-        gsap.from("h1", { opacity: 0, y: 60, duration: 1, ease: "power3.out" });
-        gsap.from("p", { opacity: 0, y: 30, duration: 1, delay: 0.2 });
-        gsap.from(".flex-wrap", { opacity: 0, y: 40, duration: 0.9, delay: 0.4 });
-        gsap.from(".max-w-4xl", { opacity: 0, scale: 0.96, duration: 1, delay: 0.6 });
-        
-        // sticky nav
-        const nav = document.getElementById('mainNav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 30) {
-                nav.classList.add('nav-sticky');
-                nav.classList.remove('nav-transparent');
-            } else {
-                nav.classList.add('nav-transparent');
-                nav.classList.remove('nav-sticky');
+      (function () {
+        const drawer = document.getElementById("mobileDrawer");
+        const openBtn = document.getElementById("mobileMenuBtn");
+        const closeBtn = document.getElementById("closeDrawerBtn");
+        const mobileLinks = document.querySelectorAll(".mobile-nav-link");
+        function openDrawer() {
+          if (drawer) {
+            drawer.classList.remove("hidden");
+            setTimeout(() => {
+              drawer.style.opacity = "1";
+              drawer.style.visibility = "visible";
+              drawer
+                .querySelector(".absolute")
+                ?.classList.remove("translate-x-full");
+              drawer.querySelector(".absolute")?.classList.add("translate-x-0");
+            }, 10);
+          }
+        }
+        function closeDrawer() {
+          if (drawer) {
+            drawer
+              .querySelector(".absolute")
+              ?.classList.remove("translate-x-0");
+            drawer
+              .querySelector(".absolute")
+              ?.classList.add("translate-x-full");
+            drawer.style.opacity = "0";
+            drawer.style.visibility = "hidden";
+            setTimeout(() => drawer.classList.add("hidden"), 300);
+          }
+        }
+        if (openBtn) openBtn.addEventListener("click", openDrawer);
+        if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
+        mobileLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("href");
+            if (targetId && targetId !== "#") {
+              const target = document.querySelector(targetId);
+              if (target) {
+                closeDrawer();
+                setTimeout(
+                  () =>
+                    target.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    }),
+                  150,
+                );
+              }
+            } else closeDrawer();
+          });
+        });
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+            if (href === "#" || !href) return;
+            if (href.startsWith("#") && document.querySelector(href)) {
+              e.preventDefault();
+              document
+                .querySelector(href)
+                .scrollIntoView({ behavior: "smooth" });
             }
+          });
         });
-        
-        // animate counters
-        const counters = document.querySelectorAll('.counter');
-        const startCounters = (entry) => {
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-target'));
-                let current = 0;
-                const increment = target / 50;
-                const updateCounter = () => {
-                    if(current < target) {
-                        current += increment;
-                        counter.innerText = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-                updateCounter();
-            });
-        };
-        // trigger on scroll
-        const statsSection = document.querySelector('.grid .stat-number')?.parentElement?.parentElement;
-        if(statsSection) {
-            ScrollTrigger.create({
-                trigger: statsSection,
-                start: "top 80%",
-                once: true,
-                onEnter: startCounters
-            });
-        } else { startCounters(); }
-        
-        // add parallax to hero?
-        gsap.to(".hero-bg", { scrollTrigger: { scrub: 1 }, y: 100, ease: "none" });
-        
-        // smooth split hover micro-interactions, already CSS
-        // additional fade on sections
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => {
-            gsap.from(section, {
-                scrollTrigger: { trigger: section, start: "top 85%", toggleActions: "play none none reverse" },
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-                ease: "power2.out"
-            });
-        });
+      })();
     </script>
-</body>
+  </body>
 </html>
