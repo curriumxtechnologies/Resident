@@ -123,6 +123,25 @@
           rgba(0, 0, 0, 0.1) 100%
         );
       }
+      /* Tag badge styles: Only Sold, New Listing, Price Slash */
+      .badge-sold {
+        background-color: #2c2c2e;
+        color: white;
+        font-weight: 600;
+        backdrop-filter: blur(4px);
+      }
+      .badge-new {
+        background-color: #c5aa23;
+        color: #001c4a;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+      }
+      .badge-price-slash {
+        background-color: #e31b23;
+        color: white;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
@@ -231,7 +250,7 @@
         </div>
       </div>
 
-      <!-- Properties Grid: UNIFIED PREMIUM CARD DESIGN (All cards now match the style of Property 1) -->
+      <!-- Properties Grid: UNIFIED PREMIUM CARD DESIGN - Only 3 random properties have tags: Sold, New Listing, Price Slash -->
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -249,7 +268,7 @@
             id="propertiesContainer"
             class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
           >
-            <!-- PROPERTY 1 - The Pearl Haven (reference style) -->
+            <!-- PROPERTY 1 - The Pearl Haven (Lagos) - TAG: New Listing -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
@@ -260,9 +279,9 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="The Pearl Haven"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
                 <span
-                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
                   >New Listing</span
                 >
               </div>
@@ -295,7 +314,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 2 - Serene Gardens Maitama (Unified with hero overlay) -->
+            <!-- PROPERTY 2 - Serene Gardens Maitama (Abuja) - NO TAG -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
@@ -306,12 +325,7 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="Serene Gardens Villa"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
-                <span
-                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
-                  >Hot Offer</span
-                >
-              </div>
+              <!-- No tag -->
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
@@ -343,7 +357,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 3 - Golden Crest Manor -->
+            <!-- PROPERTY 3 - Golden Crest Manor (Port Harcourt) - TAG: Sold -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -354,10 +368,10 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="Golden Crest Manor"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
                 <span
-                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
-                  >Exclusive</span
+                  class="badge-sold text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Sold</span
                 >
               </div>
               <div
@@ -391,7 +405,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 4 - Ikoyi Oasis -->
+            <!-- PROPERTY 4 - Ikoyi Oasis (Lagos) - NO TAG -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
@@ -402,12 +416,7 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="Ikoyi Oasis"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
-                <span
-                  class="bg-tertiary-container text-primary text-[11px] px-3 py-1 rounded-full font-bold"
-                  >New Listing</span
-                >
-              </div>
+              <!-- No tag -->
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
@@ -437,7 +446,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 5 - Gwarimpa Signature -->
+            <!-- PROPERTY 5 - Gwarimpa Signature (Abuja) - TAG: Price Slash -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
@@ -448,10 +457,10 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="Gwarimpa Signature"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
                 <span
-                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
-                  >Premium</span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Price Slash</span
                 >
               </div>
               <div
@@ -485,7 +494,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 6 - Trans Amadi Luxe (with price slash visual but integrated in hero style) -->
+            <!-- PROPERTY 6 - Trans Amadi Luxe (Port Harcourt) - NO TAG (previously had Price Slash, now clean) -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -496,12 +505,7 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="Trans Amadi Luxe"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
-                <span
-                  class="bg-tertiary-container text-primary text-[11px] px-3 py-1 rounded-full font-bold"
-                  >Price Slash</span
-                >
-              </div>
+              <!-- No tag displayed (clean) -->
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
