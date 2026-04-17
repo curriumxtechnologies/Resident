@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Resident | Property Details - Nigeria's Finest Real Estate</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+
+    <!-- PNG Favicons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+
+    <!-- Apple Touch Icon (iPhone/iPad) -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+
+    <!-- Android / Chrome Icons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="images/site.webmanifest" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .font-headline {
+        font-family: "Manrope", system-ui, sans-serif;
+      }
+      .lucide {
+        width: 1.25rem;
+        height: 1.25rem;
+        stroke-width: 1.75;
+      }
+      .bg-surface {
+        background-color: #f9f9fc;
+      }
+      .text-primary {
+        color: #001c4a;
+      }
+      .bg-tertiary-container {
+        background-color: #c5aa23;
+      }
+      .text-tertiary {
+        color: #6e5d00;
+      }
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+          transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      }
+      .fade-up.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .gallery-thumb {
+        transition: all 0.2s ease;
+      }
+      .gallery-thumb:hover {
+        opacity: 0.8;
+        transform: scale(1.02);
+      }
+      .active-thumb {
+        border: 2px solid #c5aa23;
+        opacity: 1;
+      }
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        cursor: pointer;
+      }
+      .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+      }
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-[#1a1c1e] antialiased">
+    <!-- Navigation -->
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a
+            href="#"
+            id="backToHomeLink"
+            class="flex-shrink-0 flex items-center gap-2"
+          >
+            <i data-lucide="arrow-left" class="w-5 h-5 text-primary"></i>
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML +=
+                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>RESIDENT</span>';
+              "
+            />
+          </a>
+          <div>
+            <button
+              id="scheduleTourBtn"
+              class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
+            >
+              Schedule Tour
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="detailsMain" class="pb-16">
+      <!-- Property details will be injected here -->
+      <div class="max-w-7xl mx-auto px-5 md:px-8 py-8">
+        <div id="propertyContent" class="fade-up revealed">
+          <!-- Dynamic content loads here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal for fullscreen gallery -->
+    <div id="imageModal" class="modal">
+      <span class="close-modal">&times;</span>
+      <img
+        class="modal-img"
+        id="modalImage"
+        src=""
+        alt="Full size property image"
+      />
+    </div>
+
+    <script>
+      // Full property database (6 properties matching the for-sale page)
+      const propertiesDB = {
+        "The Pearl Haven": {
+          id: 1,
+          name: "The Pearl Haven",
+          location: "Lekki Phase 1, Lagos",
+          state: "lagos",
+          lga: "Lekki Phase 1",
+          price: "₦78,500,000",
+          priceValue: 78500000,
+          beds: 4,
+          baths: 4,
+          sqm: 320,
+          description:
+            "A stunning architectural masterpiece in the heart of Lekki Phase 1. The Pearl Haven offers unparalleled luxury with imported marble finishes, smart home automation, a private swimming pool, and lush tropical landscaping. This estate is perfect for discerning buyers seeking exclusivity and comfort.",
+          features: [
+            "Smart home system",
+            "Private swimming pool",
+            "Home theater",
+            "Fully equipped gym",
+            "24/7 security",
+            "Backup generator",
+            "Central AC",
+            "Staff quarters",
+          ],
+          agent: {
+            name: "Oluwaseun Adebayo",
+            phone: "+234 802 345 6789",
+            email: "seun.adebayo@resident.ng",
+            photo: "https://randomuser.me/api/portraits/men/32.jpg",
+          },
+          images: [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&h=800&fit=crop",
+          ],
+        },
+        "Serene Gardens Villa": {
+          id: 2,
+          name: "Serene Gardens Villa",
+          location: "Maitama, Abuja",
+          state: "abuja",
+          lga: "Maitama",
+          price: "₦92,000,000",
+          priceValue: 92000000,
+          beds: 5,
+          baths: 5,
+          sqm: 410,
+          description:
+            "Experience refined living in this exquisite villa nestled in Abuja's most prestigious district. Serene Gardens Villa features expansive living areas, a state-of-the-art kitchen, and breathtaking views of the city skyline.",
+          features: [
+            "Infinity pool",
+            "Landscaped gardens",
+            "Wine cellar",
+            "Smart lighting",
+            "Solar panels",
+            "Triple garage",
+            "Private gym",
+            "CCTV surveillance",
+          ],
+          agent: {
+            name: "Ngozi Okonkwo",
+            phone: "+234 803 456 7890",
+            email: "ngozi.okonkwo@resident.ng",
+            photo: "https://randomuser.me/api/portraits/women/68.jpg",
+          },
+          images: [
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop",
+          ],
+        },
+        "Golden Crest Manor": {
+          id: 3,
+          name: "Golden Crest Manor",
+          location: "Old GRA, Port Harcourt",
+          state: "rivers",
+          lga: "Old GRA",
+          price: "₦65,500,000",
+          priceValue: 65500000,
+          beds: 4,
+          baths: 3.5,
+          sqm: 295,
+          description:
+            "A timeless residence in Port Harcourt's most coveted neighborhood. Golden Crest Manor combines classic elegance with modern amenities, offering a tranquil escape from the bustling city.",
+          features: [
+            "Jacuzzi",
+            "Outdoor BBQ area",
+            "Media room",
+            "Gated community",
+            "Backup inverter",
+            "Water treatment system",
+            "Spacious balcony",
+          ],
+          agent: {
+            name: "Chidi Eze",
+            phone: "+234 805 678 9012",
+            email: "chidi.eze@resident.ng",
+            photo: "https://randomuser.me/api/portraits/men/45.jpg",
+          },
+          images: [
+            "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=800&fit=crop",
+          ],
+        },
+        "Ikoyi Oasis": {
+          id: 4,
+          name: "Ikoyi Oasis",
+          location: "Ikoyi, Lagos",
+          state: "lagos",
+          lga: "Ikoyi",
+          price: "₦98,750,000",
+          priceValue: 98750000,
+          beds: 3,
+          baths: 3,
+          sqm: 250,
+          description:
+            "Luxury meets convenience in this contemporary Ikoyi masterpiece. Ikoyi Oasis offers panoramic views, premium finishes, and access to Lagos's finest amenities.",
+          features: [
+            "Rooftop terrace",
+            "Fitness center",
+            "Concierge service",
+            "Swimming pool",
+            "Parking for 2 cars",
+            "High-speed elevator",
+          ],
+          agent: {
+            name: "Tolu Adeleke",
+            phone: "+234 806 789 0123",
+            email: "tolu.adeleke@resident.ng",
+            photo: "https://randomuser.me/api/portraits/women/23.jpg",
+          },
+          images: [
+            "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop",
+          ],
+        },
+        "Gwarimpa Signature": {
+          id: 5,
+          name: "Gwarimpa Signature",
+          location: "Gwarimpa, Abuja",
+          state: "abuja",
+          lga: "Gwarimpa",
+          price: "₦84,200,000",
+          priceValue: 84200000,
+          beds: 5,
+          baths: 4,
+          sqm: 380,
+          description:
+            "A grand family home in Abuja's largest district. Gwarimpa Signature boasts spacious interiors, a private garden, and easy access to schools and shopping centers.",
+          features: [
+            "Children's play area",
+            "Large garden",
+            "Study room",
+            "Dining pavilion",
+            "Solar system",
+            "Ample parking",
+          ],
+          agent: {
+            name: "Fatima Bello",
+            phone: "+234 807 890 1234",
+            email: "fatima.bello@resident.ng",
+            photo: "https://randomuser.me/api/portraits/women/89.jpg",
+          },
+          images: [
+            "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1200&h=800&fit=crop",
+          ],
+        },
+        "Trans Amadi Luxe": {
+          id: 6,
+          name: "Trans Amadi Luxe",
+          location: "Trans Amadi, Port Harcourt",
+          state: "rivers",
+          lga: "Trans Amadi",
+          price: "₦45,000,000",
+          priceValue: 45000000,
+          beds: 4,
+          baths: 3,
+          sqm: 310,
+          description:
+            "Exceptional value meets luxury living. Recently price-slashed, Trans Amadi Luxe features modern design, quality finishes, and proximity to industrial hubs.",
+          features: [
+            "Modern kitchen",
+            "Living/dining combo",
+            "Security system",
+            "Water borehole",
+            "Landscaped compound",
+            "Staff quarters",
+          ],
+          agent: {
+            name: "Kelechi Okafor",
+            phone: "+234 808 901 2345",
+            email: "kelechi.okafor@resident.ng",
+            photo: "https://randomuser.me/api/portraits/men/67.jpg",
+          },
+          images: [
+            "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=800&fit=crop",
+            "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1200&h=800&fit=crop",
+          ],
+        },
+      };
+
+      // Helper to get property from URL param or from sessionStorage (for cross-page navigation)
+      function getSelectedProperty() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const propertyName = urlParams.get("property");
+        if (propertyName && propertiesDB[decodeURIComponent(propertyName)]) {
+          return propertiesDB[decodeURIComponent(propertyName)];
+        }
+        // Fallback: check sessionStorage (set when clicking from listings page)
+        const stored = sessionStorage.getItem("selectedProperty");
+        if (stored && propertiesDB[stored]) {
+          return propertiesDB[stored];
+        }
+        // Default to first property if none selected
+        return propertiesDB["The Pearl Haven"];
+      }
+
+      // Render property details with gallery and contact form
+      function renderPropertyDetails(property) {
+        const container = document.getElementById("propertyContent");
+        if (!container) return;
+
+        const galleryHtml = `
+          <div class="mb-8 fade-up">
+            <!-- Main Image -->
+            <div class="rounded-2xl overflow-hidden shadow-lg mb-4">
+              <img id="mainGalleryImg" src="${property.images[0]}" alt="${property.name}" class="w-full h-80 md:h-[500px] object-cover cursor-pointer" onclick="openModal('${property.images[0]}')">
+            </div>
+            <!-- Thumbnails row -->
+            <div class="flex gap-3 overflow-x-auto pb-2">
+              ${property.images
+                .map(
+                  (img, idx) => `
+                <img src="${img}" alt="Thumb ${idx + 1}" class="gallery-thumb w-20 h-20 md:w-24 md:h-24 rounded-lg object-cover cursor-pointer border-2 ${idx === 0 ? "active-thumb" : "border-transparent"}" onclick="changeMainImage('${img}', this)">
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        `;
+
+        const featuresList = property.features
+          .map(
+            (f) =>
+              `<li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-tertiary"></i><span class="text-sm">${f}</span></li>`,
+          )
+          .join("");
+
+        const detailsHtml = `
+          <div class="grid md:grid-cols-3 gap-8 fade-up">
+            <div class="md:col-span-2 space-y-6">
+              <div>
+                <div class="flex items-center gap-2 text-tertiary text-sm mb-1">
+                  <i data-lucide="map-pin" class="w-4 h-4"></i> ${property.location}
+                </div>
+                <h1 class="text-3xl md:text-4xl font-headline font-extrabold text-primary">${property.name}</h1>
+                <div class="text-3xl font-headline font-bold text-primary mt-2">${property.price}</div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4 py-4 border-y border-[#eeeef0]">
+                <div class="flex items-center gap-2"><i data-lucide="bed" class="w-5 h-5 text-tertiary"></i><span><strong>${property.beds}</strong> Beds</span></div>
+                <div class="flex items-center gap-2"><i data-lucide="bath" class="w-5 h-5 text-tertiary"></i><span><strong>${property.baths}</strong> Baths</span></div>
+                <div class="flex items-center gap-2"><i data-lucide="square" class="w-5 h-5 text-tertiary"></i><span><strong>${property.sqm}</strong> m²</span></div>
+              </div>
+
+              <div>
+                <h2 class="text-xl font-headline font-bold text-primary mb-3">Description</h2>
+                <p class="text-[#444650] leading-relaxed">${property.description}</p>
+              </div>
+
+              <div>
+                <h2 class="text-xl font-headline font-bold text-primary mb-3">Key Features & Amenities</h2>
+                <ul class="grid grid-cols-2 gap-2">${featuresList}</ul>
+              </div>
+            </div>
+
+            <!-- Agent Contact Form Sidebar -->
+            <div class="md:col-span-1 fade-up">
+              <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24 border border-[#eeeef0]">
+                <div class="flex items-center gap-3 mb-4">
+                  <img src="${property.agent.photo}" alt="Agent" class="w-16 h-16 rounded-full object-cover border-2 border-tertiary">
+                  <div>
+                    <h3 class="font-bold text-primary">${property.agent.name}</h3>
+                    <p class="text-xs text-gray-500">Luxury Property Specialist</p>
+                  </div>
+                </div>
+                <div class="space-y-2 mb-5 text-sm">
+                  <div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-tertiary"></i> ${property.agent.phone}</div>
+                  <div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-tertiary"></i> ${property.agent.email}</div>
+                </div>
+                <h4 class="font-semibold text-primary mb-3 text-sm">Request a Viewing</h4>
+                <form id="contactAgentForm">
+                  <input type="text" placeholder="Full Name" required class="w-full mb-3 px-4 py-2 bg-[#f3f3f6] border-none rounded-xl text-sm focus:ring-1 focus:ring-tertiary">
+                  <input type="email" placeholder="Email Address" required class="w-full mb-3 px-4 py-2 bg-[#f3f3f6] border-none rounded-xl text-sm focus:ring-1 focus:ring-tertiary">
+                  <input type="tel" placeholder="Phone Number" required class="w-full mb-3 px-4 py-2 bg-[#f3f3f6] border-none rounded-xl text-sm focus:ring-1 focus:ring-tertiary">
+                  <textarea rows="3" placeholder="Message (e.g., preferred viewing date)" class="w-full mb-4 px-4 py-2 bg-[#f3f3f6] border-none rounded-xl text-sm focus:ring-1 focus:ring-tertiary"></textarea>
+                  <button type="submit" class="w-full bg-[#001c4a] text-white py-3 rounded-xl font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2">
+                    Send Inquiry <i data-lucide="send" class="w-4 h-4"></i>
+                  </button>
+                </form>
+                <p class="text-[10px] text-center text-gray-400 mt-3">We'll respond within 24 hours</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        container.innerHTML = galleryHtml + detailsHtml;
+        lucide.createIcons();
+
+        // Add form handler
+        const form = document.getElementById("contactAgentForm");
+        if (form) {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert(
+              `Thank you! Your inquiry for ${property.name} has been sent to ${property.agent.name}. We'll contact you shortly.`,
+            );
+            form.reset();
+          });
+        }
+      }
+
+      // Global functions for gallery
+      window.changeMainImage = function (imgSrc, thumbElement) {
+        const mainImg = document.getElementById("mainGalleryImg");
+        if (mainImg) {
+          mainImg.src = imgSrc;
+          // Update active thumb class
+          document.querySelectorAll(".gallery-thumb").forEach((thumb) => {
+            thumb.classList.remove("active-thumb");
+            thumb.classList.add("border-transparent");
+          });
+          thumbElement.classList.add("active-thumb");
+          thumbElement.classList.remove("border-transparent");
+        }
+      };
+
+      window.openModal = function (imgSrc) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        if (modal && modalImg) {
+          modalImg.src = imgSrc;
+          modal.classList.add("active");
+        }
+      };
+
+      // Modal close handlers
+      function closeModal() {
+        const modal = document.getElementById("imageModal");
+        if (modal) modal.classList.remove("active");
+      }
+
+      // Simulate coming from listings page via URL param
+      function init() {
+        const property = getSelectedProperty();
+        renderPropertyDetails(property);
+        document.title = `${property.name} | Resident Luxury Estate`;
+
+        // Modal events
+        const modal = document.getElementById("imageModal");
+        const closeBtn = document.querySelector(".close-modal");
+        if (closeBtn) closeBtn.onclick = closeModal;
+        if (modal)
+          modal.onclick = (e) => {
+            if (e.target === modal) closeModal();
+          };
+
+        // Back to home (listings) button
+        const backLink = document.getElementById("backToHomeLink");
+        if (backLink) {
+          backLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.location.href = "index.html";
+          });
+        }
+
+        // Schedule tour
+        const scheduleBtn = document.getElementById("scheduleTourBtn");
+        if (scheduleBtn) {
+          scheduleBtn.addEventListener("click", () => {
+            alert(
+              `Schedule a private tour of ${property.name}. A Resident agent will reach out immediately.`,
+            );
+          });
+        }
+
+        // Fade-up observer for any new elements
+        const fadeElements = document.querySelectorAll(".fade-up");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) entry.target.classList.add("revealed");
+            });
+          },
+          { threshold: 0.1 },
+        );
+        fadeElements.forEach((el) => observer.observe(el));
+      }
+
+      // Run init on load
+      window.addEventListener("DOMContentLoaded", init);
+    </script>
+
+    <!-- In case of direct navigation without property param, we already handle default -->
+    <script>
+      // Additional style for modal and thumbs
+      const style = document.createElement("style");
+      style.textContent = `
+        .gallery-thumb { transition: all 0.2s; cursor: pointer; }
+        .active-thumb { border-color: #c5aa23 !important; opacity: 1; }
+        .modal.active { animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>
