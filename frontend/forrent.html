@@ -278,12 +278,13 @@
                     ><i data-lucide="square" class="w-4 h-4"></i>350m²</span
                   >
                 </div>
-                <button
+                <a
+                  href="propertydetailsforrent.html"
                   class="rent-detail-btn w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
                 >
                   Request Rental Info
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
+                </a>
               </div>
             </div>
 
@@ -791,18 +792,6 @@
         });
       }
       populateLGA("all");
-
-      // Rental details button handler
-      document.querySelectorAll(".rent-detail-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          const card = btn.closest(".property-card");
-          const title = card.querySelector("h3")?.innerText;
-          alert(
-            `✨ Thank you! A Resident leasing specialist will contact you about "${title}" rental details.`,
-          );
-        });
-      });
 
       // Schedule Tour button
       const scheduleBtn = document.getElementById("scheduleRentTourBtn");
