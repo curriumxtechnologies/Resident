@@ -617,9 +617,14 @@
       >
         <div class="fade-up">
           <img
-            src="https://placehold.co/100x30/001c4a/white?text=RESIDENT"
+            src="images/logo.png"
             alt="Resident"
             class="h-8 mb-3"
+            onerror="
+              this.style.display = 'none';
+              this.parentElement.innerHTML +=
+                '<span class=\'text-xl font-black text-primary\'>RESIDENT</span>';
+            "
           />
           <p class="text-xs text-[#444650] max-w-xs">
             Redefining luxury real estate through precision, trust and
@@ -805,18 +810,6 @@
         });
       }
       populateLGA("all");
-
-      // Request Rental Info alerts
-      document.querySelectorAll(".property-card a").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          const card = btn.closest(".property-card");
-          const title = card?.querySelector("h3")?.innerText || "this property";
-          alert(
-            `✨ Thank you! A Resident leasing advisor will reach out about "${title}" shortly.`,
-          );
-        });
-      });
 
       // Rental Consultation CTA
       const consultBtn = document.getElementById("rentalConsultBtn");
