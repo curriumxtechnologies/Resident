@@ -84,6 +84,14 @@
       html {
         scroll-behavior: smooth;
       }
+      /* View Toggle */
+      .view-toggle button {
+        transition: all 0.25s ease;
+      }
+      .view-toggle button.active {
+        background-color: #001c4a;
+        color: white;
+      }
       /* Fade-in animation for scroll reveal */
       .fade-up {
         opacity: 0;
@@ -141,6 +149,49 @@
         color: white;
         font-weight: 700;
         backdrop-filter: blur(4px);
+      }
+      /* MOBILE SIZE + PROPORTION FIX ONLY */
+      @media (max-width: 768px) {
+        .property-card {
+          border-radius: 1rem;
+        }
+
+        /* Make cards shorter like reference */
+        .property-card img {
+          height: 260px !important;
+        }
+
+        /* Reduce overlay padding */
+        .property-card .gradient-overlay {
+          padding: 12px !important;
+        }
+
+        /* Tighten text sizes (same structure, smaller scale) */
+        .property-card h3 {
+          font-size: 0.85rem;
+        }
+
+        .property-card p {
+          font-size: 0.7rem;
+        }
+
+        /* Price slightly smaller */
+        .property-card .text-xl {
+          font-size: 0.95rem !important;
+        }
+
+        /* Icons row smaller */
+        .property-card .flex.gap-4 {
+          gap: 8px;
+          font-size: 0.65rem;
+        }
+
+        /* Button smaller but SAME position */
+        .property-card a {
+          padding: 6px 8px;
+          font-size: 0.7rem;
+          border-radius: 0.6rem;
+        }
       }
     </style>
   </head>
@@ -254,7 +305,7 @@
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
-            class="flex justify-between items-end mb-10 flex-wrap gap-3 fade-up"
+            class="flex justify-between items-center mb-10 flex-wrap gap-3 fade-up"
           >
             <div>
               <span
@@ -262,11 +313,23 @@
                 >Signature Collection</span
               >
             </div>
+
+            <!-- View Toggle -->
+            <div
+              class="view-toggle flex items-center gap-2 bg-[#f3f3f6] p-1 rounded-xl border border-[#e2e2e5]"
+            >
+              <button id="gridViewBtn" class="active p-2 rounded-lg">
+                <i data-lucide="grid-2x2"></i>
+              </button>
+              <button id="listViewBtn" class="p-2 rounded-lg">
+                <i data-lucide="list"></i>
+              </button>
+            </div>
           </div>
 
           <div
             id="propertiesContainer"
-            class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
+            class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-7 lg:gap-8"
           >
             <!-- PROPERTY 1 - The Pearl Haven (Lagos) - TAG: New Listing -->
             <div
