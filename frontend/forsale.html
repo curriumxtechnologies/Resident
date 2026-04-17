@@ -601,9 +601,14 @@
       >
         <div class="fade-up">
           <img
-            src="https://placehold.co/100x30/001c4a/white?text=RESIDENT"
+            src="images/logo.png"
             alt="Resident"
             class="h-8 mb-3"
+            onerror="
+              this.style.display = 'none';
+              this.parentElement.innerHTML +=
+                '<span class=\'text-xl font-black text-primary\'>RESIDENT</span>';
+            "
           />
           <p class="text-xs text-[#444650] max-w-xs">
             Redefining luxury real estate through precision, trust and
