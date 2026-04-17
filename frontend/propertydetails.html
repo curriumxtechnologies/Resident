@@ -137,6 +137,21 @@
         font-weight: bold;
         cursor: pointer;
       }
+      /* custom pulse animation for payment button */
+      @keyframes subtlePulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(197, 170, 35, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(197, 170, 35, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(197, 170, 35, 0);
+        }
+      }
+      .payment-pulse {
+        animation: subtlePulse 1.8s infinite;
+      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
@@ -148,6 +163,9 @@
         <div class="flex items-center justify-between h-16 lg:h-20">
           <a href="forsale.html" class="flex-shrink-0 flex items-center gap-2">
             <i data-lucide="arrow-left" class="w-5 h-5 text-primary"></i>
+            <span class="text-sm font-medium text-primary hidden sm:inline"
+              >Back to listings</span
+            >
           </a>
           <div>
             <img
@@ -183,6 +201,66 @@
         src=""
         alt="Full size property image"
       />
+    </div>
+
+    <!-- Simple Payment Confirmation Modal (Lightbox) -->
+    <div
+      id="paymentModal"
+      class="modal"
+      style="background-color: rgba(0, 0, 0, 0.8); z-index: 1100"
+    >
+      <div
+        class="bg-white rounded-2xl max-w-md w-full p-6 relative mx-4"
+        style="animation: fadeIn 0.2s ease"
+        onclick="event.stopPropagation()"
+      >
+        <button
+          onclick="closePaymentModal()"
+          class="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-2xl"
+        >
+          &times;
+        </button>
+        <div class="text-center mb-4">
+          <div
+            class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3"
+          >
+            <i data-lucide="credit-card" class="w-8 h-8 text-tertiary"></i>
+          </div>
+          <h3 class="text-xl font-headline font-bold text-primary">
+            Secure Payment Portal
+          </h3>
+          <p class="text-sm text-gray-500 mt-1">
+            You're about to reserve this property
+          </p>
+        </div>
+        <div
+          id="paymentPropertyDetails"
+          class="bg-gray-50 p-3 rounded-lg text-sm mb-4"
+        >
+          <!-- dynamic property summary -->
+        </div>
+        <div class="space-y-3">
+          <div class="flex justify-between text-sm font-medium">
+            <span>Total Amount (Reservation fee)</span>
+            <span class="font-bold text-primary" id="paymentAmount">₦0</span>
+          </div>
+          <p class="text-[11px] text-gray-400 text-center">
+            *Refundable holding deposit to secure viewing & due diligence
+          </p>
+          <button
+            id="confirmPaymentBtn"
+            class="w-full bg-[#c5aa23] hover:bg-[#b3971a] text-[#001c4a] font-bold py-3 rounded-xl transition flex items-center justify-center gap-2"
+          >
+            <i data-lucide="lock" class="w-4 h-4"></i> Pay with Card / Transfer
+          </button>
+          <button
+            onclick="closePaymentModal()"
+            class="w-full text-gray-500 text-sm py-2"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
 
     <script>
@@ -418,8 +496,81 @@
         return propertiesDB["The Pearl Haven"];
       }
 
-      // Render property details with gallery and contact form
+      // Global current property reference
+      let currentProperty = null;
+
+      // Payment modal controls
+      function openPaymentModal(property) {
+        const modal = document.getElementById("paymentModal");
+        const detailsContainer = document.getElementById(
+          "paymentPropertyDetails",
+        );
+        const amountSpan = document.getElementById("paymentAmount");
+        if (!modal || !detailsContainer) return;
+
+        // Display reservation fee (2% of property price, rounded, for showcase)
+        const reservationFee = Math.round(property.priceValue * 0.02);
+        const formattedFee = new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(reservationFee);
+        amountSpan.innerText = formattedFee;
+
+        detailsContainer.innerHTML = `
+          <div class="flex justify-between items-center border-b pb-2 mb-2">
+            <span class="font-semibold">Property:</span>
+            <span class="text-right">${property.name}</span>
+          </div>
+          <div class="flex justify-between items-center text-xs text-gray-600">
+            <span>Location:</span>
+            <span>${property.location}</span>
+          </div>
+          <div class="flex justify-between items-center text-xs text-gray-600 mt-1">
+            <span>Full price:</span>
+            <span>${property.price}</span>
+          </div>
+          <div class="flex justify-between items-center text-xs font-medium text-tertiary mt-2 pt-1 border-t">
+            <span>Reservation deposit (2%):</span>
+            <span>${formattedFee}</span>
+          </div>
+        `;
+
+        modal.classList.add("active");
+        // reinit icons if needed
+        setTimeout(() => {
+          if (window.lucide) lucide.createIcons();
+        }, 50);
+      }
+
+      function closePaymentModal() {
+        const modal = document.getElementById("paymentModal");
+        if (modal) modal.classList.remove("active");
+      }
+
+      // handle confirm payment
+      function setupPaymentListener(property) {
+        const confirmBtn = document.getElementById("confirmPaymentBtn");
+        if (confirmBtn) {
+          // remove previous listener to avoid duplicates
+          const newBtn = confirmBtn.cloneNode(true);
+          confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+          newBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            // simulate payment processing
+            alert(
+              `✅ Payment initiated for ${property.name} (Reservation deposit). A secure payment link has been sent to your email. Our concierge will finalize the transaction.`,
+            );
+            closePaymentModal();
+            // additional: you could redirect to a dummy checkout page
+          });
+        }
+      }
+
+      // Render property details with gallery, contact form, and PROCEED TO PAYMENT button at the bottom
       function renderPropertyDetails(property) {
+        currentProperty = property;
         const container = document.getElementById("propertyContent");
         if (!container) return;
 
@@ -505,12 +656,31 @@
               </div>
             </div>
           </div>
+          
+          <!-- PROCEED TO PAYMENT BUTTON SECTION (full width bottom) -->
+          <div class="mt-12 pt-6 border-t border-gray-200 fade-up">
+            <div class="bg-gradient-to-r from-gray-50 to-white rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5">
+              <div class="flex items-center gap-3">
+                <div class="bg-tertiary/20 p-3 rounded-full">
+                  <i data-lucide="wallet" class="w-6 h-6 text-tertiary"></i>
+                </div>
+                <div>
+                  <h3 class="font-headline font-bold text-primary text-lg">Ready to own this home?</h3>
+                </div>
+              </div>
+              <button id="proceedToPaymentBtn" class="payment-pulse bg-[#c5aa23] hover:bg-[#b3971a] text-[#001c4a] font-bold px-8 py-4 rounded-xl text-base md:text-lg flex items-center gap-3 shadow-lg transition-all duration-300 transform hover:scale-105">
+                <i data-lucide="credit-card" class="w-5 h-5"></i> 
+                Proceed to Payment
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+              </button>
+            </div>
+          </div>
         `;
 
         container.innerHTML = galleryHtml + detailsHtml;
         lucide.createIcons();
 
-        // Add form handler
+        // Add form handler for contact agent
         const form = document.getElementById("contactAgentForm");
         if (form) {
           form.addEventListener("submit", (e) => {
@@ -521,6 +691,19 @@
             form.reset();
           });
         }
+
+        // Attach payment button event
+        const paymentBtn = document.getElementById("proceedToPaymentBtn");
+        if (paymentBtn) {
+          // remove any previous listener
+          const newPaymentBtn = paymentBtn.cloneNode(true);
+          paymentBtn.parentNode.replaceChild(newPaymentBtn, paymentBtn);
+          newPaymentBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openPaymentModal(property);
+            setupPaymentListener(property);
+          });
+        }
       }
 
       // Global functions for gallery
@@ -528,7 +711,6 @@
         const mainImg = document.getElementById("mainGalleryImg");
         if (mainImg) {
           mainImg.src = imgSrc;
-          // Update active thumb class
           document.querySelectorAll(".gallery-thumb").forEach((thumb) => {
             thumb.classList.remove("active-thumb");
             thumb.classList.add("border-transparent");
@@ -553,7 +735,6 @@
         if (modal) modal.classList.remove("active");
       }
 
-      // Simulate coming from listings page via URL param
       function init() {
         const property = getSelectedProperty();
         renderPropertyDetails(property);
@@ -568,26 +749,15 @@
             if (e.target === modal) closeModal();
           };
 
-        // Back to home (listings) button
-        const backLink = document.getElementById("backToHomeLink");
-        if (backLink) {
-          backLink.addEventListener("click", (e) => {
-            e.preventDefault();
-            window.location.href = "index.html";
-          });
+        // Close payment modal on backdrop click
+        const paymentModal = document.getElementById("paymentModal");
+        if (paymentModal) {
+          paymentModal.onclick = (e) => {
+            if (e.target === paymentModal) closePaymentModal();
+          };
         }
 
-        // Schedule tour
-        const scheduleBtn = document.getElementById("scheduleTourBtn");
-        if (scheduleBtn) {
-          scheduleBtn.addEventListener("click", () => {
-            alert(
-              `Schedule a private tour of ${property.name}. A Resident agent will reach out immediately.`,
-            );
-          });
-        }
-
-        // Fade-up observer for any new elements
+        // Fade-up observer
         const fadeElements = document.querySelectorAll(".fade-up");
         const observer = new IntersectionObserver(
           (entries) => {
@@ -600,21 +770,32 @@
         fadeElements.forEach((el) => observer.observe(el));
       }
 
-      // Run init on load
       window.addEventListener("DOMContentLoaded", init);
     </script>
 
-    <!-- In case of direct navigation without property param, we already handle default -->
-    <script>
-      // Additional style for modal and thumbs
-      const style = document.createElement("style");
-      style.textContent = `
-        .gallery-thumb { transition: all 0.2s; cursor: pointer; }
-        .active-thumb { border-color: #c5aa23 !important; opacity: 1; }
-        .modal.active { animation: fadeIn 0.2s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      `;
-      document.head.appendChild(style);
-    </script>
+    <style>
+      .gallery-thumb {
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      .active-thumb {
+        border-color: #c5aa23 !important;
+        opacity: 1;
+      }
+      .modal.active {
+        animation: fadeIn 0.2s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      #paymentModal .modal.active {
+        display: flex;
+      }
+    </style>
   </body>
 </html>
