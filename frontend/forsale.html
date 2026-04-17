@@ -14,49 +14,6 @@
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <!-- Favicon -->
-    <link rel="icon" href="images/favicon.ico" />
-
-    <!-- PNG Favicons -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="images/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="images/favicon-32x32.png"
-    />
-
-    <!-- Apple Touch Icon (iPhone/iPad) -->
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/apple-touch-icon.png"
-    />
-
-    <!-- Android / Chrome Icons -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="images/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="images/android-chrome-512x512.png"
-    />
-
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="images/site.webmanifest" />
-
-    <!-- Theme Color (important for mobile UI color) -->
-    <meta name="theme-color" content="#0D316D" />
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -84,11 +41,6 @@
         height: 1.25rem;
         stroke-width: 1.75;
       }
-      .filter-active {
-        background-color: #c5aa23;
-        color: #001c4a;
-        border-color: #c5aa23;
-      }
       html {
         scroll-behavior: smooth;
       }
@@ -104,9 +56,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-    </style>
-    <style>
-      /* custom overrides */
       .bg-surface {
         background-color: #f9f9fc;
       }
@@ -125,6 +74,15 @@
       .text-tertiary {
         color: #6e5d00;
       }
+      /* Custom gradient overlay for hero cards */
+      .gradient-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.6) 50%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
@@ -136,7 +94,7 @@
         <div class="flex items-center justify-between h-16 lg:h-20">
           <a href="index.html" class="flex-shrink-0">
             <img
-              src="images/logo.png"
+              src="https://placehold.co/120x40/001c4a/white?text=RESIDENT"
               alt="Resident"
               class="h-9 lg:h-11 w-auto object-contain"
               onerror="
@@ -146,7 +104,6 @@
               "
             />
           </a>
-
           <div>
             <a
               href="forrent.html"
@@ -189,7 +146,6 @@
         class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
       >
         <div class="max-w-7xl mx-auto px-5 md:px-8">
-          <!-- MOBILE: 3 in a row | DESKTOP: original flex layout -->
           <div
             class="grid grid-cols-3 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3"
           >
@@ -235,7 +191,7 @@
         </div>
       </div>
 
-      <!-- Properties Grid: 6 luxury homes under ₦100M -->
+      <!-- Properties Grid: UNIFIED PREMIUM CARD DESIGN (All cards now match the style of Property 1) -->
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -253,58 +209,45 @@
             id="propertiesContainer"
             class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
           >
-            <!-- Property 1 - Lekki Lagos -->
+            <!-- PROPERTY 1 - The Pearl Haven (reference style) -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
               data-name="The Pearl Haven Lekki"
             >
-              <div class="relative h-64 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop"
-                  alt="Luxury villa Lekki"
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-                <div
-                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+              <img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="The Pearl Haven"
+              />
+              <div class="absolute top-4 left-4 flex gap-2">
+                <span
+                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
+                  >New Listing</span
                 >
-                  New Listing
-                </div>
-                <div
-                  class="absolute bottom-4 right-4 bg-white/90 backdrop-blur rounded-full px-2 py-1 text-xs font-semibold flex items-center gap-1"
-                >
-                  <i data-lucide="camera" class="w-3 h-3"></i> 8
-                </div>
               </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
-                >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> Lekki Phase 1,
-                  Lagos
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">The Pearl Haven</h3>
+                <p class="text-xs text-white/80 mt-1">Lekki Phase 1, Lagos</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦78,500,000</span>
                 </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
-                  The Pearl Haven
-                </h3>
-                <div class="flex items-baseline gap-1 mt-1">
-                  <span class="text-primary font-headline text-2xl font-bold"
-                    >₦78,500,000</span
-                  ><span class="text-xs text-[#747781]"></span>
-                </div>
-                <div
-                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
-                >
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>4 Beds</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>4 Baths</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i>320m²</span
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 320m²</span
                   >
                 </div>
                 <a
                   href="propertydetailsforsale.html"
-                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
                 >
                   Request Details
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -312,263 +255,251 @@
               </div>
             </div>
 
-            <!-- Property 2 - Maitama Abuja -->
+            <!-- PROPERTY 2 - Serene Gardens Maitama (Unified with hero overlay) -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
               data-name="Serene Gardens Maitama"
             >
-              <div class="relative h-64 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop"
-                  alt="Modern home Abuja"
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-                <div
-                  class="absolute bottom-4 right-4 bg-white/90 backdrop-blur rounded-full px-2 py-1 text-xs font-semibold flex items-center gap-1"
+              <img
+                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Serene Gardens Villa"
+              />
+              <div class="absolute top-4 left-4 flex gap-2">
+                <span
+                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
+                  >Hot Offer</span
                 >
-                  <i data-lucide="camera" class="w-3 h-3"></i> 18
-                </div>
               </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
-                >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> Maitama, Abuja
-                </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
                   Serene Gardens Villa
                 </h3>
-                <div class="flex items-baseline gap-1 mt-1">
-                  <span class="text-primary font-headline text-2xl font-bold"
-                    >₦92,000,000</span
-                  >
+                <p class="text-xs text-white/80 mt-1">Maitama, Abuja</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦92,000,000</span>
                 </div>
-                <div
-                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
-                >
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>5 Beds</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>5 Baths</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i>410m²</span
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 5</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 5</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 410m²</span
                   >
                 </div>
-                <button
-                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
                 >
                   Request Details
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
+                </a>
               </div>
             </div>
 
-            <!-- Property 3 - Old GRA PH -->
+            <!-- PROPERTY 3 - Golden Crest Manor -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
               data-name="Golden Crest GRA"
             >
-              <div class="relative h-64 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=600&h=400&fit=crop"
-                  alt="Luxury home Port Harcourt"
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-              </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
+              <img
+                src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Golden Crest Manor"
+              />
+              <div class="absolute top-4 left-4 flex gap-2">
+                <span
+                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
+                  >Exclusive</span
                 >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> Old GRA, Port
-                  Harcourt
-                </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
                   Golden Crest Manor
                 </h3>
-                <div class="flex items-baseline gap-1 mt-1">
-                  <span class="text-primary font-headline text-2xl font-bold"
-                    >₦65,500,000</span
-                  >
+                <p class="text-xs text-white/80 mt-1">Old GRA, Port Harcourt</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦65,500,000</span>
                 </div>
-                <div
-                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
-                >
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>4 Beds</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>3.5 Baths</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i>295m²</span
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3.5</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 295m²</span
                   >
                 </div>
-                <button
-                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
                 >
                   Request Details
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
+                </a>
               </div>
             </div>
 
-            <!-- Property 4 - Ikoyi Lagos -->
+            <!-- PROPERTY 4 - Ikoyi Oasis -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
               data-name="Ikoyi Oasis Residence"
             >
-              <div class="relative h-64 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&h=400&fit=crop"
-                  alt="Ikoyi luxury apartment"
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-                <div
-                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+              <img
+                src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Ikoyi Oasis"
+              />
+              <div class="absolute top-4 left-4 flex gap-2">
+                <span
+                  class="bg-tertiary-container text-primary text-[11px] px-3 py-1 rounded-full font-bold"
+                  >New Listing</span
                 >
-                  New Listing
-                </div>
               </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
-                >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> Ikoyi, Lagos
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">Ikoyi Oasis</h3>
+                <p class="text-xs text-white/80 mt-1">Ikoyi, Lagos</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦98,750,000</span>
                 </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
-                  Ikoyi Oasis
-                </h3>
-                <div class="flex items-baseline gap-1 mt-1">
-                  <span class="text-primary font-headline text-2xl font-bold"
-                    >₦98,750,000</span
-                  >
-                </div>
-                <div
-                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
-                >
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>3 Beds</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>3 Baths</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i>250m²</span
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 250m²</span
                   >
                 </div>
-                <button
-                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
                 >
                   Request Details
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
+                </a>
               </div>
             </div>
 
-            <!-- Property 5 - Gwarimpa Abuja -->
+            <!-- PROPERTY 5 - Gwarimpa Signature -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
               data-name="Gwarimpa Signature Villa"
             >
-              <div class="relative h-64 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=400&fit=crop"
-                  alt="Spacious home Abuja"
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-              </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
+              <img
+                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Gwarimpa Signature"
+              />
+              <div class="absolute top-4 left-4 flex gap-2">
+                <span
+                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
+                  >Premium</span
                 >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> Gwarimpa, Abuja
-                </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
                   Gwarimpa Signature
                 </h3>
-                <div class="flex items-baseline gap-1 mt-1">
-                  <span class="text-primary font-headline text-2xl font-bold"
-                    >₦84,200,000</span
-                  >
+                <p class="text-xs text-white/80 mt-1">Gwarimpa, Abuja</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦84,200,000</span>
                 </div>
-                <div
-                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
-                >
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>5 Beds</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>4 Baths</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i>380m²</span
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 5</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 380m²</span
                   >
                 </div>
-                <button
-                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
                 >
                   Request Details
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
+                </a>
               </div>
             </div>
 
-            <!-- Property 6 - Trans Amadi PH -->
+            <!-- PROPERTY 6 - Trans Amadi Luxe (with price slash visual but integrated in hero style) -->
             <div
-              class="property-card bg-white rounded-2xl overflow-hidden shadow-md hover-lift transition-all duration-300 fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
               data-name="Trans Amadi Luxe Residency"
             >
-              <div class="relative h-64 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop"
-                  alt="Modern home PH"
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-                <div
-                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+              <img
+                src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Trans Amadi Luxe"
+              />
+              <div class="absolute top-4 left-4 flex gap-2">
+                <span
+                  class="bg-tertiary-container text-primary text-[11px] px-3 py-1 rounded-full font-bold"
+                  >Price Slash</span
                 >
-                  Price Slash
-                </div>
               </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-[#545e78] text-xs mb-1.5"
-                >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> Trans Amadi,
-                  Port Harcourt
-                </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
                   Trans Amadi Luxe
                 </h3>
-                <div class="flex items-baseline gap-2 mt-1">
-                  <span class="text-gray-400 text-sm line-through font-medium">
-                    ₦59,900,000
-                  </span>
-                  <span class="text-primary font-headline text-2xl font-bold">
-                    ₦45,000,000
-                  </span>
+                <p class="text-xs text-white/80 mt-1">
+                  Trans Amadi, Port Harcourt
+                </p>
+                <div class="mt-2 flex items-baseline gap-2 flex-wrap">
+                  <span class="text-gray-300 text-sm line-through font-medium"
+                    >₦59,900,000</span
+                  >
+                  <span class="text-white font-bold text-xl">₦45,000,000</span>
                 </div>
-                <div
-                  class="flex gap-5 pt-4 mt-2 border-t border-[#eeeef0] text-sm"
-                >
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>4 Beds</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>3 Baths</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i>310m²</span
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 310m²</span
                   >
                 </div>
-                <button
-                  class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
                 >
                   Request Details
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
+                </a>
               </div>
             </div>
           </div>
 
-          <!-- Empty state (hidden by default) -->
+          <!-- Empty state -->
           <div
             id="emptyState"
             class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8 fade-up"
@@ -593,7 +524,7 @@
         </div>
       </section>
 
-      <!-- CTA Section - Matching main brand -->
+      <!-- CTA Section -->
       <section
         class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
       >
@@ -610,6 +541,7 @@
             tailored to your lifestyle.
           </p>
           <button
+            id="consultBtn"
             class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm"
           >
             Request Private Consultation
@@ -625,14 +557,9 @@
       >
         <div class="fade-up">
           <img
-            src="images/logo.png"
+            src="https://placehold.co/100x30/001c4a/white?text=RESIDENT"
             alt="Resident"
             class="h-8 mb-3"
-            onerror="
-              this.style.display = 'none';
-              this.parentElement.innerHTML +=
-                '<span class=\'text-xl font-black text-primary\'>RESIDENT</span>';
-            "
           />
           <p class="text-xs text-[#444650] max-w-xs">
             Redefining luxury real estate through precision, trust and
@@ -702,10 +629,8 @@
       >
         <p>© 2025 Resident Luxury — All rights reserved.</p>
         <div class="flex gap-5">
-          <a href="#" class="hover:text-primary transition">Privacy Policy</a
-          ><a href="#" class="hover:text-primary transition"
-            >Terms of Service</a
-          >
+          <a href="#" class="hover:text-primary transition">Privacy Policy</a>
+          <a href="#" class="hover:text-primary transition">Terms of Service</a>
         </div>
       </div>
     </footer>
@@ -713,24 +638,22 @@
     <script>
       lucide.createIcons();
 
-      // Smooth scroll fade-in animation (Intersection Observer)
+      // Intersection Observer for fade-up animations
       const fadeElements = document.querySelectorAll(".fade-up");
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add("revealed");
-              // Optional: unobserve after reveal to reduce overhead
               observer.unobserve(entry.target);
             }
           });
         },
         { threshold: 0.1, rootMargin: "0px 0px -20px 0px" },
       );
-
       fadeElements.forEach((el) => observer.observe(el));
 
-      // --- FILTER & SEARCH LOGIC (PRESERVED & ENHANCED WITH LGA dropdown dynamic)---
+      // --- FILTER LOGIC (supports LGA mapping, unified for all cards)---
       const cards = document.querySelectorAll(".property-card");
       const stateSelect = document.getElementById("stateFilter");
       const lgaSelect = document.getElementById("lgaFilter");
@@ -738,21 +661,24 @@
       const resetFiltersBtn = document.getElementById("resetFiltersBtn");
       const emptyStateDiv = document.getElementById("emptyState");
 
-      // Data mapping for LGA options (static mapping based on states)
       const lgaMap = {
         lagos: ["Lekki Phase 1", "Ikoyi", "Victoria Island"],
         abuja: ["Maitama", "Gwarimpa", "Asokoro"],
         rivers: ["Old GRA", "Trans Amadi", "New GRA"],
       };
 
-      // Property specific LGA data (for filtering)
-      const propertyLGA = {
-        "The Pearl Haven": "Lekki Phase 1",
-        "Serene Gardens Villa": "Maitama",
-        "Golden Crest Manor": "Old GRA",
-        "Ikoyi Oasis": "Ikoyi",
-        "Gwarimpa Signature": "Gwarimpa",
-        "Trans Amadi Luxe": "Trans Amadi",
+      // Property LGA mapping based on displayed address inside p tag
+      const getPropertyLGA = (card) => {
+        const addressElem = card.querySelector("p.text-xs.text-white\\/80");
+        if (!addressElem) return "";
+        const address = addressElem.innerText;
+        if (address.includes("Lekki Phase 1")) return "Lekki Phase 1";
+        if (address.includes("Maitama")) return "Maitama";
+        if (address.includes("Old GRA")) return "Old GRA";
+        if (address.includes("Ikoyi")) return "Ikoyi";
+        if (address.includes("Gwarimpa")) return "Gwarimpa";
+        if (address.includes("Trans Amadi")) return "Trans Amadi";
+        return "";
       };
 
       function populateLGA(selectedState) {
@@ -760,13 +686,10 @@
         if (selectedState !== "all" && lgaMap[selectedState]) {
           lgaMap[selectedState].forEach((lga) => {
             const option = document.createElement("option");
-            option.value =
-              lga === "All LGAs" ? "all" : lga.toLowerCase().replace(/\s/g, "");
+            option.value = lga.toLowerCase().replace(/\s/g, "");
             option.textContent = lga;
             lgaSelect.appendChild(option);
           });
-        } else {
-          lgaSelect.innerHTML = '<option value="all">LGA</option>';
         }
         lgaSelect.value = "all";
       }
@@ -778,31 +701,20 @@
 
         cards.forEach((card) => {
           const location = card.dataset.location;
-          const titleElem = card.querySelector("h3");
-          const title = titleElem ? titleElem.innerText : "";
-          const propertySpecificLGA = propertyLGA[title] || "";
+          const propertyLGAValue = getPropertyLGA(card);
+          const normalizedSelectedLGA = selectedLGA
+            .toLowerCase()
+            .replace(/\s/g, "");
+          const normalizedPropLGA = propertyLGAValue
+            .toLowerCase()
+            .replace(/\s/g, "");
 
           let stateMatch =
             selectedState === "all" || location === selectedState;
           let lgaMatch = true;
-          if (selectedLGA !== "all" && selectedState !== "all") {
-            // compare normalized LGA string (lowercase, no spaces)
-            const normalizedSelected = selectedLGA
-              .toLowerCase()
-              .replace(/\s/g, "");
-            const normalizedPropLGA = propertySpecificLGA
-              .toLowerCase()
-              .replace(/\s/g, "");
-            lgaMatch = normalizedPropLGA === normalizedSelected;
-          } else if (selectedLGA !== "all" && selectedState === "all") {
-            // if no state selected but LGA selected, match by property LGA
-            const normalizedSelected = selectedLGA
-              .toLowerCase()
-              .replace(/\s/g, "");
-            const normalizedPropLGA = propertySpecificLGA
-              .toLowerCase()
-              .replace(/\s/g, "");
-            lgaMatch = normalizedPropLGA === normalizedSelected;
+
+          if (selectedLGA !== "all") {
+            lgaMatch = normalizedPropLGA === normalizedSelectedLGA;
           }
 
           if (stateMatch && lgaMatch) {
@@ -820,43 +732,22 @@
         }
       }
 
-      // Event listeners
       stateSelect.addEventListener("change", () => {
         populateLGA(stateSelect.value);
         filterProperties();
       });
-
       lgaSelect.addEventListener("change", filterProperties);
       searchBtn.addEventListener("click", filterProperties);
-
       if (resetFiltersBtn) {
         resetFiltersBtn.addEventListener("click", () => {
           stateSelect.value = "all";
           populateLGA("all");
-          lgaSelect.value = "all";
           filterProperties();
         });
       }
-
-      // Initial LGA population
       populateLGA("all");
 
-      // Request Details buttons simulation (preserved)
-      document.querySelectorAll(".property-card button").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          const card = btn.closest(".property-card");
-          const title = card.querySelector("h3")?.innerText;
-          alert(
-            `✨ Thank you! A Resident luxury advisor will reach out about "${title}" shortly.`,
-          );
-        });
-      });
-
-      // CTA consultation
-      const consultBtn = document.querySelector(
-        ".bg-tertiary-container.text-primary.px-6.py-3",
-      );
+      const consultBtn = document.getElementById("consultBtn");
       if (consultBtn) {
         consultBtn.addEventListener("click", () => {
           alert(
@@ -865,7 +756,7 @@
         });
       }
 
-      // Re-run lucide icons for any dynamic content (optional)
+      // Re-run lucide for any new icons (just in case)
       setTimeout(() => lucide.createIcons(), 100);
     </script>
   </body>
