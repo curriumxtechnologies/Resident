@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>Resident | Property Details - Nigeria's Finest Real Estate</title>
+    <title>Resident | Buy Premium Estates - Nigeria's Finest Real Estate</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
@@ -16,8 +16,6 @@
     />
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-
-    <!-- PNG Favicons -->
     <link
       rel="icon"
       type="image/png"
@@ -30,15 +28,11 @@
       sizes="32x32"
       href="images/favicon-32x32.png"
     />
-
-    <!-- Apple Touch Icon (iPhone/iPad) -->
     <link
       rel="apple-touch-icon"
       sizes="180x180"
       href="images/apple-touch-icon.png"
     />
-
-    <!-- Android / Chrome Icons -->
     <link
       rel="icon"
       type="image/png"
@@ -51,10 +45,9 @@
       sizes="512x512"
       href="images/android-chrome-512x512.png"
     />
-
-    <!-- Web App Manifest -->
     <link rel="manifest" href="images/site.webmanifest" />
-    <!-- Lucide Icons -->
+    <meta name="theme-color" content="#0D316D" />
+    <!-- Lucide + Tailwind -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -67,22 +60,22 @@
       .font-headline {
         font-family: "Manrope", system-ui, sans-serif;
       }
+      .hover-lift {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+      }
       .lucide {
         width: 1.25rem;
         height: 1.25rem;
         stroke-width: 1.75;
       }
-      .bg-surface {
-        background-color: #f9f9fc;
-      }
-      .text-primary {
-        color: #001c4a;
-      }
-      .bg-tertiary-container {
-        background-color: #c5aa23;
-      }
-      .text-tertiary {
-        color: #6e5d00;
+      html {
+        scroll-behavior: smooth;
       }
       .fade-up {
         opacity: 0;
@@ -95,16 +88,29 @@
         opacity: 1;
         transform: translateY(0);
       }
-      .gallery-thumb {
-        transition: all 0.2s ease;
+      .bg-surface {
+        background-color: #f9f9fc;
       }
-      .gallery-thumb:hover {
-        opacity: 0.8;
-        transform: scale(1.02);
+      .text-primary {
+        color: #001c4a;
       }
-      .active-thumb {
-        border: 2px solid #c5aa23;
+      .border-tertiary {
+        border-color: #c5aa23;
+      }
+      .bg-tertiary-container {
+        background-color: #c5aa23;
+      }
+      .hover\:bg-tertiary-fixed:hover {
+        background-color: #ffe260;
+      }
+      .text-tertiary {
+        color: #6e5d00;
+      }
+      /* gallery thumb active */
+      .thumb-active {
+        border-color: #c5aa23;
         opacity: 1;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
       /* Modal styles */
       .modal {
@@ -137,58 +143,35 @@
         font-weight: bold;
         cursor: pointer;
       }
-      /* custom pulse animation for payment button */
-      @keyframes subtlePulse {
-        0% {
-          box-shadow: 0 0 0 0 rgba(197, 170, 35, 0.4);
-        }
-        70% {
-          box-shadow: 0 0 0 10px rgba(197, 170, 35, 0);
-        }
-        100% {
-          box-shadow: 0 0 0 0 rgba(197, 170, 35, 0);
-        }
-      }
-      .payment-pulse {
-        animation: subtlePulse 1.8s infinite;
-      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
-    <!-- Navigation -->
+    <!-- Navigation (consistent with rent page) -->
     <header
       class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
     >
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
-          <a href="forsale.html" class="flex-shrink-0 flex items-center gap-2">
-            <i data-lucide="arrow-left" class="w-5 h-5 text-primary"></i>
-            <span class="text-sm font-medium text-primary hidden sm:inline"
-              >Back to listings</span
-            >
-          </a>
-          <div>
+          <a href="estates-for-sale.html" class="flex-shrink-0">
             <img
               src="images/logo.png"
               alt="Resident"
               class="h-9 lg:h-11 w-auto object-contain"
               onerror="
                 this.style.display = 'none';
-                this.parentElement.innerHTML +=
+                this.parentElement.innerHTML =
                   '<span class=\'text-xl font-black tracking-tighter text-primary\'>RESIDENT</span>';
               "
             />
-          </div>
+          </a>
         </div>
       </div>
     </header>
 
-    <main id="detailsMain" class="pb-16">
+    <main id="detailsMain">
       <!-- Property details will be injected here -->
-      <div class="max-w-7xl mx-auto px-5 md:px-8 py-8">
-        <div id="propertyContent" class="fade-up revealed">
-          <!-- Dynamic content loads here -->
-        </div>
+      <div id="propertyContent" class="fade-up">
+        <!-- Dynamic content loads here -->
       </div>
     </main>
 
@@ -203,7 +186,7 @@
       />
     </div>
 
-    <!-- Simple Payment Confirmation Modal (Lightbox) -->
+    <!-- Simple Payment Confirmation Modal -->
     <div
       id="paymentModal"
       class="modal"
@@ -236,9 +219,7 @@
         <div
           id="paymentPropertyDetails"
           class="bg-gray-50 p-3 rounded-lg text-sm mb-4"
-        >
-          <!-- dynamic property summary -->
-        </div>
+        ></div>
         <div class="space-y-3">
           <div class="flex justify-between text-sm font-medium">
             <span>Total Amount (Reservation fee)</span>
@@ -480,26 +461,22 @@
         },
       };
 
-      // Helper to get property from URL param or from sessionStorage (for cross-page navigation)
+      // Helper to get property from URL param or from sessionStorage
       function getSelectedProperty() {
         const urlParams = new URLSearchParams(window.location.search);
         const propertyName = urlParams.get("property");
         if (propertyName && propertiesDB[decodeURIComponent(propertyName)]) {
           return propertiesDB[decodeURIComponent(propertyName)];
         }
-        // Fallback: check sessionStorage (set when clicking from listings page)
         const stored = sessionStorage.getItem("selectedProperty");
         if (stored && propertiesDB[stored]) {
           return propertiesDB[stored];
         }
-        // Default to first property if none selected
         return propertiesDB["The Pearl Haven"];
       }
 
-      // Global current property reference
       let currentProperty = null;
 
-      // Payment modal controls
       function openPaymentModal(property) {
         const modal = document.getElementById("paymentModal");
         const detailsContainer = document.getElementById(
@@ -508,7 +485,6 @@
         const amountSpan = document.getElementById("paymentAmount");
         if (!modal || !detailsContainer) return;
 
-        // Display reservation fee (2% of property price, rounded, for showcase)
         const reservationFee = Math.round(property.priceValue * 0.02);
         const formattedFee = new Intl.NumberFormat("en-NG", {
           style: "currency",
@@ -538,7 +514,6 @@
         `;
 
         modal.classList.add("active");
-        // reinit icons if needed
         setTimeout(() => {
           if (window.lucide) lucide.createIcons();
         }, 50);
@@ -549,153 +524,335 @@
         if (modal) modal.classList.remove("active");
       }
 
-      // handle confirm payment
       function setupPaymentListener(property) {
         const confirmBtn = document.getElementById("confirmPaymentBtn");
         if (confirmBtn) {
-          // remove previous listener to avoid duplicates
           const newBtn = confirmBtn.cloneNode(true);
           confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
           newBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            // simulate payment processing
             alert(
               `✅ Payment initiated for ${property.name} (Reservation deposit). A secure payment link has been sent to your email. Our concierge will finalize the transaction.`,
             );
             closePaymentModal();
-            // additional: you could redirect to a dummy checkout page
           });
         }
       }
 
-      // Render property details with gallery, contact form, and PROCEED TO PAYMENT button at the bottom
       function renderPropertyDetails(property) {
         currentProperty = property;
         const container = document.getElementById("propertyContent");
         if (!container) return;
 
-        const galleryHtml = `
-          <div class="mb-8 fade-up">
-            <!-- Main Image -->
-            <div class="rounded-2xl overflow-hidden shadow-lg mb-4">
-              <img id="mainGalleryImg" src="${property.images[0]}" alt="${property.name}" class="w-full h-80 md:h-[500px] object-cover cursor-pointer" onclick="openModal('${property.images[0]}')">
+        // Hero Section with Breadcrumb (matching rent page style)
+        const heroHtml = `
+          <section class="relative bg-[#001c4a] text-white py-12 lg:py-16 overflow-hidden fade-up">
+            <div class="absolute inset-0 opacity-20">
+              <img
+                src="${property.images[0]}"
+                alt="Luxury interior"
+                class="w-full h-full object-cover"
+              />
             </div>
-            <!-- Thumbnails row -->
-            <div class="flex gap-3 overflow-x-auto pb-2">
-              ${property.images
-                .map(
-                  (img, idx) => `
-                <img src="${img}" alt="Thumb ${idx + 1}" class="gallery-thumb w-20 h-20 md:w-24 md:h-24 rounded-lg object-cover cursor-pointer border-2 ${idx === 0 ? "active-thumb" : "border-transparent"}" onclick="changeMainImage('${img}', this)">
-              `,
-                )
-                .join("")}
+            <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8">
+              <div class="flex items-center gap-2 text-sm text-white/70 mb-3">
+                <a
+                  href="estates-for-sale.html"
+                  class="hover:text-tertiary-container transition"
+                  >← Back to Sale Listings</a
+                >
+              </div>
+              <h1
+                class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2"
+              >
+                ${property.name}
+              </h1>
+              <div
+                class="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80 text-sm"
+              >
+                <span class="flex items-center gap-1"
+                  ><i data-lucide="map-pin" class="w-4 h-4"></i> ${property.location}</span
+                >
+                <span class="flex items-center gap-1"
+                  ><i
+                    data-lucide="badge-check"
+                    class="w-4 h-4 text-tertiary-container"
+                  ></i>
+                  Premium Listing</span
+                >
+              </div>
             </div>
-          </div>
+          </section>
         `;
 
-        const featuresList = property.features
-          .map(
-            (f) =>
-              `<li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-tertiary"></i><span class="text-sm">${f}</span></li>`,
-          )
-          .join("");
-
-        const detailsHtml = `
-          <div class="grid md:grid-cols-3 gap-8 fade-up">
-            <div class="md:col-span-2 space-y-6">
-              <div>
-                <div class="flex items-center gap-2 text-tertiary text-sm mb-1">
-                  <i data-lucide="map-pin" class="w-4 h-4"></i> ${property.location}
-                </div>
-                <h1 class="text-3xl md:text-4xl font-headline font-extrabold text-primary">${property.name}</h1>
-                <div class="text-3xl font-headline font-bold text-primary mt-2">${property.price}</div>
-              </div>
-
-              <div class="grid grid-cols-3 gap-4 py-4 border-y border-[#eeeef0]">
-                <div class="flex items-center gap-2"><i data-lucide="bed" class="w-5 h-5 text-tertiary"></i><span><strong>${property.beds}</strong> Beds</span></div>
-                <div class="flex items-center gap-2"><i data-lucide="bath" class="w-5 h-5 text-tertiary"></i><span><strong>${property.baths}</strong> Baths</span></div>
-                <div class="flex items-center gap-2"><i data-lucide="square" class="w-5 h-5 text-tertiary"></i><span><strong>${property.sqm}</strong> m²</span></div>
-              </div>
-
-              <div>
-                <h2 class="text-xl font-headline font-bold text-primary mb-3">Description</h2>
-                <p class="text-[#444650] leading-relaxed">${property.description}</p>
-              </div>
-
-              <div>
-                <h2 class="text-xl font-headline font-bold text-primary mb-3">Key Features & Amenities</h2>
-                <ul class="grid grid-cols-2 gap-2">${featuresList}</ul>
-              </div>
-            </div>
-
-            <!-- Agent Contact Form Sidebar -->
-            <div class="md:col-span-1 fade-up">
-              <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24 border border-[#eeeef0]">
-                <div class="flex items-center gap-3 mb-4">
-                  <img src="${property.agent.photo}" alt="Agent" class="w-16 h-16 rounded-full object-cover border-2 border-tertiary">
-                  <div>
-                    <h3 class="font-bold text-primary">${property.agent.name}</h3>
-                    <p class="text-xs text-gray-500">Property Agent</p>
+        // Main content matching rent page layout
+        const mainContentHtml = `
+          <div class="max-w-7xl mx-auto px-5 md:px-8 -mt-8 mb-16 fade-up">
+            <div class="grid lg:grid-cols-3 gap-8">
+              <!-- Left column: Gallery + details -->
+              <div class="lg:col-span-2">
+                <!-- Main Image Carousel / Gallery -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+                  <div class="relative">
+                    <img
+                      id="mainGalleryImg"
+                      src="${property.images[0]}"
+                      alt="Main property view"
+                      class="w-full h-[360px] lg:h-[420px] object-cover cursor-pointer"
+                      onclick="openModal('${property.images[0]}')"
+                    />
+                  </div>
+                  <!-- Thumbnails row -->
+                  <div class="flex gap-2 p-3 border-t border-[#eeeef0]">
+                    ${property.images
+                      .map(
+                        (img, idx) => `
+                      <img
+                        data-gallery="${img}"
+                        src="${img}?w=120&h=80&fit=crop"
+                        class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all"
+                        alt="thumb${idx + 1}"
+                      />
+                    `,
+                      )
+                      .join("")}
                   </div>
                 </div>
-                <div class="space-y-2 mb-5 text-sm">
-                  <div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-tertiary"></i> ${property.agent.phone}</div>
-                  <div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-tertiary"></i> ${property.agent.email}</div>
+
+                <!-- Description & Features -->
+                <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
+                  <h2 class="font-headline text-2xl font-bold text-primary mb-3">
+                    About this property
+                  </h2>
+                  <p class="text-[#3a3e4a] text-sm leading-relaxed mb-5">
+                    ${property.description}
+                  </p>
+
+                  <div
+                    class="grid grid-cols-2 md:grid-cols-4 gap-4 py-3 border-y border-[#eeeef0]"
+                  >
+                    <div>
+                      <span class="block text-xs text-[#6b6f7e]">Property Type</span
+                      ><span class="font-semibold text-primary"
+                        >Luxury Villa</span
+                      >
+                    </div>
+                    <div>
+                      <span class="block text-xs text-[#6b6f7e]">Year Built</span
+                      ><span class="font-semibold text-primary">2023</span>
+                    </div>
+                    <div>
+                      <span class="block text-xs text-[#6b6f7e]">Ownership</span
+                      ><span class="font-semibold text-primary"
+                        >Freehold</span
+                      >
+                    </div>
+                    <div>
+                      <span class="block text-xs text-[#6b6f7e]">Status</span
+                      ><span class="font-semibold text-primary">Available</span>
+                    </div>
+                  </div>
+
+                  <div class="mt-6">
+                    <h3 class="font-bold text-primary text-lg mb-3">
+                      Key Features
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      ${property.features
+                        .map(
+                          (f) => `
+                        <span class="flex items-center gap-2 text-sm"
+                          ><i data-lucide="check-circle" class="w-4 h-4 text-tertiary"></i>
+                          ${f}</span
+                        >
+                      `,
+                        )
+                        .join("")}
+                    </div>
+                  </div>
                 </div>
-                <h4 class="font-semibold text-primary mb-3 text-sm">Request a Viewing</h4>
-                <form id="contactAgentForm">
-                  <input type="text" placeholder="Full Name" required class="w-full mb-3 px-4 py-2 bg-[#f3f3f6] border-none rounded-xl text-sm focus:ring-1 focus:ring-tertiary">
-                  <input type="email" placeholder="Email Address" required class="w-full mb-3 px-4 py-2 bg-[#f3f3f6] border-none rounded-xl text-sm focus:ring-1 focus:ring-tertiary">
-                  <input type="tel" placeholder="Phone Number" required class="w-full mb-3 px-4 py-2 bg-[#f3f3f6] border-none rounded-xl text-sm focus:ring-1 focus:ring-tertiary">
-                  <textarea rows="3" placeholder="Message (e.g., preferred viewing date)" class="w-full mb-4 px-4 py-2 bg-[#f3f3f6] border-none rounded-xl text-sm focus:ring-1 focus:ring-tertiary"></textarea>
-                  <button type="submit" class="w-full bg-[#001c4a] text-white py-3 rounded-xl font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2">
-                    Send Inquiry <i data-lucide="send" class="w-4 h-4"></i>
+
+                <!-- Purchase Terms -->
+                <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
+                  <h3 class="font-headline font-bold text-primary text-xl mb-3">
+                    Purchase &amp; Terms
+                  </h3>
+                  <ul class="space-y-2 text-sm text-[#2f3340] list-disc pl-5">
+                    <li>
+                      Asking price:
+                      <strong class="text-primary">${property.price}</strong>
+                    </li>
+                    <li>Title documents: C of O / Governor's Consent available</li>
+                    <li>Early possession: available upon full payment</li>
+                    <li>Mortgage financing: partner banks available</li>
+                    <li>Legal fees: 5% + VAT (buyer covers)</li>
+                  </ul>
+                  <div
+                    class="mt-5 bg-[#f6f7fb] p-4 rounded-xl flex items-start gap-3"
+                  >
+                    <i
+                      data-lucide="clock"
+                      class="w-5 h-5 text-tertiary shrink-0 mt-0.5"
+                    ></i>
+                    <p class="text-xs text-[#4e5468]">
+                      Flexible payment plans available. Contact our sales team for bespoke arrangements.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: Price Summary + Inquiry Form -->
+              <div class="lg:col-span-1">
+                <div
+                  class="bg-white rounded-2xl shadow-lg p-6 sticky top-24 border border-[#eceef2] fade-up"
+                >
+                  <div class="mb-4 pb-3 border-b border-dashed border-[#e0e2e8]">
+                    <span
+                      class="text-tertiary text-xs font-semibold uppercase tracking-wide"
+                      >Sale Price</span
+                    >
+                    <div
+                      class="text-3xl font-headline font-black text-primary mt-1"
+                    >
+                      ${property.price}
+                    </div>
+                  </div>
+                  <div class="space-y-3 mb-5">
+                    <div class="flex justify-between text-sm">
+                      <span>Bedrooms</span><span class="font-semibold">${property.beds}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span>Bathrooms</span><span class="font-semibold">${property.baths}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span>Living Area</span
+                      ><span class="font-semibold">${property.sqm} m²</span>
+                    </div>
+                  </div>
+
+                  <!-- Inquiry Form -->
+                  <form id="inquiryForm" class="space-y-4 mb-5">
+                    <div>
+                      <label class="block text-xs font-semibold text-primary mb-1"
+                        >Full Name *</label
+                      >
+                      <input
+                        type="text"
+                        required
+                        class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-primary mb-1"
+                        >Email Address *</label
+                      >
+                      <input
+                        type="email"
+                        required
+                        class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-primary mb-1"
+                        >Phone Number *</label
+                      >
+                      <input
+                        type="tel"
+                        required
+                        class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                        placeholder="+234 812 345 6789"
+                      />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-primary mb-1"
+                        >Message (Optional)</label
+                      >
+                      <textarea
+                        rows="2"
+                        class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                        placeholder="I'm interested in this property..."
+                      ></textarea>
+                    </div>
+                    <button
+                      type="submit"
+                      class="w-full bg-[#001c4a] text-white py-3 rounded-xl font-bold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                    >
+                      Send Inquiry <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                  </form>
+
+                  <!-- Ready to Buy Text -->
+                  <div class="text-center mb-3">
+                    <p class="text-sm font-semibold text-[#c5aa23]">
+                      Ready to own this home?
+                    </p>
+                  </div>
+
+                  <button
+                    id="proceedToPaymentBtn"
+                    class="w-full bg-gradient-to-r from-[#c5aa23] to-[#e6c844] text-primary py-3 rounded-xl font-bold hover:from-[#b89a1f] hover:to-[#d4b83a] transition flex items-center justify-center gap-2 shadow-md"
+                  >
+                    Proceed to Payment
+                    <i data-lucide="credit-card" class="w-4 h-4"></i>
                   </button>
-                </form>
-                <p class="text-[10px] text-center text-gray-400 mt-3">We'll respond within 24 hours</p>
-              </div>
-            </div>
-          </div>
-          
-          <!-- PROCEED TO PAYMENT BUTTON SECTION (full width bottom) -->
-          <div class="mt-12 pt-6 border-t border-gray-200 fade-up">
-            <div class="bg-gradient-to-r from-gray-50 to-white rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5">
-              <div class="flex items-center gap-3">
-                <div class="bg-tertiary/20 p-3 rounded-full">
-                  <i data-lucide="wallet" class="w-6 h-6 text-tertiary"></i>
+
+                  <div class="mt-6 pt-4 border-t border-[#edf0f5]">
+                    <div class="flex items-center gap-2 mb-2">
+                      <i data-lucide="user-check" class="w-5 h-5 text-tertiary"></i>
+                      <span class="text-sm font-bold text-primary"
+                        >Sales Agent</span
+                      >
+                    </div>
+                    <p class="text-xs text-[#4a4f62]">
+                      ${property.agent.name}: Senior Sales Consultant
+                    </p>
+                    <p class="text-xs text-[#4a4f62] mt-1">
+                      ✉️ ${property.agent.email} | 📞 ${property.agent.phone}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 class="font-headline font-bold text-primary text-lg">Ready to own this home?</h3>
-                </div>
               </div>
-              <button id="proceedToPaymentBtn" class="payment-pulse bg-[#c5aa23] hover:bg-[#b3971a] text-[#001c4a] font-bold px-8 py-4 rounded-xl text-base md:text-lg flex items-center gap-3 shadow-lg transition-all duration-300 transform hover:scale-105">
-                <i data-lucide="credit-card" class="w-5 h-5"></i> 
-                Proceed to Payment
-                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-              </button>
             </div>
           </div>
         `;
 
-        container.innerHTML = galleryHtml + detailsHtml;
+        container.innerHTML = heroHtml + mainContentHtml;
         lucide.createIcons();
 
-        // Add form handler for contact agent
-        const form = document.getElementById("contactAgentForm");
+        // Gallery thumbnail switching
+        const mainImg = document.getElementById("mainGalleryImg");
+        const thumbs = document.querySelectorAll("[data-gallery]");
+        thumbs.forEach((thumb) => {
+          thumb.addEventListener("click", function () {
+            const fullSrc = this.getAttribute("data-gallery");
+            if (fullSrc && mainImg) mainImg.src = fullSrc;
+            thumbs.forEach((t) =>
+              t.classList.remove("thumb-active", "border-tertiary"),
+            );
+            this.classList.add("thumb-active", "border-tertiary");
+            this.style.borderWidth = "2px";
+          });
+          if (thumb === thumbs[0])
+            thumb.classList.add("thumb-active", "border-tertiary");
+        });
+
+        // Form handler
+        const form = document.getElementById("inquiryForm");
         if (form) {
           form.addEventListener("submit", (e) => {
             e.preventDefault();
             alert(
-              `Thank you! Your inquiry for ${property.name} has been sent to ${property.agent.name}. We'll contact you shortly.`,
+              `Thank you! Your inquiry for ${property.name} has been sent. A sales agent will contact you shortly.`,
             );
             form.reset();
           });
         }
 
-        // Attach payment button event
+        // Payment button
         const paymentBtn = document.getElementById("proceedToPaymentBtn");
         if (paymentBtn) {
-          // remove any previous listener
           const newPaymentBtn = paymentBtn.cloneNode(true);
           paymentBtn.parentNode.replaceChild(newPaymentBtn, paymentBtn);
           newPaymentBtn.addEventListener("click", (e) => {
@@ -706,20 +863,7 @@
         }
       }
 
-      // Global functions for gallery
-      window.changeMainImage = function (imgSrc, thumbElement) {
-        const mainImg = document.getElementById("mainGalleryImg");
-        if (mainImg) {
-          mainImg.src = imgSrc;
-          document.querySelectorAll(".gallery-thumb").forEach((thumb) => {
-            thumb.classList.remove("active-thumb");
-            thumb.classList.add("border-transparent");
-          });
-          thumbElement.classList.add("active-thumb");
-          thumbElement.classList.remove("border-transparent");
-        }
-      };
-
+      // Modal functions
       window.openModal = function (imgSrc) {
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("modalImage");
@@ -729,7 +873,6 @@
         }
       };
 
-      // Modal close handlers
       function closeModal() {
         const modal = document.getElementById("imageModal");
         if (modal) modal.classList.remove("active");
@@ -738,7 +881,7 @@
       function init() {
         const property = getSelectedProperty();
         renderPropertyDetails(property);
-        document.title = `${property.name} | Resident Luxury Estate`;
+        document.title = `${property.name} | Buy Premium Estates - Resident`;
 
         // Modal events
         const modal = document.getElementById("imageModal");
@@ -749,7 +892,6 @@
             if (e.target === modal) closeModal();
           };
 
-        // Close payment modal on backdrop click
         const paymentModal = document.getElementById("paymentModal");
         if (paymentModal) {
           paymentModal.onclick = (e) => {
@@ -772,30 +914,5 @@
 
       window.addEventListener("DOMContentLoaded", init);
     </script>
-
-    <style>
-      .gallery-thumb {
-        transition: all 0.2s;
-        cursor: pointer;
-      }
-      .active-thumb {
-        border-color: #c5aa23 !important;
-        opacity: 1;
-      }
-      .modal.active {
-        animation: fadeIn 0.2s ease;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      #paymentModal .modal.active {
-        display: flex;
-      }
-    </style>
   </body>
 </html>

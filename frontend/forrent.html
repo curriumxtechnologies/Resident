@@ -133,12 +133,12 @@
             />
           </a>
           <div>
-            <button
+            <a
+              href="forsale.html"
               class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
-              id="scheduleRentTourBtn"
             >
-              Schedule Tour
-            </button>
+              For Sale
+            </a>
           </div>
         </div>
       </div>
@@ -792,16 +792,6 @@
         });
       }
       populateLGA("all");
-
-      // Schedule Tour button
-      const scheduleBtn = document.getElementById("scheduleRentTourBtn");
-      if (scheduleBtn) {
-        scheduleBtn.addEventListener("click", () => {
-          alert(
-            "Schedule a private tour of our premium rental portfolio. One of our leasing agents will reach out shortly.",
-          );
-        });
-      }
 
       // Rental Consultation CTA
       const consultBtn = document.getElementById("rentalConsultBtn");
