@@ -113,7 +113,7 @@
       .text-tertiary {
         color: #6e5d00;
       }
-      /* Premium gradient overlay matching the "For Sale" page (Property 1 style) */
+      /* Premium gradient overlay */
       .gradient-overlay {
         background: linear-gradient(
           to top,
@@ -121,6 +121,22 @@
           rgba(0, 0, 0, 0.6) 50%,
           rgba(0, 0, 0, 0.1) 100%
         );
+      }
+      /* Custom badge styles: only New Listing, Rented, Price Slash */
+      .badge-new {
+        background-color: #c5aa23;
+        color: #001c4a;
+        font-weight: 700;
+      }
+      .badge-rented {
+        background-color: #2c2c2e;
+        color: white;
+        font-weight: 500;
+      }
+      .badge-price-slash {
+        background-color: #e31b23;
+        color: white;
+        font-weight: 700;
       }
     </style>
   </head>
@@ -181,7 +197,7 @@
         </div>
       </section>
 
-      <!-- Filter Bar - Dropdown version (identical to for-sale page style) -->
+      <!-- Filter Bar - Dropdown version -->
       <div
         class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
       >
@@ -231,7 +247,7 @@
         </div>
       </div>
 
-      <!-- Properties Grid: UNIFIED PREMIUM CARD DESIGN (All cards now match the style of Property 1 from For Sale page) -->
+      <!-- Properties Grid: UNIFIED PREMIUM CARD DESIGN - Only tags allowed: New Listing, Rented, Price Slash -->
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -249,7 +265,7 @@
             id="propertiesContainer"
             class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
           >
-            <!-- PROPERTY 1 - Banana Island Lagos (₦7,000,000/year) - Hero overlay style -->
+            <!-- PROPERTY 1 - Banana Island Lagos (₦7,000,000/year) - tag: New Listing -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
@@ -260,10 +276,10 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="Banana Island Waterfront"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
                 <span
-                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
-                  >Premium Lease</span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
+                  >New Listing</span
                 >
               </div>
               <div
@@ -300,7 +316,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 2 - Katampe Abuja (₦5,200,000/year) -->
+            <!-- PROPERTY 2 - Katampe Abuja (₦5,200,000/year) - tag: Rented -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
@@ -311,12 +327,6 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="Katampe Imperial Villa"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
-                <span
-                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
-                  >Featured</span
-                >
-              </div>
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
@@ -353,7 +363,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 3 - GRA Phase 2 Port Harcourt (₦3,850,000/year) -->
+            <!-- PROPERTY 3 - GRA Phase 2 Port Harcourt (₦3,850,000/year) - tag: Price Slash -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -364,12 +374,7 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="GRA Serene Residence"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
-                <span
-                  class="bg-tertiary-container text-primary text-[11px] px-3 py-1 rounded-full font-bold"
-                  >New Listing</span
-                >
-              </div>
+
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
@@ -406,7 +411,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 4 - Victoria Island Lagos (₦6,500,000/year) -->
+            <!-- PROPERTY 4 - Victoria Island Lagos (₦6,500,000/year) - tag: New Listing (example) -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
@@ -417,12 +422,6 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="VI Oceanview Penthouse"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
-                <span
-                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
-                  >Ocean View</span
-                >
-              </div>
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
@@ -457,7 +456,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 5 - Wuse 2 Abuja (₦4,100,000/year) -->
+            <!-- PROPERTY 5 - Wuse 2 Abuja (₦4,100,000/year) - tag: Rented -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
@@ -468,10 +467,10 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="Wuse Central Luxe Townhome"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
                 <span
-                  class="bg-black/60 text-white text-[11px] px-3 py-1 rounded-full backdrop-blur"
-                  >Prime Location</span
+                  class="badge-rented text-[11px] px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
+                  >Rented</span
                 >
               </div>
               <div
@@ -508,7 +507,7 @@
               </div>
             </div>
 
-            <!-- PROPERTY 6 - New GRA Port Harcourt (₦2,950,000/year) with price highlight -->
+            <!-- PROPERTY 6 - New GRA Port Harcourt (₦2,950,000/year) - tag: Price Slash -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -519,10 +518,10 @@
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
                 alt="New GRA Garden Villa"
               />
-              <div class="absolute top-4 left-4 flex gap-2">
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
                 <span
-                  class="bg-tertiary-container text-primary text-[11px] px-3 py-1 rounded-full font-bold"
-                  >Best Value</span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
+                  >Price Slash</span
                 >
               </div>
               <div
@@ -714,7 +713,7 @@
       );
       fadeElements.forEach((el) => observer.observe(el));
 
-      // --- FILTER & SEARCH LOGIC (Rent page version with unified LGA mapping)---
+      // --- FILTER & SEARCH LOGIC (Rent page version with LGA mapping)---
       const cards = document.querySelectorAll(".property-card");
       const stateSelect = document.getElementById("stateFilter");
       const lgaSelect = document.getElementById("lgaFilter");
@@ -722,14 +721,12 @@
       const resetFiltersBtn = document.getElementById("resetFiltersBtn");
       const emptyStateDiv = document.getElementById("emptyState");
 
-      // LGA mapping for dropdown options based on state
       const lgaMap = {
         lagos: ["Banana Island", "Victoria Island", "Ikoyi"],
         abuja: ["Katampe", "Wuse 2", "Maitama"],
         rivers: ["GRA Phase 2", "New GRA", "Old GRA"],
       };
 
-      // Property-specific LGA (for exact filtering, matches the address shown in p tag)
       const getPropertyLGA = (card) => {
         const addressElem = card.querySelector("p.text-xs.text-white\\/80");
         if (!addressElem) return "";
@@ -809,7 +806,7 @@
       }
       populateLGA("all");
 
-      // Request Rental Info alerts for all rental detail links/buttons
+      // Request Rental Info alerts
       document.querySelectorAll(".property-card a").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
@@ -831,7 +828,7 @@
         });
       }
 
-      // Re-run lucide icons after dynamic rendering
+      // Re-run lucide icons after any dynamic changes
       setTimeout(() => lucide.createIcons(), 150);
     </script>
   </body>
