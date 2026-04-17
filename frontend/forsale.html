@@ -148,11 +148,12 @@
           </a>
 
           <div>
-            <button
+            <a
+              href="forrent.html"
               class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
             >
-              Schedule Tour
-            </button>
+              For rent
+            </a>
           </div>
         </div>
       </div>
@@ -302,7 +303,7 @@
                   >
                 </div>
                 <a
-                  href="propertydetails.html"
+                  href="propertydetailsforsale.html"
                   class="w-full mt-5 bg-[#001c4a] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
                 >
                   Request Details
@@ -860,18 +861,6 @@
         consultBtn.addEventListener("click", () => {
           alert(
             "Connect with our concierge team: +234 (0) 123 456 7890 or hello@resident.ng",
-          );
-        });
-      }
-
-      // Schedule tour button
-      const scheduleBtn = document.querySelector(
-        ".inline-flex.bg-\\[\\#001c4a\\].text-white",
-      );
-      if (scheduleBtn) {
-        scheduleBtn.addEventListener("click", () => {
-          alert(
-            "Schedule a private tour of our premium portfolio. One of our agents will contact you.",
           );
         });
       }
