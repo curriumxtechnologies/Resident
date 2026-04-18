@@ -53,8 +53,6 @@
     </script>
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-
-    <!-- PNG Favicons -->
     <link
       rel="icon"
       type="image/png"
@@ -67,15 +65,11 @@
       sizes="32x32"
       href="images/favicon-32x32.png"
     />
-
-    <!-- Apple Touch Icon (iPhone/iPad) -->
     <link
       rel="apple-touch-icon"
       sizes="180x180"
       href="images/apple-touch-icon.png"
     />
-
-    <!-- Android / Chrome Icons -->
     <link
       rel="icon"
       type="image/png"
@@ -88,11 +82,7 @@
       sizes="512x512"
       href="images/android-chrome-512x512.png"
     />
-
-    <!-- Web App Manifest -->
     <link rel="manifest" href="images/site.webmanifest" />
-
-    <!-- Theme Color (important for mobile UI color) -->
     <meta name="theme-color" content="#0D316D" />
 
     <style>
@@ -145,6 +135,63 @@
       .fade-up.revealed {
         opacity: 1;
         transform: translateY(0);
+      }
+      /* Premium property card styling (matching forsale page) */
+      .property-card {
+        border-radius: 1rem;
+        transition: all 0.3s ease;
+      }
+      .gradient-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.6) 50%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+      }
+      .badge-sold {
+        background-color: #2c2c2e;
+        color: white;
+        font-weight: 600;
+        backdrop-filter: blur(4px);
+      }
+      .badge-new {
+        background-color: #c5aa23;
+        color: #001c4a;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+      }
+      .badge-price-slash {
+        background-color: #e31b23;
+        color: white;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+      }
+      @media (max-width: 768px) {
+        .property-card img {
+          height: 260px !important;
+        }
+        .property-card .gradient-overlay {
+          padding: 12px !important;
+        }
+        .property-card h3 {
+          font-size: 0.85rem;
+        }
+        .property-card p {
+          font-size: 0.7rem;
+        }
+        .property-card .text-xl {
+          font-size: 0.95rem !important;
+        }
+        .property-card .flex.gap-4 {
+          gap: 8px;
+          font-size: 0.65rem;
+        }
+        .property-card a {
+          padding: 6px 8px;
+          font-size: 0.7rem;
+          border-radius: 0.6rem;
+        }
       }
     </style>
   </head>
@@ -256,15 +303,12 @@
                 <button
                   id="buyBtn"
                   class="px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition"
-                  onclick="setMode('buy')"
                 >
                   Buy
                 </button>
-
                 <button
                   id="rentBtn"
                   class="px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition"
-                  onclick="setMode('rent')"
                 >
                   Rent
                 </button>
@@ -404,17 +448,16 @@
                 <a
                   href="forrent.html"
                   class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/40 px-5 py-2 rounded-full font-semibold text-sm hover:bg-white hover:text-primary transition"
-                >
-                  Discover Rentals
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+                  >Discover Rentals
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ========== FEATURED PROPERTIES ========= -->
+      <!-- ========== FEATURED RESIDENCES (Premium Cards matching forsale page) ========= -->
       <section class="py-20 lg:py-28 bg-surface-container-low px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -428,125 +471,128 @@
               <h2
                 class="text-3xl md:text-4xl font-headline font-extrabold text-primary mt-1"
               >
-                Featured Residences
+                New Listings
               </h2>
             </div>
           </div>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8">
+            <!-- Card 1: Sold (badge-sold) -->
             <div
-              class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover-lift transition-all duration-400 fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="lagos"
             >
-              <div class="relative h-72 overflow-hidden">
-                <img
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC851fE3037ZbaHUdWC72l5imFiJjA1v45W2PJBdog-mYtySRRmToEhA_7mGYEuWOyRpoJc4ftnrA_UkhBv3dN-07ABQeAiO3sLye5MOnaFBnKRaaJCEHDjvb24rLfmMGBkCroxH-zc-weRohQTJj6kBvKLX-nQcHC7hrObH4_HtzTRIdw99qRcCRfFYGG4cpimmt6yR5N65HBEliXCgE0JUuy4SjxNVFBudnbhE9zMrqRGd8i5-zN1Dir9fhtQK67jV7wPY1A1ldc"
-                  alt="Lekki Villa"
-                />
-                <div
-                  class="absolute top-4 left-4 bg-tertiary-container text-primary text-[11px] font-bold px-2.5 py-1 rounded-full"
+              <img
+                class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC851fE3037ZbaHUdWC72l5imFiJjA1v45W2PJBdog-mYtySRRmToEhA_7mGYEuWOyRpoJc4ftnrA_UkhBv3dN-07ABQeAiO3sLye5MOnaFBnKRaaJCEHDjvb24rLfmMGBkCroxH-zc-weRohQTJj6kBvKLX-nQcHC7hrObH4_HtzTRIdw99qRcCRfFYGG4cpimmt6yR5N65HBEliXCgE0JUuy4SjxNVFBudnbhE9zMrqRGd8i5-zN1Dir9fhtQK67jV7wPY1A1ldc"
+                alt="Lekki Villa"
+              />
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
                 >
-                  Sold
-                </div>
               </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-secondary text-xs mb-1.5"
-                >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i>Lekki Phase 1,
-                  Lagos
-                </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
                   The Obsidian Villa
                 </h3>
-                <p class="text-primary font-headline text-xl font-bold mb-3">
-                  ₦245,000,000
-                </p>
-                <div
-                  class="flex gap-5 pt-3 border-t border-surface-container text-sm"
-                >
+                <p class="text-xs text-white/80 mt-1">Lekki Phase 1, Lagos</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦245,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>5</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>6</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i>450m²</span
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 5</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 6</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 450m²</span
                   >
                 </div>
               </div>
             </div>
+            <!-- Card 2: New Listing -->
             <div
-              class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover-lift fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="abuja"
             >
-              <div class="relative h-72 overflow-hidden">
-                <img
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTeCftafsNLd1y6HqAHyzGBJQ8pUROMtyiKa8P28gXfsY14DyC8fWyOMpGwbL9XKMXHzb7YZdU0oidh9JBX0QhhZJm-z_2pr2nQPIT-vUHfYRbacbiLio9pjApc4BAyA5oSnD-Svm-xVRWf8WwNx2GoKbZ5TisCFoHkEK2NG9-4TubjNsPe2fNtwWxvKGmjxuar80OGSCc9WHY2UqXvTcp2lVE3sCdMM4z0tXg7qWFgLW1_qCroAdWhqPQ_HO5j3-wHHfhviprHqM"
-                  alt="Abuja Penthouse"
-                />
-                <div
-                  class="absolute top-4 left-4 bg-primary text-white text-[11px] font-bold px-2.5 py-1 rounded-full"
+              <img
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTeCftafsNLd1y6HqAHyzGBJQ8pUROMtyiKa8P28gXfsY14DyC8fWyOMpGwbL9XKMXHzb7YZdU0oidh9JBX0QhhZJm-z_2pr2nQPIT-vUHfYRbacbiLio9pjApc4BAyA5oSnD-Svm-xVRWf8WwNx2GoKbZ5TisCFoHkEK2NG9-4TubjNsPe2fNtwWxvKGmjxuar80OGSCc9WHY2UqXvTcp2lVE3sCdMM4z0tXg7qWFgLW1_qCroAdWhqPQ_HO5j3-wHHfhviprHqM"
+                alt="Abuja Penthouse"
+              />
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
                 >
-                  New Listing
-                </div>
               </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-secondary text-xs mb-1.5"
-                >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i>Maitama, Abuja
-                </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
                   Skyline Penthouse
                 </h3>
-                <p class="text-primary font-headline text-xl font-bold mb-3">
-                  ₦180,000,000
-                </p>
-                <div class="flex gap-5 pt-3 border-t">
-                  <span class="flex items-center gap-1 text-sm"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>3</span
-                  ><span class="flex items-center gap-1 text-sm"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>4</span
-                  ><span class="flex items-center gap-1 text-sm"
-                    ><i data-lucide="square" class="w-4 h-4"></i>320m²</span
+                <p class="text-xs text-white/80 mt-1">Maitama, Abuja</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦180,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 320m²</span
                   >
                 </div>
               </div>
             </div>
+            <!-- Card 3: Price Slash -->
             <div
-              class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover-lift fade-up"
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
             >
-              <div class="relative h-72 overflow-hidden">
-                <img
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNYLCt4vEKOTFUEihS719pueVClyPovDbmlJPF-nLmfLgyUxZ9jQVUdtJkcnwPlYHlCiTXsElRKHylFEq5glzvotDNeXaGuqInm5XdSifCr48t9l_MBcQ0BsvWMcCi9Ga5_FvYGXTLHWKdfT65P9aEVluSaGmeDfCOeAnTjrHpFhYxAgIQH7ZmFcWeq4Q412hco9Tk7aQzWolYmLUfKtzyQLRkfxlDMQq6iRY8u-22z1W8g3PNHvc1a6imjKEIQfOJb5WJ1B6DdIc"
-                  alt="PH Waterfront"
-                />
-                <div
-                  class="absolute top-4 left-4 bg-tertiary text-white text-[11px] font-bold px-2.5 py-1 rounded-full"
+              <img
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNYLCt4vEKOTFUEihS719pueVClyPovDbmlJPF-nLmfLgyUxZ9jQVUdtJkcnwPlYHlCiTXsElRKHylFEq5glzvotDNeXaGuqInm5XdSifCr48t9l_MBcQ0BsvWMcCi9Ga5_FvYGXTLHWKdfT65P9aEVluSaGmeDfCOeAnTjrHpFhYxAgIQH7ZmFcWeq4Q412hco9Tk7aQzWolYmLUfKtzyQLRkfxlDMQq6iRY8u-22z1W8g3PNHvc1a6imjKEIQfOJb5WJ1B6DdIc"
+                alt="PH Waterfront"
+              />
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
                 >
-                  Rented
-                </div>
               </div>
-              <div class="p-5">
-                <div
-                  class="flex items-center gap-1 text-secondary text-xs mb-1.5"
-                >
-                  <i data-lucide="map-pin" class="w-3 h-3"></i>Old GRA, Port
-                  Harcourt
-                </div>
-                <h3 class="text-xl font-headline font-bold text-primary mb-1">
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
                   Azura Waterfront
                 </h3>
-                <p class="text-primary font-headline text-xl font-bold mb-3">
-                  ₦120,000,000
-                </p>
-                <div class="flex gap-5 pt-3 border-t">
-                  <span class="flex items-center gap-1 text-sm"
-                    ><i data-lucide="bed" class="w-4 h-4"></i>4</span
-                  ><span class="flex items-center gap-1 text-sm"
-                    ><i data-lucide="bath" class="w-4 h-4"></i>5</span
-                  ><span class="flex items-center gap-1 text-sm"
-                    ><i data-lucide="square" class="w-4 h-4"></i>380m²</span
+                <p class="text-xs text-white/80 mt-1">Old GRA, Port Harcourt</p>
+                <div class="mt-2 flex items-baseline gap-2 flex-wrap">
+                  <span class="text-gray-300 text-sm line-through font-medium"
+                    >₦150,000,000</span
+                  ><span class="text-white font-bold text-xl"
+                    >₦120,000,000</span
+                  >
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 5</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 380m²</span
                   >
                 </div>
               </div>
@@ -586,7 +632,6 @@
                   of mind.
                 </p>
               </div>
-
               <div>
                 <i
                   data-lucide="briefcase-concierge"
@@ -600,7 +645,6 @@
                   keys.
                 </p>
               </div>
-
               <div>
                 <i data-lucide="lock" class="text-tertiary w-6 h-6 mb-2"></i>
                 <h4 class="font-bold text-primary mb-0.5 text-base">
@@ -611,7 +655,6 @@
                   acquisitions.
                 </p>
               </div>
-
               <div>
                 <i
                   data-lucide="key-round"
@@ -660,6 +703,7 @@
         </div>
       </section>
 
+      <!-- Stats Section -->
       <div class="bg-primary py-14 lg:py-20">
         <div
           class="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
@@ -677,7 +721,6 @@
               PREMIUM HOMES
             </div>
           </div>
-
           <div class="stat fade-up">
             <div
               class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
@@ -691,7 +734,6 @@
               HAPPY CLIENTS
             </div>
           </div>
-
           <div class="stat fade-up">
             <div
               class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
@@ -707,7 +749,6 @@
               ASSETS MANAGED
             </div>
           </div>
-
           <div class="stat fade-up">
             <div
               class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
@@ -928,54 +969,30 @@
         </div>
       </div>
     </footer>
+
     <script>
       let mode = null;
-
       function setMode(selected) {
         mode = selected;
-
-        const buyBtn = document.getElementById("buyBtn");
-        const rentBtn = document.getElementById("rentBtn");
-        const stateBox = document.getElementById("stateBox");
-        const lgaBox = document.getElementById("lgaBox");
-
-        // 1. Define the active and inactive styles
-        const activeClasses = ["bg-white", "text-[#0D316D]"];
-        const inactiveClasses = ["text-white/80"];
-
+        const buyBtn = document.getElementById("buyBtn"),
+          rentBtn = document.getElementById("rentBtn");
+        const activeClasses = ["bg-white", "text-[#0D316D]"],
+          inactiveClasses = ["text-white/80"];
         if (selected === "buy") {
-          // Set Buy to Active
           buyBtn.classList.add(...activeClasses);
           buyBtn.classList.remove(...inactiveClasses);
-
-          // Set Rent to Inactive
           rentBtn.classList.remove(...activeClasses);
           rentBtn.classList.add(...inactiveClasses);
         } else {
-          // Set Rent to Active
           rentBtn.classList.add(...activeClasses);
           rentBtn.classList.remove(...inactiveClasses);
-
-          // Set Buy to Inactive
           buyBtn.classList.remove(...activeClasses);
           buyBtn.classList.add(...inactiveClasses);
         }
-
-        // Enable filters
-        [stateBox, lgaBox].forEach((el) => {
-          if (el) el.classList.remove("opacity-50", "pointer-events-none");
-        });
       }
-    </script>
-
-    <script>
-      // Initialize Lucide icons
+      window.setMode = setMode;
       lucide.createIcons();
-
-      // Register GSAP ScrollTrigger
       gsap.registerPlugin(ScrollTrigger);
-
-      // Hero entrance animation
       gsap.from(".hero-anim", {
         y: 40,
         opacity: 0,
@@ -984,25 +1001,19 @@
         stagger: 0.15,
         delay: 0.2,
       });
-
-      // ========== SMOOTH FADE-IN ON SCROLL (Intersection Observer) ==========
       const fadeElements = document.querySelectorAll(".fade-up");
-
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add("revealed");
-              observer.unobserve(entry.target); // only animate once
+              observer.unobserve(entry.target);
             }
           });
         },
         { threshold: 0.15, rootMargin: "0px 0px -30px 0px" },
       );
-
       fadeElements.forEach((el) => observer.observe(el));
-
-      // Counter animation for stats
       const statNumbers = document.querySelectorAll(".stat-number");
       const counterObserver = new IntersectionObserver(
         (entries) => {
@@ -1020,22 +1031,18 @@
                 current += step;
                 if (current >= targetValue) {
                   current = targetValue;
-                  if (hasPrefix && targetValue === 450) {
+                  if (hasPrefix && targetValue === 450)
                     el.innerText = prefix + current.toLocaleString() + suffix;
-                  } else if (targetValue >= 1000) {
+                  else if (targetValue >= 1000)
                     el.innerText = current.toLocaleString() + "+";
-                  } else {
-                    el.innerText = current + "+";
-                  }
+                  else el.innerText = current + "+";
                   clearInterval(timer);
                 } else {
-                  if (hasPrefix && targetValue === 450) {
+                  if (hasPrefix && targetValue === 450)
                     el.innerText = prefix + current.toLocaleString() + suffix;
-                  } else if (targetValue >= 1000) {
+                  else if (targetValue >= 1000)
                     el.innerText = current.toLocaleString() + "+";
-                  } else {
-                    el.innerText = current + "+";
-                  }
+                  else el.innerText = current + "+";
                 }
               }, 16);
               counterObserver.unobserve(el);
@@ -1044,10 +1051,7 @@
         },
         { threshold: 0.5 },
       );
-
       statNumbers.forEach((el) => counterObserver.observe(el));
-
-      // Mobile drawer logic (simple but functional, keep original structure)
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           const href = this.getAttribute("href");
@@ -1058,6 +1062,8 @@
           }
         });
       });
+      // Reinitialize icons for dynamic content
+      setTimeout(() => lucide.createIcons(), 100);
     </script>
   </body>
 </html>
