@@ -14,38 +14,6 @@
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <!-- Favicon -->
-    <link rel="icon" href="images/favicon.ico" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="images/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="images/favicon-32x32.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="images/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="images/android-chrome-512x512.png"
-    />
-    <link rel="manifest" href="images/site.webmanifest" />
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -113,19 +81,19 @@
           rgba(0, 0, 0, 0.1) 100%
         );
       }
-      /* Badges for sale: New Listing, Reduced, Just Listed (max 3 tags) */
+      /* Updated badge styles: New Listing, Price Slash, Sold */
       .badge-new {
         background-color: #c5aa23;
         color: #001c4a;
         font-weight: 700;
       }
-      .badge-reduced {
+      .badge-price-slash {
         background-color: #e31b23;
         color: white;
         font-weight: 700;
       }
-      .badge-just-listed {
-        background-color: #2c6e2c;
+      .badge-sold {
+        background-color: #2c3e50;
         color: white;
         font-weight: 600;
       }
@@ -136,7 +104,7 @@
         gap: 4px;
       }
 
-      /* ========== MOBILE STYLES MATCHING RENT PAGE ========== */
+      /* ========== MOBILE STYLES ========== */
       @media (max-width: 768px) {
         .property-card {
           border-radius: 1rem;
@@ -271,7 +239,10 @@
           </h1>
           <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
             Own your dream home today. From affordable townhouses to luxury
-            mansions. Zero hidden fees, transparent buying process
+            mansions —
+            <span class="font-semibold text-tertiary-container"
+              >all priced ≤ ₦50 million</span
+            >. Zero hidden fees, transparent buying process.
           </p>
         </div>
       </section>
@@ -343,7 +314,7 @@
         </div>
       </div>
 
-      <!-- Properties Grid: Max price 50M, majority in PH with sale tags -->
+      <!-- Properties Grid: Updated tags: New Listing, Price Slash, Sold. Buttons: "View More" -->
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -372,7 +343,7 @@
             id="propertiesContainer"
             class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-7 lg:gap-8"
           >
-            <!-- ========== PORT HARCOURT PROPERTIES (Majority: 9 out of 12) All ≤ 50M ========= -->
+            <!-- All properties updated with correct tags: New Listing, Price Slash, or Sold. Buttons say "View More" -->
 
             <!-- 1. PH: 3-Bed Bungalow (₦28M) - New Listing -->
             <div
@@ -418,13 +389,12 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
 
-            <!-- 2. PH: 4-Bed Duplex (₦45M) - Reduced -->
+            <!-- 2. PH: 4-Bed Duplex (₦45M) - Price Slash -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -440,8 +410,8 @@
               />
               <div class="absolute top-4 left-4">
                 <span
-                  class="badge-reduced text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Reduced</span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Price Slash</span
                 >
               </div>
               <div
@@ -470,13 +440,12 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
 
-            <!-- 3. PH: 2-Bed Flat (₦18M) - Just Listed -->
+            <!-- 3. PH: 2-Bed Flat (₦18M) - Sold -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -492,8 +461,8 @@
               />
               <div class="absolute top-4 left-4">
                 <span
-                  class="badge-just-listed text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Just Listed</span
+                  class="badge-sold text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Sold</span
                 >
               </div>
               <div
@@ -518,8 +487,7 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
@@ -566,13 +534,12 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
 
-            <!-- 5. PH: Terrace 3-Bed (₦32M) - Reduced -->
+            <!-- 5. PH: Terrace 3-Bed (₦32M) - Price Slash -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -588,8 +555,8 @@
               />
               <div class="absolute top-4 left-4">
                 <span
-                  class="badge-reduced text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Reduced</span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Price Slash</span
                 >
               </div>
               <div
@@ -614,13 +581,12 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
 
-            <!-- 6. PH: 1-Bed Flat (₦8.5M) - Just Listed budget option -->
+            <!-- 6. PH: 1-Bed Flat (₦8.5M) - Sold -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -636,8 +602,8 @@
               />
               <div class="absolute top-4 left-4">
                 <span
-                  class="badge-just-listed text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Just Listed</span
+                  class="badge-sold text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Sold</span
                 >
               </div>
               <div
@@ -660,8 +626,7 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
@@ -710,13 +675,12 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
 
-            <!-- 8. PH: 2-Bed Terrace (₦22M) - Reduced -->
+            <!-- 8. PH: 2-Bed Terrace (₦22M) - Price Slash -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
@@ -732,8 +696,8 @@
               />
               <div class="absolute top-4 left-4">
                 <span
-                  class="badge-reduced text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Reduced</span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Price Slash</span
                 >
               </div>
               <div
@@ -758,8 +722,7 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
@@ -808,14 +771,12 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
 
-            <!-- ========== LAGOS & ABUJA (3 listings all ≤ 50M) ========= -->
-            <!-- Lagos: 3-Bed Terrace (₦47M) - Reduced -->
+            <!-- 10. Lagos: 3-Bed Terrace (₦47M) - Price Slash -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
@@ -831,8 +792,8 @@
               />
               <div class="absolute top-4 left-4">
                 <span
-                  class="badge-reduced text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Reduced</span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Price Slash</span
                 >
               </div>
               <div
@@ -857,13 +818,12 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
 
-            <!-- Abuja: 4-Bed Duplex (₦48.5M) - New Listing -->
+            <!-- 11. Abuja: 4-Bed Duplex (₦48.5M) - New Listing -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
@@ -905,13 +865,12 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
 
-            <!-- Lagos: 2-Bed Flat (₦25M) - Just Listed -->
+            <!-- 12. Lagos: 2-Bed Flat (₦25M) - Sold -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
@@ -927,8 +886,8 @@
               />
               <div class="absolute top-4 left-4">
                 <span
-                  class="badge-just-listed text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Just Listed</span
+                  class="badge-sold text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Sold</span
                 >
               </div>
               <div
@@ -951,8 +910,7 @@
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Sale Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
                 ></a>
               </div>
             </div>
@@ -1009,7 +967,7 @@
       </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer (unchanged) -->
     <footer class="bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8">
       <div
         class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
@@ -1120,7 +1078,7 @@
       );
       fadeElements.forEach((el) => observer.observe(el));
 
-      // Filter logic (state, LGA, property type)
+      // Filter logic
       const cards = document.querySelectorAll(".property-card");
       const stateSelect = document.getElementById("stateFilter");
       const lgaSelect = document.getElementById("lgaFilter");
@@ -1219,6 +1177,7 @@
           filterProperties();
         });
       populateLGA("all");
+
       const consultSaleBtn = document.getElementById("saleConsultBtn");
       if (consultSaleBtn)
         consultSaleBtn.addEventListener("click", () =>
@@ -1226,6 +1185,7 @@
             "Connect with our home buying specialists: +234 (0) 123 456 7890 or sales@resident.ng — No hidden charges, transparent process.",
           ),
         );
+
       setTimeout(() => lucide.createIcons(), 150);
     </script>
   </body>
