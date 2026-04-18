@@ -122,7 +122,7 @@
           rgba(0, 0, 0, 0.1) 100%
         );
       }
-      /* Custom badge styles: only New Listing, Rented, Price Slash */
+      /* ONLY THREE TAGS: New Listing, Rented, Price Slash */
       .badge-new {
         background-color: #c5aa23;
         color: #001c4a;
@@ -138,10 +138,16 @@
         color: white;
         font-weight: 700;
       }
+      .price-tag {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
-    <!-- Navigation (consistent with main site and for-sale page) -->
+    <!-- Navigation -->
     <header
       class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
     >
@@ -190,14 +196,16 @@
             Homes for Rent
           </h1>
           <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
-            Experience premium living with flexible lease terms. Discover
-            Nigeria's most desirable rental estates, from as low as ₦300k per
-            annum.
+            Discover premium estates & budget-friendly apartments — from ₦200k
+            self-contained to luxury penthouses.
+            <span class="font-semibold text-tertiary-container"
+              >No hidden charges, transparent pricing.</span
+            >
           </p>
         </div>
       </section>
 
-      <!-- Filter Bar - Dropdown version -->
+      <!-- Filter Bar -->
       <div
         class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
       >
@@ -218,9 +226,9 @@
                 class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
               >
                 <option value="all">States</option>
+                <option value="rivers">Port Harcourt (PH)</option>
                 <option value="lagos">Lagos</option>
                 <option value="abuja">Abuja</option>
-                <option value="rivers">Port Harcourt</option>
               </select>
             </div>
 
@@ -247,7 +255,7 @@
         </div>
       </div>
 
-      <!-- Properties Grid: UNIFIED PREMIUM CARD DESIGN - Only tags allowed: New Listing, Rented, Price Slash -->
+      <!-- Properties Grid: ONLY tags New Listing, Rented, Price Slash. MOST houses in Port Harcourt -->
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -265,20 +273,423 @@
             id="propertiesContainer"
             class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
           >
-            <!-- PROPERTY 1 - Banana Island Lagos (₦7,000,000/year) - tag: New Listing -->
+            <!-- ========== PORT HARCOURT PROPERTIES (Majority - 8 out of 12) ========= -->
+
+            <!-- PH: 1 Room Apartment (₦200,000/year) - New Listing -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-name="1 Room - Woji PH"
+              data-price="200000"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Cozy 1-room apartment PH"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4 flex gap-2 z-10">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  Smart 1-Room Studio
+                </h3>
+                <p class="text-xs text-white/80 mt-1">
+                  Woji / Rukpokwu, Port Harcourt
+                </p>
+                <div class="mt-2 price-tag">
+                  <span class="text-white font-bold text-xl">₦200,000</span
+                  ><span class="text-sm font-normal">/ year</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 35m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforrent.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- PH: Self Contained (₦500,000/year) - Price Slash -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-name="Self-Con - Rumuokoro"
+              data-price="500000"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Self-contained PH"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Price Slash</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  Self-Contained Comfort
+                </h3>
+                <p class="text-xs text-white/80 mt-1">
+                  Rumuokoro / Eliozu, Port Harcourt
+                </p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦500,000</span
+                  ><span class="text-sm font-normal">/ year</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 1
+                    (private)</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 48m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforrent.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- PH: 1 Bedroom (₦700,000/year) - New Listing -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-name="1 Bed - GRA Phase 2"
+              data-price="700000"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="1 bedroom PH"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  1-Bedroom Modern Suite
+                </h3>
+                <p class="text-xs text-white/80 mt-1">
+                  GRA Phase 2, Port Harcourt
+                </p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦700,000</span
+                  ><span class="text-sm font-normal">/ year</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 1.5</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 65m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforrent.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- PH: 2 Bedroom (₦1,200,000/year) - Rented -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-name="2 Bed - Old GRA"
+              data-price="1200000"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="2 bedroom PH"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-rented text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Rented</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  2-Bedroom Family Apartment
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Old GRA, Port Harcourt</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦1,200,000</span
+                  ><span class="text-sm font-normal">/ year</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 2</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 2</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 95m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforrent.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- PH: 3 Bedroom (₦2,000,000/year) - Price Slash -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-name="3 Bed - New GRA"
+              data-price="2000000"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600566753190-17f5ba7d3e1a?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="3 bedroom PH"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Price Slash</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  3-Bedroom Contemporary Flat
+                </h3>
+                <p class="text-xs text-white/80 mt-1">New GRA, Port Harcourt</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦2,000,000</span
+                  ><span class="text-sm font-normal">/ year</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 145m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforrent.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- PH: Additional 1 room (Rumuokwurushi) - New Listing -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-name="Budget 1-Room PH"
+              data-price="200000"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Simple 1 room PH"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  Compact 1-Room (No Hidden Fees)
+                </h3>
+                <p class="text-xs text-white/80 mt-1">
+                  Rumuokwurushi / Choba, Port Harcourt
+                </p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦200,000</span
+                  ><span class="text-sm font-normal">/ year</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 32m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforrent.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- PH: Premium 4 Bedroom (₦3,850,000/year) - Rented example -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-name="4 Bed - GRA Phase 2"
+              data-price="3850000"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="GRA luxury PH"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-rented text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Rented</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  GRA Serene Mansion
+                </h3>
+                <p class="text-xs text-white/80 mt-1">
+                  GRA Phase 2, Port Harcourt
+                </p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦3,850,000</span
+                  ><span class="text-sm font-normal">/ year</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3.5</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 280m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforrent.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- PH: Another Self-con (Rumuibekwe) - New Listing -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-name="Self-Con - Rumuibekwe"
+              data-price="500000"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Self-contained unit PH"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  Self-Contained Executive
+                </h3>
+                <p class="text-xs text-white/80 mt-1">
+                  Rumuibekwe / Artillery, Port Harcourt
+                </p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦500,000</span
+                  ><span class="text-sm font-normal">/ year</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 50m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforrent.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- ========== LAGOS & ABUJA (minority - 4 listings) ========= -->
+
+            <!-- Lagos: Banana Island (₦7M) - New Listing -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
-              data-name="Banana Island Haven"
+              data-name="Banana Island Lagos"
+              data-price="7000000"
             >
               <img
                 src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=700&fit=crop"
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="Banana Island Waterfront"
+                alt="Banana Island luxury"
+                loading="lazy"
               />
-              <div class="absolute top-4 left-4 flex gap-2 z-10">
+              <div class="absolute top-4 left-4">
                 <span
-                  class="badge-new text-[11px] px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
                   >New Listing</span
                 >
               </div>
@@ -290,43 +701,46 @@
                 </h3>
                 <p class="text-xs text-white/80 mt-1">Banana Island, Lagos</p>
                 <div class="mt-2">
-                  <span class="text-white font-bold text-xl"
-                    >₦7,000,000
-                    <span class="text-sm font-normal">/ year</span></span
-                  >
+                  <span class="text-white font-bold text-xl">₦7,000,000</span
+                  ><span class="text-sm font-normal">/ year</span>
                 </div>
                 <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
                     ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
-                  >
-                  <span class="flex items-center gap-1"
+                  ><span class="flex items-center gap-1"
                     ><i data-lucide="bath" class="w-4 h-4"></i> 4.5</span
-                  >
-                  <span class="flex items-center gap-1"
+                  ><span class="flex items-center gap-1"
                     ><i data-lucide="square" class="w-4 h-4"></i> 350m²</span
                   >
                 </div>
                 <a
                   href="propertydetailsforrent.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Rental Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
 
-            <!-- PROPERTY 2 - Katampe Abuja (₦5,200,000/year) - tag: Rented -->
+            <!-- Abuja: Katampe (₦5.2M) - Rented -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
-              data-name="Katampe Luxe Residency"
+              data-name="Katampe Abuja"
+              data-price="5200000"
             >
               <img
                 src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=600&h=700&fit=crop"
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="Katampe Imperial Villa"
+                alt="Katampe Villa"
+                loading="lazy"
               />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-rented text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Rented</span
+                >
+              </div>
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
@@ -337,91 +751,46 @@
                   Katampe Extension, Abuja
                 </p>
                 <div class="mt-2">
-                  <span class="text-white font-bold text-xl"
-                    >₦5,200,000
-                    <span class="text-sm font-normal">/ year</span></span
-                  >
+                  <span class="text-white font-bold text-xl">₦5,200,000</span
+                  ><span class="text-sm font-normal">/ year</span>
                 </div>
                 <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
                     ><i data-lucide="bed" class="w-4 h-4"></i> 5</span
-                  >
-                  <span class="flex items-center gap-1"
+                  ><span class="flex items-center gap-1"
                     ><i data-lucide="bath" class="w-4 h-4"></i> 5</span
-                  >
-                  <span class="flex items-center gap-1"
+                  ><span class="flex items-center gap-1"
                     ><i data-lucide="square" class="w-4 h-4"></i> 420m²</span
                   >
                 </div>
                 <a
                   href="propertydetailsforrent.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Rental Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
 
-            <!-- PROPERTY 3 - GRA Phase 2 Port Harcourt (₦3,850,000/year) - tag: Price Slash -->
-            <div
-              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
-              data-location="rivers"
-              data-name="GRA Phase 2 Elegance"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&h=700&fit=crop"
-                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="GRA Serene Residence"
-              />
-
-              <div
-                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-              >
-                <h3 class="font-headline text-lg font-bold">
-                  GRA Serene Residence
-                </h3>
-                <p class="text-xs text-white/80 mt-1">
-                  GRA Phase 2, Port Harcourt
-                </p>
-                <div class="mt-2">
-                  <span class="text-white font-bold text-xl"
-                    >₦3,850,000
-                    <span class="text-sm font-normal">/ year</span></span
-                  >
-                </div>
-                <div class="flex gap-4 mt-3 text-xs text-white/80">
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 3.5</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 280m²</span
-                  >
-                </div>
-                <a
-                  href="propertydetailsforrent.html"
-                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Rental Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- PROPERTY 4 - Victoria Island Lagos (₦6,500,000/year) - tag: New Listing (example) -->
+            <!-- Lagos: VI Oceanview (₦6.5M) - Price Slash -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="lagos"
-              data-name="VI Oceanview Penthouse"
+              data-name="VI Penthouse"
+              data-price="6500000"
             >
               <img
                 src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=700&fit=crop"
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="VI Oceanview Penthouse"
+                alt="VI Oceanview"
+                loading="lazy"
               />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Price Slash</span
+                >
+              </div>
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
@@ -430,47 +799,44 @@
                 </h3>
                 <p class="text-xs text-white/80 mt-1">Victoria Island, Lagos</p>
                 <div class="mt-2">
-                  <span class="text-white font-bold text-xl"
-                    >₦6,500,000
-                    <span class="text-sm font-normal">/ year</span></span
-                  >
+                  <span class="text-white font-bold text-xl">₦6,500,000</span
+                  ><span class="text-sm font-normal">/ year</span>
                 </div>
                 <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
                     ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
-                  >
-                  <span class="flex items-center gap-1"
+                  ><span class="flex items-center gap-1"
                     ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
-                  >
-                  <span class="flex items-center gap-1"
+                  ><span class="flex items-center gap-1"
                     ><i data-lucide="square" class="w-4 h-4"></i> 210m²</span
                   >
                 </div>
                 <a
                   href="propertydetailsforrent.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Rental Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
 
-            <!-- PROPERTY 5 - Wuse 2 Abuja (₦4,100,000/year) - tag: Rented -->
+            <!-- Abuja: Wuse 2 (₦4.1M) - New Listing -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="abuja"
-              data-name="Wuse 2 Classic"
+              data-name="Wuse 2 Abuja"
+              data-price="4100000"
             >
               <img
                 src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=700&fit=crop"
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="Wuse Central Luxe Townhome"
+                alt="Wuse 2 townhome"
+                loading="lazy"
               />
-              <div class="absolute top-4 left-4 flex gap-2 z-10">
+              <div class="absolute top-4 left-4">
                 <span
-                  class="badge-rented text-[11px] px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
-                  >Rented</span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
                 >
               </div>
               <div
@@ -481,85 +847,29 @@
                 </h3>
                 <p class="text-xs text-white/80 mt-1">Wuse 2, Abuja</p>
                 <div class="mt-2">
-                  <span class="text-white font-bold text-xl"
-                    >₦4,100,000
-                    <span class="text-sm font-normal">/ year</span></span
-                  >
+                  <span class="text-white font-bold text-xl">₦4,100,000</span
+                  ><span class="text-sm font-normal">/ year</span>
                 </div>
                 <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
                     ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
-                  >
-                  <span class="flex items-center gap-1"
+                  ><span class="flex items-center gap-1"
                     ><i data-lucide="bath" class="w-4 h-4"></i> 4</span
-                  >
-                  <span class="flex items-center gap-1"
+                  ><span class="flex items-center gap-1"
                     ><i data-lucide="square" class="w-4 h-4"></i> 310m²</span
                   >
                 </div>
                 <a
                   href="propertydetailsforrent.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Rental Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- PROPERTY 6 - New GRA Port Harcourt (₦2,950,000/year) - tag: Price Slash -->
-            <div
-              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
-              data-location="rivers"
-              data-name="New GRA Cozy Residence"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=600&h=700&fit=crop"
-                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="New GRA Garden Villa"
-              />
-              <div class="absolute top-4 left-4 flex gap-2 z-10">
-                <span
-                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
-                  >Price Slash</span
-                >
-              </div>
-              <div
-                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-              >
-                <h3 class="font-headline text-lg font-bold">
-                  New GRA Garden Villa
-                </h3>
-                <p class="text-xs text-white/80 mt-1">New GRA, Port Harcourt</p>
-                <div class="mt-2">
-                  <span class="text-white font-bold text-xl"
-                    >₦2,950,000
-                    <span class="text-sm font-normal">/ year</span></span
-                  >
-                </div>
-                <div class="flex gap-4 mt-3 text-xs text-white/80">
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 2.5</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 240m²</span
-                  >
-                </div>
-                <a
-                  href="propertydetailsforrent.html"
-                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Rental Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+                  >Request Rental Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
           </div>
 
-          <!-- Empty state (hidden by default) -->
+          <!-- Empty state -->
           <div
             id="emptyState"
             class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8 fade-up"
@@ -584,7 +894,7 @@
         </div>
       </section>
 
-      <!-- CTA Section - Rental-specific consultation -->
+      <!-- CTA Section -->
       <section
         class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
       >
@@ -597,8 +907,8 @@
             Looking for flexible lease options?
           </h2>
           <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">
-            Our leasing experts offer exclusive access to short-term and
-            long-term luxury rentals. Let's find your perfect home.
+            Including low-income apartments with zero hidden fees. Let's find
+            your perfect home.
           </p>
           <button
             id="rentalConsultBtn"
@@ -610,7 +920,7 @@
       </section>
     </main>
 
-    <!-- Footer (consistent branding) -->
+    <!-- Footer -->
     <footer class="bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8">
       <div
         class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
@@ -627,8 +937,8 @@
             "
           />
           <p class="text-xs text-[#444650] max-w-xs">
-            Redefining luxury real estate through precision, trust and
-            uncompromising standard.
+            Redefining real estate through precision, trust and transparency.
+            Affordable options with no hidden charges.
           </p>
         </div>
         <div class="fade-up">
@@ -692,18 +1002,21 @@
       <div
         class="max-w-7xl mx-auto pt-8 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-[#444650]"
       >
-        <p>© 2025 Resident Luxury — All rights reserved.</p>
+        <p>
+          © 2025 Resident Luxury — All rights reserved. No hidden charges on any
+          rental.
+        </p>
         <div class="flex gap-5">
-          <a href="#" class="hover:text-primary transition">Privacy Policy</a>
-          <a href="#" class="hover:text-primary transition">Terms of Service</a>
+          <a href="#" class="hover:text-primary transition">Privacy Policy</a
+          ><a href="#" class="hover:text-primary transition"
+            >Terms of Service</a
+          >
         </div>
       </div>
     </footer>
 
     <script>
       lucide.createIcons();
-
-      // Intersection Observer for fade-up animations
       const fadeElements = document.querySelectorAll(".fade-up");
       const observer = new IntersectionObserver(
         (entries) => {
@@ -714,11 +1027,11 @@
             }
           });
         },
-        { threshold: 0.1, rootMargin: "0px 0px -20px 0px" },
+        { threshold: 0.1 },
       );
       fadeElements.forEach((el) => observer.observe(el));
 
-      // --- FILTER & SEARCH LOGIC (Rent page version with LGA mapping)---
+      // FILTER LOGIC with LGA mapping for PH focus
       const cards = document.querySelectorAll(".property-card");
       const stateSelect = document.getElementById("stateFilter");
       const lgaSelect = document.getElementById("lgaFilter");
@@ -727,26 +1040,44 @@
       const emptyStateDiv = document.getElementById("emptyState");
 
       const lgaMap = {
-        lagos: ["Banana Island", "Victoria Island", "Ikoyi"],
-        abuja: ["Katampe", "Wuse 2", "Maitama"],
-        rivers: ["GRA Phase 2", "New GRA", "Old GRA"],
+        rivers: [
+          "Woji",
+          "Rumuokoro",
+          "GRA Phase 2",
+          "Old GRA",
+          "New GRA",
+          "Rumuokwurushi",
+          "Rumuibekwe",
+          "Eliozu",
+          "Choba",
+        ],
+        lagos: ["Banana Island", "Victoria Island", "Ikoyi", "Ikeja"],
+        abuja: ["Katampe", "Wuse 2", "Maitama", "Lugbe"],
       };
 
       const getPropertyLGA = (card) => {
         const addressElem = card.querySelector("p.text-xs.text-white\\/80");
         if (!addressElem) return "";
         const address = addressElem.innerText;
-        if (address.includes("Banana Island")) return "Banana Island";
-        if (address.includes("Katampe")) return "Katampe";
+        if (address.includes("Woji")) return "Woji";
+        if (address.includes("Rumuokoro")) return "Rumuokoro";
         if (address.includes("GRA Phase 2")) return "GRA Phase 2";
-        if (address.includes("Victoria Island")) return "Victoria Island";
-        if (address.includes("Wuse 2")) return "Wuse 2";
+        if (address.includes("Old GRA")) return "Old GRA";
         if (address.includes("New GRA")) return "New GRA";
+        if (address.includes("Rumuokwurushi")) return "Rumuokwurushi";
+        if (address.includes("Rumuibekwe")) return "Rumuibekwe";
+        if (address.includes("Eliozu")) return "Eliozu";
+        if (address.includes("Choba")) return "Choba";
+        if (address.includes("Banana Island")) return "Banana Island";
+        if (address.includes("Victoria Island")) return "Victoria Island";
+        if (address.includes("Katampe")) return "Katampe";
+        if (address.includes("Wuse 2")) return "Wuse 2";
+        if (address.includes("Maitama")) return "Maitama";
         return "";
       };
 
       function populateLGA(selectedState) {
-        lgaSelect.innerHTML = '<option value="all">LGA</option>';
+        lgaSelect.innerHTML = '<option value="all">LGAs</option>';
         if (selectedState !== "all" && lgaMap[selectedState]) {
           lgaMap[selectedState].forEach((lga) => {
             const option = document.createElement("option");
@@ -772,15 +1103,11 @@
           const normalizedPropLGA = propertyLGAValue
             .toLowerCase()
             .replace(/\s/g, "");
-
           let stateMatch =
             selectedState === "all" || location === selectedState;
           let lgaMatch = true;
-
-          if (selectedLGA !== "all") {
+          if (selectedLGA !== "all")
             lgaMatch = normalizedPropLGA === normalizedSelectedLGA;
-          }
-
           if (stateMatch && lgaMatch) {
             card.style.display = "";
             visibleCount++;
@@ -788,12 +1115,7 @@
             card.style.display = "none";
           }
         });
-
-        if (visibleCount === 0) {
-          emptyStateDiv.classList.remove("hidden");
-        } else {
-          emptyStateDiv.classList.add("hidden");
-        }
+        emptyStateDiv.classList.toggle("hidden", visibleCount !== 0);
       }
 
       stateSelect.addEventListener("change", () => {
@@ -802,26 +1124,21 @@
       });
       lgaSelect.addEventListener("change", filterProperties);
       searchBtn.addEventListener("click", filterProperties);
-      if (resetFiltersBtn) {
+      if (resetFiltersBtn)
         resetFiltersBtn.addEventListener("click", () => {
           stateSelect.value = "all";
           populateLGA("all");
           filterProperties();
         });
-      }
       populateLGA("all");
 
-      // Rental Consultation CTA
       const consultBtn = document.getElementById("rentalConsultBtn");
-      if (consultBtn) {
+      if (consultBtn)
         consultBtn.addEventListener("click", () => {
           alert(
-            "Connect with our luxury leasing concierge: +234 (0) 123 456 7890 or rentals@resident.ng",
+            "Connect with our leasing concierge: +234 (0) 123 456 7890 or rentals@resident.ng — No hidden charges.",
           );
         });
-      }
-
-      // Re-run lucide icons after any dynamic changes
       setTimeout(() => lucide.createIcons(), 150);
     </script>
   </body>
