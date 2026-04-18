@@ -250,6 +250,14 @@
           font-size: 0.65rem;
         }
       }
+      /* View Toggle */
+      .view-toggle button {
+        transition: all 0.25s ease;
+      }
+      .view-toggle button.active {
+        background-color: #001c4a;
+        color: white;
+      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
@@ -365,13 +373,25 @@
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
-            class="flex justify-between items-end mb-10 flex-wrap gap-3 fade-up"
+            class="flex justify-between items-center mb-10 flex-wrap gap-3 fade-up"
           >
             <div>
               <span
                 class="text-tertiary font-bold uppercase tracking-widest text-xs"
-                >Rental Collection</span
+                >Signature Collection</span
               >
+            </div>
+
+            <!-- View Toggle -->
+            <div
+              class="view-toggle flex items-center gap-2 bg-[#f3f3f6] p-1 rounded-xl border border-[#e2e2e5]"
+            >
+              <button id="gridViewBtn" class="active p-2 rounded-lg">
+                <i data-lucide="grid-2x2"></i>
+              </button>
+              <button id="listViewBtn" class="p-2 rounded-lg">
+                <i data-lucide="list"></i>
+              </button>
             </div>
           </div>
 

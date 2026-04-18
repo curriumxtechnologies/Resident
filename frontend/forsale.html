@@ -16,8 +16,6 @@
     />
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-
-    <!-- PNG Favicons -->
     <link
       rel="icon"
       type="image/png"
@@ -30,15 +28,11 @@
       sizes="32x32"
       href="images/favicon-32x32.png"
     />
-
-    <!-- Apple Touch Icon (iPhone/iPad) -->
     <link
       rel="apple-touch-icon"
       sizes="180x180"
       href="images/apple-touch-icon.png"
     />
-
-    <!-- Android / Chrome Icons -->
     <link
       rel="icon"
       type="image/png"
@@ -51,8 +45,6 @@
       sizes="512x512"
       href="images/android-chrome-512x512.png"
     />
-
-    <!-- Web App Manifest -->
     <link rel="manifest" href="images/site.webmanifest" />
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -84,15 +76,6 @@
       html {
         scroll-behavior: smooth;
       }
-      /* View Toggle */
-      .view-toggle button {
-        transition: all 0.25s ease;
-      }
-      .view-toggle button.active {
-        background-color: #001c4a;
-        color: white;
-      }
-      /* Fade-in animation for scroll reveal */
       .fade-up {
         opacity: 0;
         transform: translateY(30px);
@@ -122,7 +105,6 @@
       .text-tertiary {
         color: #6e5d00;
       }
-      /* Custom gradient overlay for hero cards */
       .gradient-overlay {
         background: linear-gradient(
           to top,
@@ -131,72 +113,115 @@
           rgba(0, 0, 0, 0.1) 100%
         );
       }
-      /* Tag badge styles: Only Sold, New Listing, Price Slash */
-      .badge-sold {
-        background-color: #2c2c2e;
-        color: white;
-        font-weight: 600;
-        backdrop-filter: blur(4px);
-      }
+      /* Badges for sale: New Listing, Reduced, Just Listed (max 3 tags) */
       .badge-new {
         background-color: #c5aa23;
         color: #001c4a;
         font-weight: 700;
-        backdrop-filter: blur(4px);
       }
-      .badge-price-slash {
+      .badge-reduced {
         background-color: #e31b23;
         color: white;
         font-weight: 700;
-        backdrop-filter: blur(4px);
       }
-      /* MOBILE SIZE + PROPORTION FIX ONLY */
+      .badge-just-listed {
+        background-color: #2c6e2c;
+        color: white;
+        font-weight: 600;
+      }
+      .price-tag {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      /* ========== MOBILE STYLES MATCHING RENT PAGE ========== */
       @media (max-width: 768px) {
         .property-card {
           border-radius: 1rem;
         }
-
-        /* Make cards shorter like reference */
         .property-card img {
           height: 260px !important;
         }
-
-        /* Reduce overlay padding */
         .property-card .gradient-overlay {
           padding: 12px !important;
         }
-
-        /* Tighten text sizes (same structure, smaller scale) */
         .property-card h3 {
           font-size: 0.85rem;
+          line-height: 1.3;
         }
-
         .property-card p {
           font-size: 0.7rem;
         }
-
-        /* Price slightly smaller */
         .property-card .text-xl {
           font-size: 0.95rem !important;
         }
-
-        /* Icons row smaller */
         .property-card .flex.gap-4 {
           gap: 8px;
           font-size: 0.65rem;
         }
-
-        /* Button smaller but SAME position */
         .property-card a {
           padding: 6px 8px;
           font-size: 0.7rem;
           border-radius: 0.6rem;
         }
+        .property-card .absolute.top-4.left-4 span {
+          font-size: 9px !important;
+          padding: 4px 8px !important;
+        }
+        #propertiesContainer {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 12px !important;
+        }
+        section.py-16 {
+          padding-top: 2rem;
+          padding-bottom: 2rem;
+        }
+        .max-w-7xl.mx-auto {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+        .relative.bg-\[\#001c4a\].py-16 {
+          padding-top: 2.5rem;
+          padding-bottom: 2.5rem;
+        }
+        .hero-title {
+          font-size: 1.8rem !important;
+        }
+      }
+      @media (max-width: 480px) {
+        #propertiesContainer {
+          gap: 10px !important;
+        }
+        .property-card img {
+          height: 220px !important;
+        }
+        .property-card .gradient-overlay {
+          padding: 10px !important;
+        }
+        .property-card h3 {
+          font-size: 0.75rem;
+        }
+        .property-card .text-xl {
+          font-size: 0.85rem !important;
+        }
+        .property-card a {
+          padding: 5px 6px;
+          font-size: 0.65rem;
+        }
+      }
+      .view-toggle button {
+        transition: all 0.25s ease;
+      }
+      .view-toggle button.active {
+        background-color: #001c4a;
+        color: white;
       }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
-    <!-- Navigation (matching main site style) -->
+    <!-- Navigation -->
     <header
       class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
     >
@@ -214,12 +239,12 @@
               "
             />
           </a>
-          <div>
+          <div class="flex gap-3">
             <a
               href="forrent.html"
               class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
             >
-              For rent
+              For Rent
             </a>
           </div>
         </div>
@@ -227,37 +252,40 @@
     </header>
 
     <main>
-      <!-- Page Hero -->
+      <!-- Hero Section -->
       <section
         class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden fade-up"
       >
         <div class="absolute inset-0 opacity-20">
           <img
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&h=400&fit=crop"
-            alt="Luxury homes background"
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&h=400&fit=crop"
+            alt="Luxury homes for sale"
             class="w-full h-full object-cover"
           />
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
           <h1
-            class="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4"
+            class="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 hero-title"
           >
-            Homes for Sale
+            Prime Estates for Sale
           </h1>
           <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
-            Discover exceptional homes where legacy meets modern luxury.
-            Carefully curated properties across Nigeria's prime locations.
+            Own your dream home today. From affordable townhouses to luxury
+            mansions —
+            <span class="font-semibold text-tertiary-container"
+              >all priced ≤ ₦50 million</span
+            >. Zero hidden fees, transparent buying process.
           </p>
         </div>
       </section>
 
-      <!-- Filter Bar - Dropdown version (matching landing page style) -->
+      <!-- Filter Bar with Property Type Dropdown -->
       <div
         class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
       >
         <div class="max-w-7xl mx-auto px-5 md:px-8">
           <div
-            class="grid grid-cols-3 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3"
+            class="grid grid-cols-4 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3"
           >
             <!-- State Dropdown -->
             <div
@@ -272,9 +300,9 @@
                 class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
               >
                 <option value="all">States</option>
+                <option value="rivers">Port Harcourt (PH)</option>
                 <option value="lagos">Lagos</option>
                 <option value="abuja">Abuja</option>
-                <option value="rivers">Port Harcourt</option>
               </select>
             </div>
 
@@ -289,6 +317,23 @@
               ></select>
             </div>
 
+            <!-- Property Type Dropdown -->
+            <div
+              class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
+              <i data-lucide="home" class="text-tertiary w-5 h-5 shrink-0"></i>
+              <select
+                id="typeFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
+              >
+                <option value="all">Property Type</option>
+                <option value="bungalow">Bungalow</option>
+                <option value="duplex">Duplex</option>
+                <option value="terrace">Terrace / Townhouse</option>
+                <option value="flat">Flat / Apartment</option>
+              </select>
+            </div>
+
             <!-- Search Button -->
             <button
               id="searchBtn"
@@ -301,7 +346,7 @@
         </div>
       </div>
 
-      <!-- Properties Grid: UNIFIED PREMIUM CARD DESIGN - Only 3 random properties have tags: Sold, New Listing, Price Slash -->
+      <!-- Properties Grid: Max price 50M, majority in PH with sale tags -->
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -313,7 +358,6 @@
                 >Signature Collection</span
               >
             </div>
-
             <!-- View Toggle -->
             <div
               class="view-toggle flex items-center gap-2 bg-[#f3f3f6] p-1 rounded-xl border border-[#e2e2e5]"
@@ -331,16 +375,21 @@
             id="propertiesContainer"
             class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-7 lg:gap-8"
           >
-            <!-- PROPERTY 1 - The Pearl Haven (Lagos) - TAG: New Listing -->
+            <!-- ========== PORT HARCOURT PROPERTIES (Majority: 9 out of 12) All ≤ 50M ========= -->
+
+            <!-- 1. PH: 3-Bed Bungalow (₦28M) - New Listing -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
-              data-location="lagos"
-              data-name="The Pearl Haven Lekki"
+              data-location="rivers"
+              data-type="bungalow"
+              data-price="28000000"
+              data-name="3 Bed Bungalow - Woji"
             >
               <img
                 src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=700&fit=crop"
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="The Pearl Haven"
+                alt="Bungalow Woji PH"
+                loading="lazy"
               />
               <div class="absolute top-4 left-4 flex gap-2 z-10">
                 <span
@@ -351,237 +400,63 @@
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
-                <h3 class="font-headline text-lg font-bold">The Pearl Haven</h3>
-                <p class="text-xs text-white/80 mt-1">Lekki Phase 1, Lagos</p>
-                <div class="mt-2">
-                  <span class="text-white font-bold text-xl">₦78,500,000</span>
-                </div>
-                <div class="flex gap-4 mt-3 text-xs text-white/80">
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 4</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 320m²</span
-                  >
-                </div>
-                <a
-                  href="propertydetailsforsale.html"
-                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Details
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- PROPERTY 2 - Serene Gardens Maitama (Abuja) - NO TAG -->
-            <div
-              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
-              data-location="abuja"
-              data-name="Serene Gardens Maitama"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=700&fit=crop"
-                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="Serene Gardens Villa"
-              />
-              <!-- No tag -->
-              <div
-                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-              >
                 <h3 class="font-headline text-lg font-bold">
-                  Serene Gardens Villa
+                  3-Bedroom Bungalow
                 </h3>
-                <p class="text-xs text-white/80 mt-1">Maitama, Abuja</p>
-                <div class="mt-2">
-                  <span class="text-white font-bold text-xl">₦92,000,000</span>
-                </div>
-                <div class="flex gap-4 mt-3 text-xs text-white/80">
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i> 5</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 5</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 410m²</span
-                  >
-                </div>
-                <a
-                  href="propertydetailsforsale.html"
-                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Details
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- PROPERTY 3 - Golden Crest Manor (Port Harcourt) - TAG: Sold -->
-            <div
-              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
-              data-location="rivers"
-              data-name="Golden Crest GRA"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=600&h=700&fit=crop"
-                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="Golden Crest Manor"
-              />
-              <div class="absolute top-4 left-4 flex gap-2 z-10">
-                <span
-                  class="badge-sold text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Sold</span
-                >
-              </div>
-              <div
-                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-              >
-                <h3 class="font-headline text-lg font-bold">
-                  Golden Crest Manor
-                </h3>
-                <p class="text-xs text-white/80 mt-1">Old GRA, Port Harcourt</p>
-                <div class="mt-2">
-                  <span class="text-white font-bold text-xl">₦65,500,000</span>
-                </div>
-                <div class="flex gap-4 mt-3 text-xs text-white/80">
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 3.5</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 295m²</span
-                  >
-                </div>
-                <a
-                  href="propertydetailsforsale.html"
-                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Details
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- PROPERTY 4 - Ikoyi Oasis (Lagos) - NO TAG -->
-            <div
-              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
-              data-location="lagos"
-              data-name="Ikoyi Oasis Residence"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&h=700&fit=crop"
-                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="Ikoyi Oasis"
-              />
-              <!-- No tag -->
-              <div
-                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-              >
-                <h3 class="font-headline text-lg font-bold">Ikoyi Oasis</h3>
-                <p class="text-xs text-white/80 mt-1">Ikoyi, Lagos</p>
-                <div class="mt-2">
-                  <span class="text-white font-bold text-xl">₦98,750,000</span>
+                <p class="text-xs text-white/80 mt-1">Woji, Port Harcourt</p>
+                <div class="mt-2 price-tag">
+                  <span class="text-white font-bold text-xl">₦28,000,000</span>
                 </div>
                 <div class="flex gap-4 mt-3 text-xs text-white/80">
                   <span class="flex items-center gap-1"
                     ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
                   >
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 2.5</span
                   >
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 250m²</span
+                    ><i data-lucide="square" class="w-4 h-4"></i> 165m²</span
                   >
                 </div>
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Details
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
 
-            <!-- PROPERTY 5 - Gwarimpa Signature (Abuja) - TAG: Price Slash -->
-            <div
-              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
-              data-location="abuja"
-              data-name="Gwarimpa Signature Villa"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=700&fit=crop"
-                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="Gwarimpa Signature"
-              />
-              <div class="absolute top-4 left-4 flex gap-2 z-10">
-                <span
-                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Price Slash</span
-                >
-              </div>
-              <div
-                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-              >
-                <h3 class="font-headline text-lg font-bold">
-                  Gwarimpa Signature
-                </h3>
-                <p class="text-xs text-white/80 mt-1">Gwarimpa, Abuja</p>
-                <div class="mt-2">
-                  <span class="text-white font-bold text-xl">₦84,200,000</span>
-                </div>
-                <div class="flex gap-4 mt-3 text-xs text-white/80">
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i> 5</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 4</span
-                  >
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 380m²</span
-                  >
-                </div>
-                <a
-                  href="propertydetailsforsale.html"
-                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                >
-                  Request Details
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- PROPERTY 6 - Trans Amadi Luxe (Port Harcourt) - NO TAG (previously had Price Slash, now clean) -->
+            <!-- 2. PH: 4-Bed Duplex (₦45M) - Reduced -->
             <div
               class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
               data-location="rivers"
-              data-name="Trans Amadi Luxe Residency"
+              data-type="duplex"
+              data-price="45000000"
+              data-name="4 Bed Duplex - GRA Phase 2"
             >
               <img
-                src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=700&fit=crop"
+                src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&h=700&fit=crop"
                 class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="Trans Amadi Luxe"
+                alt="Duplex GRA PH"
+                loading="lazy"
               />
-              <!-- No tag displayed (clean) -->
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-reduced text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Reduced</span
+                >
+              </div>
               <div
                 class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
               >
                 <h3 class="font-headline text-lg font-bold">
-                  Trans Amadi Luxe
+                  4-Bedroom Duplex
                 </h3>
                 <p class="text-xs text-white/80 mt-1">
-                  Trans Amadi, Port Harcourt
+                  GRA Phase 2, Port Harcourt
                 </p>
-                <div class="mt-2 flex items-baseline gap-2 flex-wrap">
-                  <span class="text-gray-300 text-sm line-through font-medium"
-                    >₦59,900,000</span
-                  >
+                <div class="mt-2">
                   <span class="text-white font-bold text-xl">₦45,000,000</span>
                 </div>
                 <div class="flex gap-4 mt-3 text-xs text-white/80">
@@ -589,24 +464,504 @@
                     ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
                   >
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 4</span
                   >
                   <span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 310m²</span
+                    ><i data-lucide="square" class="w-4 h-4"></i> 280m²</span
                   >
                 </div>
                 <a
                   href="propertydetailsforsale.html"
                   class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- 3. PH: 2-Bed Flat (₦18M) - Just Listed -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-type="flat"
+              data-price="18000000"
+              data-name="2 Bed Flat - Rumuokoro"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Flat Rumuokoro"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-just-listed text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Just Listed</span
                 >
-                  Request Details
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">2-Bedroom Flat</h3>
+                <p class="text-xs text-white/80 mt-1">
+                  Rumuokoro, Port Harcourt
+                </p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦18,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 2</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 2</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 90m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- 4. PH: 5-Bed Mansion (₦49.5M) - New Listing -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-type="duplex"
+              data-price="49500000"
+              data-name="5 Bed Mansion - Old GRA"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Mansion Old GRA"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  5-Bed Luxury Mansion
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Old GRA, Port Harcourt</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦49,500,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 5</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 5</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 400m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- 5. PH: Terrace 3-Bed (₦32M) - Reduced -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-type="terrace"
+              data-price="32000000"
+              data-name="3 Bed Terrace - New GRA"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Terrace New GRA"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-reduced text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Reduced</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  3-Bedroom Terrace
+                </h3>
+                <p class="text-xs text-white/80 mt-1">New GRA, Port Harcourt</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦32,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3.5</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 210m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- 6. PH: 1-Bed Flat (₦8.5M) - Just Listed budget option -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-type="flat"
+              data-price="8500000"
+              data-name="1 Bed Flat - Choba"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="1 bed Choba"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-just-listed text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Just Listed</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">1-Bedroom Flat</h3>
+                <p class="text-xs text-white/80 mt-1">Choba, Port Harcourt</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦8,500,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 1</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 55m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- 7. PH: 4-Bed Bungalow (₦38M) - New Listing -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-type="bungalow"
+              data-price="38000000"
+              data-name="4 Bed Bungalow - Rumuibekwe"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Bungalow Rumuibekwe"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  4-Bedroom Bungalow
+                </h3>
+                <p class="text-xs text-white/80 mt-1">
+                  Rumuibekwe, Port Harcourt
+                </p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦38,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 220m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- 8. PH: 2-Bed Terrace (₦22M) - Reduced -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-type="terrace"
+              data-price="22000000"
+              data-name="2 Bed Terrace - Eliozu"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Terrace Eliozu"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-reduced text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Reduced</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  2-Bedroom Terrace
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Eliozu, Port Harcourt</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦22,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 2</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 2</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 130m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- 9. PH: 3-Bed Duplex (₦42M) - New Listing -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="rivers"
+              data-type="duplex"
+              data-price="42000000"
+              data-name="3 Bed Duplex - GRA Phase 1"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Duplex GRA Phase 1"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  3-Bedroom Duplex
+                </h3>
+                <p class="text-xs text-white/80 mt-1">
+                  GRA Phase 1, Port Harcourt
+                </p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦42,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 250m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- ========== LAGOS & ABUJA (3 listings all ≤ 50M) ========= -->
+            <!-- Lagos: 3-Bed Terrace (₦47M) - Reduced -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="lagos"
+              data-type="terrace"
+              data-price="47000000"
+              data-name="3 Bed Terrace - Ikeja"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Ikeja Terrace"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-reduced text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Reduced</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  3-Bedroom Terrace
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Ikeja, Lagos</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦47,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 200m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Abuja: 4-Bed Duplex (₦48.5M) - New Listing -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="abuja"
+              data-type="duplex"
+              data-price="48500000"
+              data-name="4 Bed Duplex - Katampe"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Katampe Abuja"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >New Listing</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  4-Bedroom Duplex
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Katampe, Abuja</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦48,500,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 4</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 4</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 320m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Lagos: 2-Bed Flat (₦25M) - Just Listed -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
+              data-location="lagos"
+              data-type="flat"
+              data-price="25000000"
+              data-name="2 Bed Flat - Surulere"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=700&fit=crop"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+                alt="Surulere Flat"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4">
+                <span
+                  class="badge-just-listed text-[11px] px-3 py-1 rounded-full shadow-sm"
+                  >Just Listed</span
+                >
+              </div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">2-Bedroom Flat</h3>
+                <p class="text-xs text-white/80 mt-1">Surulere, Lagos</p>
+                <div class="mt-2">
+                  <span class="text-white font-bold text-xl">₦25,000,000</span>
+                </div>
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed" class="w-4 h-4"></i> 2</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 2</span
+                  ><span class="flex items-center gap-1"
+                    ><i data-lucide="square" class="w-4 h-4"></i> 105m²</span
+                  >
+                </div>
+                <a
+                  href="propertydetailsforsale.html"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >Request Sale Info
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
           </div>
 
-          <!-- Empty state -->
+          <!-- Empty State -->
           <div
             id="emptyState"
             class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8 fade-up"
@@ -616,7 +971,7 @@
               class="w-16 h-16 text-[#c4c6d1] mx-auto mb-4"
             ></i>
             <h3 class="text-xl font-headline font-semibold text-primary">
-              No matching properties
+              No matching properties for sale
             </h3>
             <p class="text-[#444650] text-sm mt-1">
               Try adjusting your search or filter.
@@ -637,21 +992,21 @@
       >
         <div class="max-w-4xl mx-auto text-center">
           <i
-            data-lucide="phone-call"
+            data-lucide="handshake"
             class="w-10 h-10 text-tertiary-container mx-auto mb-4"
           ></i>
           <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">
-            Not finding your dream home?
+            Ready to own? We simplify the purchase.
           </h2>
           <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">
-            Speak with a Resident curator for exclusive off-market listings
-            tailored to your lifestyle.
+            Flexible payment plans, legal support & zero hidden fees. Talk to
+            our sales team today.
           </p>
           <button
-            id="consultBtn"
+            id="saleConsultBtn"
             class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm"
           >
-            Request Private Consultation
+            Request Private Sales Consultation
           </button>
         </div>
       </section>
@@ -674,8 +1029,8 @@
             "
           />
           <p class="text-xs text-[#444650] max-w-xs">
-            Redefining luxury real estate through precision, trust and
-            uncompromising standard.
+            Redefining real estate through precision, trust and transparency.
+            Affordable sale options with zero hidden costs.
           </p>
         </div>
         <div class="fade-up">
@@ -683,17 +1038,17 @@
           <ul class="space-y-2 text-xs">
             <li>
               <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Buy Properties</a
+                >Properties for Sale</a
               >
             </li>
             <li>
               <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Rent Properties</a
+                >New Developments</a
               >
             </li>
             <li>
               <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Off-market Listings</a
+                >Land & Plots</a
               >
             </li>
           </ul>
@@ -708,7 +1063,7 @@
             </li>
             <li>
               <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Concierge Team</a
+                >Sales Concierge</a
               >
             </li>
             <li>
@@ -721,7 +1076,7 @@
         <div class="fade-up">
           <h4 class="font-bold text-primary mb-4 text-sm">Insights</h4>
           <p class="text-xs text-[#444650] mb-2">
-            Access exclusive off-market opportunities
+            Get early access to new sale listings
           </p>
           <div class="flex">
             <input
@@ -739,18 +1094,21 @@
       <div
         class="max-w-7xl mx-auto pt-8 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-[#444650]"
       >
-        <p>© 2025 Resident Luxury — All rights reserved.</p>
+        <p>
+          © 2025 Resident Luxury — All rights reserved. Transparent pricing on
+          all sale listings.
+        </p>
         <div class="flex gap-5">
-          <a href="#" class="hover:text-primary transition">Privacy Policy</a>
-          <a href="#" class="hover:text-primary transition">Terms of Service</a>
+          <a href="#" class="hover:text-primary transition">Privacy Policy</a
+          ><a href="#" class="hover:text-primary transition"
+            >Terms of Service</a
+          >
         </div>
       </div>
     </footer>
 
     <script>
       lucide.createIcons();
-
-      // Intersection Observer for fade-up animations
       const fadeElements = document.querySelectorAll(".fade-up");
       const observer = new IntersectionObserver(
         (entries) => {
@@ -761,46 +1119,62 @@
             }
           });
         },
-        { threshold: 0.1, rootMargin: "0px 0px -20px 0px" },
+        { threshold: 0.1 },
       );
       fadeElements.forEach((el) => observer.observe(el));
 
-      // --- FILTER LOGIC (supports LGA mapping, unified for all cards)---
+      // Filter logic (state, LGA, property type)
       const cards = document.querySelectorAll(".property-card");
       const stateSelect = document.getElementById("stateFilter");
       const lgaSelect = document.getElementById("lgaFilter");
+      const typeSelect = document.getElementById("typeFilter");
       const searchBtn = document.getElementById("searchBtn");
       const resetFiltersBtn = document.getElementById("resetFiltersBtn");
       const emptyStateDiv = document.getElementById("emptyState");
 
       const lgaMap = {
-        lagos: ["Lekki Phase 1", "Ikoyi", "Victoria Island"],
-        abuja: ["Maitama", "Gwarimpa", "Asokoro"],
-        rivers: ["Old GRA", "Trans Amadi", "New GRA"],
+        rivers: [
+          "Woji",
+          "Rumuokoro",
+          "GRA Phase 2",
+          "Old GRA",
+          "New GRA",
+          "Rumuibekwe",
+          "Eliozu",
+          "Choba",
+          "GRA Phase 1",
+        ],
+        lagos: ["Ikeja", "Surulere", "Victoria Island", "Banana Island"],
+        abuja: ["Katampe", "Wuse 2", "Maitama"],
       };
 
-      // Property LGA mapping based on displayed address inside p tag
-      const getPropertyLGA = (card) => {
-        const addressElem = card.querySelector("p.text-xs.text-white\\/80");
-        if (!addressElem) return "";
-        const address = addressElem.innerText;
-        if (address.includes("Lekki Phase 1")) return "Lekki Phase 1";
-        if (address.includes("Maitama")) return "Maitama";
-        if (address.includes("Old GRA")) return "Old GRA";
-        if (address.includes("Ikoyi")) return "Ikoyi";
-        if (address.includes("Gwarimpa")) return "Gwarimpa";
-        if (address.includes("Trans Amadi")) return "Trans Amadi";
+      function getPropertyLGA(card) {
+        const addr =
+          card.querySelector("p.text-xs.text-white\\/80")?.innerText || "";
+        if (addr.includes("Woji")) return "Woji";
+        if (addr.includes("Rumuokoro")) return "Rumuokoro";
+        if (addr.includes("GRA Phase 2")) return "GRA Phase 2";
+        if (addr.includes("Old GRA")) return "Old GRA";
+        if (addr.includes("New GRA")) return "New GRA";
+        if (addr.includes("Rumuibekwe")) return "Rumuibekwe";
+        if (addr.includes("Eliozu")) return "Eliozu";
+        if (addr.includes("Choba")) return "Choba";
+        if (addr.includes("GRA Phase 1")) return "GRA Phase 1";
+        if (addr.includes("Ikeja")) return "Ikeja";
+        if (addr.includes("Surulere")) return "Surulere";
+        if (addr.includes("Katampe")) return "Katampe";
+        if (addr.includes("Wuse 2")) return "Wuse 2";
         return "";
-      };
+      }
 
       function populateLGA(selectedState) {
-        lgaSelect.innerHTML = '<option value="all">LGA</option>';
+        lgaSelect.innerHTML = '<option value="all">LGAs</option>';
         if (selectedState !== "all" && lgaMap[selectedState]) {
           lgaMap[selectedState].forEach((lga) => {
-            const option = document.createElement("option");
-            option.value = lga.toLowerCase().replace(/\s/g, "");
-            option.textContent = lga;
-            lgaSelect.appendChild(option);
+            const opt = document.createElement("option");
+            opt.value = lga.toLowerCase().replace(/\s/g, "");
+            opt.textContent = lga;
+            lgaSelect.appendChild(opt);
           });
         }
         lgaSelect.value = "all";
@@ -809,39 +1183,28 @@
       function filterProperties() {
         const selectedState = stateSelect.value;
         const selectedLGA = lgaSelect.value;
+        const selectedType = typeSelect.value;
         let visibleCount = 0;
-
         cards.forEach((card) => {
           const location = card.dataset.location;
-          const propertyLGAValue = getPropertyLGA(card);
-          const normalizedSelectedLGA = selectedLGA
-            .toLowerCase()
-            .replace(/\s/g, "");
-          const normalizedPropLGA = propertyLGAValue
-            .toLowerCase()
-            .replace(/\s/g, "");
-
-          let stateMatch =
+          const propertyType = card.dataset.type;
+          const propLGA = getPropertyLGA(card).toLowerCase().replace(/\s/g, "");
+          const targetLGA =
+            selectedLGA === "all"
+              ? true
+              : propLGA === selectedLGA.toLowerCase().replace(/\s/g, "");
+          const stateMatch =
             selectedState === "all" || location === selectedState;
-          let lgaMatch = true;
-
-          if (selectedLGA !== "all") {
-            lgaMatch = normalizedPropLGA === normalizedSelectedLGA;
-          }
-
-          if (stateMatch && lgaMatch) {
+          const typeMatch =
+            selectedType === "all" || propertyType === selectedType;
+          if (stateMatch && targetLGA && typeMatch) {
             card.style.display = "";
             visibleCount++;
           } else {
             card.style.display = "none";
           }
         });
-
-        if (visibleCount === 0) {
-          emptyStateDiv.classList.remove("hidden");
-        } else {
-          emptyStateDiv.classList.add("hidden");
-        }
+        emptyStateDiv.classList.toggle("hidden", visibleCount !== 0);
       }
 
       stateSelect.addEventListener("change", () => {
@@ -849,27 +1212,24 @@
         filterProperties();
       });
       lgaSelect.addEventListener("change", filterProperties);
+      typeSelect.addEventListener("change", filterProperties);
       searchBtn.addEventListener("click", filterProperties);
-      if (resetFiltersBtn) {
+      if (resetFiltersBtn)
         resetFiltersBtn.addEventListener("click", () => {
           stateSelect.value = "all";
+          typeSelect.value = "all";
           populateLGA("all");
           filterProperties();
         });
-      }
       populateLGA("all");
-
-      const consultBtn = document.getElementById("consultBtn");
-      if (consultBtn) {
-        consultBtn.addEventListener("click", () => {
+      const consultSaleBtn = document.getElementById("saleConsultBtn");
+      if (consultSaleBtn)
+        consultSaleBtn.addEventListener("click", () =>
           alert(
-            "Connect with our concierge team: +234 (0) 123 456 7890 or hello@resident.ng",
-          );
-        });
-      }
-
-      // Re-run lucide for any new icons (just in case)
-      setTimeout(() => lucide.createIcons(), 100);
+            "Connect with our home buying specialists: +234 (0) 123 456 7890 or sales@resident.ng — No hidden charges, transparent process.",
+          ),
+        );
+      setTimeout(() => lucide.createIcons(), 150);
     </script>
   </body>
 </html>
