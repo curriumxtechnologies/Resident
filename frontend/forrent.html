@@ -144,10 +144,116 @@
         flex-wrap: wrap;
         gap: 4px;
       }
+
+      /* ========== MOBILE STYLES MATCHING FORSALE PAGE ========== */
+      @media (max-width: 768px) {
+        .property-card {
+          border-radius: 1rem;
+        }
+
+        /* Make cards shorter like reference */
+        .property-card img {
+          height: 260px !important;
+        }
+
+        /* Reduce overlay padding */
+        .property-card .gradient-overlay {
+          padding: 12px !important;
+        }
+
+        /* Tighten text sizes */
+        .property-card h3 {
+          font-size: 0.85rem;
+          line-height: 1.3;
+        }
+
+        .property-card p {
+          font-size: 0.7rem;
+        }
+
+        /* Price slightly smaller */
+        .property-card .text-xl {
+          font-size: 0.95rem !important;
+        }
+
+        /* Icons row smaller */
+        .property-card .flex.gap-4 {
+          gap: 8px;
+          font-size: 0.65rem;
+        }
+
+        /* Button smaller */
+        .property-card a {
+          padding: 6px 8px;
+          font-size: 0.7rem;
+          border-radius: 0.6rem;
+        }
+
+        /* Badge size adjustment */
+        .property-card .absolute.top-4.left-4 span {
+          font-size: 9px !important;
+          padding: 4px 8px !important;
+        }
+
+        /* Grid columns - 2 columns on mobile like forsale */
+        #propertiesContainer {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 12px !important;
+        }
+
+        /* Container padding tighter */
+        section.py-16 {
+          padding-top: 2rem;
+          padding-bottom: 2rem;
+        }
+
+        .max-w-7xl.mx-auto {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        /* Hero section padding */
+        .relative.bg-\[\#001c4a\].py-16 {
+          padding-top: 2.5rem;
+          padding-bottom: 2.5rem;
+        }
+
+        .hero-title {
+          font-size: 1.8rem !important;
+        }
+      }
+
+      /* Small screens extra polish */
+      @media (max-width: 480px) {
+        #propertiesContainer {
+          gap: 10px !important;
+        }
+
+        .property-card img {
+          height: 220px !important;
+        }
+
+        .property-card .gradient-overlay {
+          padding: 10px !important;
+        }
+
+        .property-card h3 {
+          font-size: 0.75rem;
+        }
+
+        .property-card .text-xl {
+          font-size: 0.85rem !important;
+        }
+
+        .property-card a {
+          padding: 5px 6px;
+          font-size: 0.65rem;
+        }
+      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
-    <!-- Navigation -->
+    <!-- Navigation (consistent with main site and for-sale page) -->
     <header
       class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
     >
@@ -191,7 +297,7 @@
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
           <h1
-            class="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4"
+            class="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 hero-title"
           >
             Homes for Rent
           </h1>
@@ -205,7 +311,7 @@
         </div>
       </section>
 
-      <!-- Filter Bar -->
+      <!-- Filter Bar - Dropdown version -->
       <div
         class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
       >
@@ -255,7 +361,7 @@
         </div>
       </div>
 
-      <!-- Properties Grid: ONLY tags New Listing, Rented, Price Slash. MOST houses in Port Harcourt -->
+      <!-- Properties Grid: ONLY tags New Listing, Rented, Price Slash. MOST houses in Port Harcourt with mobile-optimized grid -->
       <section class="py-16 lg:py-20 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -271,7 +377,7 @@
 
           <div
             id="propertiesContainer"
-            class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
+            class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-7 lg:gap-8"
           >
             <!-- ========== PORT HARCOURT PROPERTIES (Majority - 8 out of 12) ========= -->
 
@@ -361,8 +467,7 @@
                   <span class="flex items-center gap-1"
                     ><i data-lucide="bed" class="w-4 h-4"></i> 1</span
                   ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 1
-                    (private)</span
+                    ><i data-lucide="bath" class="w-4 h-4"></i> 1 </span
                   ><span class="flex items-center gap-1"
                     ><i data-lucide="square" class="w-4 h-4"></i> 48m²</span
                   >
@@ -463,54 +568,6 @@
                     ><i data-lucide="bath" class="w-4 h-4"></i> 2</span
                   ><span class="flex items-center gap-1"
                     ><i data-lucide="square" class="w-4 h-4"></i> 95m²</span
-                  >
-                </div>
-                <a
-                  href="propertydetailsforrent.html"
-                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
-                  >Request Rental Info
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i
-                ></a>
-              </div>
-            </div>
-
-            <!-- PH: 3 Bedroom (₦2,000,000/year) - Price Slash -->
-            <div
-              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up"
-              data-location="rivers"
-              data-name="3 Bed - New GRA"
-              data-price="2000000"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600566753190-17f5ba7d3e1a?w=600&h=700&fit=crop"
-                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
-                alt="3 bedroom PH"
-                loading="lazy"
-              />
-              <div class="absolute top-4 left-4">
-                <span
-                  class="badge-price-slash text-[11px] px-3 py-1 rounded-full shadow-sm"
-                  >Price Slash</span
-                >
-              </div>
-              <div
-                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-              >
-                <h3 class="font-headline text-lg font-bold">
-                  3-Bedroom Contemporary Flat
-                </h3>
-                <p class="text-xs text-white/80 mt-1">New GRA, Port Harcourt</p>
-                <div class="mt-2">
-                  <span class="text-white font-bold text-xl">₦2,000,000</span
-                  ><span class="text-sm font-normal">/ year</span>
-                </div>
-                <div class="flex gap-4 mt-3 text-xs text-white/80">
-                  <span class="flex items-center gap-1"
-                    ><i data-lucide="bed" class="w-4 h-4"></i> 3</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="bath" class="w-4 h-4"></i> 3</span
-                  ><span class="flex items-center gap-1"
-                    ><i data-lucide="square" class="w-4 h-4"></i> 145m²</span
                   >
                 </div>
                 <a
