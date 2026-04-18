@@ -218,6 +218,92 @@
         background-color: #001c4a;
         color: white;
       }
+
+      /* ========== LIST VIEW ========== */
+
+      /* Mobile: KEEP original list (1 per row) */
+      .list-view {
+        display: flex !important;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* Desktop ONLY: switch to grid */
+      @media (min-width: 1024px) {
+        .list-view {
+          display: grid !important;
+          grid-template-columns: repeat(2, 1fr); /* 2 per row */
+          gap: 20px;
+        }
+      }
+
+      /* Horizontal card layout (applies everywhere) */
+      .list-view .property-card {
+        display: flex;
+        flex-direction: row;
+        height: 160px;
+        border-radius: 1rem;
+      }
+
+      /* Image left */
+      .list-view .property-card img {
+        width: 40%;
+        height: 100% !important;
+        object-fit: cover;
+      }
+
+      /* Content right */
+      .list-view .property-card .gradient-overlay {
+        position: relative;
+        background: white;
+        color: #1a1c1e;
+        width: 60%;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* Text */
+      .list-view .property-card h3 {
+        font-size: 1rem;
+        color: #001c4a;
+      }
+
+      .list-view .property-card p {
+        font-size: 0.8rem;
+        color: #555;
+      }
+
+      .list-view .property-card .text-xl {
+        font-size: 1rem !important;
+        color: #000;
+      }
+
+      /* Hide extra details */
+      .list-view .property-card .flex.gap-4 {
+        display: none;
+      }
+
+      /* Button */
+      .list-view .property-card a {
+        margin-top: 8px;
+        width: fit-content;
+        padding: 6px 12px;
+        font-size: 0.75rem;
+        background: #001c4a;
+        color: white;
+        border-radius: 0.5rem;
+      }
+
+      /* KEEP TAGS */
+      .list-view .property-card .absolute.top-4 {
+        display: block;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 10;
+      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
@@ -1216,6 +1302,24 @@
         );
 
       setTimeout(() => lucide.createIcons(), 150);
+      // VIEW TOGGLE
+      const gridBtn = document.getElementById("gridViewBtn");
+      const listBtn = document.getElementById("listViewBtn");
+      const container = document.getElementById("propertiesContainer");
+
+      gridBtn.addEventListener("click", () => {
+        container.classList.remove("list-view");
+        container.classList.add("grid");
+        gridBtn.classList.add("active");
+        listBtn.classList.remove("active");
+      });
+
+      listBtn.addEventListener("click", () => {
+        container.classList.add("list-view");
+        container.classList.remove("grid");
+        listBtn.classList.add("active");
+        gridBtn.classList.remove("active");
+      });
     </script>
   </body>
 </html>
