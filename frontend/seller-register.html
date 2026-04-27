@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Registration | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="icon" href="images/favicon.ico" />
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .hero-radial-mask {
+        background: radial-gradient(
+          circle at 70% 30%,
+          rgba(0, 28, 74, 0.25) 0%,
+          rgba(0, 28, 74, 0.75) 75%,
+          #001c4a 100%
+        );
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      .form-section {
+        display: none;
+      }
+
+      .form-section.active {
+        display: block;
+      }
+
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <main
+      class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden"
+    >
+      <div class="absolute inset-0 z-0">
+        <img
+          src="images/hero.avif"
+          alt="Luxury residence"
+          class="w-full h-full object-cover brightness-[0.58] saturate-110"
+        />
+        <div class="absolute inset-0 hero-radial-mask mix-blend-multiply"></div>
+      </div>
+
+      <a
+        href="index.html"
+        class="absolute top-6 left-5 md:left-8 z-20 inline-flex items-center gap-2 text-white/90 hover:text-tertiary-fixed text-sm font-semibold transition"
+      >
+        <i data-lucide="arrow-left"></i>
+        Back home
+      </a>
+
+      <section class="relative z-10 w-full max-w-2xl">
+        <div class="glass-card rounded-2xl shadow-2xl p-6 sm:p-8">
+          <div class="text-center mb-8">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-10 mx-auto mb-5 object-contain"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML =
+                  '<h1 class=\'text-2xl font-black tracking-tighter text-primary mb-5\'>RESIDENT</h1>' +
+                  this.parentElement.innerHTML;
+              "
+            />
+
+            <span
+              class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+            >
+              <i data-lucide="home" class="w-4 h-4"></i>
+              Seller Registration
+            </span>
+
+            <h1 class="font-headline text-3xl font-extrabold text-primary">
+              List Properties on Resident
+            </h1>
+
+            <p class="text-sm text-on-surface-variant mt-2">
+              Register as a landlord or real estate agency to post houses for
+              sale or rent.
+            </p>
+          </div>
+
+          <div id="accountTypeBox" class="mb-8">
+            <label class="block text-sm font-bold text-primary mb-3">
+              Select Account Type
+            </label>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+              <button
+                type="button"
+                id="landlordBtn"
+                onclick="selectAccountType('landlord')"
+                class="account-btn border border-outline/25 bg-white rounded-xl p-5 text-left hover:border-primary hover:bg-primary/5 transition"
+              >
+                <div
+                  class="w-11 h-11 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-3"
+                >
+                  <i data-lucide="user-round"></i>
+                </div>
+                <h3 class="font-bold text-primary">Landlord</h3>
+                <p class="text-xs text-on-surface-variant mt-1">
+                  For property owners listing their own houses.
+                </p>
+              </button>
+
+              <button
+                type="button"
+                id="agencyBtn"
+                onclick="selectAccountType('agency')"
+                class="account-btn border border-outline/25 bg-white rounded-xl p-5 text-left hover:border-primary hover:bg-primary/5 transition"
+              >
+                <div
+                  class="w-11 h-11 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-3"
+                >
+                  <i data-lucide="building-2"></i>
+                </div>
+                <h3 class="font-bold text-primary">Real Estate Agency</h3>
+                <p class="text-xs text-on-surface-variant mt-1">
+                  For registered agencies managing property listings.
+                </p>
+              </button>
+            </div>
+          </div>
+
+          <!-- LANDLORD STEP 1 -->
+          <form id="landlordStep1" class="form-section space-y-5">
+            <h2 class="font-headline text-xl font-extrabold text-primary">
+              Landlord Details
+            </h2>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Enter your full name"
+                class="input-field"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                required
+                placeholder="you@example.com"
+                class="input-field"
+              />
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="08012345678"
+                  class="input-field"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2">
+                  Alternate Phone Number
+                </label>
+                <input type="tel" placeholder="Optional" class="input-field" />
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Create password"
+                  class="input-field"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Confirm password"
+                  class="input-field"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onclick="goToStep('landlordStep2')"
+              class="primary-btn"
+            >
+              Next
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </form>
+
+          <!-- LANDLORD STEP 2 -->
+          <form id="landlordStep2" class="form-section space-y-5">
+            <h2 class="font-headline text-xl font-extrabold text-primary">
+              Landlord Verification
+            </h2>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Address
+              </label>
+              <textarea
+                required
+                rows="3"
+                placeholder="Enter your residential address"
+                class="input-field resize-none"
+              ></textarea>
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Proof of Address
+              </label>
+              <p class="text-xs text-on-surface-variant mb-2">
+                Upload a utility bill.
+              </p>
+              <input type="file" required class="file-field" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                NIN Card
+              </label>
+              <input type="file" required class="file-field" />
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button
+                type="button"
+                onclick="goToStep('landlordStep1')"
+                class="secondary-btn"
+              >
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back
+              </button>
+
+              <button type="submit" class="primary-btn">
+                Submit Registration
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- AGENCY STEP 1 -->
+          <form id="agencyStep1" class="form-section space-y-5">
+            <h2 class="font-headline text-xl font-extrabold text-primary">
+              Real Estate Agency Details
+            </h2>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Business Name
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Enter business name"
+                class="input-field"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Owner's Name
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Enter owner's name"
+                class="input-field"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                required
+                placeholder="business@example.com"
+                class="input-field"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                required
+                placeholder="08012345678"
+                class="input-field"
+              />
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Create password"
+                  class="input-field"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Confirm password"
+                  class="input-field"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onclick="goToStep('agencyStep2')"
+              class="primary-btn"
+            >
+              Next
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </form>
+
+          <!-- AGENCY STEP 2 -->
+          <form id="agencyStep2" class="form-section space-y-5">
+            <h2 class="font-headline text-xl font-extrabold text-primary">
+              Business Verification
+            </h2>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                CAC Certificate
+              </label>
+              <input type="file" required class="file-field" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                TIN
+                <span class="text-xs text-on-surface-variant font-semibold">
+                  Optional
+                </span>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter Tax Identification Number"
+                class="input-field"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Office Address
+              </label>
+              <textarea
+                required
+                rows="3"
+                placeholder="Enter office address"
+                class="input-field resize-none"
+              ></textarea>
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-primary mb-2">
+                Proof of Address
+              </label>
+              <p class="text-xs text-on-surface-variant mb-2">
+                Upload office utility bill or valid address document.
+              </p>
+              <input type="file" required class="file-field" />
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button
+                type="button"
+                onclick="goToStep('agencyStep1')"
+                class="secondary-btn"
+              >
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back
+              </button>
+
+              <button type="submit" class="primary-btn">
+                Submit Registration
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </form>
+
+          <p class="text-center text-sm text-on-surface-variant mt-7">
+            Already registered?
+            <a
+              href="login.html"
+              class="font-bold text-primary hover:text-tertiary transition"
+            >
+              Sign in
+            </a>
+          </p>
+        </div>
+
+        <p class="text-center text-white/70 text-xs mt-6">
+          © 2026 Resident Luxury. All rights reserved.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const style = document.createElement("style");
+      style.innerHTML = `
+        .input-field {
+          width: 100%;
+          padding: 0.85rem 1rem;
+          border-radius: 0.75rem;
+          background: white;
+          border: 1px solid rgba(116, 119, 129, 0.25);
+          outline: none;
+          font-size: 0.875rem;
+          font-weight: 500;
+          transition: 0.2s ease;
+        }
+
+        .input-field:focus {
+          border-color: #001c4a;
+          box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
+        }
+
+        .file-field {
+          width: 100%;
+          background: white;
+          border: 1px solid rgba(116, 119, 129, 0.25);
+          border-radius: 0.75rem;
+          padding: 0.75rem;
+          font-size: 0.875rem;
+        }
+
+        .primary-btn {
+          width: 100%;
+          background: #c5aa23;
+          color: #001c4a;
+          padding: 0.85rem 1rem;
+          border-radius: 0.75rem;
+          font-weight: 800;
+          font-size: 0.875rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          transition: 0.2s ease;
+          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .primary-btn:hover {
+          background: #ffe260;
+        }
+
+        .secondary-btn {
+          width: 100%;
+          background: white;
+          color: #001c4a;
+          padding: 0.85rem 1rem;
+          border-radius: 0.75rem;
+          font-weight: 800;
+          font-size: 0.875rem;
+          border: 1px solid rgba(116, 119, 129, 0.25);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          transition: 0.2s ease;
+        }
+
+        .secondary-btn:hover {
+          background: rgba(0, 28, 74, 0.06);
+        }
+      `;
+      document.head.appendChild(style);
+
+      function hideAllForms() {
+        document.querySelectorAll(".form-section").forEach((form) => {
+          form.classList.remove("active");
+        });
+      }
+
+      function selectAccountType(type) {
+        hideAllForms();
+
+        document.querySelectorAll(".account-btn").forEach((btn) => {
+          btn.classList.remove("border-primary", "bg-primary/5");
+        });
+
+        if (type === "landlord") {
+          document.getElementById("landlordStep1").classList.add("active");
+          document
+            .getElementById("landlordBtn")
+            .classList.add("border-primary", "bg-primary/5");
+        }
+
+        if (type === "agency") {
+          document.getElementById("agencyStep1").classList.add("active");
+          document
+            .getElementById("agencyBtn")
+            .classList.add("border-primary", "bg-primary/5");
+        }
+
+        lucide.createIcons();
+      }
+
+      function goToStep(stepId) {
+        hideAllForms();
+        document.getElementById(stepId).classList.add("active");
+        lucide.createIcons();
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
