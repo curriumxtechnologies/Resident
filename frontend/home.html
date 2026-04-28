@@ -1,0 +1,811 @@
+<!doctype html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Home | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "surface-container-low": "#f3f3f6",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="icon" href="images/favicon.ico" />
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+
+      .property-card {
+        border-radius: 1rem;
+        overflow: hidden;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .property-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+      }
+
+      .gradient-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.55) 50%,
+          rgba(0, 0, 0, 0.08) 100%
+        );
+      }
+
+      .mobile-nav-link {
+        color: #001c4a;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(116, 119, 129, 0.18);
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .property-card {
+        border-radius: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .hover-lift {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+      }
+
+      .gradient-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.6) 50%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+      }
+
+      .badge-new {
+        background-color: #c5aa23;
+        color: #001c4a;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+      }
+
+      @media (max-width: 768px) {
+        .property-card img {
+          height: 260px !important;
+        }
+
+        .property-card .gradient-overlay {
+          padding: 12px !important;
+        }
+
+        .property-card h3 {
+          font-size: 0.85rem;
+        }
+
+        .property-card p {
+          font-size: 0.7rem;
+        }
+
+        .property-card .text-xl {
+          font-size: 0.95rem !important;
+        }
+
+        .property-card .flex.gap-4 {
+          gap: 8px;
+          font-size: 0.65rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-surface text-on-surface font-body antialiased overflow-x-hidden"
+  >
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="home.html">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
+          </a>
+
+          <nav class="hidden lg:flex items-center gap-8">
+            <a
+              href="#search"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition"
+              >Search</a
+            >
+            <a
+              href="#sale"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition"
+              >For Sale</a
+            >
+            <a
+              href="#rent"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition"
+              >For Rent</a
+            >
+            <a
+              href="#recent"
+              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition"
+              >Recently Viewed</a
+            >
+          </nav>
+
+          <div class="hidden lg:flex items-center gap-3">
+            <a
+              href="seller-register.html"
+              class="text-sm font-bold text-primary hover:text-tertiary transition"
+            >
+              List Property
+            </a>
+            <button
+              class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center"
+            >
+              <i data-lucide="user"></i>
+            </button>
+          </div>
+
+          <button
+            id="mobileMenuBtn"
+            class="lg:hidden w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center"
+          >
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+
+        <div id="mobileMenu" class="hidden lg:hidden pb-5 pt-2">
+          <nav class="flex flex-col">
+            <a href="#search" class="mobile-nav-link">Search</a>
+            <a href="#sale" class="mobile-nav-link">For Sale</a>
+            <a href="#rent" class="mobile-nav-link">For Rent</a>
+            <a href="#recent" class="mobile-nav-link">Recently Viewed</a>
+            <a
+              href="seller-register.html"
+              class="mt-4 bg-tertiary-container text-primary text-center py-3 rounded-xl font-extrabold text-sm"
+            >
+              List Property
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="bg-primary px-5 md:px-8 py-14 lg:py-20">
+        <div class="max-w-7xl mx-auto">
+          <div class="max-w-3xl">
+            <span
+              class="inline-flex items-center gap-2 bg-white/10 text-tertiary-fixed px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+            >
+              <i data-lucide="sparkles"></i>
+              Welcome to Resident
+            </span>
+
+            <h1
+              class="font-headline text-4xl md:text-6xl font-extrabold text-white leading-tight"
+            >
+              Find your next home with ease.
+            </h1>
+
+            <p class="text-white/75 mt-4 max-w-xl">
+              Search premium homes for sale and rent. Save your best picks and
+              continue from where you stopped.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="search" class="relative bg-primary px-5 md:px-8 pb-12">
+        <div class="max-w-7xl mx-auto">
+          <div class="mb-3 max-w-xl">
+            <div
+              class="bg-white/10 backdrop-blur-md rounded-full p-1 flex gap-1 border border-white/20 w-fit"
+            >
+              <button
+                id="buyBtn"
+                class="px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition"
+              >
+                Buy
+              </button>
+              <button
+                id="rentBtn"
+                class="px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition"
+              >
+                Rent
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="glass-card rounded-xl p-1.5 flex flex-col md:flex-row items-stretch gap-1.5 shadow-2xl max-w-xl"
+          >
+            <div
+              class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
+            >
+              <i data-lucide="map-pin" class="text-tertiary-fixed w-5 h-5"></i>
+              <select
+                class="w-full bg-transparent border-none focus:ring-0 text-[#0D316D] font-medium text-sm outline-none"
+              >
+                <option disabled selected class="text-gray-400">
+                  Select State
+                </option>
+                <option class="text-[#0D316D]">Lagos</option>
+                <option class="text-[#0D316D]">Abuja</option>
+                <option class="text-[#0D316D]">Rivers</option>
+              </select>
+            </div>
+
+            <div class="hidden md:block w-px h-6 bg-white/30"></div>
+
+            <div
+              class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
+            >
+              <i data-lucide="map" class="text-tertiary-fixed w-5 h-5"></i>
+              <select
+                class="w-full bg-transparent border-none focus:ring-0 text-[#0D316D] font-medium text-sm outline-none"
+              >
+                <option disabled selected class="text-gray-400">
+                  Select LGA
+                </option>
+                <option class="text-[#0D316D]">Ikeja</option>
+                <option class="text-[#0D316D]">Maitama</option>
+                <option class="text-[#0D316D]">GRA PH</option>
+              </select>
+            </div>
+
+            <button
+              class="bg-tertiary-container text-primary px-6 py-2.5 rounded-lg font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-1 text-sm"
+            >
+              Search <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="sale" class="py-20 lg:py-24 bg-surface px-5 md:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="flex items-end justify-between mb-10">
+            <div>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+              >
+                Premium Listings
+              </span>
+              <h2
+                class="text-3xl md:text-4xl font-headline font-extrabold text-primary mt-1"
+              >
+                Houses for Sale
+              </h2>
+            </div>
+
+            <a
+              href="forsale.html"
+              class="hidden sm:flex items-center gap-2 text-sm font-bold text-primary hover:text-tertiary transition"
+            >
+              View More
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+            <!-- Card 1 -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group"
+            >
+              <img
+                src="images/forsale.avif"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+              />
+
+              <div class="absolute top-4 left-4 z-10">
+                <span class="badge-new text-[11px] px-3 py-1 rounded-full"
+                  >For Sale</span
+                >
+              </div>
+
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  The Obsidian Villa
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Lekki Phase 1, Lagos</p>
+
+                <span class="block text-xl font-bold mt-2">₦245,000,000</span>
+
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed"></i>5</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath"></i>6</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square"></i>450m²</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group"
+            >
+              <img
+                src="images/hero.avif"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+              />
+
+              <div class="absolute top-4 left-4 z-10">
+                <span class="badge-new text-[11px] px-3 py-1 rounded-full"
+                  >For Sale</span
+                >
+              </div>
+
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  Skyline Penthouse
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Maitama, Abuja</p>
+
+                <span class="block text-xl font-bold mt-2">₦180,000,000</span>
+
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed"></i>3</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath"></i>4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square"></i>320m²</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group"
+            >
+              <img
+                src="images/forsale.avif"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+              />
+
+              <div class="absolute top-4 left-4 z-10">
+                <span class="badge-new text-[11px] px-3 py-1 rounded-full"
+                  >For Sale</span
+                >
+              </div>
+
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  Azura Waterfront
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Port Harcourt, Rivers</p>
+
+                <span class="block text-xl font-bold mt-2">₦120,000,000</span>
+
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed"></i>4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath"></i>4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square"></i>380m²</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile View More -->
+          <a
+            href="forsale.html"
+            class="sm:hidden mt-8 w-full bg-primary text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2"
+          >
+            View More Houses
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </section>
+
+      <section
+        id="rent"
+        class="py-20 lg:py-24 bg-surface-container-low px-5 md:px-8"
+      >
+        <div class="max-w-7xl mx-auto">
+          <div class="flex items-end justify-between mb-10">
+            <div>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+              >
+                Flexible Living
+              </span>
+              <h2
+                class="text-3xl md:text-4xl font-headline font-extrabold text-primary mt-1"
+              >
+                Houses for Rent
+              </h2>
+            </div>
+
+            <a
+              href="forrent.html"
+              class="hidden sm:flex items-center gap-2 text-sm font-bold text-primary hover:text-tertiary transition"
+            >
+              View More
+              <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+            <!-- Card 1 -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group"
+            >
+              <img
+                src="images/forrent.avif"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+              />
+
+              <div class="absolute top-4 left-4 z-10">
+                <span class="badge-new text-[11px] px-3 py-1 rounded-full"
+                  >For Rent</span
+                >
+              </div>
+
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">
+                  Palm Grove Apartment
+                </h3>
+                <p class="text-xs text-white/80 mt-1">Ikoyi, Lagos</p>
+
+                <span class="block text-xl font-bold mt-2"
+                  >₦8,000,000/year</span
+                >
+
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed"></i>3</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath"></i>3</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square"></i>250m²</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group"
+            >
+              <img
+                src="images/hero.avif"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+              />
+
+              <div class="absolute top-4 left-4 z-10">
+                <span class="badge-new text-[11px] px-3 py-1 rounded-full"
+                  >For Rent</span
+                >
+              </div>
+
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">Emerald Duplex</h3>
+                <p class="text-xs text-white/80 mt-1">Abuja</p>
+
+                <span class="block text-xl font-bold mt-2"
+                  >₦12,000,000/year</span
+                >
+
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed"></i>4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath"></i>5</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square"></i>400m²</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div
+              class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group"
+            >
+              <img
+                src="images/forrent.avif"
+                class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+              />
+
+              <div class="absolute top-4 left-4 z-10">
+                <span class="badge-new text-[11px] px-3 py-1 rounded-full"
+                  >For Rent</span
+                >
+              </div>
+
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+              >
+                <h3 class="font-headline text-lg font-bold">GRA Smart Home</h3>
+                <p class="text-xs text-white/80 mt-1">Port Harcourt</p>
+
+                <span class="block text-xl font-bold mt-2"
+                  >₦6,500,000/year</span
+                >
+
+                <div class="flex gap-4 mt-3 text-xs text-white/80">
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bed"></i>4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="bath"></i>4</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="square"></i>300m²</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="forrent.html"
+            class="sm:hidden mt-8 w-full bg-primary text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2"
+          >
+            View More Rentals
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </section>
+
+      <section id="recent" class="px-5 md:px-8 py-16 lg:py-20">
+        <div class="max-w-7xl mx-auto">
+          <div class="mb-8">
+            <span
+              class="text-tertiary font-bold uppercase tracking-widest text-xs"
+            >
+              Continue browsing
+            </span>
+            <h2
+              class="font-headline text-3xl md:text-4xl font-extrabold text-primary mt-1"
+            >
+              Recently Viewed
+            </h2>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6">
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden"
+            >
+              <img
+                src="images/forsale.avif"
+                class="h-44 w-full object-cover"
+                alt="Recently viewed property"
+              />
+              <div class="p-5">
+                <h3 class="font-bold text-primary">The Obsidian Villa</h3>
+                <p class="text-sm text-on-surface-variant mt-1">
+                  Lekki Phase 1, Lagos
+                </p>
+                <p class="font-extrabold text-primary mt-3">₦245,000,000</p>
+              </div>
+            </div>
+
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden"
+            >
+              <img
+                src="images/forrent.avif"
+                class="h-44 w-full object-cover"
+                alt="Recently viewed property"
+              />
+              <div class="p-5">
+                <h3 class="font-bold text-primary">Palm Grove Apartment</h3>
+                <p class="text-sm text-on-surface-variant mt-1">Ikoyi, Lagos</p>
+                <p class="font-extrabold text-primary mt-3">₦8,000,000/year</p>
+              </div>
+            </div>
+
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden"
+            >
+              <img
+                src="images/hero.avif"
+                class="h-44 w-full object-cover"
+                alt="Recently viewed property"
+              />
+              <div class="p-5">
+                <h3 class="font-bold text-primary">Azura Waterfront</h3>
+                <p class="text-sm text-on-surface-variant mt-1">
+                  Old GRA, Port Harcourt
+                </p>
+                <p class="font-extrabold text-primary mt-3">₦120,000,000</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-white border-t border-outline/10 pt-12 pb-6 px-5 md:px-8">
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10"
+      >
+        <div>
+          <img src="images/logo.png" alt="Resident" class="h-8 mb-3" />
+          <p class="text-xs text-on-surface-variant max-w-xs">
+            Redefining luxury real estate through precision, trust and an
+            uncompromising standard.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Updates</h4>
+          <p class="text-xs text-on-surface-variant mb-2">
+            Get exclusive property updates.
+          </p>
+          <div class="flex">
+            <input
+              type="email"
+              placeholder="Email address"
+              class="bg-surface-container-low border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-primary"
+            />
+            <button
+              class="bg-primary text-white px-4 rounded-r-lg text-xs font-semibold"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="max-w-7xl mx-auto pt-8 mt-6 border-t border-outline/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-on-surface-variant"
+      >
+        <p>© 2026 Resident Luxury. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+
+          const isOpen = !mobileMenu.classList.contains("hidden");
+
+          mobileMenuBtn.innerHTML = isOpen
+            ? '<i data-lucide="x"></i>'
+            : '<i data-lucide="menu"></i>';
+
+          lucide.createIcons();
+        });
+
+        document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+            lucide.createIcons();
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
