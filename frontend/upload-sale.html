@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Upload House for Sale | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "surface-container-low": "#f3f3f6",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border-radius: 0.75rem;
+        background: white;
+        border: 1px solid rgba(116, 119, 129, 0.25);
+        outline: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: 0.2s ease;
+      }
+
+      .input-field:focus {
+        border-color: #001c4a;
+        box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
+      }
+
+      .file-field {
+        width: 100%;
+        background: white;
+        border: 1px dashed rgba(116, 119, 129, 0.45);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="home.html">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
+          </a>
+
+          <div class="flex items-center gap-3">
+            <span class="hidden md:inline-block text-sm font-bold text-primary">
+              Joshua Sorochi
+            </span>
+
+            <a
+              href="profile.html"
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
+            >
+              JS
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <section
+          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8"
+        >
+          <div class="absolute inset-0 opacity-15">
+            <img src="images/hero.avif" class="w-full h-full object-cover" />
+          </div>
+
+          <div class="relative z-10 max-w-3xl">
+            <span
+              class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-bold mb-4"
+            >
+              <i
+                data-lucide="badge-dollar-sign"
+                class="w-4 h-4 text-tertiary-fixed"
+              ></i>
+              Sale Listing
+            </span>
+
+            <h1 class="font-headline text-3xl md:text-5xl font-extrabold">
+              Upload House for Sale
+            </h1>
+
+            <p class="text-white/75 text-sm md:text-base mt-3 max-w-2xl">
+              Add full property information, images, title documents, and seller
+              contact details for buyer inquiries.
+            </p>
+          </div>
+        </section>
+
+        <form class="grid lg:grid-cols-3 gap-8">
+          <div class="lg:col-span-2 space-y-8">
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Property Information
+              </h2>
+
+              <div class="space-y-5">
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Property Title
+                  </label>
+                  <input
+                    type="text"
+                    class="input-field"
+                    placeholder="Example: The Pearl Haven"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Short Description
+                  </label>
+                  <textarea
+                    rows="4"
+                    class="input-field resize-none"
+                    placeholder="Describe the property, location advantage, finishing, and unique features."
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Property Type
+                    </label>
+                    <select class="input-field" required>
+                      <option value="">Select property type</option>
+                      <option>Luxury Villa</option>
+                      <option>Duplex</option>
+                      <option>Bungalow</option>
+                      <option>Penthouse</option>
+                      <option>Apartment</option>
+                      <option>Terrace House</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Sale Price
+                    </label>
+                    <input
+                      type="number"
+                      class="input-field"
+                      placeholder="Example: 78500000"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="grid sm:grid-cols-3 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Bedrooms
+                    </label>
+                    <input
+                      type="number"
+                      class="input-field"
+                      placeholder="4"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Bathrooms
+                    </label>
+                    <input
+                      type="number"
+                      class="input-field"
+                      placeholder="4"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Size
+                    </label>
+                    <input
+                      type="text"
+                      class="input-field"
+                      placeholder="320 m²"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Year Built
+                    </label>
+                    <input
+                      type="number"
+                      class="input-field"
+                      placeholder="2023"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Ownership Type
+                    </label>
+                    <select class="input-field">
+                      <option>Freehold</option>
+                      <option>Leasehold</option>
+                      <option>Family Property</option>
+                      <option>Company Owned</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Location Details
+              </h2>
+
+              <div class="space-y-5">
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      State
+                    </label>
+                    <select class="input-field" required>
+                      <option value="">Select state</option>
+                      <option>Lagos</option>
+                      <option>Abuja</option>
+                      <option>Rivers</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      LGA / Area
+                    </label>
+                    <input
+                      type="text"
+                      class="input-field"
+                      placeholder="Lekki Phase 1"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Full Property Address
+                  </label>
+                  <textarea
+                    rows="3"
+                    class="input-field resize-none"
+                    placeholder="Enter the full house address"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Images & Documents
+              </h2>
+
+              <div class="space-y-5">
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Property Images
+                  </label>
+                  <p class="text-xs text-on-surface-variant mb-2">
+                    Upload clear exterior, interior, kitchen, bedroom, bathroom,
+                    and compound images.
+                  </p>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    class="file-field"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Title Document
+                  </label>
+                  <p class="text-xs text-on-surface-variant mb-2">
+                    Upload C of O, Governor's Consent, Deed of Assignment, or
+                    valid ownership document.
+                  </p>
+                  <input
+                    type="file"
+                    accept=".pdf,image/*"
+                    class="file-field"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Survey Plan
+                  </label>
+                  <input type="file" accept=".pdf,image/*" class="file-field" />
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Key Features
+              </h2>
+
+              <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Smart home system
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Swimming pool
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  24/7 security
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Backup generator
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Staff quarters
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Gym
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Parking space
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  CCTV
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Water treatment
+                </label>
+              </div>
+
+              <div class="mt-5">
+                <label class="block text-sm font-bold text-primary mb-2">
+                  Other Features
+                </label>
+                <textarea
+                  rows="3"
+                  class="input-field resize-none"
+                  placeholder="Add other features separated by commas"
+                ></textarea>
+              </div>
+            </section>
+          </div>
+
+          <aside class="lg:col-span-1">
+            <div
+              class="bg-white rounded-2xl shadow-lg border border-outline/10 p-6 lg:sticky lg:top-24"
+            >
+              <h2
+                class="font-headline text-xl font-extrabold text-primary mb-5"
+              >
+                Seller Contact
+              </h2>
+
+              <div class="space-y-5">
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Seller Name
+                  </label>
+                  <input
+                    type="text"
+                    class="input-field"
+                    placeholder="Joshua Sorochi"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Seller Email
+                  </label>
+                  <input
+                    type="email"
+                    class="input-field"
+                    placeholder="seller@example.com"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    class="input-field"
+                    placeholder="+234 800 000 0000"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Alternate Phone
+                  </label>
+                  <input
+                    type="tel"
+                    class="input-field"
+                    placeholder="Optional"
+                  />
+                </div>
+
+                <div class="bg-surface-container-low rounded-xl p-4">
+                  <h3 class="font-bold text-primary text-sm mb-2">
+                    Listing Review
+                  </h3>
+                  <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Your property will be reviewed before it appears on
+                    Resident. Make sure all details and documents are correct.
+                  </p>
+                </div>
+
+                <label
+                  class="flex items-start gap-3 text-sm text-on-surface-variant"
+                >
+                  <input
+                    type="checkbox"
+                    required
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                  <span>
+                    I confirm that this property information is accurate and I
+                    have the right to list it for sale.
+                  </span>
+                </label>
+
+                <button
+                  type="submit"
+                  class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2 shadow-md"
+                >
+                  Submit Sale Listing
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="w-full border border-outline/20 text-primary py-3 rounded-xl font-bold text-sm hover:bg-primary/5 transition flex items-center justify-center gap-2"
+                >
+                  Save as Draft
+                  <i data-lucide="save" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
