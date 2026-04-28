@@ -74,25 +74,12 @@
         height: 1.2rem;
         stroke-width: 1.8;
       }
-
-      body {
-        padding-top: env(safe-area-inset-top);
-      }
-
-      @supports (padding-top: constant(safe-area-inset-top)) {
-        body {
-          padding-top: constant(safe-area-inset-top);
-        }
-      }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
-    <div
-      class="fixed top-0 left-0 right-0 h-[env(safe-area-inset-top)] bg-[#101923] z-[9999]"
-    ></div>
     <main
-      class="min-h-screen relative flex items-start justify-center px-5 pt-28 pb-10 overflow-hidden"
+      class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden"
     >
       <div class="absolute inset-0 z-0">
         <img
