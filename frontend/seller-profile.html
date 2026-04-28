@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Seller Profile | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" href="images/favicon.ico" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "surface-container-low": "#f3f3f6",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <header
+      class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="h-16 lg:h-20 flex items-center justify-between">
+          <a href="home.html">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
+          </a>
+
+          <div class="flex items-center gap-3">
+            <span class="hidden md:inline-block text-sm font-bold text-primary">
+              Joshua Sorochi
+            </span>
+
+            <a
+              href="profile.html"
+              class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold"
+            >
+              JS
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <section
+          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8"
+        >
+          <div class="absolute inset-0 opacity-15">
+            <img
+              src="images/hero.avif"
+              class="w-full h-full object-cover"
+              alt=""
+            />
+          </div>
+
+          <div
+            class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8"
+          >
+            <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+              <div
+                class="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-lg overflow-hidden shrink-0"
+              >
+                <img
+                  src="images/logo.png"
+                  alt="Resident"
+                  class="w-20 h-auto object-contain"
+                />
+              </div>
+
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-3">
+                  <span
+                    class="bg-tertiary-container text-primary px-3 py-1 rounded-full text-xs font-extrabold"
+                  >
+                    Verified Seller
+                  </span>
+
+                  <span
+                    class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-bold"
+                  >
+                    Real Estate Agency
+                  </span>
+                </div>
+
+                <h1 class="font-headline text-3xl md:text-5xl font-extrabold">
+                  Resident Homes
+                </h1>
+
+                <p class="text-white/75 text-sm mt-2 max-w-xl">
+                  Premium real estate seller focused on verified homes for sale
+                  and rent across Nigeria.
+                </p>
+
+                <div
+                  class="flex flex-wrap items-center gap-4 mt-4 text-sm text-white/80"
+                >
+                  <span class="flex items-center gap-1">
+                    <i data-lucide="map-pin" class="w-4 h-4"></i>
+                    Lagos, Nigeria
+                  </span>
+
+                  <span class="flex items-center gap-1">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i>
+                    Joined 2024
+                  </span>
+
+                  <span class="flex items-center gap-1">
+                    <i
+                      data-lucide="badge-check"
+                      class="w-4 h-4 text-tertiary-fixed"
+                    ></i>
+                    Identity verified
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
+              <a
+                href="seller-listings.html"
+                class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"
+              >
+                View All Seller Houses
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+
+              <button
+                id="reportSellerBtn"
+                class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-white hover:text-red-600 transition flex items-center justify-center gap-2"
+              >
+                <i data-lucide="flag" class="w-4 h-4"></i>
+                Report Seller
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-8">
+          <div class="lg:col-span-2 space-y-8">
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <div
+                class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6"
+              >
+                <div>
+                  <h2
+                    class="font-headline text-2xl font-extrabold text-primary"
+                  >
+                    Seller Details
+                  </h2>
+                  <p class="text-sm text-on-surface-variant mt-1">
+                    Basic information visible to buyers and renters.
+                  </p>
+                </div>
+
+                <span
+                  class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold"
+                >
+                  Active
+                </span>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Seller Name
+                  </p>
+                  <p class="font-bold text-primary mt-1">Resident Homes</p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Seller Type
+                  </p>
+                  <p class="font-bold text-primary mt-1">Real Estate Agency</p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Email
+                  </p>
+                  <p class="font-bold text-primary mt-1">contact@resident.ng</p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Phone
+                  </p>
+                  <p class="font-bold text-primary mt-1">+234 812 345 6789</p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Office Address
+                  </p>
+                  <p class="font-bold text-primary mt-1">
+                    Victoria Island, Lagos
+                  </p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Verification
+                  </p>
+                  <p class="font-bold text-primary mt-1">
+                    CAC and address verified
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-4"
+              >
+                About Seller
+              </h2>
+
+              <p class="text-sm text-on-surface-variant leading-relaxed">
+                Resident Homes lists verified residential properties for buyers
+                and renters. The seller provides luxury homes, apartments, and
+                family houses with clear property details, inspection support,
+                and guided transaction assistance.
+              </p>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <div class="flex items-center justify-between gap-4 mb-6">
+                <div>
+                  <h2
+                    class="font-headline text-2xl font-extrabold text-primary"
+                  >
+                    Ratings & Reviews
+                  </h2>
+                  <p class="text-sm text-on-surface-variant mt-1">
+                    What users say about this seller.
+                  </p>
+                </div>
+
+                <div class="text-right">
+                  <p class="text-3xl font-extrabold text-primary">4.8</p>
+                  <div class="flex items-center gap-1 text-tertiary">
+                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
+                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
+                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
+                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
+                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1">42 reviews</p>
+                </div>
+              </div>
+
+              <div class="space-y-5">
+                <div class="border-t border-outline/10 pt-5">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h3 class="font-bold text-primary">Adaeze N.</h3>
+                      <p class="text-xs text-on-surface-variant">Buyer</p>
+                    </div>
+
+                    <span class="text-xs font-bold text-tertiary">5.0 ★</span>
+                  </div>
+                  <p class="text-sm text-on-surface-variant mt-3">
+                    Smooth inspection process. The seller responded quickly and
+                    the house matched the listing.
+                  </p>
+                </div>
+
+                <div class="border-t border-outline/10 pt-5">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h3 class="font-bold text-primary">Michael O.</h3>
+                      <p class="text-xs text-on-surface-variant">Renter</p>
+                    </div>
+
+                    <span class="text-xs font-bold text-tertiary">4.7 ★</span>
+                  </div>
+                  <p class="text-sm text-on-surface-variant mt-3">
+                    Good communication and clear rent terms. Inspection was
+                    arranged fast.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="space-y-8">
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-xl font-extrabold text-primary mb-5"
+              >
+                Seller Performance
+              </h2>
+
+              <div class="space-y-4">
+                <div
+                  class="flex items-center justify-between border-b border-outline/10 pb-3"
+                >
+                  <span class="text-sm text-on-surface-variant"
+                    >Total Listings</span
+                  >
+                  <span class="font-extrabold text-primary">36</span>
+                </div>
+
+                <div
+                  class="flex items-center justify-between border-b border-outline/10 pb-3"
+                >
+                  <span class="text-sm text-on-surface-variant"
+                    >Houses Sold</span
+                  >
+                  <span class="font-extrabold text-primary">18</span>
+                </div>
+
+                <div
+                  class="flex items-center justify-between border-b border-outline/10 pb-3"
+                >
+                  <span class="text-sm text-on-surface-variant"
+                    >Houses Rented</span
+                  >
+                  <span class="font-extrabold text-primary">11</span>
+                </div>
+
+                <div
+                  class="flex items-center justify-between border-b border-outline/10 pb-3"
+                >
+                  <span class="text-sm text-on-surface-variant"
+                    >Response Rate</span
+                  >
+                  <span class="font-extrabold text-primary">96%</span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-on-surface-variant"
+                    >Avg. Response Time</span
+                  >
+                  <span class="font-extrabold text-primary">1 hour</span>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-xl font-extrabold text-primary mb-5"
+              >
+                Contact Seller
+              </h2>
+
+              <div class="space-y-3">
+                <a
+                  href="tel:+2348123456789"
+                  class="w-full bg-primary text-white px-4 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
+                >
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                  Call Seller
+                </a>
+
+                <a
+                  href="mailto:contact@resident.ng"
+                  class="w-full bg-tertiary-container text-primary px-4 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"
+                >
+                  <i data-lucide="mail" class="w-4 h-4"></i>
+                  Email Seller
+                </a>
+
+                <a
+                  href="seller-listings.html"
+                  class="w-full border border-outline/20 text-primary px-4 py-3 rounded-xl font-bold text-sm hover:bg-primary/5 transition flex items-center justify-center gap-2"
+                >
+                  <i data-lucide="building-2" class="w-4 h-4"></i>
+                  View All Houses
+                </a>
+              </div>
+            </section>
+
+            <section class="bg-red-50 rounded-2xl border border-red-100 p-6">
+              <h2
+                class="font-headline text-xl font-extrabold text-red-600 mb-2"
+              >
+                Report Seller
+              </h2>
+
+              <p class="text-sm text-red-700/80 leading-relaxed mb-4">
+                Report this seller if you notice fake listings, wrong property
+                details, payment fraud, or suspicious activity.
+              </p>
+
+              <button
+                id="reportSellerBtnAside"
+                class="w-full bg-red-600 text-white px-4 py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition flex items-center justify-center gap-2"
+              >
+                <i data-lucide="flag" class="w-4 h-4"></i>
+                Report This Seller
+              </button>
+            </section>
+          </aside>
+        </section>
+      </div>
+    </main>
+
+    <div
+      id="reportModal"
+      class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center"
+    >
+      <div class="bg-white rounded-2xl max-w-md w-full p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-headline text-2xl font-extrabold text-primary">
+            Report Seller
+          </h2>
+
+          <button
+            id="closeReportModal"
+            class="text-on-surface-variant hover:text-primary"
+          >
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <form class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold text-primary mb-2">
+              Reason
+            </label>
+            <select
+              class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+            >
+              <option>Fake property listing</option>
+              <option>Wrong property information</option>
+              <option>Suspicious payment request</option>
+              <option>Seller is unreachable</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-primary mb-2">
+              Message
+            </label>
+            <textarea
+              rows="4"
+              class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15 resize-none"
+              placeholder="Explain what happened..."
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-red-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition"
+          >
+            Submit Report
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      const reportModal = document.getElementById("reportModal");
+      const reportSellerBtn = document.getElementById("reportSellerBtn");
+      const reportSellerBtnAside = document.getElementById(
+        "reportSellerBtnAside",
+      );
+      const closeReportModal = document.getElementById("closeReportModal");
+
+      function openReportModal() {
+        reportModal.classList.remove("hidden");
+        lucide.createIcons();
+      }
+
+      function closeModal() {
+        reportModal.classList.add("hidden");
+      }
+
+      reportSellerBtn.addEventListener("click", openReportModal);
+      reportSellerBtnAside.addEventListener("click", openReportModal);
+      closeReportModal.addEventListener("click", closeModal);
+
+      reportModal.addEventListener("click", (event) => {
+        if (event.target === reportModal) closeModal();
+      });
+    </script>
+  </body>
+</html>
