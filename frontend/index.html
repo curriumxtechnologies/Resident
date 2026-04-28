@@ -193,12 +193,54 @@
           border-radius: 0.6rem;
         }
       }
+
+      .nav-link {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #444650;
+        transition: color 0.2s ease;
+        padding-bottom: 0.25rem;
+        border-bottom: 2px solid transparent;
+      }
+
+      .nav-link:hover {
+        color: #001c4a;
+        border-bottom-color: #6e5d00;
+      }
+
+      .mobile-nav-link {
+        color: #001c4a;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(116, 119, 129, 0.18);
+      }
+      .nav-link {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #444650;
+        transition: color 0.2s ease;
+        padding-bottom: 0.25rem;
+        border-bottom: 2px solid transparent;
+      }
+
+      .nav-link:hover {
+        color: #001c4a;
+        border-bottom-color: #6e5d00;
+      }
+
+      .mobile-nav-link {
+        color: #001c4a;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(116, 119, 129, 0.18);
+      }
     </style>
   </head>
   <body
     class="bg-surface text-on-surface font-body antialiased overflow-x-hidden"
   >
-    <!-- ========== HEADER ========= -->
     <header
       class="sticky top-0 w-full z-50 bg-white/85 backdrop-blur-xl shadow-sm transition-all duration-300 border-b border-surface-container/50"
     >
@@ -216,33 +258,65 @@
               "
             />
           </div>
+
           <div class="hidden lg:flex items-center space-x-8">
-            <a
-              href="#discover"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
-              >Discover</a
-            >
-            <a
-              href="#portfolio"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
-              >Portfolio</a
-            >
-            <a
-              href="#experience"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
-              >Experience</a
-            >
-            <a
-              href="#journey"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
-              >Journey</a
-            >
-            <a
-              href="#connect"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-tertiary"
-              >Connect</a
-            >
+            <a href="#discover" class="nav-link">Discover</a>
+            <a href="#portfolio" class="nav-link">Portfolio</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#journey" class="nav-link">Journey</a>
+            <a href="#connect" class="nav-link">Connect</a>
           </div>
+
+          <div class="hidden lg:flex items-center gap-3">
+            <a
+              href="login.html"
+              class="text-sm font-bold text-primary hover:text-tertiary transition"
+            >
+              Sign in
+            </a>
+            <a
+              href="register.html"
+              class="bg-tertiary-container text-primary px-5 py-2.5 rounded-full text-sm font-extrabold hover:bg-tertiary-fixed transition shadow-sm"
+            >
+              Create Account
+            </a>
+          </div>
+
+          <button
+            id="mobileMenuBtn"
+            class="lg:hidden w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center"
+            aria-label="Open menu"
+          >
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+
+        <div
+          id="mobileMenu"
+          class="hidden lg:hidden pb-5 pt-2 border-t border-surface-container/60"
+        >
+          <nav class="flex flex-col gap-3">
+            <a href="#discover" class="mobile-nav-link">Discover</a>
+            <a href="#portfolio" class="mobile-nav-link">Portfolio</a>
+            <a href="#experience" class="mobile-nav-link">Experience</a>
+            <a href="#journey" class="mobile-nav-link">Journey</a>
+            <a href="#connect" class="mobile-nav-link">Connect</a>
+
+            <div class="grid grid-cols-2 gap-3 pt-3">
+              <a
+                href="login.html"
+                class="border border-primary/20 text-primary text-center py-3 rounded-xl font-bold text-sm"
+              >
+                Sign in
+              </a>
+              <a
+                href="register.html"
+                class="bg-tertiary-container text-primary text-center py-3 rounded-xl font-extrabold text-sm"
+              >
+                Create Account
+              </a>
+            </div>
+          </nav>
         </div>
       </div>
     </header>
@@ -930,6 +1004,14 @@
                 >Careers</a
               >
             </li>
+            <li>
+              <a
+                href="seller-register.html"
+                class="text-on-surface-variant hover:text-primary transition"
+              >
+                Register as a Seller
+              </a>
+            </li>
           </ul>
         </div>
         <div>
@@ -984,6 +1066,32 @@
         }
       }
       window.setMode = setMode;
+
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+
+          const isOpen = !mobileMenu.classList.contains("hidden");
+
+          mobileMenuBtn.innerHTML = isOpen
+            ? '<i data-lucide="x"></i>'
+            : '<i data-lucide="menu"></i>';
+
+          lucide.createIcons();
+        });
+
+        document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+            lucide.createIcons();
+          });
+        });
+      }
+
       lucide.createIcons();
       gsap.registerPlugin(ScrollTrigger);
       gsap.from(".hero-anim", {
