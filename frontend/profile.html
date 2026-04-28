@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Profile | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "surface-container-low": "#f3f3f6",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="icon" href="images/favicon.ico" />
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="home.html">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
+          </a>
+
+          <div class="flex items-center gap-3">
+            <span class="hidden md:inline-block text-sm font-bold text-primary">
+              Joshua Sorochi
+            </span>
+
+            <a
+              href="settings.html"
+              class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition"
+              aria-label="Settings"
+            >
+              <i data-lucide="settings"></i>
+            </a>
+
+            <button
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
+              aria-label="User account"
+            >
+              JS
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <section
+          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden"
+        >
+          <div class="absolute inset-0 opacity-15">
+            <img
+              src="images/hero.avif"
+              class="w-full h-full object-cover"
+              alt=""
+            />
+          </div>
+
+          <div
+            class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+          >
+            <div class="flex items-center gap-5">
+              <div
+                class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg"
+              >
+                JS
+              </div>
+
+              <div>
+                <h1 class="font-headline text-3xl md:text-4xl font-extrabold">
+                  Joshua Sorochi
+                </h1>
+
+                <p class="text-white/75 text-sm mt-1">
+                  Buyer, renter, and property seller on Resident.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a
+                href="upload-sale.html"
+                class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"
+              >
+                <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+                Upload House for Sale
+              </a>
+
+              <a
+                href="upload-rent.html"
+                class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-white hover:text-primary transition flex items-center justify-center gap-2"
+              >
+                <i data-lucide="home" class="w-4 h-4"></i>
+                Upload House for Rent
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-8 mt-8">
+          <div class="lg:col-span-2 space-y-8">
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <div class="flex items-center justify-between mb-6">
+                <h2 class="font-headline text-2xl font-extrabold text-primary">
+                  Profile Details
+                </h2>
+
+                <a
+                  href="edit-profile.html"
+                  class="text-sm font-bold text-tertiary hover:text-primary transition"
+                >
+                  Edit Profile
+                </a>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Full Name
+                  </p>
+                  <p class="font-bold text-primary mt-1">Joshua Sorochi</p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Email Address
+                  </p>
+                  <p class="font-bold text-primary mt-1">joshua@example.com</p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Phone Number
+                  </p>
+                  <p class="font-bold text-primary mt-1">+234 800 000 0000</p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Alternate Phone
+                  </p>
+                  <p class="font-bold text-primary mt-1">+234 801 000 0000</p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Location
+                  </p>
+                  <p class="font-bold text-primary mt-1">Lagos, Nigeria</p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <div
+                class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+              >
+                <div>
+                  <h2
+                    class="font-headline text-2xl font-extrabold text-primary"
+                  >
+                    My Property Activity
+                  </h2>
+                  <p class="text-sm text-on-surface-variant mt-1">
+                    View houses you have rented or bought through Resident.
+                  </p>
+                </div>
+
+                <a
+                  href="my-properties.html"
+                  class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
+                >
+                  View Bought/Rented Houses
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <aside class="space-y-8">
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h3
+                class="font-headline text-xl font-extrabold text-primary mb-5"
+              >
+                Account Summary
+              </h3>
+
+              <div class="space-y-4">
+                <div
+                  class="flex items-center justify-between border-b border-outline/10 pb-3"
+                >
+                  <span class="text-sm text-on-surface-variant"
+                    >Saved Homes</span
+                  >
+                  <span class="font-extrabold text-primary">12</span>
+                </div>
+
+                <div
+                  class="flex items-center justify-between border-b border-outline/10 pb-3"
+                >
+                  <span class="text-sm text-on-surface-variant"
+                    >Recently Viewed</span
+                  >
+                  <span class="font-extrabold text-primary">8</span>
+                </div>
+
+                <div
+                  class="flex items-center justify-between border-b border-outline/10 pb-3"
+                >
+                  <span class="text-sm text-on-surface-variant"
+                    >Uploaded Listings</span
+                  >
+                  <span class="font-extrabold text-primary">3</span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-on-surface-variant"
+                    >Completed Deals</span
+                  >
+                  <span class="font-extrabold text-primary">2</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
