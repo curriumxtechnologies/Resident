@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Settings | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "surface-container-low": "#f3f3f6",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="icon" href="images/favicon.ico" />
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border-radius: 0.75rem;
+        background: white;
+        border: 1px solid rgba(116, 119, 129, 0.25);
+        outline: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: 0.2s ease;
+      }
+
+      .input-field:focus {
+        border-color: #001c4a;
+        box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="home.html">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
+          </a>
+
+          <div class="flex items-center gap-3">
+            <span class="hidden md:inline-block text-sm font-bold text-primary">
+              Joshua Sorochi
+            </span>
+
+            <a
+              href="profile.html"
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
+              aria-label="Profile"
+            >
+              JS
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <div class="mb-8">
+          <a
+            href="profile.html"
+            class="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-tertiary transition mb-5"
+          >
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            Back to Profile
+          </a>
+
+          <h1
+            class="font-headline text-3xl md:text-4xl font-extrabold text-primary"
+          >
+            Account Settings
+          </h1>
+          <p class="text-sm text-on-surface-variant mt-2">
+            Manage your login, privacy, notifications, and account security.
+          </p>
+        </div>
+
+        <section class="grid lg:grid-cols-3 gap-8">
+          <aside class="lg:col-span-1">
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-4 lg:sticky lg:top-24"
+            >
+              <a
+                href="#security"
+                class="flex items-center gap-3 p-3 rounded-xl text-primary font-bold hover:bg-primary/5"
+              >
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                Security
+              </a>
+              <a
+                href="#notifications"
+                class="flex items-center gap-3 p-3 rounded-xl text-primary font-bold hover:bg-primary/5"
+              >
+                <i data-lucide="bell" class="w-4 h-4"></i>
+                Notifications
+              </a>
+              <a
+                href="#privacy"
+                class="flex items-center gap-3 p-3 rounded-xl text-primary font-bold hover:bg-primary/5"
+              >
+                <i data-lucide="lock" class="w-4 h-4"></i>
+                Privacy
+              </a>
+              <a
+                href="#account"
+                class="flex items-center gap-3 p-3 rounded-xl text-red-600 font-bold hover:bg-red-50"
+              >
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                Delete Account
+              </a>
+            </div>
+          </aside>
+
+          <div class="lg:col-span-2 space-y-8">
+            <section
+              id="security"
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <div class="mb-6">
+                <h2 class="font-headline text-2xl font-extrabold text-primary">
+                  Security
+                </h2>
+                <p class="text-sm text-on-surface-variant mt-1">
+                  Update your password and protect your account.
+                </p>
+              </div>
+
+              <form class="space-y-5">
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Current Password
+                  </label>
+                  <input
+                    type="password"
+                    class="input-field"
+                    placeholder="Enter current password"
+                  />
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      New Password
+                    </label>
+                    <input
+                      type="password"
+                      class="input-field"
+                      placeholder="Enter new password"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Confirm New Password
+                    </label>
+                    <input
+                      type="password"
+                      class="input-field"
+                      placeholder="Confirm new password"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
+                >
+                  Update Password
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                </button>
+              </form>
+            </section>
+
+            <section
+              id="notifications"
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <div class="mb-6">
+                <h2 class="font-headline text-2xl font-extrabold text-primary">
+                  Notifications
+                </h2>
+                <p class="text-sm text-on-surface-variant mt-1">
+                  Choose the updates you want to receive.
+                </p>
+              </div>
+
+              <div class="space-y-5">
+                <label
+                  class="flex items-start justify-between gap-4 border-b border-outline/10 pb-4"
+                >
+                  <div>
+                    <h3 class="font-bold text-primary">Property Updates</h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Get alerts for new houses for sale or rent.
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                </label>
+
+                <label
+                  class="flex items-start justify-between gap-4 border-b border-outline/10 pb-4"
+                >
+                  <div>
+                    <h3 class="font-bold text-primary">
+                      Saved Property Alerts
+                    </h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Receive updates when a saved property changes price or
+                      status.
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                </label>
+
+                <label class="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="font-bold text-primary">Marketing Emails</h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Receive curated offers and real estate insights.
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                </label>
+              </div>
+
+              <button
+                class="mt-6 bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition"
+              >
+                Save Notification Settings
+              </button>
+            </section>
+
+            <section
+              id="privacy"
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <div class="mb-6">
+                <h2 class="font-headline text-2xl font-extrabold text-primary">
+                  Privacy
+                </h2>
+                <p class="text-sm text-on-surface-variant mt-1">
+                  Control how your profile and contact details appear.
+                </p>
+              </div>
+
+              <div class="space-y-5">
+                <label
+                  class="flex items-start justify-between gap-4 border-b border-outline/10 pb-4"
+                >
+                  <div>
+                    <h3 class="font-bold text-primary">
+                      Show Phone Number to Agents
+                    </h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Allow verified agents to contact you about property
+                      requests.
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                </label>
+
+                <label
+                  class="flex items-start justify-between gap-4 border-b border-outline/10 pb-4"
+                >
+                  <div>
+                    <h3 class="font-bold text-primary">
+                      Show Profile Name on Listings
+                    </h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Display your name when you upload houses for sale or rent.
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                </label>
+
+                <label class="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="font-bold text-primary">
+                      Hide Recently Viewed Properties
+                    </h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Keep your recently viewed houses private.
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                </label>
+              </div>
+
+              <button
+                class="mt-6 bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition"
+              >
+                Save Privacy Settings
+              </button>
+            </section>
+
+            <section
+              id="account"
+              class="bg-white rounded-2xl shadow-sm border border-red-100 p-6"
+            >
+              <div class="flex items-start gap-4">
+                <div
+                  class="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center shrink-0"
+                >
+                  <i data-lucide="triangle-alert"></i>
+                </div>
+
+                <div class="flex-1">
+                  <h2
+                    class="font-headline text-2xl font-extrabold text-red-600"
+                  >
+                    Delete Account
+                  </h2>
+                  <p class="text-sm text-on-surface-variant mt-1">
+                    This will remove your profile, saved homes, uploaded
+                    properties, and account history.
+                  </p>
+
+                  <div class="mt-5">
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Type DELETE MY ACCOUNT to confirm
+                    </label>
+                    <input
+                      type="text"
+                      class="input-field"
+                      placeholder="DELETE MY ACCOUNT"
+                    />
+                  </div>
+
+                  <button
+                    class="mt-5 bg-red-600 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition flex items-center justify-center gap-2"
+                  >
+                    Delete My Account
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
