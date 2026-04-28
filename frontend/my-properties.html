@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>My Property Activity | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" href="images/favicon.ico" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "surface-container-low": "#f3f3f6",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+
+      .property-card {
+        border-radius: 1rem;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .property-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+      }
+
+      .gradient-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.58) 48%,
+          rgba(0, 0, 0, 0.08) 100%
+        );
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="home.html">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
+          </a>
+
+          <div class="flex items-center gap-3">
+            <span class="hidden md:inline-block text-sm font-bold text-primary">
+              Joshua Sorochi
+            </span>
+
+            <a
+              href="profile.html"
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
+              aria-label="Profile"
+            >
+              JS
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <section
+          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8"
+        >
+          <div class="absolute inset-0 opacity-15">
+            <img
+              src="images/hero.avif"
+              class="w-full h-full object-cover"
+              alt=""
+            />
+          </div>
+
+          <div
+            class="relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+          >
+            <div>
+              <span
+                class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-bold mb-4"
+              >
+                <i data-lucide="home" class="w-4 h-4 text-tertiary-fixed"></i>
+                Property Activity
+              </span>
+
+              <h1 class="font-headline text-3xl md:text-5xl font-extrabold">
+                My Houses
+              </h1>
+
+              <p class="text-white/75 text-sm md:text-base mt-3 max-w-2xl">
+                View houses you have rented or bought through Resident.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-center">
+              <div class="bg-white/10 rounded-2xl px-5 py-4">
+                <p class="text-2xl font-extrabold text-tertiary-fixed">2</p>
+                <p class="text-xs text-white/75 mt-1">Bought</p>
+              </div>
+
+              <div class="bg-white/10 rounded-2xl px-5 py-4">
+                <p class="text-2xl font-extrabold text-tertiary-fixed">2</p>
+                <p class="text-xs text-white/75 mt-1">Rented</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="bg-white rounded-2xl shadow-sm border border-outline/10 p-4 md:p-5 mb-8"
+        >
+          <div
+            class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+          >
+            <div class="flex flex-wrap gap-2">
+              <button
+                class="filter-btn bg-primary text-white px-4 py-2 rounded-full text-sm font-bold"
+                data-filter="all"
+              >
+                All
+              </button>
+              <button
+                class="filter-btn bg-surface-container-low text-primary px-4 py-2 rounded-full text-sm font-bold"
+                data-filter="sold"
+              >
+                Bought
+              </button>
+              <button
+                class="filter-btn bg-surface-container-low text-primary px-4 py-2 rounded-full text-sm font-bold"
+                data-filter="rented"
+              >
+                Rented
+              </button>
+            </div>
+
+            <div class="relative w-full md:w-72">
+              <i
+                data-lucide="search"
+                class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-4 h-4"
+              ></i>
+              <input
+                id="searchInput"
+                type="text"
+                placeholder="Search property"
+                class="w-full pl-11 pr-4 py-2.5 rounded-xl bg-surface-container-low border border-outline/10 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-7"
+          id="propertyGrid"
+        >
+          <article
+            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
+            data-status="sold"
+            data-title="The Obsidian Villa"
+          >
+            <img
+              src="images/forsale.avif"
+              alt="The Obsidian Villa"
+              class="w-full h-[390px] object-cover"
+            />
+
+            <div class="absolute top-4 left-4 z-10 flex gap-2">
+              <span
+                class="bg-tertiary-container text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
+              >
+                Sold
+              </span>
+            </div>
+
+            <div class="absolute top-4 right-4 z-10">
+              <span
+                class="bg-white/90 text-primary text-[11px] font-bold px-3 py-1 rounded-full"
+              >
+                Bought
+              </span>
+            </div>
+
+            <div
+              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+            >
+              <h3 class="font-headline text-lg font-bold">
+                The Obsidian Villa
+              </h3>
+              <p class="text-xs text-white/80 mt-1">Lekki Phase 1, Lagos</p>
+
+              <div class="mt-2">
+                <span class="text-white font-bold text-xl">₦245,000,000</span>
+              </div>
+
+              <div class="flex gap-4 mt-3 text-xs text-white/80">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bed" class="w-4 h-4"></i> 5
+                </span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bath" class="w-4 h-4"></i> 6
+                </span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="square" class="w-4 h-4"></i> 450m²
+                </span>
+              </div>
+
+              <div class="mt-4 flex items-center justify-between gap-3">
+                <p class="text-[11px] text-white/70">Bought on Apr 12, 2026</p>
+
+                <a
+                  href="propertydetailsforsale.html"
+                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
+                >
+                  View Details
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
+            data-status="rented"
+            data-title="Banana Island Waterfront"
+          >
+            <img
+              src="images/forrent.avif"
+              alt="Banana Island Waterfront"
+              class="w-full h-[390px] object-cover"
+            />
+
+            <div class="absolute top-4 left-4 z-10 flex gap-2">
+              <span
+                class="bg-white/90 text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
+              >
+                Rented
+              </span>
+            </div>
+
+            <div class="absolute top-4 right-4 z-10">
+              <span
+                class="bg-tertiary-container text-primary text-[11px] font-bold px-3 py-1 rounded-full"
+              >
+                Active Lease
+              </span>
+            </div>
+
+            <div
+              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+            >
+              <h3 class="font-headline text-lg font-bold">
+                Banana Island Waterfront
+              </h3>
+              <p class="text-xs text-white/80 mt-1">Banana Island, Lagos</p>
+
+              <div class="mt-2">
+                <span class="text-white font-bold text-xl">
+                  ₦7,000,000/year
+                </span>
+              </div>
+
+              <div class="flex gap-4 mt-3 text-xs text-white/80">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bed" class="w-4 h-4"></i> 4
+                </span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bath" class="w-4 h-4"></i> 4.5
+                </span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="square" class="w-4 h-4"></i> 350m²
+                </span>
+              </div>
+
+              <div class="mt-4 flex items-center justify-between gap-3">
+                <p class="text-[11px] text-white/70">Rented on Mar 20, 2026</p>
+
+                <a
+                  href="propertydetailsforrent.html"
+                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
+                >
+                  View Details
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
+            data-status="sold"
+            data-title="Skyline Penthouse"
+          >
+            <img
+              src="images/hero.avif"
+              alt="Skyline Penthouse"
+              class="w-full h-[390px] object-cover"
+            />
+
+            <div class="absolute top-4 left-4 z-10 flex gap-2">
+              <span
+                class="bg-tertiary-container text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
+              >
+                Sold
+              </span>
+            </div>
+
+            <div class="absolute top-4 right-4 z-10">
+              <span
+                class="bg-white/90 text-primary text-[11px] font-bold px-3 py-1 rounded-full"
+              >
+                Bought
+              </span>
+            </div>
+
+            <div
+              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+            >
+              <h3 class="font-headline text-lg font-bold">Skyline Penthouse</h3>
+              <p class="text-xs text-white/80 mt-1">Maitama, Abuja</p>
+
+              <div class="mt-2">
+                <span class="text-white font-bold text-xl">₦180,000,000</span>
+              </div>
+
+              <div class="flex gap-4 mt-3 text-xs text-white/80">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bed" class="w-4 h-4"></i> 3
+                </span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bath" class="w-4 h-4"></i> 4
+                </span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="square" class="w-4 h-4"></i> 320m²
+                </span>
+              </div>
+
+              <div class="mt-4 flex items-center justify-between gap-3">
+                <p class="text-[11px] text-white/70">Bought on Jan 08, 2026</p>
+
+                <a
+                  href="propertydetailsforsale.html"
+                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
+                >
+                  View Details
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
+            data-status="rented"
+            data-title="Palm Grove Apartment"
+          >
+            <img
+              src="images/forrent.avif"
+              alt="Palm Grove Apartment"
+              class="w-full h-[390px] object-cover"
+            />
+
+            <div class="absolute top-4 left-4 z-10 flex gap-2">
+              <span
+                class="bg-white/90 text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
+              >
+                Rented
+              </span>
+            </div>
+
+            <div class="absolute top-4 right-4 z-10">
+              <span
+                class="bg-tertiary-container text-primary text-[11px] font-bold px-3 py-1 rounded-full"
+              >
+                Active Lease
+              </span>
+            </div>
+
+            <div
+              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+            >
+              <h3 class="font-headline text-lg font-bold">
+                Palm Grove Apartment
+              </h3>
+              <p class="text-xs text-white/80 mt-1">Ikoyi, Lagos</p>
+
+              <div class="mt-2">
+                <span class="text-white font-bold text-xl">
+                  ₦8,000,000/year
+                </span>
+              </div>
+
+              <div class="flex gap-4 mt-3 text-xs text-white/80">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bed" class="w-4 h-4"></i> 3
+                </span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bath" class="w-4 h-4"></i> 3
+                </span>
+                <span class="flex items-center gap-1">
+                  <i data-lucide="square" class="w-4 h-4"></i> 250m²
+                </span>
+              </div>
+
+              <div class="mt-4 flex items-center justify-between gap-3">
+                <p class="text-[11px] text-white/70">Rented on Feb 18, 2026</p>
+
+                <a
+                  href="propertydetailsforrent.html"
+                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
+                >
+                  View Details
+                </a>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section
+          id="emptyState"
+          class="hidden bg-white rounded-2xl shadow-sm border border-outline/10 p-10 text-center mt-8"
+        >
+          <div
+            class="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <i data-lucide="search-x" class="w-7 h-7"></i>
+          </div>
+
+          <h2 class="font-headline text-2xl font-extrabold text-primary">
+            No property found
+          </h2>
+
+          <p class="text-sm text-on-surface-variant mt-2">
+            Try another search or change the selected filter.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const items = document.querySelectorAll(".property-item");
+      const searchInput = document.getElementById("searchInput");
+      const emptyState = document.getElementById("emptyState");
+
+      let currentFilter = "all";
+
+      function updateCards() {
+        const searchValue = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        items.forEach((item) => {
+          const status = item.dataset.status;
+          const title = item.dataset.title.toLowerCase();
+
+          const matchesFilter =
+            currentFilter === "all" || status === currentFilter;
+
+          const matchesSearch = title.includes(searchValue);
+
+          if (matchesFilter && matchesSearch) {
+            item.classList.remove("hidden");
+            visibleCount++;
+          } else {
+            item.classList.add("hidden");
+          }
+        });
+
+        if (visibleCount === 0) {
+          emptyState.classList.remove("hidden");
+        } else {
+          emptyState.classList.add("hidden");
+        }
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          currentFilter = button.dataset.filter;
+
+          filterButtons.forEach((btn) => {
+            btn.classList.remove("bg-primary", "text-white");
+            btn.classList.add("bg-surface-container-low", "text-primary");
+          });
+
+          button.classList.add("bg-primary", "text-white");
+          button.classList.remove("bg-surface-container-low", "text-primary");
+
+          updateCards();
+        });
+      });
+
+      searchInput.addEventListener("input", updateCards);
+    </script>
+  </body>
+</html>
