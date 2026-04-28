@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Upload House for Rent | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" href="images/favicon.ico" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "surface-container-low": "#f3f3f6",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border-radius: 0.75rem;
+        background: white;
+        border: 1px solid rgba(116, 119, 129, 0.25);
+        outline: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: 0.2s ease;
+      }
+
+      .input-field:focus {
+        border-color: #001c4a;
+        box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
+      }
+
+      .file-field {
+        width: 100%;
+        background: white;
+        border: 1px dashed rgba(116, 119, 129, 0.45);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="home.html">
+            <img
+              src="images/logo.png"
+              alt="Resident"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
+          </a>
+
+          <div class="flex items-center gap-3">
+            <span class="hidden md:inline-block text-sm font-bold text-primary">
+              Joshua Sorochi
+            </span>
+
+            <a
+              href="profile.html"
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
+            >
+              JS
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <a
+          href="profile.html"
+          class="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-tertiary transition mb-6"
+        >
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          Back to Profile
+        </a>
+
+        <section
+          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8"
+        >
+          <div class="absolute inset-0 opacity-15">
+            <img src="images/hero.avif" class="w-full h-full object-cover" />
+          </div>
+
+          <div class="relative z-10 max-w-3xl">
+            <span
+              class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-bold mb-4"
+            >
+              <i
+                data-lucide="key-round"
+                class="w-4 h-4 text-tertiary-fixed"
+              ></i>
+              Rental Listing
+            </span>
+
+            <h1 class="font-headline text-3xl md:text-5xl font-extrabold">
+              Upload House for Rent
+            </h1>
+
+            <p class="text-white/75 text-sm md:text-base mt-3 max-w-2xl">
+              Add rental details, lease terms, images, and landlord contact
+              information for tenant inquiries.
+            </p>
+          </div>
+        </section>
+
+        <form class="grid lg:grid-cols-3 gap-8">
+          <div class="lg:col-span-2 space-y-8">
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Property Information
+              </h2>
+
+              <div class="space-y-5">
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Property Title
+                  </label>
+                  <input
+                    type="text"
+                    class="input-field"
+                    placeholder="Example: Banana Island Waterfront"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Property Description
+                  </label>
+                  <textarea
+                    rows="4"
+                    class="input-field resize-none"
+                    placeholder="Describe the rental property, furnishing, environment, access, security, and unique features."
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Property Type
+                    </label>
+                    <select class="input-field" required>
+                      <option value="">Select property type</option>
+                      <option>Luxury Apartment</option>
+                      <option>Duplex</option>
+                      <option>Bungalow</option>
+                      <option>Penthouse</option>
+                      <option>Terrace House</option>
+                      <option>Self Contain</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Annual Rent
+                    </label>
+                    <input
+                      type="number"
+                      class="input-field"
+                      placeholder="Example: 7000000"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="grid sm:grid-cols-3 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Bedrooms
+                    </label>
+                    <input
+                      type="number"
+                      class="input-field"
+                      placeholder="4"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Bathrooms
+                    </label>
+                    <input
+                      type="number"
+                      class="input-field"
+                      placeholder="4.5"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Size
+                    </label>
+                    <input
+                      type="text"
+                      class="input-field"
+                      placeholder="350 m²"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Year Built
+                    </label>
+                    <input
+                      type="number"
+                      class="input-field"
+                      placeholder="2022"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Furnishing
+                    </label>
+                    <select class="input-field" required>
+                      <option value="">Select furnishing status</option>
+                      <option>Fully Furnished</option>
+                      <option>Semi Furnished</option>
+                      <option>Unfurnished</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Location Details
+              </h2>
+
+              <div class="space-y-5">
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      State
+                    </label>
+                    <select class="input-field" required>
+                      <option value="">Select state</option>
+                      <option>Lagos</option>
+                      <option>Abuja</option>
+                      <option>Rivers</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      LGA / Area
+                    </label>
+                    <input
+                      type="text"
+                      class="input-field"
+                      placeholder="Banana Island"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Full Property Address
+                  </label>
+                  <textarea
+                    rows="3"
+                    class="input-field resize-none"
+                    placeholder="Enter the full property address"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Rent Terms
+              </h2>
+
+              <div class="space-y-5">
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Lease Term
+                    </label>
+                    <select class="input-field" required>
+                      <option>1 year minimum</option>
+                      <option>6 months minimum</option>
+                      <option>Short let</option>
+                      <option>Flexible lease</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Security Deposit
+                    </label>
+                    <input
+                      type="text"
+                      class="input-field"
+                      placeholder="Example: 2 months rent"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Service Charge
+                    </label>
+                    <input
+                      type="text"
+                      class="input-field"
+                      placeholder="Included or enter amount"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-bold text-primary mb-2">
+                      Availability
+                    </label>
+                    <select class="input-field" required>
+                      <option>Available now</option>
+                      <option>Available next month</option>
+                      <option>Occupied, inspection only</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Utility Terms
+                  </label>
+                  <textarea
+                    rows="3"
+                    class="input-field resize-none"
+                    placeholder="Example: Electricity, water, waste, and internet are metered separately."
+                  ></textarea>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Pet Policy
+                  </label>
+                  <select class="input-field">
+                    <option>Not specified</option>
+                    <option>Pets allowed</option>
+                    <option>Pets not allowed</option>
+                    <option>Negotiable with deposit</option>
+                  </select>
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Images & Documents
+              </h2>
+
+              <div class="space-y-5">
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Property Images
+                  </label>
+                  <p class="text-xs text-on-surface-variant mb-2">
+                    Upload clear exterior, interior, kitchen, bedroom, bathroom,
+                    and compound images.
+                  </p>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    class="file-field"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Proof of Ownership or Authorization
+                  </label>
+                  <p class="text-xs text-on-surface-variant mb-2">
+                    Upload landlord document, agency authorization, or property
+                    management approval.
+                  </p>
+                  <input
+                    type="file"
+                    accept=".pdf,image/*"
+                    class="file-field"
+                    required
+                  />
+                </div>
+              </div>
+            </section>
+
+            <section
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Key Features
+              </h2>
+
+              <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Fiber Internet
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Infinity Pool
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Gym / Spa
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Car Park
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  24/7 Security
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Central AC
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Backup Power
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Smart Home
+                </label>
+
+                <label class="flex items-center gap-2 text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    class="rounded text-primary focus:ring-primary"
+                  />
+                  Concierge
+                </label>
+              </div>
+
+              <div class="mt-5">
+                <label class="block text-sm font-bold text-primary mb-2">
+                  Other Features
+                </label>
+                <textarea
+                  rows="3"
+                  class="input-field resize-none"
+                  placeholder="Add other rental features separated by commas"
+                ></textarea>
+              </div>
+            </section>
+          </div>
+
+          <aside class="lg:col-span-1">
+            <div
+              class="bg-white rounded-2xl shadow-lg border border-outline/10 p-6 lg:sticky lg:top-24"
+            >
+              <h2
+                class="font-headline text-xl font-extrabold text-primary mb-5"
+              >
+                Landlord / Agent Contact
+              </h2>
+
+              <div class="space-y-5">
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Contact Name
+                  </label>
+                  <input
+                    type="text"
+                    class="input-field"
+                    placeholder="Joshua Sorochi"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Contact Email
+                  </label>
+                  <input
+                    type="email"
+                    class="input-field"
+                    placeholder="owner@example.com"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    class="input-field"
+                    placeholder="+234 800 000 0000"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-bold text-primary mb-2">
+                    Alternate Phone
+                  </label>
+                  <input
+                    type="tel"
+                    class="input-field"
+                    placeholder="Optional"
+                  />
+                </div>
+
+                <div class="bg-surface-container-low rounded-xl p-4">
+                  <h3 class="font-bold text-primary text-sm mb-2">
+                    Rental Review
+                  </h3>
+                  <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Your rental listing will be reviewed before it appears on
+                    Resident. Use accurate rent, address, and lease details.
+                  </p>
+                </div>
+
+                <label
+                  class="flex items-start gap-3 text-sm text-on-surface-variant"
+                >
+                  <input
+                    type="checkbox"
+                    required
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                  <span>
+                    I confirm that this rental information is accurate and I
+                    have the right to list it.
+                  </span>
+                </label>
+
+                <button
+                  type="submit"
+                  class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2 shadow-md"
+                >
+                  Submit Rental Listing
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="w-full border border-outline/20 text-primary py-3 rounded-xl font-bold text-sm hover:bg-primary/5 transition flex items-center justify-center gap-2"
+                >
+                  Save as Draft
+                  <i data-lucide="save" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
