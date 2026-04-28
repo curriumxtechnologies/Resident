@@ -195,72 +195,31 @@
     >
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
-          <a href="home.html">
+          <a href="home.html" class="flex-shrink-0">
             <img
               src="images/logo.png"
               alt="Resident"
               class="h-9 lg:h-11 w-auto object-contain"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML =
+                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>RESIDENT</span>';
+              "
             />
           </a>
 
-          <nav class="hidden lg:flex items-center gap-8">
-            <a
-              href="#search"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition"
-              >Search</a
-            >
-            <a
-              href="#sale"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition"
-              >For Sale</a
-            >
-            <a
-              href="#rent"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition"
-              >For Rent</a
-            >
-            <a
-              href="#recent"
-              class="text-sm font-semibold text-on-surface-variant hover:text-primary transition"
-              >Recently Viewed</a
-            >
-          </nav>
+          <div class="flex items-center gap-3">
+            <span class="hidden md:inline-block text-sm font-bold text-primary">
+              Joshua Sorochi
+            </span>
 
-          <div class="hidden lg:flex items-center gap-3">
-            <a
-              href="seller-register.html"
-              class="text-sm font-bold text-primary hover:text-tertiary transition"
-            >
-              List Property
-            </a>
             <button
-              class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center"
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
+              aria-label="User account"
             >
-              <i data-lucide="user"></i>
+              JS
             </button>
           </div>
-
-          <button
-            id="mobileMenuBtn"
-            class="lg:hidden w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center"
-          >
-            <i data-lucide="menu"></i>
-          </button>
-        </div>
-
-        <div id="mobileMenu" class="hidden lg:hidden pb-5 pt-2">
-          <nav class="flex flex-col">
-            <a href="#search" class="mobile-nav-link">Search</a>
-            <a href="#sale" class="mobile-nav-link">For Sale</a>
-            <a href="#rent" class="mobile-nav-link">For Rent</a>
-            <a href="#recent" class="mobile-nav-link">Recently Viewed</a>
-            <a
-              href="seller-register.html"
-              class="mt-4 bg-tertiary-container text-primary text-center py-3 rounded-xl font-extrabold text-sm"
-            >
-              List Property
-            </a>
-          </nav>
         </div>
       </div>
     </header>
@@ -419,6 +378,11 @@
                     ><i data-lucide="square"></i>450m²</span
                   >
                 </div>
+                <a
+                  href="#"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
 
@@ -458,6 +422,11 @@
                     ><i data-lucide="square"></i>320m²</span
                   >
                 </div>
+                <a
+                  href="#"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
 
@@ -497,6 +466,11 @@
                     ><i data-lucide="square"></i>380m²</span
                   >
                 </div>
+                <a
+                  href="#"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
           </div>
@@ -579,6 +553,11 @@
                     ><i data-lucide="square"></i>250m²</span
                   >
                 </div>
+                <a
+                  href="#"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
 
@@ -618,6 +597,11 @@
                     ><i data-lucide="square"></i>400m²</span
                   >
                 </div>
+                <a
+                  href="#"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
 
@@ -657,6 +641,11 @@
                     ><i data-lucide="square"></i>300m²</span
                   >
                 </div>
+                <a
+                  href="#"
+                  class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition"
+                  >View More <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
               </div>
             </div>
           </div>
