@@ -1,7 +1,12 @@
-// apiConfig.js
+// js/apiConfig.js
 import { getStoredToken } from "./tokenStorage.js";
 
-const BASE_URL = "http://localhost:8000/api"; // adjust to your backend
+// Dynamically set the base URL based on the current environment
+const BASE_URL =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:8000/api" // Local development backend
+    : "https://resident-azkm.onrender.com/api"; // Deployed production backend
 
 export async function apiRequest(endpoint, options = {}) {
   const token = getStoredToken();
@@ -23,7 +28,9 @@ export async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${BASE_URL}${endpoint}`, config);
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: "Request failed" }));
+    const errorData = await response.json().catch(() => ({
+      message: "Request failed",
+    }));
     throw new Error(errorData.message || "Request failed");
   }
 
