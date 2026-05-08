@@ -14,35 +14,11 @@
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="images/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="images/favicon-32x32.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="images/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="images/android-chrome-512x512.png"
-    />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
     <link rel="manifest" href="images/site.webmanifest" />
     <meta name="theme-color" content="#0D316D" />
 
@@ -102,9 +78,7 @@
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
-    <main
-      class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden"
-    >
+    <main class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden">
       <div class="absolute inset-0 z-0">
         <img
           src="images/hero.avif"
@@ -116,266 +90,188 @@
 
       <section class="relative z-10 w-full max-w-xl">
         <div class="glass-card rounded-2xl shadow-2xl p-6 sm:p-8">
-          <div class="text-center mb-8">
-            <img
-              src="images/logo.png"
-              alt="Resident"
-              class="h-10 mx-auto mb-5 object-contain"
-              onerror="
-                this.style.display = 'none';
-                this.parentElement.innerHTML =
-                  '<h1 class=\'text-2xl font-black tracking-tighter text-primary mb-5\'>RESIDENT</h1>' +
-                  this.parentElement.innerHTML;
-              "
-            />
+          <!-- Step 1: Signup Form -->
+          <div id="signupStep1">
+            <div class="text-center mb-8">
+              <img
+                src="images/logo.png"
+                alt="Resident"
+                class="h-10 mx-auto mb-5 object-contain"
+                onerror="
+                  this.style.display = 'none';
+                  this.parentElement.innerHTML =
+                    '<h1 class=\'text-2xl font-black tracking-tighter text-primary mb-5\'>RESIDENT</h1>' +
+                    this.parentElement.innerHTML;
+                "
+              />
+              <span
+                class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+              >
+                <i data-lucide="user-plus" class="w-4 h-4"></i>
+                User Registration
+              </span>
+              <h1 class="font-headline text-3xl font-extrabold text-primary">
+                Create Your Account
+              </h1>
+              <p class="text-sm text-on-surface-variant mt-2">
+                Sign up to save properties, request tours, and manage your real estate journey.
+              </p>
+            </div>
 
-            <span
-              class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+            <!-- Google Signup -->
+            <button
+              id="googleSignupBtn"
+              type="button"
+              class="w-full flex items-center justify-center gap-3 border border-outline/30 bg-white text-primary rounded-xl py-3 font-bold text-sm hover:bg-surface transition shadow-sm"
             >
-              <i data-lucide="user-plus" class="w-4 h-4"></i>
-              User Registration
-            </span>
+              <!-- Google icon SVG -->
+              <svg class="w-5 h-5" viewBox="0 0 48 48">
+                <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+                <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+                <path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.5-5.2l-6.2-5.2C29.3 35.1 26.8 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+                <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.1 5.6l6.2 5.2C36.9 39.3 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+              </svg>
+              Sign up with Google
+            </button>
 
-            <h1 class="font-headline text-3xl font-extrabold text-primary">
-              Create Your Account
-            </h1>
-            <p class="text-sm text-on-surface-variant mt-2">
-              Sign up to save properties, request tours, and manage your real
-              estate journey.
+            <div class="flex items-center gap-4 my-6">
+              <div class="h-px bg-outline/20 flex-1"></div>
+              <span class="text-xs text-on-surface-variant font-semibold">OR</span>
+              <div class="h-px bg-outline/20 flex-1"></div>
+            </div>
+
+            <!-- Local Signup Form -->
+            <form id="signupForm" class="space-y-5">
+              <div>
+                <label for="fullName" class="block text-sm font-bold text-primary mb-2">Full Name</label>
+                <div class="relative">
+                  <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                  <input id="fullName" type="text" name="name" placeholder="Enter your full name" required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+                </div>
+              </div>
+
+              <div>
+                <label for="username" class="block text-sm font-bold text-primary mb-2">Username</label>
+                <div class="relative">
+                  <i data-lucide="at-sign" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                  <input id="username" type="text" name="username" placeholder="Choose a username" required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+                </div>
+              </div>
+
+              <div>
+                <label for="email" class="block text-sm font-bold text-primary mb-2">Email Address</label>
+                <div class="relative">
+                  <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                  <input id="email" type="email" name="email" placeholder="you@example.com" required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+                </div>
+              </div>
+
+              <!-- Phone fields (now supported) -->
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="phone" class="block text-sm font-bold text-primary mb-2">Phone Number</label>
+                  <div class="relative">
+                    <i data-lucide="phone" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                    <input id="phone" type="tel" name="phone" placeholder="08012345678"
+                      class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+                  </div>
+                </div>
+                <div>
+                  <label for="alternatePhone" class="block text-sm font-bold text-primary mb-2">Alternate Phone</label>
+                  <div class="relative">
+                    <i data-lucide="phone-call" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                    <input id="alternatePhone" type="tel" name="alternatePhone" placeholder="Optional"
+                      class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="password" class="block text-sm font-bold text-primary mb-2">Password</label>
+                  <div class="relative">
+                    <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                    <input id="password" type="password" name="password" placeholder="Create password" required minlength="6"
+                      class="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+                    <button type="button" class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition" data-target="password">
+                      <i data-lucide="eye" class="w-5 h-5"></i>
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label for="confirmPassword" class="block text-sm font-bold text-primary mb-2">Confirm Password</label>
+                  <div class="relative">
+                    <i data-lucide="lock-keyhole" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                    <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm password" required
+                      class="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+                    <button type="button" class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition" data-target="confirmPassword">
+                      <i data-lucide="eye" class="w-5 h-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <label class="flex items-start gap-3 text-sm text-on-surface-variant">
+                <input type="checkbox" id="agreeTerms" required class="mt-1 rounded border-outline/40 text-primary focus:ring-primary" />
+                <span>
+                  I agree to Resident’s
+                  <a href="#" class="font-bold text-primary hover:text-tertiary transition">Terms</a>
+                  and
+                  <a href="#" class="font-bold text-primary hover:text-tertiary transition">Privacy Policy</a>.
+                </span>
+              </label>
+
+              <p id="formError" class="text-red-500 text-sm hidden"></p>
+
+              <button type="submit"
+                class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md flex items-center justify-center gap-2">
+                Register
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </form>
+
+            <p class="text-center text-sm text-on-surface-variant mt-7">
+              Already have an account?
+              <a href="login.html" class="font-bold text-primary hover:text-tertiary transition">Sign in</a>
             </p>
           </div>
 
-          <button
-            type="button"
-            class="w-full flex items-center justify-center gap-3 border border-outline/30 bg-white text-primary rounded-xl py-3 font-bold text-sm hover:bg-surface transition shadow-sm"
-          >
-            <svg class="w-5 h-5" viewBox="0 0 48 48">
-              <path
-                fill="#FFC107"
-                d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"
-              />
-              <path
-                fill="#FF3D00"
-                d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
-              />
-              <path
-                fill="#4CAF50"
-                d="M24 44c5.2 0 10-2 13.5-5.2l-6.2-5.2C29.3 35.1 26.8 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"
-              />
-              <path
-                fill="#1976D2"
-                d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.1 5.6l6.2 5.2C36.9 39.3 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"
-              />
-            </svg>
-            Sign up with Google
-          </button>
-
-          <div class="flex items-center gap-4 my-6">
-            <div class="h-px bg-outline/20 flex-1"></div>
-            <span class="text-xs text-on-surface-variant font-semibold"
-              >OR</span
-            >
-            <div class="h-px bg-outline/20 flex-1"></div>
-          </div>
-
-          <form action="#" method="POST" class="space-y-5">
-            <div>
-              <label
-                for="fullName"
-                class="block text-sm font-bold text-primary mb-2"
-              >
-                Full Name
-              </label>
-              <div class="relative">
-                <i
-                  data-lucide="user"
-                  class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
-                ></i>
-                <input
-                  id="fullName"
-                  type="text"
-                  name="fullName"
-                  placeholder="Enter your full name"
-                  required
-                  class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                for="email"
-                class="block text-sm font-bold text-primary mb-2"
-              >
-                Email Address
-              </label>
-              <div class="relative">
-                <i
-                  data-lucide="mail"
-                  class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
-                ></i>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  required
-                  class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
-                />
-              </div>
-            </div>
-
-            <div class="grid sm:grid-cols-2 gap-5">
-              <div>
-                <label
-                  for="phone"
-                  class="block text-sm font-bold text-primary mb-2"
-                >
-                  Phone Number
-                </label>
-                <div class="relative">
-                  <i
-                    data-lucide="phone"
-                    class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
-                  ></i>
-                  <input
-                    id="phone"
-                    type="tel"
-                    name="phone"
-                    placeholder="08012345678"
-                    required
-                    class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  for="alternatePhone"
-                  class="block text-sm font-bold text-primary mb-2"
-                >
-                  Alternate Phone
-                </label>
-                <div class="relative">
-                  <i
-                    data-lucide="phone-call"
-                    class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
-                  ></i>
-                  <input
-                    id="alternatePhone"
-                    type="tel"
-                    name="alternatePhone"
-                    placeholder="Optional"
-                    class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="grid sm:grid-cols-2 gap-5">
-              <div>
-                <label
-                  for="password"
-                  class="block text-sm font-bold text-primary mb-2"
-                >
-                  Password
-                </label>
-                <div class="relative">
-                  <i
-                    data-lucide="lock"
-                    class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
-                  ></i>
-                  <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    placeholder="Create password"
-                    required
-                    class="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
-                  />
-                  <button
-                    type="button"
-                    class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition"
-                    data-target="password"
-                  >
-                    <i data-lucide="eye" class="w-5 h-5"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label
-                  for="confirmPassword"
-                  class="block text-sm font-bold text-primary mb-2"
-                >
-                  Confirm Password
-                </label>
-                <div class="relative">
-                  <i
-                    data-lucide="lock-keyhole"
-                    class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
-                  ></i>
-                  <input
-                    id="confirmPassword"
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm password"
-                    required
-                    class="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
-                  />
-                  <button
-                    type="button"
-                    class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition"
-                    data-target="confirmPassword"
-                  >
-                    <i data-lucide="eye" class="w-5 h-5"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <label
-              class="flex items-start gap-3 text-sm text-on-surface-variant"
-            >
-              <input
-                type="checkbox"
-                required
-                class="mt-1 rounded border-outline/40 text-primary focus:ring-primary"
-              />
-              <span>
-                I agree to Resident’s
-                <a
-                  href="#"
-                  class="font-bold text-primary hover:text-tertiary transition"
-                  >Terms</a
-                >
-                and
-                <a
-                  href="#"
-                  class="font-bold text-primary hover:text-tertiary transition"
-                  >Privacy Policy</a
-                >.
+          <!-- Step 2: OTP Verification -->
+          <div id="signupStep2" class="hidden">
+            <div class="text-center mb-8">
+              <span class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
+                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                Verify Email
               </span>
-            </label>
+              <h1 class="font-headline text-3xl font-extrabold text-primary">Check Your Email</h1>
+              <p class="text-sm text-on-surface-variant mt-2">
+                We’ve sent a 6‑digit code to <span id="otpEmailDisplay" class="font-bold"></span>
+              </p>
+            </div>
 
-            <button
-              type="submit"
-              class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md flex items-center justify-center gap-2"
-            >
-              Register
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <div id="otpInputGroup" class="flex justify-center gap-3 my-8">
+              <!-- OTP inputs generated by JS -->
+            </div>
+
+            <p id="otpError" class="text-red-500 text-sm text-center hidden"></p>
+
+            <button id="verifyOtpBtn"
+              class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md flex items-center justify-center gap-2">
+              Verify Account
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
             </button>
-          </form>
 
-          <p class="text-center text-sm text-on-surface-variant mt-7">
-            Already have an account?
-            <a
-              href="login.html"
-              class="font-bold text-primary hover:text-tertiary transition"
-            >
-              Sign in
-            </a>
-          </p>
+            <div class="text-center mt-6 text-sm">
+              <p class="text-on-surface-variant">
+                Didn’t receive the code?
+                <button id="resendOtpBtn" class="font-bold text-primary hover:text-tertiary transition disabled:opacity-50">Resend OTP</button>
+              </p>
+              <button id="backToSignup" class="text-outline hover:text-primary mt-2 inline-block font-medium">← Back to signup</button>
+            </div>
+          </div>
         </div>
 
         <p class="text-center text-white/70 text-xs mt-6">
@@ -384,24 +280,176 @@
       </section>
     </main>
 
-    <script>
+   <!-- At the top of the body, leave everything as is -->
+
+<!-- Just replace the <script type="module"> block with this -->
+<script type="module">
+  import { authService } from "./js/authService.js";
+
+  // ---------- GOOGLE CLIENT ID ----------
+  const GOOGLE_CLIENT_ID = "139378208657-e640gtpqqljkrve8u7ho82q5v90k6jfl.apps.googleusercontent.com";
+  // The REDIRECT_URI must be exactly as registered in Google Cloud Console
+  const REDIRECT_URI = window.location.origin + "/google-callback.html";   // adjust if your page is in a subfolder
+
+  // DOM elements
+  const step1 = document.getElementById("signupStep1");
+  const step2 = document.getElementById("signupStep2");
+  const signupForm = document.getElementById("signupForm");
+  const formError = document.getElementById("formError");
+  const googleBtn = document.getElementById("googleSignupBtn");
+  const otpEmailDisplay = document.getElementById("otpEmailDisplay");
+  const otpInputGroup = document.getElementById("otpInputGroup");
+  const otpError = document.getElementById("otpError");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const resendOtpBtn = document.getElementById("resendOtpBtn");
+  const backToSignup = document.getElementById("backToSignup");
+
+  let currentUserId = null;
+  let currentEmail = null;
+
+  // ---------- GOOGLE AUTH (redirect method) ----------
+  googleBtn.addEventListener("click", () => {
+    const url = "https://accounts.google.com/o/oauth2/v2/auth" +
+      "?client_id=" + GOOGLE_CLIENT_ID +
+      "&redirect_uri=" + encodeURIComponent(REDIRECT_URI) +
+      "&response_type=token" +
+      "&scope=profile%20email";
+    window.location.href = url;
+  });
+
+  // Password toggle
+  document.querySelectorAll(".toggle-password").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = document.getElementById(btn.dataset.target);
+      const show = target.type === "password";
+      target.type = show ? "text" : "password";
+      btn.innerHTML = show
+        ? '<i data-lucide="eye-off" class="w-5 h-5"></i>'
+        : '<i data-lucide="eye" class="w-5 h-5"></i>';
       lucide.createIcons();
+    });
+  });
 
-      document.querySelectorAll(".toggle-password").forEach((button) => {
-        button.addEventListener("click", () => {
-          const targetId = button.getAttribute("data-target");
-          const input = document.getElementById(targetId);
-          const isPassword = input.type === "password";
+  function showStep(step) {
+    step1.classList.add("hidden");
+    step2.classList.add("hidden");
+    step.classList.remove("hidden");
+    lucide.createIcons();
+  }
 
-          input.type = isPassword ? "text" : "password";
+  function showError(el, msg) {
+    el.textContent = msg;
+    el.classList.remove("hidden");
+  }
+  function hideError(el) {
+    el.classList.add("hidden");
+  }
 
-          button.innerHTML = isPassword
-            ? '<i data-lucide="eye-off" class="w-5 h-5"></i>'
-            : '<i data-lucide="eye" class="w-5 h-5"></i>';
-
-          lucide.createIcons();
-        });
+  function createOTPInputs() {
+    otpInputGroup.innerHTML = "";
+    for (let i = 0; i < 6; i++) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.maxLength = 1;
+      input.inputMode = "numeric";
+      input.required = true;
+      input.className = "w-12 h-14 text-center text-xl font-bold rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition";
+      otpInputGroup.appendChild(input);
+    }
+    const inputs = otpInputGroup.querySelectorAll("input");
+    inputs.forEach((inp, idx) => {
+      inp.addEventListener("input", e => {
+        if (e.target.value.length === 1 && idx < 5) inputs[idx + 1].focus();
       });
-    </script>
+      inp.addEventListener("keydown", e => {
+        if (e.key === "Backspace" && !e.target.value && idx > 0) inputs[idx - 1].focus();
+      });
+    });
+  }
+
+  function getOTP() {
+    return Array.from(otpInputGroup.querySelectorAll("input")).map(i => i.value).join("");
+  }
+
+  // Local signup
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideError(formError);
+
+    const name = document.getElementById("fullName").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirm = document.getElementById("confirmPassword").value;
+    const phone = document.getElementById("phone").value.trim();
+    const alternatePhone = document.getElementById("alternatePhone").value.trim();
+    const agree = document.getElementById("agreeTerms").checked;
+
+    if (!name || !username || !email || !password || !confirm) {
+      return showError(formError, "All fields marked required must be filled.");
+    }
+    if (password.length < 6) {
+      return showError(formError, "Password must be at least 6 characters.");
+    }
+    if (password !== confirm) {
+      return showError(formError, "Passwords do not match.");
+    }
+    if (!agree) {
+      return showError(formError, "You must agree to the terms.");
+    }
+
+    try {
+      const data = await authService.sendSignupOTP({
+        name, username, email, password,
+        phone, alternatePhone
+      });
+      currentUserId = data.userId;
+      currentEmail = email;
+      otpEmailDisplay.textContent = email;
+      createOTPInputs();
+      showStep(step2);
+    } catch (err) {
+      showError(formError, err.message || "Signup failed.");
+    }
+  });
+
+  // OTP verification
+  verifyOtpBtn.addEventListener("click", async () => {
+    hideError(otpError);
+    const otp = getOTP();
+    if (otp.length !== 6) {
+      return showError(otpError, "Enter the full 6‑digit OTP.");
+    }
+    try {
+      await authService.verifySignupOTP({ userId: currentUserId, otp });
+      window.location.href = "home.html";
+    } catch (err) {
+      showError(otpError, err.message || "Verification failed.");
+    }
+  });
+
+  // Resend OTP
+  resendOtpBtn.addEventListener("click", async () => {
+    if (!currentUserId) return;
+    resendOtpBtn.disabled = true;
+    try {
+      await authService.resendOTP({ userId: currentUserId });
+      hideError(otpError);
+      alert("A new OTP has been sent to your email.");
+    } catch (err) {
+      showError(otpError, err.message || "Failed to resend OTP.");
+    } finally {
+      resendOtpBtn.disabled = false;
+    }
+  });
+
+  backToSignup.addEventListener("click", () => {
+    currentUserId = null;
+    currentEmail = null;
+    showStep(step1);
+  });
+
+  lucide.createIcons();
+</script>
   </body>
 </html>

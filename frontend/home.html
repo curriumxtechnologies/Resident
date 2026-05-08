@@ -77,8 +77,6 @@
       };
     </script>
 
-    <link rel="icon" href="images/favicon.ico" />
-
     <style>
       * {
         -webkit-tap-highlight-color: transparent;
@@ -126,11 +124,6 @@
         border: 1px solid rgba(255, 255, 255, 0.4);
       }
 
-      .property-card {
-        border-radius: 1rem;
-        transition: all 0.3s ease;
-      }
-
       .hover-lift {
         transition:
           transform 0.25s ease,
@@ -140,15 +133,6 @@
       .hover-lift:hover {
         transform: translateY(-6px);
         box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
-      }
-
-      .gradient-overlay {
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.92) 0%,
-          rgba(0, 0, 0, 0.6) 50%,
-          rgba(0, 0, 0, 0.1) 100%
-        );
       }
 
       .badge-new {
@@ -212,11 +196,11 @@
             href="profile.html"
             class="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <span class="hidden md:inline-block text-sm font-bold text-primary">
+            <span id="userNameDisplay" class="hidden md:inline-block text-sm font-bold text-primary">
               Joshua Sorochi
             </span>
-
             <div
+              id="userAvatar"
               class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
               aria-label="User account"
             >
@@ -816,6 +800,31 @@
           });
         });
       }
+    </script>
+
+    <!-- Dynamic user info (loads from stored auth data) -->
+    <script type="module">
+      import { getStoredUser } from "./js/authService.js";
+
+      function initUserHeader() {
+        const user = getStoredUser();
+        const nameSpan = document.getElementById("userNameDisplay");
+        const avatar = document.getElementById("userAvatar");
+
+        if (user && user.name) {
+          const initials = user.name
+            .split(" ")
+            .map(n => n[0])
+            .join("")
+            .toUpperCase()
+            .substring(0, 2);
+          nameSpan.textContent = user.name;
+          avatar.textContent = initials;
+        }
+        // If no stored user, the default hardcoded "Joshua Sorochi" remains
+      }
+
+      initUserHeader();
     </script>
   </body>
 </html>

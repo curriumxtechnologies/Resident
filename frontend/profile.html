@@ -17,35 +17,11 @@
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="images/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="images/favicon-32x32.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="images/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="images/android-chrome-512x512.png"
-    />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
     <link rel="manifest" href="images/site.webmanifest" />
     <meta name="theme-color" content="#0D316D" />
 
@@ -76,8 +52,6 @@
         },
       };
     </script>
-
-    <link rel="icon" href="images/favicon.ico" />
 
     <style>
       * {
@@ -114,6 +88,15 @@
             >
               <i data-lucide="settings"></i>
             </a>
+
+            <!-- Logout button -->
+            <button
+              id="logoutBtn"
+              class="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-100 transition"
+              aria-label="Logout"
+            >
+              <i data-lucide="log-out"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -137,13 +120,17 @@
           >
             <div class="flex items-center gap-5">
               <div
+                id="profileInitials"
                 class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg"
               >
                 JS
               </div>
 
               <div>
-                <h2 class="font-headline text-3xl md:text-4xl font-extrabold">
+                <h2
+                  id="profileName"
+                  class="font-headline text-3xl md:text-4xl font-extrabold"
+                >
                   Joshua Sorochi
                 </h2>
               </div>
@@ -195,7 +182,9 @@
                   >
                     Full Name
                   </p>
-                  <p class="font-bold text-primary mt-1">Joshua Sorochi</p>
+                  <p id="detailName" class="font-bold text-primary mt-1">
+                    Joshua Sorochi
+                  </p>
                 </div>
 
                 <div>
@@ -204,7 +193,9 @@
                   >
                     Email Address
                   </p>
-                  <p class="font-bold text-primary mt-1">joshua@example.com</p>
+                  <p id="detailEmail" class="font-bold text-primary mt-1">
+                    joshua@example.com
+                  </p>
                 </div>
 
                 <div>
@@ -213,7 +204,9 @@
                   >
                     Phone Number
                   </p>
-                  <p class="font-bold text-primary mt-1">+234 800 000 0000</p>
+                  <p id="detailPhone" class="font-bold text-primary mt-1">
+                    +234 800 000 0000
+                  </p>
                 </div>
 
                 <div>
@@ -222,16 +215,34 @@
                   >
                     Alternate Phone
                   </p>
-                  <p class="font-bold text-primary mt-1">+234 801 000 0000</p>
+                  <p
+                    id="detailAltPhone"
+                    class="font-bold text-primary mt-1"
+                  >
+                    +234 801 000 0000
+                  </p>
                 </div>
 
                 <div>
                   <p
                     class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
                   >
-                    Location
+                    Username
                   </p>
-                  <p class="font-bold text-primary mt-1">Lagos, Nigeria</p>
+                  <p id="detailUsername" class="font-bold text-primary mt-1">
+                    @joshuasorochi
+                  </p>
+                </div>
+
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Role
+                  </p>
+                  <p id="detailRole" class="font-bold text-primary mt-1">
+                    User
+                  </p>
                 </div>
               </div>
             </div>
@@ -268,6 +279,62 @@
 
     <script>
       lucide.createIcons();
+    </script>
+
+    <!-- Dynamic user info + logout -->
+    <script type="module">
+      import { getStoredUser, authService } from "./js/authService.js";
+
+      // Update header and profile details with stored user info
+      function populateProfile() {
+        const user = getStoredUser();
+
+        if (!user) {
+          // If no user is found, redirect to login after a brief delay
+          setTimeout(() => {
+            window.location.href = "signup.html";
+          }, 500);
+          return;
+        }
+
+        // Profile banner
+        document.getElementById("profileName").textContent = user.name || "User";
+        const initials = (user.name || "User")
+          .split(" ")
+          .map(n => n[0])
+          .join("")
+          .toUpperCase()
+          .substring(0, 2);
+        document.getElementById("profileInitials").textContent = initials;
+
+        // Detail fields (use fallback values if property missing)
+        document.getElementById("detailName").textContent = user.name || "Not set";
+        document.getElementById("detailEmail").textContent = user.email || "Not set";
+        document.getElementById("detailPhone").textContent = user.phone || "Not set";
+        document.getElementById("detailAltPhone").textContent =
+          user.alternatePhone || "Not set";
+        document.getElementById("detailUsername").textContent =
+          user.username ? "@" + user.username : "Not set";
+        document.getElementById("detailRole").textContent =
+          user.role === "admin" ? "Admin" : "User";
+      }
+
+      // Attach logout functionality
+      document.getElementById("logoutBtn").addEventListener("click", async () => {
+        try {
+          await authService.logout();
+        } catch (err) {
+          console.warn("Logout API call failed, clearing local data anyway.");
+        } finally {
+          // Always clear auth and redirect
+          localStorage.removeItem("auth_token");
+          localStorage.removeItem("auth_user");
+          window.location.href = "login.html"; // or signup.html
+        }
+      });
+
+      // Run on page load
+      populateProfile();
     </script>
   </body>
 </html>

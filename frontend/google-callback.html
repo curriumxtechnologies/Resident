@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Completing Google Sign‑In …</title>
+  <script type="module">
+    import { authService } from "./js/authService.js";
+
+    const hash = window.location.hash.substring(1); // remove '#'
+    const params = new URLSearchParams(hash);
+    const accessToken = params.get("access_token");
+
+    if (!accessToken) {
+      document.body.innerHTML = "<p>Authentication failed. Missing access token.</p>";
+      // Redirect back to signup after 3 seconds
+      setTimeout(() => { window.location.href = "signup.html"; }, 3000);
+    } else {
+      // Send the access token to your backend
+      try {
+        await authService.googleAuth(accessToken);
+        window.location.href = "index.html";  // success → go to home/dashboard
+      } catch (err) {
+        document.body.innerHTML = `<p>Google sign‑in failed: ${err.message}</p>`;
+        setTimeout(() => { window.location.href = "signup.html"; }, 3000);
+      }
+    }
+  </script>
+</head>
+<body>
+  <p>Signing in with Google…</p>
+</body>
+</html>
