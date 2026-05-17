@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "admin", "seller"],  // Added "seller"
       default: "user",
     },
     googleId: {
@@ -58,6 +58,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: "",
+    },
+    // SELLER FIELDS — ADD THESE
+    sellerType: {
+      type: String,
+      enum: ["landlord", "agency"],
+      default: null,
+    },
+    sellerVerified: {
+      type: Boolean,
+      default: false,
     },
     // OTP fields (hidden from queries by default)
     otp: {

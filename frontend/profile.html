@@ -57,44 +57,44 @@
       * {
         -webkit-tap-highlight-color: transparent;
       }
-
       .lucide {
         width: 1.2rem;
         height: 1.2rem;
         stroke-width: 1.8;
       }
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
-    <header
-      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
-    >
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden">
+      <div class="loader"></div>
+    </div>
+
+    <header class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10">
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
           <a href="home.html">
-            <img
-              src="images/logo.png"
-              alt="Resident"
-              class="h-9 lg:h-11 w-auto object-contain"
-            />
+            <img src="images/logo.png" alt="Resident" class="h-9 lg:h-11 w-auto object-contain" />
           </a>
-
           <div class="flex items-center gap-3">
-            <a
-              href="settings.html"
-              class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition"
-              aria-label="Settings"
-            >
+            <a href="settings.html" class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition" aria-label="Settings">
               <i data-lucide="settings"></i>
             </a>
-
-            <!-- Logout button -->
-            <button
-              id="logoutBtn"
-              class="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-100 transition"
-              aria-label="Logout"
-            >
+            <button id="logoutBtn" class="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-100 transition" aria-label="Logout">
               <i data-lucide="log-out"></i>
             </button>
           </div>
@@ -104,169 +104,49 @@
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
-        <section
-          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden"
-        >
+        <!-- Hero Banner -->
+        <section class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden">
           <div class="absolute inset-0 opacity-15">
-            <img
-              src="images/hero.avif"
-              class="w-full h-full object-cover"
-              alt=""
-            />
+            <img src="images/hero.avif" class="w-full h-full object-cover" alt="" />
           </div>
-
-          <div
-            class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
-          >
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div class="flex items-center gap-5">
-              <div
-                id="profileInitials"
-                class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg"
-              >
-                JS
-              </div>
-
+              <div id="profileInitials" class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg">--</div>
               <div>
-                <h2
-                  id="profileName"
-                  class="font-headline text-3xl md:text-4xl font-extrabold"
-                >
-                  Joshua Sorochi
-                </h2>
+                <h2 id="profileName" class="font-headline text-3xl md:text-4xl font-extrabold">Loading...</h2>
               </div>
             </div>
-
-            <div class="flex flex-col sm:flex-row gap-3">
-              <a
-                href="upload-sale.html"
-                class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"
-              >
-                <i data-lucide="upload-cloud" class="w-4 h-4"></i>
-                Upload House for Sale
-              </a>
-
-              <a
-                href="upload-rent.html"
-                class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-white hover:text-primary transition flex items-center justify-center gap-2"
-              >
-                <i data-lucide="home" class="w-4 h-4"></i>
-                Upload House for Rent
-              </a>
-            </div>
+            <!-- Dynamic buttons injected here -->
+            <div id="actionButtons" class="flex flex-col sm:flex-row gap-3"></div>
           </div>
         </section>
 
+        <!-- Profile Details & Activity -->
         <section class="grid lg:grid-cols-3 gap-8 mt-8">
-          <!-- LEFT SIDE (Profile Details) -->
           <div class="lg:col-span-2 space-y-8">
-            <div
-              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
-            >
+            <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
               <div class="flex items-center justify-between mb-6">
-                <h2 class="font-headline text-2xl font-extrabold text-primary">
-                  Profile Details
-                </h2>
-
-                <a
-                  href="edit-profile.html"
-                  class="text-sm font-bold text-tertiary hover:text-primary transition"
-                >
-                  Edit Profile
-                </a>
+                <h2 class="font-headline text-2xl font-extrabold text-primary">Profile Details</h2>
+                <a href="edit-profile.html" class="text-sm font-bold text-tertiary hover:text-primary transition">Edit Profile</a>
               </div>
-
               <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Full Name
-                  </p>
-                  <p id="detailName" class="font-bold text-primary mt-1">
-                    Joshua Sorochi
-                  </p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Email Address
-                  </p>
-                  <p id="detailEmail" class="font-bold text-primary mt-1">
-                    joshua@example.com
-                  </p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Phone Number
-                  </p>
-                  <p id="detailPhone" class="font-bold text-primary mt-1">
-                    +234 800 000 0000
-                  </p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Alternate Phone
-                  </p>
-                  <p
-                    id="detailAltPhone"
-                    class="font-bold text-primary mt-1"
-                  >
-                    +234 801 000 0000
-                  </p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Username
-                  </p>
-                  <p id="detailUsername" class="font-bold text-primary mt-1">
-                    @joshuasorochi
-                  </p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Role
-                  </p>
-                  <p id="detailRole" class="font-bold text-primary mt-1">
-                    User
-                  </p>
-                </div>
+                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Full Name</p><p id="detailName" class="font-bold text-primary mt-1">--</p></div>
+                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Email Address</p><p id="detailEmail" class="font-bold text-primary mt-1">--</p></div>
+                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Phone Number</p><p id="detailPhone" class="font-bold text-primary mt-1">--</p></div>
+                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Alternate Phone</p><p id="detailAltPhone" class="font-bold text-primary mt-1">--</p></div>
+                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Username</p><p id="detailUsername" class="font-bold text-primary mt-1">--</p></div>
+                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Role</p><p id="detailRole" class="font-bold text-primary mt-1">--</p></div>
               </div>
             </div>
           </div>
-
-          <!-- RIGHT SIDE (My Property Activity) -->
           <div class="space-y-8">
-            <div
-              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
-            >
+            <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
               <div class="flex flex-col gap-4">
                 <div>
-                  <h2 class="font-headline text-xl font-extrabold text-primary">
-                    My Property Activity
-                  </h2>
-                  <p class="text-sm text-on-surface-variant mt-1">
-                    View houses you have rented or bought through Resident.
-                  </p>
+                  <h2 class="font-headline text-xl font-extrabold text-primary">My Property Activity</h2>
+                  <p class="text-sm text-on-surface-variant mt-1">View houses you have rented or bought through Resident.</p>
                 </div>
-
-                <a
-                  href="my-properties.html"
-                  class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
-                >
+                <a href="my-properties.html" class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2">
                   View Bought/Rented Houses
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
@@ -281,23 +161,71 @@
       lucide.createIcons();
     </script>
 
-    <!-- Dynamic user info + logout -->
     <script type="module">
-      import { getStoredUser, authService } from "./js/authService.js";
+      import { getUserProfile } from "./slices/userService.js";
+      import { getMyApplication } from "./slices/sellerService.js";
+      import { getStoredToken, clearAuthData, storeUser } from "./js/tokenStorage.js";
+      import { authService } from "./js/authService.js";
 
-      // Update header and profile details with stored user info
-      function populateProfile() {
-        const user = getStoredUser();
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      function showLoading(show) {
+        show ? loadingOverlay.classList.remove("hidden") : loadingOverlay.classList.add("hidden");
+      }
 
-        if (!user) {
-          // If no user is found, redirect to login after a brief delay
-          setTimeout(() => {
-            window.location.href = "signup.html";
-          }, 500);
+      // Render action buttons based on user role and application status
+      function renderActionButtons(user, sellerApplication) {
+        const container = document.getElementById("actionButtons");
+        if (!container) return;
+
+        // 0. Admin role – show Admin Dashboard button
+        if (user.role === "admin") {
+          container.innerHTML = `
+            <a href="admin.html" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2">
+              <i data-lucide="layout-dashboard" class="w-4 h-4"></i> View Admin Dashboard
+            </a>
+          `;
+          lucide.createIcons();
           return;
         }
 
-        // Profile banner
+        // 1. Approved seller (role = seller and verified)
+        const isApprovedSeller = user.role === "seller" && user.sellerVerified === true;
+        if (isApprovedSeller) {
+          container.innerHTML = `
+            <a href="upload-sale.html" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2">
+              <i data-lucide="upload-cloud" class="w-4 h-4"></i> Upload House for Sale
+            </a>
+            <a href="upload-rent.html" class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-white hover:text-primary transition flex items-center justify-center gap-2">
+              <i data-lucide="home" class="w-4 h-4"></i> Upload House for Rent
+            </a>
+          `;
+          lucide.createIcons();
+          return;
+        }
+
+        // 2. Pending application (application exists and status = pending)
+        if (sellerApplication && sellerApplication.status === "pending") {
+          container.innerHTML = `
+            <div class="bg-yellow-100 text-yellow-800 px-5 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 border border-yellow-300">
+              <i data-lucide="clock" class="w-4 h-4"></i> Pending Application – Awaiting Admin Review
+            </div>
+          `;
+          lucide.createIcons();
+          return;
+        }
+
+        // 3. Default: no application or rejected – show apply button
+        container.innerHTML = `
+          <a href="seller-register.html" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2">
+            <i data-lucide="briefcase" class="w-4 h-4"></i> Apply as Seller/Landlord
+          </a>
+        `;
+        lucide.createIcons();
+      }
+
+      function updateProfileUI(user, sellerApplication) {
+        if (!user) return;
+
         document.getElementById("profileName").textContent = user.name || "User";
         const initials = (user.name || "User")
           .split(" ")
@@ -307,34 +235,78 @@
           .substring(0, 2);
         document.getElementById("profileInitials").textContent = initials;
 
-        // Detail fields (use fallback values if property missing)
         document.getElementById("detailName").textContent = user.name || "Not set";
         document.getElementById("detailEmail").textContent = user.email || "Not set";
         document.getElementById("detailPhone").textContent = user.phone || "Not set";
-        document.getElementById("detailAltPhone").textContent =
-          user.alternatePhone || "Not set";
-        document.getElementById("detailUsername").textContent =
-          user.username ? "@" + user.username : "Not set";
-        document.getElementById("detailRole").textContent =
-          user.role === "admin" ? "Admin" : "User";
+        document.getElementById("detailAltPhone").textContent = user.alternatePhone || "Not set";
+        document.getElementById("detailUsername").textContent = user.username ? `@${user.username}` : "Not set";
+        let roleText = "User";
+        if (user.role === "admin") roleText = "Admin";
+        else if (user.role === "seller") roleText = "Seller";
+        document.getElementById("detailRole").textContent = roleText;
+
+        // Update stored user for other pages
+        storeUser({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          username: user.username,
+          phone: user.phone,
+          alternatePhone: user.alternatePhone,
+          role: user.role,
+          profile: user.profile,
+          authMethod: user.authMethod,
+          isVerified: user.isVerified,
+          sellerType: user.sellerType,
+          sellerVerified: user.sellerVerified,
+        });
+
+        renderActionButtons(user, sellerApplication);
       }
 
-      // Attach logout functionality
-      document.getElementById("logoutBtn").addEventListener("click", async () => {
+      async function handleLogout() {
         try {
           await authService.logout();
         } catch (err) {
           console.warn("Logout API call failed, clearing local data anyway.");
         } finally {
-          // Always clear auth and redirect
-          localStorage.removeItem("auth_token");
-          localStorage.removeItem("auth_user");
-          window.location.href = "login.html"; // or signup.html
+          clearAuthData();
+          window.location.href = "login.html";
         }
-      });
+      }
 
-      // Run on page load
-      populateProfile();
+      (async function init() {
+        showLoading(true);
+        const token = getStoredToken();
+        if (!token) {
+          window.location.href = "login.html";
+          return;
+        }
+        try {
+          const user = await getUserProfile();
+          if (!user) throw new Error("No user data");
+
+          let sellerApplication = null;
+          // Only fetch application if not admin (to avoid unnecessary call)
+          if (user.role !== "admin") {
+            try {
+              sellerApplication = await getMyApplication();
+            } catch (err) {
+              console.warn("Could not fetch seller application:", err.message);
+            }
+          }
+
+          updateProfileUI(user, sellerApplication);
+        } catch (err) {
+          console.error(err);
+          alert("Session expired or failed to load profile. Please login again.");
+          clearAuthData();
+          window.location.href = "login.html";
+        } finally {
+          showLoading(false);
+        }
+        document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+      })();
     </script>
   </body>
 </html>

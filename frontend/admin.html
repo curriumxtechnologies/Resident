@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Admin Dashboard | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * { -webkit-tap-highlight-color: transparent; }
+      .lucide { width: 1.2rem; height: 1.2rem; stroke-width: 1.8; }
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <div id="navbar-container"></div>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <div class="mb-8">
+          <h1 class="font-headline text-3xl font-extrabold text-primary">Dashboard</h1>
+          <p class="text-on-surface-variant mt-1">Welcome back, <span id="adminName">Admin</span></p>
+        </div>
+
+        <!-- Stats Cards (placeholders) -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-outline/10">
+            <div class="flex items-center justify-between">
+              <div><p class="text-sm text-on-surface-variant">Total Users</p><p id="totalUsers" class="text-3xl font-extrabold text-primary mt-1">-</p></div>
+              <i data-lucide="users" class="w-8 h-8 text-tertiary"></i>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-outline/10">
+            <div class="flex items-center justify-between">
+              <div><p class="text-sm text-on-surface-variant">Seller Applications</p><p id="totalApps" class="text-3xl font-extrabold text-primary mt-1">-</p></div>
+              <i data-lucide="briefcase" class="w-8 h-8 text-tertiary"></i>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-outline/10">
+            <div class="flex items-center justify-between">
+              <div><p class="text-sm text-on-surface-variant">Listings</p><p id="totalListings" class="text-3xl font-extrabold text-primary mt-1">-</p></div>
+              <i data-lucide="home" class="w-8 h-8 text-tertiary"></i>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-outline/10">
+            <div class="flex items-center justify-between">
+              <div><p class="text-sm text-on-surface-variant">Pending Reviews</p><p id="pendingReviews" class="text-3xl font-extrabold text-primary mt-1">-</p></div>
+              <i data-lucide="clock" class="w-8 h-8 text-tertiary"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+          <h2 class="font-headline text-xl font-extrabold text-primary mb-4">Quick Actions</h2>
+          <div class="flex flex-wrap gap-4">
+            <a href="admin-applications.html" class="bg-primary/10 text-primary px-4 py-2 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition">Review Seller Applications</a>
+            <a href="admin-users.html" class="bg-primary/10 text-primary px-4 py-2 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition">Manage Users</a>
+            <a href="admin-houses.html" class="bg-primary/10 text-primary px-4 py-2 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition">Manage Listings</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+    </script>
+
+    <script type="module">
+      import { renderAdminNavbar } from "./js/adminNavbar.js";
+      import { getStoredToken, getStoredUser, clearAuthData } from "./js/tokenStorage.js";
+      import { getUsers } from "./slices/userService.js";
+      import { getSellerApplications } from "./slices/sellerService.js";
+      import { getHouses } from "./slices/houseService.js";
+
+      // Check admin access
+      const token = getStoredToken();
+      const user = getStoredUser();
+      if (!token || !user || user.role !== "admin") {
+        alert("Admin access required");
+        window.location.href = "login.html";
+      }
+
+      // Insert navbar
+      const navbarContainer = document.getElementById("navbar-container");
+      navbarContainer.appendChild(renderAdminNavbar("dashboard"));
+
+      // Load stats
+      async function loadStats() {
+        try {
+          const usersData = await getUsers({ limit: 1 });
+          document.getElementById("totalUsers").textContent = usersData.total || 0;
+
+          const applications = await getSellerApplications();
+          const pendingApps = applications.filter(app => app.status === "pending").length;
+          document.getElementById("totalApps").textContent = applications.length;
+          document.getElementById("pendingReviews").textContent = pendingApps;
+
+          const housesData = await getHouses({ limit: 1 });
+          document.getElementById("totalListings").textContent = housesData.total || 0;
+        } catch (err) {
+          console.error("Failed to load stats:", err);
+        }
+      }
+
+      document.getElementById("adminName").textContent = user.name || "Admin";
+      loadStats();
+    </script>
+  </body>
+</html>

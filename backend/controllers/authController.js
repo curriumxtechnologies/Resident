@@ -130,15 +130,22 @@ const sendSignupOTP = asyncHandler(async (req, res) => {
     throw new Error("All fields (name, username, email, password) are required");
   }
 
-  // Check if user already exists and is verified
-  const existingUser = await User.findOne({ email, isVerified: true });
-  if (existingUser) {
+  // Check if a VERIFIED user already exists with this email
+  const existingVerifiedUser = await User.findOne({ email, isVerified: true });
+  if (existingVerifiedUser) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error("User already exists. Please sign in instead.");
   }
 
-  // Remove previous unverified attempt with the same email
+  // If an UNVERIFIED user exists with this email, delete it so they can re-register
   await User.deleteOne({ email, isVerified: false });
+
+  // Also check if username is taken by someone else
+  const existingUsername = await User.findOne({ username });
+  if (existingUsername) {
+    res.status(400);
+    throw new Error("Username already taken");
+  }
 
   const otp = generateOTP();
   const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes

@@ -7,6 +7,9 @@ import mongoose from 'mongoose';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
 import authRoutes from './routes/authRoutes.js';
+import sellerRoutes from './routes/sellerRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import houseRoutes from './routes/houseRoutes.js';
 
 dotenv.config()
 
@@ -16,8 +19,8 @@ const MONGO_URL = process.env.MONGO_URL;
 
 app.use(cors({
     origin: [
-        'http://127.0.0.1:5500',
-        'http://localhost:5500',
+        'http://127.0.0.1:5501',
+        'http://localhost:5501',
         'http://localhost:5173',
         'https://www.rezidenthomes.com',
         'https://rezidenthomes.com',
@@ -35,6 +38,9 @@ app.use(cookieParser());
 
 //Routing
 app.use('/api/auth', authRoutes);
+app.use('/api/sellers', sellerRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/houses', houseRoutes);
 
 
 // Middleware

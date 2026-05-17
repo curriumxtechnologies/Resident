@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Manage Users | Admin | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * { -webkit-tap-highlight-color: transparent; }
+      .lucide { width: 1.2rem; height: 1.2rem; stroke-width: 1.8; }
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <div id="navbar-container"></div>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+          <div>
+            <h1 class="font-headline text-3xl font-extrabold text-primary">Manage Users</h1>
+            <p class="text-on-surface-variant mt-1">View, edit roles, and manage user accounts.</p>
+          </div>
+          <div class="flex gap-3">
+            <input type="text" id="searchInput" placeholder="Search by name, email, username..." class="input-field w-64" />
+            <select id="roleFilter" class="input-field w-40">
+              <option value="">All Roles</option>
+              <option value="user">User</option>
+              <option value="seller">Seller</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Loading & Error -->
+        <div id="loadingOverlay" class="hidden py-10"><div class="loader"></div></div>
+        <div id="errorMsg" class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"></div>
+
+        <!-- Users Table -->
+        <div class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-surface-container-low border-b border-outline/10">
+                <tr>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">User</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Email</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Phone</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Role</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Verified</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <tr><td colspan="6" class="text-center py-8 text-on-surface-variant">Loading users...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <div class="px-6 py-4 border-t border-outline/10 flex items-center justify-between flex-wrap gap-3">
+            <div class="text-sm text-on-surface-variant">
+              Showing <span id="pageStart">0</span> - <span id="pageEnd">0</span> of <span id="totalCount">0</span>
+            </div>
+            <div class="flex gap-2">
+              <button id="prevPage" class="px-4 py-2 border rounded-lg text-sm font-bold hover:bg-primary/5 disabled:opacity-50" disabled>Previous</button>
+              <button id="nextPage" class="px-4 py-2 border rounded-lg text-sm font-bold hover:bg-primary/5 disabled:opacity-50" disabled>Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal for editing user role (simple inline dropdown is easier, but we'll use inline edit per row) -->
+    <script>
+      lucide.createIcons();
+    </script>
+
+    <style>
+      .input-field {
+        padding: 0.65rem 1rem;
+        border-radius: 0.75rem;
+        background: white;
+        border: 1px solid rgba(116,119,129,0.25);
+        outline: none;
+        font-size: 0.875rem;
+      }
+      .input-field:focus {
+        border-color: #001c4a;
+        box-shadow: 0 0 0 3px rgba(0,28,74,0.14);
+      }
+    </style>
+
+    <script type="module">
+      import { renderAdminNavbar } from "./js/adminNavbar.js";
+      import { getStoredToken, getStoredUser, clearAuthData } from "./js/tokenStorage.js";
+      import { getUsers, updateUser, deleteUser } from "./slices/userService.js";
+
+      // Admin check
+      const token = getStoredToken();
+      const currentUser = getStoredUser();
+      if (!token || !currentUser || currentUser.role !== "admin") {
+        alert("Admin access required");
+        window.location.href = "login.html";
+      }
+
+      // Insert navbar
+      document.getElementById("navbar-container").appendChild(renderAdminNavbar("users"));
+
+      // State
+      let users = [];
+      let total = 0;
+      let currentPage = 1;
+      const limit = 10;
+      let search = "";
+      let roleFilter = "";
+
+      const tableBody = document.getElementById("usersTableBody");
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      const errorMsgDiv = document.getElementById("errorMsg");
+      const prevBtn = document.getElementById("prevPage");
+      const nextBtn = document.getElementById("nextPage");
+      const pageStartSpan = document.getElementById("pageStart");
+      const pageEndSpan = document.getElementById("pageEnd");
+      const totalCountSpan = document.getElementById("totalCount");
+      const searchInput = document.getElementById("searchInput");
+      const roleFilterSelect = document.getElementById("roleFilter");
+
+      function showLoading(show) {
+        loadingOverlay.classList.toggle("hidden", !show);
+      }
+
+      function showError(msg) {
+        errorMsgDiv.textContent = msg;
+        errorMsgDiv.classList.remove("hidden");
+        setTimeout(() => errorMsgDiv.classList.add("hidden"), 5000);
+      }
+
+      async function fetchUsers() {
+        showLoading(true);
+        try {
+          const params = {
+            page: currentPage,
+            limit,
+            search,
+            role: roleFilter,
+          };
+          const data = await getUsers(params);
+          users = data.users;
+          total = data.total;
+          renderTable();
+          updatePagination();
+        } catch (err) {
+          console.error(err);
+          showError("Failed to load users: " + err.message);
+          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-600">Error loading users</td></tr>`;
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      function renderTable() {
+        if (!users.length) {
+          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-on-surface-variant">No users found</td></tr>`;
+          return;
+        }
+        tableBody.innerHTML = users.map(user => `
+          <tr class="border-b border-outline/10 hover:bg-primary/5">
+            <td class="px-6 py-4">
+              <div class="font-bold text-primary">${escapeHtml(user.name)}</div>
+              <div class="text-xs text-on-surface-variant">@${escapeHtml(user.username)}</div>
+            </td>
+            <td class="px-6 py-4 text-sm">${escapeHtml(user.email)}</td>
+            <td class="px-6 py-4 text-sm">${user.phone || '—'}</td>
+            <td class="px-6 py-4">
+              <select class="role-select text-sm border rounded-lg px-2 py-1" data-user-id="${user._id}" data-current-role="${user.role}">
+                <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
+                <option value="seller" ${user.role === 'seller' ? 'selected' : ''}>Seller</option>
+                <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+              </select>
+            </td>
+            <td class="px-6 py-4 text-sm">
+              ${user.isVerified ? '<span class="text-green-600">✓ Verified</span>' : '<span class="text-red-600">✗ Not verified</span>'}
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex gap-2">
+                <button class="update-role-btn bg-tertiary-container text-primary px-3 py-1 rounded-lg text-xs font-bold" data-user-id="${user._id}">Update Role</button>
+                <button class="delete-user-btn bg-red-100 text-red-700 px-3 py-1 rounded-lg text-xs font-bold" data-user-id="${user._id}">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+
+        // Attach event listeners to buttons
+        document.querySelectorAll('.update-role-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const userId = btn.dataset.userId;
+            const select = btn.closest('tr').querySelector('.role-select');
+            const newRole = select.value;
+            if (newRole === currentUser.role && userId === currentUser._id) {
+              showError("You cannot change your own role via this panel (to avoid lockout).");
+              return;
+            }
+            try {
+              await updateUser(userId, { role: newRole });
+              showError("Role updated successfully");
+              fetchUsers(); // refresh
+            } catch (err) {
+              showError(err.message);
+            }
+          });
+        });
+
+        document.querySelectorAll('.delete-user-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const userId = btn.dataset.userId;
+            if (userId === currentUser._id) {
+              showError("You cannot delete your own account.");
+              return;
+            }
+            if (confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
+              try {
+                await deleteUser(userId);
+                showError("User deleted");
+                fetchUsers();
+              } catch (err) {
+                showError(err.message);
+              }
+            }
+          });
+        });
+      }
+
+      function updatePagination() {
+        const totalPages = Math.ceil(total / limit);
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages || total === 0;
+        const start = (currentPage - 1) * limit + 1;
+        const end = Math.min(currentPage * limit, total);
+        pageStartSpan.textContent = total === 0 ? 0 : start;
+        pageEndSpan.textContent = end;
+        totalCountSpan.textContent = total;
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+          if (m === '&') return '&amp;';
+          if (m === '<') return '&lt;';
+          if (m === '>') return '&gt;';
+          return m;
+        });
+      }
+
+      // Event listeners
+      searchInput.addEventListener('input', (e) => {
+        search = e.target.value;
+        currentPage = 1;
+        fetchUsers();
+      });
+      roleFilterSelect.addEventListener('change', (e) => {
+        roleFilter = e.target.value;
+        currentPage = 1;
+        fetchUsers();
+      });
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          fetchUsers();
+        }
+      });
+      nextBtn.addEventListener('click', () => {
+        currentPage++;
+        fetchUsers();
+      });
+
+      // Initial fetch
+      fetchUsers();
+    </script>
+  </body>
+</html>

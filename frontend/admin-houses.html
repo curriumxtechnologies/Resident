@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Manage Houses | Admin | Resident</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * { -webkit-tap-highlight-color: transparent; }
+      .lucide { width: 1.2rem; height: 1.2rem; stroke-width: 1.8; }
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .input-field {
+        padding: 0.65rem 1rem;
+        border-radius: 0.75rem;
+        background: white;
+        border: 1px solid rgba(116,119,129,0.25);
+        outline: none;
+        font-size: 0.875rem;
+      }
+      .input-field:focus {
+        border-color: #001c4a;
+        box-shadow: 0 0 0 3px rgba(0,28,74,0.14);
+      }
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+      .status-published { background: #d1fae5; color: #065f46; }
+      .status-draft { background: #fef3c7; color: #92400e; }
+      .status-inactive { background: #fee2e2; color: #991b1b; }
+      .status-sold { background: #e0e7ff; color: #3730a3; }
+      .status-rented { background: #fce7f3; color: #9d174d; }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <div id="navbar-container"></div>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+          <div>
+            <h1 class="font-headline text-3xl font-extrabold text-primary">Manage House Listings</h1>
+            <p class="text-on-surface-variant mt-1">View, update status, or delete any property listing.</p>
+          </div>
+          <div class="flex gap-3">
+            <input type="text" id="searchInput" placeholder="Search by title, address, seller..." class="input-field w-64" />
+            <select id="statusFilter" class="input-field w-40">
+              <option value="">All Status</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+              <option value="inactive">Inactive</option>
+              <option value="sold">Sold</option>
+              <option value="rented">Rented</option>
+            </select>
+            <select id="typeFilter" class="input-field w-40">
+              <option value="">All Types</option>
+              <option value="rent">Rent</option>
+              <option value="sale">Sale</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Loading & Error -->
+        <div id="loadingOverlay" class="hidden py-10"><div class="loader"></div></div>
+        <div id="errorMsg" class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"></div>
+
+        <!-- Houses Table -->
+        <div class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-surface-container-low border-b border-outline/10">
+                <tr>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Property</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Type / Price</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Seller</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Date</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="housesTableBody">
+                <tr><td colspan="6" class="text-center py-8 text-on-surface-variant">Loading houses...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <div class="px-6 py-4 border-t border-outline/10 flex items-center justify-between flex-wrap gap-3">
+            <div class="text-sm text-on-surface-variant">
+              Showing <span id="pageStart">0</span> - <span id="pageEnd">0</span> of <span id="totalCount">0</span>
+            </div>
+            <div class="flex gap-2">
+              <button id="prevPage" class="px-4 py-2 border rounded-lg text-sm font-bold hover:bg-primary/5 disabled:opacity-50" disabled>Previous</button>
+              <button id="nextPage" class="px-4 py-2 border rounded-lg text-sm font-bold hover:bg-primary/5 disabled:opacity-50" disabled>Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+    </script>
+
+    <script type="module">
+      import { renderAdminNavbar } from "./js/adminNavbar.js";
+      import { getStoredToken, getStoredUser } from "./js/tokenStorage.js";
+      import { getHouses, toggleHouseStatus, deleteHouse } from "./slices/houseService.js";
+
+      // Admin check
+      const token = getStoredToken();
+      const currentUser = getStoredUser();
+      if (!token || !currentUser || currentUser.role !== "admin") {
+        alert("Admin access required");
+        window.location.href = "login.html";
+      }
+
+      // Insert navbar
+      document.getElementById("navbar-container").appendChild(renderAdminNavbar("houses"));
+
+      // State
+      let houses = [];
+      let total = 0;
+      let currentPage = 1;
+      const limit = 10;
+      let search = "";
+      let statusFilter = "";
+      let typeFilter = "";
+
+      const tableBody = document.getElementById("housesTableBody");
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      const errorMsgDiv = document.getElementById("errorMsg");
+      const prevBtn = document.getElementById("prevPage");
+      const nextBtn = document.getElementById("nextPage");
+      const pageStartSpan = document.getElementById("pageStart");
+      const pageEndSpan = document.getElementById("pageEnd");
+      const totalCountSpan = document.getElementById("totalCount");
+      const searchInput = document.getElementById("searchInput");
+      const statusFilterSelect = document.getElementById("statusFilter");
+      const typeFilterSelect = document.getElementById("typeFilter");
+
+      function showLoading(show) {
+        loadingOverlay.classList.toggle("hidden", !show);
+      }
+
+      function showError(msg) {
+        errorMsgDiv.textContent = msg;
+        errorMsgDiv.classList.remove("hidden");
+        setTimeout(() => errorMsgDiv.classList.add("hidden"), 5000);
+      }
+
+      async function fetchHouses() {
+        showLoading(true);
+        try {
+          const params = {
+            page: currentPage,
+            limit,
+            search,
+            status: statusFilter,
+            listingType: typeFilter,
+            sort: "-createdAt"
+          };
+          const data = await getHouses(params);
+          houses = data.houses;
+          total = data.total;
+          renderTable();
+          updatePagination();
+        } catch (err) {
+          console.error(err);
+          showError("Failed to load houses: " + err.message);
+          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-600">Error loading houses</td></tr>`;
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      async function handleStatusChange(houseId, newStatus) {
+        try {
+          await toggleHouseStatus(houseId, newStatus);
+          showError(`Status updated to ${newStatus}`);
+          fetchHouses(); // refresh
+        } catch (err) {
+          showError(err.message);
+        }
+      }
+
+      async function handleDelete(houseId) {
+        if (confirm("Are you sure you want to delete this listing? This action cannot be undone.")) {
+          try {
+            await deleteHouse(houseId);
+            showError("Listing deleted successfully");
+            fetchHouses();
+          } catch (err) {
+            showError(err.message);
+          }
+        }
+      }
+
+      function formatDate(dateString) {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+          if (m === '&') return '&amp;';
+          if (m === '<') return '&lt;';
+          if (m === '>') return '&gt;';
+          return m;
+        });
+      }
+
+      function renderTable() {
+        if (!houses.length) {
+          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-on-surface-variant">No houses found</td></tr>`;
+          return;
+        }
+
+        tableBody.innerHTML = houses.map(house => {
+          const statusClass = `status-${house.status}`;
+          const priceDisplay = house.listingType === 'rent' 
+            ? `₦${Number(house.price).toLocaleString()}/mo` 
+            : `₦${Number(house.price).toLocaleString()}`;
+          return `
+            <tr class="border-b border-outline/10 hover:bg-primary/5">
+              <td class="px-6 py-4">
+                <div class="font-bold text-primary">${escapeHtml(house.title)}</div>
+                <div class="text-xs text-on-surface-variant">${escapeHtml(house.address)}</div>
+                <div class="text-xs text-on-surface-variant mt-1">${house.bedrooms || '?'} beds · ${house.bathrooms || '?'} baths</div>
+              </td>
+              <td class="px-6 py-4 text-sm">
+                <span class="inline-block px-2 py-1 rounded text-xs font-bold bg-primary/10 text-primary mb-1">${house.listingType === 'rent' ? 'Rent' : 'Sale'}</span>
+                <div class="font-bold text-primary">${priceDisplay}</div>
+              </td>
+              <td class="px-6 py-4 text-sm">
+                <div>${escapeHtml(house.user?.name || 'Unknown')}</div>
+                <div class="text-xs text-on-surface-variant">${escapeHtml(house.user?.email || '')}</div>
+              </td>
+              <td class="px-6 py-4">
+                <select class="status-select text-sm border rounded-lg px-2 py-1" data-house-id="${house._id}" data-current-status="${house.status}">
+                  <option value="published" ${house.status === 'published' ? 'selected' : ''}>Published</option>
+                  <option value="draft" ${house.status === 'draft' ? 'selected' : ''}>Draft</option>
+                  <option value="inactive" ${house.status === 'inactive' ? 'selected' : ''}>Inactive</option>
+                  <option value="sold" ${house.status === 'sold' ? 'selected' : ''}>Sold</option>
+                  <option value="rented" ${house.status === 'rented' ? 'selected' : ''}>Rented</option>
+                </select>
+              </td>
+              <td class="px-6 py-4 text-sm">${formatDate(house.createdAt)}</td>
+              <td class="px-6 py-4">
+                <div class="flex gap-2">
+                  <button class="update-status-btn bg-tertiary-container text-primary px-3 py-1 rounded-lg text-xs font-bold" data-house-id="${house._id}">Update</button>
+                  <button class="delete-house-btn bg-red-100 text-red-700 px-3 py-1 rounded-lg text-xs font-bold" data-house-id="${house._id}">Delete</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Attach event listeners
+        document.querySelectorAll('.update-status-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const houseId = btn.dataset.houseId;
+            const select = btn.closest('tr').querySelector('.status-select');
+            const newStatus = select.value;
+            handleStatusChange(houseId, newStatus);
+          });
+        });
+
+        document.querySelectorAll('.delete-house-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const houseId = btn.dataset.houseId;
+            handleDelete(houseId);
+          });
+        });
+      }
+
+      function updatePagination() {
+        const totalPages = Math.ceil(total / limit);
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages || total === 0;
+        const start = (currentPage - 1) * limit + 1;
+        const end = Math.min(currentPage * limit, total);
+        pageStartSpan.textContent = total === 0 ? 0 : start;
+        pageEndSpan.textContent = end;
+        totalCountSpan.textContent = total;
+      }
+
+      // Event listeners
+      searchInput.addEventListener('input', (e) => {
+        search = e.target.value;
+        currentPage = 1;
+        fetchHouses();
+      });
+      statusFilterSelect.addEventListener('change', (e) => {
+        statusFilter = e.target.value;
+        currentPage = 1;
+        fetchHouses();
+      });
+      typeFilterSelect.addEventListener('change', (e) => {
+        typeFilter = e.target.value;
+        currentPage = 1;
+        fetchHouses();
+      });
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          fetchHouses();
+        }
+      });
+      nextBtn.addEventListener('click', () => {
+        currentPage++;
+        fetchHouses();
+      });
+
+      // Initial fetch
+      fetchHouses();
+    </script>
+  </body>
+</html>
