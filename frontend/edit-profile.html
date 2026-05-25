@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Edit Profile | Resident</title>
+
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+  <link rel="manifest" href="images/site.webmanifest" />
+  <meta name="theme-color" content="#0D316D" />
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#001c4a",
+            "primary-container": "#0d316d",
+            tertiary: "#6e5d00",
+            "tertiary-container": "#c5aa23",
+            "tertiary-fixed": "#ffe260",
+            surface: "#f9f9fc",
+            "on-surface": "#1a1c1e",
+            "on-surface-variant": "#444650",
+            outline: "#747781",
+          },
+          fontFamily: {
+            headline: ["Manrope", "system-ui", "sans-serif"],
+            body: ["Inter", "system-ui", "sans-serif"],
+          },
+          animation: {
+            'toast-in': 'toastIn 0.3s cubic-bezier(0.21, 1.11, 0.35, 1) forwards',
+            'toast-out': 'toastOut 0.2s ease-in forwards',
+          },
+          keyframes: {
+            toastIn: {
+              '0%': { opacity: '0', transform: 'translateY(-20px) scale(0.95)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+            },
+            toastOut: {
+              '0%': { opacity: '1', transform: 'translateY(0)' },
+              '100%': { opacity: '0', transform: 'translateY(-15px)' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * { -webkit-tap-highlight-color: transparent; }
+    .loader {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #c5aa23;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 0.8s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .toast-stack {
+      position: fixed;
+      top: 24px;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 1100;
+      pointer-events: none;
+    }
+    .toast-message {
+      pointer-events: auto;
+      max-width: 90%;
+      width: 380px;
+      background: #1e293b;
+      backdrop-filter: blur(12px);
+      color: white;
+      border-radius: 60px;
+      padding: 12px 20px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+      border-left: 4px solid;
+    }
+    .toast-success { background: #0a2f1f; border-left-color: #4ade80; }
+    .toast-error { background: #4a1a1f; border-left-color: #f87171; }
+    .toast-info { background: #1e2a3e; border-left-color: #60a5fa; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased relative">
+
+  <div id="toastStack" class="toast-stack"></div>
+
+  <!-- Loading overlay -->
+  <div id="loadingOverlay" class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden">
+    <div class="loader"></div>
+  </div>
+
+  <header class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-20">
+        <a href="home.html">
+          <img src="images/logo.png" alt="Resident" class="h-9 lg:h-11 w-auto object-contain" />
+        </a>
+        <div class="flex items-center gap-3">
+          <a href="settings.html" class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+            <i data-lucide="settings"></i>
+          </a>
+          <button id="logoutBtn" class="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-100 transition">
+            <i data-lucide="log-out"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="px-5 md:px-8 py-10 lg:py-14">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6 md:p-8">
+        <div class="flex items-center justify-between mb-6">
+          <h1 class="font-headline text-2xl font-extrabold text-primary">Edit Profile</h1>
+          <a href="profile.html" class="text-sm font-bold text-tertiary hover:text-primary transition">← Back to Profile</a>
+        </div>
+
+        <!-- Profile picture preview & upload -->
+        <div class="flex flex-col items-center mb-6">
+          <div id="profilePreview" class="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border-2 border-primary/20">
+            <i data-lucide="user" class="w-12 h-12 text-primary/40"></i>
+          </div>
+          <label for="profileImage" class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-tertiary cursor-pointer transition">
+            <i data-lucide="upload" class="w-4 h-4"></i>
+            Upload new picture
+          </label>
+          <input type="file" id="profileImage" accept="image/jpeg,image/png,image/webp" class="hidden" />
+          <p class="text-xs text-on-surface-variant mt-2">JPG, PNG or WEBP, max 2MB</p>
+        </div>
+
+        <form id="editProfileForm" class="space-y-5">
+          <div>
+            <label for="fullName" class="block text-sm font-bold text-primary mb-2">Full Name *</label>
+            <div class="relative">
+              <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+              <input id="fullName" type="text" name="name" required class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+            </div>
+          </div>
+
+          <div>
+            <label for="username" class="block text-sm font-bold text-primary mb-2">Username *</label>
+            <div class="relative">
+              <i data-lucide="at-sign" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+              <input id="username" type="text" name="username" required class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-bold text-primary mb-2">Email Address</label>
+            <div class="relative">
+              <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+              <input id="email" type="email" disabled class="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-100 border border-outline/20 text-gray-500 cursor-not-allowed" />
+            </div>
+            <p class="text-xs text-on-surface-variant mt-1">Email cannot be changed</p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="phone" class="block text-sm font-bold text-primary mb-2">Phone Number</label>
+              <div class="relative">
+                <i data-lucide="phone" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                <input id="phone" type="tel" name="phone" placeholder="08012345678" class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+              </div>
+            </div>
+            <div>
+              <label for="alternatePhone" class="block text-sm font-bold text-primary mb-2">Alternate Phone</label>
+              <div class="relative">
+                <i data-lucide="phone-call" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
+                <input id="alternatePhone" type="tel" name="alternatePhone" placeholder="Optional" class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 pt-4">
+            <button type="submit" id="saveProfileBtn" class="flex-1 bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md flex items-center justify-center gap-2">
+              <span>Save Changes</span>
+              <i data-lucide="save" class="w-4 h-4"></i>
+            </button>
+            <a href="profile.html" class="flex-1 bg-white border border-outline/30 text-primary py-3 rounded-xl font-bold text-sm hover:bg-surface/80 transition flex items-center justify-center gap-2">
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { getUserProfile, updateUserProfile } from "./slices/userService.js";
+    import { getStoredToken, clearAuthData, storeUser } from "./js/tokenStorage.js";
+    import { authService } from "./js/authService.js";
+
+    // ---------- UI Elements ----------
+    const loadingOverlay = document.getElementById("loadingOverlay");
+    const form = document.getElementById("editProfileForm");
+    const fullNameInput = document.getElementById("fullName");
+    const usernameInput = document.getElementById("username");
+    const emailInput = document.getElementById("email");
+    const phoneInput = document.getElementById("phone");
+    const alternatePhoneInput = document.getElementById("alternatePhone");
+    const profileImageInput = document.getElementById("profileImage");
+    const profilePreviewDiv = document.getElementById("profilePreview");
+    const saveBtn = document.getElementById("saveProfileBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const toastStack = document.getElementById("toastStack");
+
+    let originalUsername = "";
+    let currentProfileUrl = "";
+
+    function showLoading(show) {
+      show ? loadingOverlay.classList.remove("hidden") : loadingOverlay.classList.add("hidden");
+    }
+
+    // ---------- Toast ----------
+    function showToast(message, type = "info", duration = 4000) {
+      const toast = document.createElement("div");
+      toast.className = `toast-message toast-${type}`;
+      const icon = type === "success" ? "✓" : type === "error" ? "⚠️" : "ℹ️";
+      toast.innerHTML = `<span class="text-base font-bold">${icon}</span><span class="flex-1">${message}</span>`;
+      toast.style.animation = "toastIn 0.3s cubic-bezier(0.21, 1.11, 0.35, 1) forwards";
+      toastStack.appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = "toastOut 0.2s ease-in forwards";
+        setTimeout(() => toast.remove(), 250);
+      }, duration);
+    }
+
+    // Update profile preview with image URL or file
+    function updateProfilePreview(urlOrFile) {
+      profilePreviewDiv.innerHTML = "";
+      if (urlOrFile instanceof File) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.className = "w-full h-full object-cover rounded-full";
+          profilePreviewDiv.innerHTML = "";
+          profilePreviewDiv.appendChild(img);
+        };
+        reader.readAsDataURL(urlOrFile);
+      } else if (urlOrFile && typeof urlOrFile === "string" && urlOrFile.trim() !== "") {
+        const img = document.createElement("img");
+        img.src = urlOrFile;
+        img.className = "w-full h-full object-cover rounded-full";
+        img.onerror = () => {
+          profilePreviewDiv.innerHTML = `<i data-lucide="user" class="w-12 h-12 text-primary/40"></i>`;
+          lucide.createIcons();
+        };
+        img.onload = () => profilePreviewDiv.appendChild(img);
+      } else {
+        profilePreviewDiv.innerHTML = `<i data-lucide="user" class="w-12 h-12 text-primary/40"></i>`;
+        lucide.createIcons();
+      }
+    }
+
+    // Load profile data
+    async function loadProfile() {
+      showLoading(true);
+      try {
+        const user = await getUserProfile();
+        if (!user) throw new Error("No user data");
+        fullNameInput.value = user.name || "";
+        usernameInput.value = user.username || "";
+        emailInput.value = user.email || "";
+        phoneInput.value = user.phone || "";
+        alternatePhoneInput.value = user.alternatePhone || "";
+        currentProfileUrl = user.profile || "";
+        originalUsername = user.username;
+        updateProfilePreview(currentProfileUrl);
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || "Failed to load profile", "error");
+        if (err.message?.includes("401") || err.message?.includes("unauthorized")) {
+          setTimeout(() => { window.location.href = "login.html"; }, 2000);
+        }
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // Preview selected image immediately
+    profileImageInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (file.size > 2 * 1024 * 1024) {
+          showToast("Image must be less than 2MB", "error");
+          profileImageInput.value = "";
+          return;
+        }
+        if (!file.type.startsWith("image/")) {
+          showToast("Only image files are allowed", "error");
+          profileImageInput.value = "";
+          return;
+        }
+        updateProfilePreview(file);
+      } else {
+        updateProfilePreview(currentProfileUrl);
+      }
+    });
+
+    // Handle form submission with FormData
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = fullNameInput.value.trim();
+      const username = usernameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const alternatePhone = alternatePhoneInput.value.trim();
+      const imageFile = profileImageInput.files[0];
+
+      if (!name || !username) {
+        showToast("Name and username are required", "error");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("phone", phone);
+      formData.append("alternatePhone", alternatePhone);
+      if (username !== originalUsername) {
+        formData.append("username", username);
+      }
+      if (imageFile) {
+        formData.append("profile", imageFile);
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = `<span class="spinner border-current mr-2"></span> Saving...`;
+      try {
+        const updatedUser = await updateUserProfile(formData); // expects FormData
+        showToast("Profile updated successfully!", "success");
+        storeUser({
+          _id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          username: updatedUser.username,
+          phone: updatedUser.phone,
+          alternatePhone: updatedUser.alternatePhone,
+          role: updatedUser.role,
+          profile: updatedUser.profile,
+          authMethod: updatedUser.authMethod,
+          isVerified: updatedUser.isVerified,
+          sellerType: updatedUser.sellerType,
+          sellerVerified: updatedUser.sellerVerified,
+        });
+        setTimeout(() => { window.location.href = "profile.html"; }, 1500);
+      } catch (err) {
+        let errorMsg = err.message || "Update failed. Please try again.";
+        if (errorMsg.toLowerCase().includes("username already taken")) {
+          errorMsg = "Username already taken. Please choose another.";
+        }
+        showToast(errorMsg, "error");
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `<span>Save Changes</span><i data-lucide="save" class="w-4 h-4"></i>`;
+        lucide.createIcons();
+      }
+    });
+
+    // Logout handler
+    async function handleLogout() {
+      try {
+        await authService.logout();
+      } catch (err) {
+        console.warn("Logout API call failed, clearing local data anyway.");
+      } finally {
+        clearAuthData();
+        window.location.href = "login.html";
+      }
+    }
+    logoutBtn?.addEventListener("click", handleLogout);
+
+    // Initialize
+    (async function init() {
+      const token = getStoredToken();
+      if (!token) {
+        window.location.href = "login.html";
+        return;
+      }
+      await loadProfile();
+      lucide.createIcons();
+    })();
+  </script>
+</body>
+</html>

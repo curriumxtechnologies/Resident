@@ -1,6 +1,7 @@
   import asyncHandler from "express-async-handler";
   import House from "../models/houseModel.js";
   import https from "https";
+import User from "../models/userModel.js";
 
   // -------------------------------------------------------------------
   //  CREATE – POST /api/houses
@@ -132,68 +133,82 @@
   // -------------------------------------------------------------------
   //  READ – GET /api/houses (public, with filters)
   // -------------------------------------------------------------------
-  const getHouses = asyncHandler(async (req, res) => {
-    const {
-      listingType,
-      state,
-      lga,
-      propertyType,
-      minPrice,
-      maxPrice,
-      bedrooms,
-      bathrooms,
-      status,
-      search,
-      page = 1,
-      limit = 10,
-      sort = "-createdAt",
-    } = req.query;
 
-    const filter = {};
 
-    // By default show only published
-    filter.status = status || "published";
+// -------------------------------------------------------------------
+//  READ – GET /api/houses (public, with filters)
+// -------------------------------------------------------------------
+const getHouses = asyncHandler(async (req, res) => {
+  const {
+    listingType,
+    state,
+    lga,
+    propertyType,
+    minPrice,
+    maxPrice,
+    bedrooms,
+    bathrooms,
+    status,
+    search,
+    page = 1,
+    limit = 10,
+    sort = "-createdAt",
+  } = req.query;
 
-    if (listingType) filter.listingType = listingType;
-    if (state) filter.state = state;
-    if (lga) filter.lga = lga;
-    if (propertyType) filter.propertyType = propertyType;
-    if (bedrooms) filter.bedrooms = { $gte: Number(bedrooms) };
-    if (bathrooms) filter.bathrooms = { $gte: Number(bathrooms) };
+  // Base filter – only published listings by default
+  const filter = { status: status || "published" };
 
-    if (minPrice || maxPrice) {
-      filter.price = {};
-      if (minPrice) filter.price.$gte = Number(minPrice);
-      if (maxPrice) filter.price.$lte = Number(maxPrice);
-    }
+  // Apply filters
+  if (listingType) filter.listingType = listingType;
+  if (state) filter.state = state;
+  if (lga) filter.lga = lga;
+  if (propertyType) filter.propertyType = propertyType;
+  if (bedrooms) filter.bedrooms = { $gte: Number(bedrooms) };
+  if (bathrooms) filter.bathrooms = { $gte: Number(bathrooms) };
 
-    if (search) {
-      filter.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
-        { address: { $regex: search, $options: "i" } },
-      ];
-    }
+  // Price range
+  if (minPrice || maxPrice) {
+    filter.price = {};
+    if (minPrice) filter.price.$gte = Number(minPrice);
+    if (maxPrice) filter.price.$lte = Number(maxPrice);
+  }
 
-    const skip = (Number(page) - 1) * Number(limit);
+  // Text search
+  if (search) {
+    filter.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { description: { $regex: search, $options: "i" } },
+      { address: { $regex: search, $options: "i" } },
+    ];
+  }
 
-    const houses = await House.find(filter)
-      .populate("user", "name email phone")
-      .sort(sort)
-      .skip(skip)
-      .limit(Number(limit));
+  // 🔥 EXCLUDE HOUSES FROM SUSPENDED SELLERS
+  const suspendedSellers = await User.find({ isSuspended: true, role: "seller" }).distinct("_id");
+  if (suspendedSellers.length) {
+    filter.user = { $nin: suspendedSellers };
+  }
 
-    const total = await House.countDocuments(filter);
+  // Pagination
+  const skip = (Number(page) - 1) * Number(limit);
 
-    res.json({
-      success: true,
-      count: houses.length,
-      total,
-      page: Number(page),
-      pages: Math.ceil(total / Number(limit)),
-      houses,
-    });
+  // Fetch houses with FULL seller details (logo, badge, seller type, etc.)
+  const houses = await House.find(filter)
+    .populate("user", "name email phone profile verificationBadge sellerType sellerVerified isSuspended")
+    .sort(sort)
+    .skip(skip)
+    .limit(Number(limit));
+
+  const total = await House.countDocuments(filter);
+
+  res.json({
+    success: true,
+    count: houses.length,
+    total,
+    page: Number(page),
+    pages: Math.ceil(total / Number(limit)),
+    houses,
   });
+});
 
   // -------------------------------------------------------------------
   //  READ – GET /api/houses/:id (single listing)

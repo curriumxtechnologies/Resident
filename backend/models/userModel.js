@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["user", "admin", "seller"],  // Added "seller"
+      enum: ["user", "admin", "seller"],
       default: "user",
     },
     googleId: {
@@ -59,7 +59,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
-    // SELLER FIELDS — ADD THESE
+    // SELLER FIELDS
     sellerType: {
       type: String,
       enum: ["landlord", "agency"],
@@ -77,6 +77,43 @@ const userSchema = new mongoose.Schema(
     otpExpires: {
       type: Date,
       select: false,
+    },
+
+    // ---------- NEW MODERATION FEATURES ----------
+    // Suspension (admin can suspend a seller)
+    isSuspended: {
+      type: Boolean,
+      default: false,
+    },
+    suspensionReason: {
+      type: String,
+      default: "",
+    },
+    suspendedAt: {
+      type: Date,
+    },
+    suspendedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+
+    // Verification badge (admin‑granted, visible to buyers)
+    verificationBadge: {
+      type: Boolean,
+      default: false,
+    },
+    verificationBadgeGrantedAt: {
+      type: Date,
+    },
+    verificationBadgeGrantedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+
+    // Report counter – increments when users report this seller
+    reportCount: {
+      type: Number,
+      default: 0,
     },
   },
   {

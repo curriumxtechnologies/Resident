@@ -2,50 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Seller Profile | Resident</title>
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="images/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="images/favicon-32x32.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="images/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="images/android-chrome-512x512.png"
-    />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
     <link rel="manifest" href="images/site.webmanifest" />
     <meta name="theme-color" content="#0D316D" />
 
@@ -78,42 +48,40 @@
     </script>
 
     <style>
-      * {
-        -webkit-tap-highlight-color: transparent;
+      * { -webkit-tap-highlight-color: transparent; }
+      .lucide { width: 1.2rem; height: 1.2rem; stroke-width: 1.8; }
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
       }
-
-      .lucide {
-        width: 1.2rem;
-        height: 1.2rem;
-        stroke-width: 1.8;
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      .property-card {
+        border-radius: 1rem;
+        overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.3s ease;
+      }
+      .property-card:hover { transform: translateY(-4px); box-shadow: 0 15px 25px -10px rgba(0,0,0,0.1); }
+      .gradient-overlay {
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.05) 100%);
       }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
-    <header
-      class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
-    >
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10">
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="h-16 lg:h-20 flex items-center justify-between">
-          <a href="home.html">
-            <img
-              src="images/logo.png"
-              alt="Resident"
-              class="h-9 lg:h-11 w-auto object-contain"
-            />
-          </a>
-
+          <a href="home.html"><img src="images/logo.png" alt="Resident" class="h-9 lg:h-11 w-auto object-contain" /></a>
           <div class="flex items-center gap-3">
-            <span class="hidden md:inline-block text-sm font-bold text-primary">
-              Joshua Sorochi
-            </span>
-
-            <a
-              href="profile.html"
-              class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold"
-            >
-              JS
+            <span id="userNameDisplay" class="hidden md:inline-block text-sm font-bold text-primary">Guest</span>
+            <a href="profile.html" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold overflow-hidden">
+              <span id="avatarInitials">G</span>
+              <img id="avatarImage" class="hidden w-full h-full object-cover" alt="Profile" />
             </a>
           </div>
         </div>
@@ -122,447 +90,413 @@
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
-        <section
-          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8"
-        >
-          <div class="absolute inset-0 opacity-15">
-            <img
-              src="images/hero.avif"
-              class="w-full h-full object-cover"
-              alt=""
-            />
-          </div>
-
-          <div
-            class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8"
-          >
-            <div class="flex flex-col sm:flex-row sm:items-center gap-5">
-              <div
-                class="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-lg overflow-hidden shrink-0"
-              >
-                <img
-                  src="images/logo.png"
-                  alt="Resident"
-                  class="w-20 h-auto object-contain"
-                />
-              </div>
-
-              <div>
-                <div class="flex flex-wrap items-center gap-2 mb-3">
-                  <span
-                    class="bg-tertiary-container text-primary px-3 py-1 rounded-full text-xs font-extrabold"
-                  >
-                    Verified Seller
-                  </span>
-
-                  <span
-                    class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-bold"
-                  >
-                    Real Estate Agency
-                  </span>
-                </div>
-
-                <h1 class="font-headline text-3xl md:text-5xl font-extrabold">
-                  Resident Homes
-                </h1>
-
-                <p class="text-white/75 text-sm mt-2 max-w-xl">
-                  Premium real estate seller focused on verified homes for sale
-                  and rent across Nigeria.
-                </p>
-
-                <div
-                  class="flex flex-wrap items-center gap-4 mt-4 text-sm text-white/80"
-                >
-                  <span class="flex items-center gap-1">
-                    <i data-lucide="map-pin" class="w-4 h-4"></i>
-                    Lagos, Nigeria
-                  </span>
-
-                  <span class="flex items-center gap-1">
-                    <i data-lucide="calendar-days" class="w-4 h-4"></i>
-                    Joined 2024
-                  </span>
-
-                  <span class="flex items-center gap-1">
-                    <i
-                      data-lucide="badge-check"
-                      class="w-4 h-4 text-tertiary-fixed"
-                    ></i>
-                    Identity verified
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
-              <a
-                href="seller-listings.html"
-                class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"
-              >
-                View All Seller Houses
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </a>
-
-              <button
-                id="reportSellerBtn"
-                class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-white hover:text-red-600 transition flex items-center justify-center gap-2"
-              >
-                <i data-lucide="flag" class="w-4 h-4"></i>
-                Report Seller
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section class="grid lg:grid-cols-3 gap-8">
-          <div class="lg:col-span-2 space-y-8">
-            <section
-              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
-            >
-              <div
-                class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6"
-              >
-                <div>
-                  <h2
-                    class="font-headline text-2xl font-extrabold text-primary"
-                  >
-                    Seller Details
-                  </h2>
-                  <p class="text-sm text-on-surface-variant mt-1">
-                    Basic information visible to buyers and renters.
-                  </p>
-                </div>
-
-                <span
-                  class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold"
-                >
-                  Active
-                </span>
-              </div>
-
-              <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Seller Name
-                  </p>
-                  <p class="font-bold text-primary mt-1">Resident Homes</p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Seller Type
-                  </p>
-                  <p class="font-bold text-primary mt-1">Real Estate Agency</p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Email
-                  </p>
-                  <p class="font-bold text-primary mt-1">contact@resident.ng</p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Phone
-                  </p>
-                  <p class="font-bold text-primary mt-1">+234 812 345 6789</p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Office Address
-                  </p>
-                  <p class="font-bold text-primary mt-1">
-                    Victoria Island, Lagos
-                  </p>
-                </div>
-
-                <div>
-                  <p
-                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
-                  >
-                    Verification
-                  </p>
-                  <p class="font-bold text-primary mt-1">
-                    CAC and address verified
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            <section
-              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
-            >
-              <h2
-                class="font-headline text-2xl font-extrabold text-primary mb-4"
-              >
-                About Seller
-              </h2>
-
-              <p class="text-sm text-on-surface-variant leading-relaxed">
-                Resident Homes lists verified residential properties for buyers
-                and renters. The seller provides luxury homes, apartments, and
-                family houses with clear property details, inspection support,
-                and guided transaction assistance.
-              </p>
-            </section>
-
-            <section
-              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
-            >
-              <div class="flex items-center justify-between gap-4 mb-6">
-                <div>
-                  <h2
-                    class="font-headline text-2xl font-extrabold text-primary"
-                  >
-                    Ratings & Reviews
-                  </h2>
-                  <p class="text-sm text-on-surface-variant mt-1">
-                    What users say about this seller.
-                  </p>
-                </div>
-
-                <div class="text-right">
-                  <p class="text-3xl font-extrabold text-primary">4.8</p>
-                  <div class="flex items-center gap-1 text-tertiary">
-                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
-                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
-                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
-                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
-                    <i data-lucide="star" class="w-4 h-4 fill-[#c5aa23]"></i>
-                  </div>
-                  <p class="text-xs text-on-surface-variant mt-1">42 reviews</p>
-                </div>
-              </div>
-
-              <div class="space-y-5">
-                <div class="border-t border-outline/10 pt-5">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <h3 class="font-bold text-primary">Adaeze N.</h3>
-                      <p class="text-xs text-on-surface-variant">Buyer</p>
-                    </div>
-
-                    <span class="text-xs font-bold text-tertiary">5.0 ★</span>
-                  </div>
-                  <p class="text-sm text-on-surface-variant mt-3">
-                    Smooth inspection process. The seller responded quickly and
-                    the house matched the listing.
-                  </p>
-                </div>
-
-                <div class="border-t border-outline/10 pt-5">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <h3 class="font-bold text-primary">Michael O.</h3>
-                      <p class="text-xs text-on-surface-variant">Renter</p>
-                    </div>
-
-                    <span class="text-xs font-bold text-tertiary">4.7 ★</span>
-                  </div>
-                  <p class="text-sm text-on-surface-variant mt-3">
-                    Good communication and clear rent terms. Inspection was
-                    arranged fast.
-                  </p>
-                </div>
-              </div>
-            </section>
-          </div>
-
-          <aside class="space-y-8">
-            <section
-              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
-            >
-              <h2
-                class="font-headline text-xl font-extrabold text-primary mb-5"
-              >
-                Seller Performance
-              </h2>
-
-              <div class="space-y-4">
-                <div
-                  class="flex items-center justify-between border-b border-outline/10 pb-3"
-                >
-                  <span class="text-sm text-on-surface-variant"
-                    >Total Listings</span
-                  >
-                  <span class="font-extrabold text-primary">36</span>
-                </div>
-
-                <div
-                  class="flex items-center justify-between border-b border-outline/10 pb-3"
-                >
-                  <span class="text-sm text-on-surface-variant"
-                    >Houses Sold</span
-                  >
-                  <span class="font-extrabold text-primary">18</span>
-                </div>
-
-                <div
-                  class="flex items-center justify-between border-b border-outline/10 pb-3"
-                >
-                  <span class="text-sm text-on-surface-variant"
-                    >Houses Rented</span
-                  >
-                  <span class="font-extrabold text-primary">11</span>
-                </div>
-              </div>
-            </section>
-
-            <section
-              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
-            >
-              <h2
-                class="font-headline text-xl font-extrabold text-primary mb-5"
-              >
-                Contact Seller
-              </h2>
-
-              <div class="space-y-3">
-                <a
-                  href="tel:+2348123456789"
-                  class="w-full bg-primary text-white px-4 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
-                >
-                  <i data-lucide="phone" class="w-4 h-4"></i>
-                  Call Seller
-                </a>
-
-                <a
-                  href="mailto:contact@resident.ng"
-                  class="w-full bg-tertiary-container text-primary px-4 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"
-                >
-                  <i data-lucide="mail" class="w-4 h-4"></i>
-                  Email Seller
-                </a>
-
-                <a
-                  href="seller-listings.html"
-                  class="w-full border border-outline/20 text-primary px-4 py-3 rounded-xl font-bold text-sm hover:bg-primary/5 transition flex items-center justify-center gap-2"
-                >
-                  <i data-lucide="building-2" class="w-4 h-4"></i>
-                  View All Houses
-                </a>
-              </div>
-            </section>
-
-            <section class="bg-red-50 rounded-2xl border border-red-100 p-6">
-              <h2
-                class="font-headline text-xl font-extrabold text-red-600 mb-2"
-              >
-                Report Seller
-              </h2>
-
-              <p class="text-sm text-red-700/80 leading-relaxed mb-4">
-                Report this seller if you notice fake listings, wrong property
-                details, payment fraud, or suspicious activity.
-              </p>
-
-              <button
-                id="reportSellerBtnAside"
-                class="w-full bg-red-600 text-white px-4 py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition flex items-center justify-center gap-2"
-              >
-                <i data-lucide="flag" class="w-4 h-4"></i>
-                Report This Seller
-              </button>
-            </section>
-          </aside>
-        </section>
+        <div id="loadingState" class="py-20 text-center"><div class="loader"></div></div>
+        <div id="errorState" class="hidden bg-red-50 text-red-700 p-6 rounded-xl text-center"></div>
+        <div id="profileContent" class="hidden"></div>
       </div>
     </main>
 
-    <div
-      id="reportModal"
-      class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center"
-    >
+    <!-- Report Modal -->
+    <div id="reportModal" class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center">
       <div class="bg-white rounded-2xl max-w-md w-full p-6">
         <div class="flex items-center justify-between mb-5">
-          <h2 class="font-headline text-2xl font-extrabold text-primary">
-            Report Seller
-          </h2>
-
-          <button
-            id="closeReportModal"
-            class="text-on-surface-variant hover:text-primary"
-          >
-            <i data-lucide="x"></i>
-          </button>
+          <h2 class="font-headline text-2xl font-extrabold text-primary">Report Seller</h2>
+          <button id="closeReportModal" class="text-on-surface-variant hover:text-primary"><i data-lucide="x"></i></button>
         </div>
-
-        <form class="space-y-4">
+        <form id="reportForm" class="space-y-4">
           <div>
-            <label class="block text-sm font-bold text-primary mb-2">
-              Reason
-            </label>
-            <select
-              class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
-            >
-              <option>Fake property listing</option>
-              <option>Wrong property information</option>
-              <option>Suspicious payment request</option>
-              <option>Seller is unreachable</option>
-              <option>Other</option>
+            <label class="block text-sm font-bold text-primary mb-2">Reason</label>
+            <select id="reportReason" class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15">
+              <option value="Fake property listing">Fake property listing</option>
+              <option value="Wrong property information">Wrong property information</option>
+              <option value="Suspicious payment request">Suspicious payment request</option>
+              <option value="Seller is unreachable">Seller is unreachable</option>
+              <option value="Other">Other</option>
             </select>
           </div>
-
           <div>
-            <label class="block text-sm font-bold text-primary mb-2">
-              Message
-            </label>
-            <textarea
-              rows="4"
-              class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15 resize-none"
-              placeholder="Explain what happened..."
-            ></textarea>
+            <label class="block text-sm font-bold text-primary mb-2">Message (optional)</label>
+            <textarea id="reportMessage" rows="4" class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15 resize-none" placeholder="Explain what happened..."></textarea>
           </div>
-
-          <button
-            type="submit"
-            class="w-full bg-red-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition"
-          >
-            Submit Report
-          </button>
+          <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition">Submit Report</button>
         </form>
       </div>
     </div>
 
-    <script>
-      lucide.createIcons();
+    <!-- Review Modal -->
+    <div id="reviewModal" class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center">
+      <div class="bg-white rounded-2xl max-w-md w-full p-6">
+        <h2 class="font-headline text-2xl font-extrabold text-primary mb-4">Write a Review</h2>
+        <form id="reviewForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-bold text-primary mb-2">Rating</label>
+            <div class="flex gap-2 text-2xl" id="ratingStars">
+              <span class="cursor-pointer hover:scale-110 transition" data-rating="1">☆</span>
+              <span class="cursor-pointer hover:scale-110 transition" data-rating="2">☆</span>
+              <span class="cursor-pointer hover:scale-110 transition" data-rating="3">☆</span>
+              <span class="cursor-pointer hover:scale-110 transition" data-rating="4">☆</span>
+              <span class="cursor-pointer hover:scale-110 transition" data-rating="5">☆</span>
+            </div>
+            <input type="hidden" id="reviewRating" value="0" />
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-primary mb-2">Comment</label>
+            <textarea id="reviewComment" rows="3" class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15" placeholder="Share your experience with this seller..."></textarea>
+          </div>
+          <div class="flex gap-3">
+            <button type="submit" class="flex-1 bg-tertiary-container text-primary py-3 rounded-xl font-bold">Submit Review</button>
+            <button type="button" id="closeReviewModal" class="flex-1 border border-outline/20 text-primary py-3 rounded-xl font-bold">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-      const reportModal = document.getElementById("reportModal");
-      const reportSellerBtn = document.getElementById("reportSellerBtn");
-      const reportSellerBtnAside = document.getElementById(
-        "reportSellerBtnAside",
-      );
-      const closeReportModal = document.getElementById("closeReportModal");
+    <script type="module">
+      import { getStoredUser } from "./js/tokenStorage.js";
+      import { getBaseURL } from "./js/apiConfig.js";
+      import { getSellerDetails, reportSeller, addSellerReview } from "./slices/sellerService.js";
 
-      function openReportModal() {
-        reportModal.classList.remove("hidden");
+      // ---------- Helper functions ----------
+      function showLoading() {
+        document.getElementById("loadingState").classList.remove("hidden");
+        document.getElementById("errorState").classList.add("hidden");
+        document.getElementById("profileContent").classList.add("hidden");
+      }
+      function showError(msg) {
+        document.getElementById("loadingState").classList.add("hidden");
+        const errDiv = document.getElementById("errorState");
+        errDiv.textContent = msg || "Failed to load seller profile. Please try again.";
+        errDiv.classList.remove("hidden");
+        document.getElementById("profileContent").classList.add("hidden");
+      }
+      function showContent() {
+        document.getElementById("loadingState").classList.add("hidden");
+        document.getElementById("errorState").classList.add("hidden");
+        document.getElementById("profileContent").classList.remove("hidden");
         lucide.createIcons();
       }
-
-      function closeModal() {
-        reportModal.classList.add("hidden");
+      function formatDate(dateStr) {
+        if (!dateStr) return "Recently";
+        const d = new Date(dateStr);
+        return d.toLocaleDateString(undefined, { year: "numeric", month: "short" });
+      }
+      function formatNaira(amount) {
+        return new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", minimumFractionDigits: 0 }).format(amount);
+      }
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) { if (m === "&") return "&amp;"; if (m === "<") return "&lt;"; if (m === ">") return "&gt;"; return m; });
       }
 
-      reportSellerBtn.addEventListener("click", openReportModal);
-      reportSellerBtnAside.addEventListener("click", openReportModal);
-      closeReportModal.addEventListener("click", closeModal);
+      // Render star rating (from number)
+      function renderStars(rating) {
+        const full = Math.floor(rating);
+        const half = rating % 1 >= 0.5;
+        let html = "";
+        for (let i = 0; i < full; i++) html += '<i data-lucide="star" class="w-4 h-4 fill-[#c5aa23] text-tertiary"></i>';
+        if (half) html += '<i data-lucide="star-half" class="w-4 h-4 fill-[#c5aa23] text-tertiary"></i>';
+        for (let i = full + (half ? 1 : 0); i < 5; i++) html += '<i data-lucide="star" class="w-4 h-4 text-gray-300"></i>';
+        return html;
+      }
 
-      reportModal.addEventListener("click", (event) => {
-        if (event.target === reportModal) closeModal();
-      });
+      // ---------- Fetch seller houses ----------
+      async function fetchSellerHouses(sellerId) {
+        try {
+          const token = localStorage.getItem("auth_token");
+          const url = `${getBaseURL()}/houses?user=${sellerId}&status=published&limit=20`;
+          const res = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+          if (!res.ok) return [];
+          const data = await res.json();
+          return data.houses || [];
+        } catch (err) {
+          console.warn("Could not fetch seller houses", err);
+          return [];
+        }
+      }
+
+      // Render property listing card (small for "latest houses" section)
+      function renderSmallHouseCard(house) {
+        const image = house.images?.[0]?.url || "images/hero.avif";
+        return `
+          <a href="property-details.html?id=${house._id}" class="property-card block bg-white rounded-xl overflow-hidden shadow-sm border border-outline/10 hover:shadow-md transition">
+            <img src="${image}" class="w-full h-40 object-cover" />
+            <div class="p-3">
+              <h3 class="font-bold text-primary text-sm truncate">${escapeHtml(house.title || "Property")}</h3>
+              <p class="text-xs text-on-surface-variant">${house.address || `${house.lga}, ${house.state}`}</p>
+              <p class="text-sm font-extrabold text-primary mt-1">${formatNaira(house.price)}${house.listingType === "rent" ? "/yr" : ""}</p>
+            </div>
+          </a>
+        `;
+      }
+
+      // Build the full profile HTML
+      async function buildProfileHTML() {
+        const params = new URLSearchParams(window.location.search);
+        const sellerId = params.get("id");
+        if (!sellerId) {
+          showError("No seller ID provided.");
+          return null;
+        }
+
+        let sellerData = null;
+        try {
+          sellerData = await getSellerDetails(sellerId);
+        } catch (err) {
+          showError(err.message || "Seller not found.");
+          return null;
+        }
+
+        const seller = sellerData.seller;
+        const reviewsData = sellerData.reviews || { count: 0, averageRating: 0, list: [] };
+        const application = sellerData.application;
+        const isLandlord = seller.sellerType === "landlord";
+        const verificationBadge = seller.verificationBadge;
+        const isSuspended = seller.isSuspended;
+
+        // Fetch seller's houses
+        const houses = await fetchSellerHouses(seller._id);
+        const totalListings = houses.length;
+        const sold = houses.filter(h => h.status === "sold").length;
+        const rented = houses.filter(h => h.status === "rented").length;
+
+        // Build address info
+        let addressDisplay = "";
+        let officeDisplay = "";
+        if (application) {
+          if (isLandlord) addressDisplay = `<p class="font-bold text-primary mt-1">${escapeHtml(application.address || "Not provided")}</p>`;
+          else officeDisplay = `<p class="font-bold text-primary mt-1">${escapeHtml(application.officeAddress || "Not provided")}</p>`;
+        }
+
+        const joinedDate = formatDate(seller.createdAt);
+        const sellerName = seller.name || (application?.fullName) || "Seller";
+        const sellerLogo = seller.profile || (application?.logoUrl) || "images/icon.png";
+
+        // Reviews section
+        const reviewListHtml = reviewsData.list.slice(0, 3).map(r => `
+          <div class="border-t border-outline/10 pt-4">
+            <div class="flex items-center justify-between">
+              <div><h3 class="font-bold text-primary">${escapeHtml(r.reviewer?.name || "Anonymous")}</h3><p class="text-xs text-on-surface-variant">${new Date(r.createdAt).toLocaleDateString()}</p></div>
+              <div class="flex gap-0.5 text-xs">${renderStars(r.rating)}</div>
+            </div>
+            <p class="text-sm text-on-surface-variant mt-2">${escapeHtml(r.comment || "No comment provided.")}</p>
+          </div>
+        `).join("");
+
+        const reviewSection = reviewsData.count === 0
+          ? '<p class="text-center text-on-surface-variant py-6">No reviews yet.</p>'
+          : `<div class="space-y-4">${reviewListHtml}</div>`;
+
+        // Listings preview (first 3)
+        const listingsHtml = houses.slice(0, 3).map(renderSmallHouseCard).join("");
+        const viewAllLink = houses.length > 0 ? `<a href="seller-listings.html?id=${seller._id}" class="block text-center mt-4 text-sm font-bold text-primary hover:text-tertiary">View all ${totalListings} listings →</a>` : "";
+
+        // If seller is suspended, show message
+        if (isSuspended) {
+          document.getElementById("profileContent").innerHTML = `
+            <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-8 text-center">
+              <i data-lucide="alert-triangle" class="w-12 h-12 text-yellow-600 mx-auto mb-3"></i>
+              <h2 class="font-headline text-2xl font-extrabold text-primary">Seller Account Suspended</h2>
+              <p class="text-on-surface-variant mt-2">This seller's account has been suspended due to policy violations.</p>
+              <p class="text-sm text-on-surface-variant mt-1">Reason: ${escapeHtml(seller.suspensionReason || "Violation of platform policies")}</p>
+            </div>
+          `;
+          return sellerData;
+        }
+
+        const profileHTML = `
+          <section class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8">
+            <div class="absolute inset-0 opacity-15"><img src="images/hero.avif" class="w-full h-full object-cover" /></div>
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+                <div class="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-lg overflow-hidden shrink-0"><img src="${sellerLogo}" alt="Logo" class="w-20 h-auto object-contain" /></div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-3">
+                    ${verificationBadge ? '<span class="bg-tertiary-container text-primary px-3 py-1 rounded-full text-xs font-extrabold">✓ Verified Seller</span>' : ''}
+                    <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-bold">${isLandlord ? "Private Landlord" : "Real Estate Agency"}</span>
+                  </div>
+                  <h1 class="font-headline text-3xl md:text-5xl font-extrabold">${escapeHtml(sellerName)}</h1>
+                  <p class="text-white/75 text-sm mt-2 max-w-xl">${escapeHtml(application?.businessName || "Professional real estate services")}</p>
+                  <div class="flex flex-wrap items-center gap-4 mt-4 text-sm text-white/80">
+                    <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> ${escapeHtml(isLandlord ? (application?.address || "Nigeria") : (application?.officeAddress || "Nigeria"))}</span>
+                    <span class="flex items-center gap-1"><i data-lucide="calendar-days" class="w-4 h-4"></i> Joined ${joinedDate}</span>
+                    ${verificationBadge ? '<span class="flex items-center gap-1"><i data-lucide="badge-check" class="w-4 h-4 text-tertiary-fixed"></i> Identity verified</span>' : ''}
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
+                <a href="seller-listings.html?id=${seller._id}" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2">View All Houses <i data-lucide="arrow-right"></i></a>
+                <button id="reportSellerBtn" class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-white hover:text-red-600 transition flex items-center justify-center gap-2"><i data-lucide="flag"></i> Report Seller</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="grid lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8">
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                  <div><h2 class="font-headline text-2xl font-extrabold text-primary">Seller Details</h2><p class="text-sm text-on-surface-variant mt-1">Basic information visible to buyers.</p></div>
+                  <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Active</span>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Name</p><p class="font-bold text-primary mt-1">${escapeHtml(sellerName)}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Type</p><p class="font-bold text-primary mt-1">${isLandlord ? "Landlord" : "Real Estate Agency"}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Email</p><p class="font-bold text-primary mt-1">${escapeHtml(seller.email || application?.email || "Not provided")}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Phone</p><p class="font-bold text-primary mt-1">${escapeHtml(seller.phone || application?.phone || "Not provided")}</p></div>
+                  ${isLandlord ? `<div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Residential Address</p>${addressDisplay}</div>` : `<div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Office Address</p>${officeDisplay}</div>`}
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Verification</p><p class="font-bold text-primary mt-1">${verificationBadge ? "CAC and address verified" : "Not verified yet"}</p></div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+                <h2 class="font-headline text-2xl font-extrabold text-primary mb-4">About Seller</h2>
+                <p class="text-sm text-on-surface-variant leading-relaxed">${escapeHtml(application?.businessName || sellerName)} provides ${isLandlord ? "private property rentals and sales" : "verified real estate listings for buyers and renters"} across Nigeria. Professional, transparent, and client-focused.</p>
+              </div>
+
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+                <div class="flex items-center justify-between gap-4 mb-6">
+                  <div><h2 class="font-headline text-2xl font-extrabold text-primary">Ratings & Reviews</h2><p class="text-sm text-on-surface-variant mt-1">What users say about this seller.</p></div>
+                  <div class="text-right"><p class="text-3xl font-extrabold text-primary">${reviewsData.averageRating || 0}</p><div class="flex gap-0.5 text-xs">${renderStars(reviewsData.averageRating)}</div><p class="text-xs text-on-surface-variant mt-1">${reviewsData.count} reviews</p></div>
+                </div>
+                <div id="reviewsContainer">${reviewSection}</div>
+                ${getStoredUser() ? `<button id="writeReviewBtn" class="mt-6 w-full border border-tertiary-container text-primary py-2 rounded-xl font-bold text-sm hover:bg-tertiary-container/10 transition">Write a Review</button>` : `<p class="mt-4 text-center text-sm"><a href="login.html" class="text-tertiary font-bold">Login</a> to write a review.</p>`}
+              </div>
+            </div>
+
+            <aside class="space-y-8">
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+                <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Seller Performance</h2>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Total Listings</span><span class="font-extrabold text-primary">${totalListings}</span></div>
+                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Houses Sold</span><span class="font-extrabold text-primary">${sold}</span></div>
+                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Houses Rented</span><span class="font-extrabold text-primary">${rented}</span></div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+                <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Latest Listings</h2>
+                ${listingsHtml || '<p class="text-center text-on-surface-variant">No listings yet.</p>'}
+                ${viewAllLink}
+              </div>
+
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+                <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Contact Seller</h2>
+                <div class="space-y-3">
+                  <a href="tel:${seller.phone || application?.phone || ''}" class="w-full bg-primary text-white px-4 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"><i data-lucide="phone"></i> Call Seller</a>
+                  <a href="mailto:${seller.email || application?.email || ''}" class="w-full bg-tertiary-container text-primary px-4 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"><i data-lucide="mail"></i> Email Seller</a>
+                  <a href="seller-listings.html?id=${seller._id}" class="w-full border border-outline/20 text-primary px-4 py-3 rounded-xl font-bold text-sm hover:bg-primary/5 transition flex items-center justify-center gap-2"><i data-lucide="building-2"></i> View All Houses</a>
+                </div>
+              </div>
+            </aside>
+          </section>
+        `;
+        document.getElementById("profileContent").innerHTML = profileHTML;
+        return sellerData;
+      }
+
+      // Initialize user header
+      function initUserHeader() {
+        const user = getStoredUser();
+        const nameSpan = document.getElementById("userNameDisplay");
+        const avatarInitials = document.getElementById("avatarInitials");
+        const avatarImage = document.getElementById("avatarImage");
+        if (user && user.name) {
+          nameSpan.textContent = user.name;
+          const initials = user.name.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2);
+          if (user.profile && user.profile.trim() !== "") {
+            avatarImage.src = user.profile;
+            avatarImage.classList.remove("hidden");
+            avatarInitials.classList.add("hidden");
+          } else {
+            avatarInitials.textContent = initials;
+            avatarInitials.classList.remove("hidden");
+            avatarImage.classList.add("hidden");
+          }
+        } else {
+          nameSpan.textContent = "Guest";
+          avatarInitials.textContent = "G";
+          avatarInitials.classList.remove("hidden");
+          avatarImage.classList.add("hidden");
+        }
+      }
+
+      // Report modal logic
+      function initReportModal(sellerId) {
+        const modal = document.getElementById("reportModal");
+        const closeBtn = document.getElementById("closeReportModal");
+        const openBtns = document.querySelectorAll("#reportSellerBtn");
+        const form = document.getElementById("reportForm");
+        function openModal() { modal.classList.remove("hidden"); lucide.createIcons(); }
+        function closeModal() { modal.classList.add("hidden"); }
+        openBtns.forEach(btn => btn.addEventListener("click", openModal));
+        closeBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const reason = document.getElementById("reportReason").value;
+          const message = document.getElementById("reportMessage").value;
+          try {
+            await reportSeller(sellerId, reason + (message ? `: ${message}` : ""));
+            alert("Report submitted. Thank you for helping keep Resident safe.");
+            closeModal();
+            form.reset();
+          } catch (err) {
+            alert(err.message || "Failed to submit report. Please try again.");
+          }
+        });
+      }
+
+      // Review modal and submission
+      function initReviewModal(sellerId) {
+        const modal = document.getElementById("reviewModal");
+        const openBtn = document.getElementById("writeReviewBtn");
+        const closeBtn = document.getElementById("closeReviewModal");
+        const form = document.getElementById("reviewForm");
+        const stars = document.querySelectorAll("#ratingStars span");
+        const ratingInput = document.getElementById("reviewRating");
+        let selectedRating = 0;
+
+        stars.forEach(star => {
+          star.addEventListener("click", () => {
+            selectedRating = parseInt(star.dataset.rating);
+            ratingInput.value = selectedRating;
+            stars.forEach(s => s.textContent = "☆");
+            for (let i = 0; i < selectedRating; i++) stars[i].textContent = "★";
+          });
+        });
+
+        if (!openBtn) return;
+        function openModal() { modal.classList.remove("hidden"); lucide.createIcons(); }
+        function closeModal() { modal.classList.add("hidden"); form.reset(); selectedRating = 0; ratingInput.value = "0"; stars.forEach(s => s.textContent = "☆"); }
+        openBtn.addEventListener("click", openModal);
+        closeBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const rating = parseInt(ratingInput.value);
+          const comment = document.getElementById("reviewComment").value.trim();
+          if (!rating || rating < 1 || rating > 5) { alert("Please select a rating."); return; }
+          try {
+            await addSellerReview(sellerId, rating, comment, false);
+            alert("Review submitted successfully!");
+            closeModal();
+            window.location.reload();
+          } catch (err) {
+            alert(err.message || "Failed to submit review. You may have already reviewed this seller.");
+          }
+        });
+      }
+
+      // Main entry
+      (async function() {
+        showLoading();
+        initUserHeader();
+        const sellerData = await buildProfileHTML();
+        if (!sellerData) return;
+        showContent();
+        const sellerId = sellerData.seller._id;
+        initReportModal(sellerId);
+        if (document.getElementById("writeReviewBtn")) initReviewModal(sellerId);
+      })();
     </script>
   </body>
 </html>

@@ -1,10 +1,5 @@
 // slices/userService.js
-import { apiRequest } from "../js/apiConfig.js";
-
-/**
- * All functions return promises.
- * Use async/await directly in your HTML pages.
- */
+import { apiRequest, uploadRequest } from "../js/apiConfig.js";
 
 // ---------- Profile (logged-in user) ----------
 export async function getUserProfile() {
@@ -13,6 +8,12 @@ export async function getUserProfile() {
 }
 
 export async function updateUserProfile(userData) {
+  // If userData is FormData → file upload (multipart)
+  if (userData instanceof FormData) {
+    const data = await uploadRequest("/users/profile", userData, "PUT");
+    return data.user;
+  }
+  // Otherwise, normal JSON update
   const data = await apiRequest("/users/profile", {
     method: "PUT",
     body: JSON.stringify(userData),

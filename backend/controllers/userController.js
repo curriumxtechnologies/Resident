@@ -37,29 +37,32 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // ----------------------------------------------------------------
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-
   if (!user) {
     res.status(404);
     throw new Error("User not found");
   }
 
-  const { name, username, phone, alternatePhone, profile } = req.body;
+  // Text fields
+  const { name, username, phone, alternatePhone } = req.body;
 
   if (name) user.name = name;
-  if (username) {
-    const existingUsername = await User.findOne({
-      username,
-      _id: { $ne: user._id },
-    });
+  if (phone) user.phone = phone;
+  if (alternatePhone !== undefined) user.alternatePhone = alternatePhone;
+
+  // Username uniqueness
+  if (username && username !== user.username) {
+    const existingUsername = await User.findOne({ username, _id: { $ne: user._id } });
     if (existingUsername) {
       res.status(400);
       throw new Error("Username already taken");
     }
     user.username = username;
   }
-  if (phone) user.phone = phone;
-  if (alternatePhone !== undefined) user.alternatePhone = alternatePhone;
-  if (profile) user.profile = profile;
+
+  // Profile picture – multer-storage-cloudinary already uploaded, just get the URL
+  if (req.file) {
+    user.profile = req.file.path; // Cloudinary URL
+  }
 
   const updatedUser = await user.save();
 
@@ -78,6 +81,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     },
   });
 });
+
+// … other functions (getUserProfile, getUsers, etc.) remain unchanged
 
 // ----------------------------------------------------------------
 //  ADMIN: GET ALL USERS – /api/users

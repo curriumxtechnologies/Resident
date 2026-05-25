@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { protect } from "../middleware/authMiddleware.js";
+import { uploadUserProfile } from "../config/cloudinaryUser.js";
 import {
   getUserProfile,
   updateUserProfile,
@@ -11,14 +12,13 @@ import {
 
 const router = Router();
 
-// All routes require authentication
 router.use(protect);
 
-// Profile routes (any logged-in user)
+// Profile routes – now accepts multipart/form-data with file field 'profile'
 router.get("/profile", getUserProfile);
-router.put("/profile", updateUserProfile);
+router.put("/profile", uploadUserProfile, updateUserProfile);
 
-// Admin routes (role checked inside controller)
+// Admin routes
 router.get("/", getUsers);
 router.get("/:id", getUserById);
 router.put("/:id", updateUser);

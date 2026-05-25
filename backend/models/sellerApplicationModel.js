@@ -2,18 +2,8 @@ import mongoose from "mongoose";
 
 const sellerApplicationSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-      unique: true, // one application per user
-    },
-    sellerType: {
-      type: String,
-      enum: ["landlord", "agency"],
-      required: true,
-    },
-    // Common fields
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true },
+    sellerType: { type: String, enum: ["landlord", "agency"], required: true },
     fullName: { type: String, trim: true },
     email: { type: String, lowercase: true },
     phone: { type: String, trim: true },
@@ -21,7 +11,7 @@ const sellerApplicationSchema = new mongoose.Schema(
 
     // Landlord specific
     address: { type: String, trim: true },
-    proofOfAddressUrl: { type: String },  // Cloudinary URL
+    proofOfAddressUrl: { type: String },
     ninCardUrl: { type: String },
 
     // Agency specific
@@ -30,13 +20,9 @@ const sellerApplicationSchema = new mongoose.Schema(
     officeAddress: { type: String, trim: true },
     cacCertificateUrl: { type: String },
     tin: { type: String, trim: true, default: "" },
+    logoUrl: { type: String }, // NEW
 
-    // Status
-    status: {
-      type: String,
-      enum: ["pending", "approved", "rejected"],
-      default: "pending",
-    },
+    status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
     adminNote: { type: String, trim: true },
   },
   { timestamps: true }

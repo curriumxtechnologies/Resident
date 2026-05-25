@@ -111,7 +111,11 @@
           </div>
           <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div class="flex items-center gap-5">
-              <div id="profileInitials" class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg">--</div>
+              <!-- Profile image or fallback initials -->
+              <div id="profileImageContainer" class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg overflow-hidden">
+                <span id="profileInitials">--</span>
+                <img id="profileImage" class="hidden w-full h-full object-cover" alt="Profile" />
+              </div>
               <div>
                 <h2 id="profileName" class="font-headline text-3xl md:text-4xl font-extrabold">Loading...</h2>
               </div>
@@ -226,15 +230,45 @@
       function updateProfileUI(user, sellerApplication) {
         if (!user) return;
 
+        // Set name
         document.getElementById("profileName").textContent = user.name || "User";
-        const initials = (user.name || "User")
-          .split(" ")
-          .map(n => n[0])
-          .join("")
-          .toUpperCase()
-          .substring(0, 2);
-        document.getElementById("profileInitials").textContent = initials;
 
+        // Handle profile image or initials
+        const initialsSpan = document.getElementById("profileInitials");
+        const profileImg = document.getElementById("profileImage");
+        const container = document.getElementById("profileImageContainer");
+
+        if (user.profile && user.profile.trim() !== "") {
+          // Show image
+          profileImg.src = user.profile;
+          profileImg.classList.remove("hidden");
+          initialsSpan.classList.add("hidden");
+          profileImg.onerror = () => {
+            // fallback to initials if image fails to load
+            profileImg.classList.add("hidden");
+            initialsSpan.classList.remove("hidden");
+            const initials = (user.name || "User")
+              .split(" ")
+              .map(n => n[0])
+              .join("")
+              .toUpperCase()
+              .substring(0, 2);
+            initialsSpan.textContent = initials || "--";
+          };
+        } else {
+          // Show initials
+          profileImg.classList.add("hidden");
+          initialsSpan.classList.remove("hidden");
+          const initials = (user.name || "User")
+            .split(" ")
+            .map(n => n[0])
+            .join("")
+            .toUpperCase()
+            .substring(0, 2);
+          initialsSpan.textContent = initials || "--";
+        }
+
+        // Details
         document.getElementById("detailName").textContent = user.name || "Not set";
         document.getElementById("detailEmail").textContent = user.email || "Not set";
         document.getElementById("detailPhone").textContent = user.phone || "Not set";
@@ -290,7 +324,14 @@
           // Only fetch application if not admin (to avoid unnecessary call)
           if (user.role !== "admin") {
             try {
-              sellerApplication = await getMyApplication();
+              const result = await getMyApplication();
+              // The API returns { success: true, application: {...} } or the application object directly
+              if (result && result.application) {
+                sellerApplication = result.application;
+              } else if (result && result.status) {
+                // Direct application object
+                sellerApplication = result;
+              }
             } catch (err) {
               console.warn("Could not fetch seller application:", err.message);
             }

@@ -1,4 +1,3 @@
-// config/cloudinary.js (if you want to reuse)
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
@@ -17,7 +16,6 @@ const storage = new CloudinaryStorage({
     return {
       folder,
       allowed_formats: ["jpg", "png", "jpeg", "webp", "pdf"],
-      // No transformation for documents, you could add if needed
     };
   },
 });
@@ -29,4 +27,5 @@ export const uploadSellerDocs = multer({
   { name: "proofOfAddress", maxCount: 1 },
   { name: "ninCard", maxCount: 1 },
   { name: "cacCertificate", maxCount: 1 },
+  { name: "logo", maxCount: 1 }, // ← NEW: agency logo
 ]);

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Seller Registration | Resident</title>
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -55,12 +55,11 @@
         background: radial-gradient(circle at 70% 30%, rgba(0,28,74,0.25) 0%, rgba(0,28,74,0.75) 75%, #001c4a 100%);
       }
       .glass-card {
-        background: rgba(255,255,255,0.95);
+        background: rgba(255,255,255,0.96);
         backdrop-filter: blur(18px);
         border: 1px solid rgba(255,255,255,0.5);
       }
       .form-section { display: none; }
-      .form-section.active { display: block; }
       .lucide { width: 1.2rem; height: 1.2rem; stroke-width: 1.8; }
       .input-field {
         width: 100%; padding: 0.85rem 1rem; border-radius: 0.75rem; background: white;
@@ -72,6 +71,7 @@
         width: 100%; background: white; border: 1px solid rgba(116,119,129,0.25);
         border-radius: 0.75rem; padding: 0.75rem; font-size: 0.875rem;
       }
+      .file-group { margin-bottom: 1.25rem; }
       .primary-btn {
         width: 100%; background: #c5aa23; color: #001c4a; padding: 0.85rem 1rem;
         border-radius: 0.75rem; font-weight: 800; font-size: 0.875rem;
@@ -79,26 +79,22 @@
         transition: 0.2s ease; box-shadow: 0 8px 18px rgba(0,0,0,0.12);
       }
       .primary-btn:hover { background: #ffe260; }
-      .secondary-btn {
-        width: 100%; background: white; color: #001c4a; padding: 0.85rem 1rem;
-        border-radius: 0.75rem; font-weight: 800; font-size: 0.875rem;
-        border: 1px solid rgba(116,119,129,0.25);
-        display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-        transition: 0.2s ease;
-      }
-      .secondary-btn:hover { background: rgba(0,28,74,0.06); }
       .loader {
         border: 3px solid #f3f3f3; border-top: 3px solid #c5aa23; border-radius: 50%;
         width: 40px; height: 40px; animation: spin 0.8s linear infinite; margin: 20px auto;
       }
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      .instruction-text {
+        font-size: 0.7rem; color: #444650; margin-top: 0.25rem;
+        display: flex; align-items: center; gap: 0.25rem;
+      }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
     <main class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden">
       <div class="absolute inset-0 z-0">
-        <img src="images/hero.avif" alt="Luxury residence" class="w-full h-full object-cover brightness-[0.58] saturate-110" />
+        <img src="images/hero.avif" alt="Luxury residence" class="w-full h-full object-cover brightness-50" />
         <div class="absolute inset-0 hero-radial-mask mix-blend-multiply"></div>
       </div>
 
@@ -107,13 +103,13 @@
           <div class="text-center mb-8">
             <img src="images/logo.png" alt="Resident" class="h-10 mx-auto mb-5 object-contain" />
             <span class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
-              <i data-lucide="home" class="w-4 h-4"></i> Seller Registration
+              <i data-lucide="home"></i> Seller Registration
             </span>
             <h1 class="font-headline text-3xl font-extrabold text-primary">List Properties on Resident</h1>
             <p class="text-sm text-on-surface-variant mt-2">Register as a landlord or agency to post houses for sale or rent.</p>
           </div>
 
-          <!-- Pending Application Message (hidden initially) -->
+          <!-- Pending message -->
           <div id="pendingMessage" class="hidden mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-center">
             <i data-lucide="clock" class="w-5 h-5 text-yellow-600 mx-auto mb-2"></i>
             <p class="text-sm font-semibold text-yellow-800">Your seller application is under review.</p>
@@ -121,11 +117,11 @@
             <a href="profile.html" class="inline-block mt-3 text-xs font-bold text-primary underline">Back to Profile</a>
           </div>
 
-          <!-- Already approved/rejected message -->
+          <!-- Approved / rejected message -->
           <div id="finalStatusMessage" class="hidden mb-6 p-4 rounded-xl text-center"></div>
 
+          <!-- Application form container -->
           <div id="applicationFormContainer">
-            <!-- Account Type Selection -->
             <div id="accountTypeBox" class="mb-8">
               <label class="block text-sm font-bold text-primary mb-3">Select Account Type</label>
               <div class="grid sm:grid-cols-2 gap-4">
@@ -142,22 +138,22 @@
               </div>
             </div>
 
-            <!-- LANDLORD FORM -->
+            <!-- Landlord Form -->
             <form id="landlordForm" class="seller-form form-section space-y-5" data-type="landlord" style="display:none;">
               <h2 class="font-headline text-xl font-extrabold text-primary">Landlord Details</h2>
               <div><label class="block text-sm font-bold text-primary mb-2">Full Name</label><input type="text" name="fullName" required placeholder="Enter your full name" class="input-field" /></div>
               <div><label class="block text-sm font-bold text-primary mb-2">Email Address</label><input type="email" name="email" required placeholder="you@example.com" class="input-field" /></div>
               <div class="grid sm:grid-cols-2 gap-5">
                 <div><label class="block text-sm font-bold text-primary mb-2">Phone Number</label><input type="tel" name="phone" required placeholder="08012345678" class="input-field" /></div>
-                <div><label class="block text-sm font-bold text-primary mb-2">Alternate Phone Number</label><input type="tel" name="alternatePhone" placeholder="Optional" class="input-field" /></div>
+                <div><label class="block text-sm font-bold text-primary mb-2">Alternate Phone</label><input type="tel" name="alternatePhone" placeholder="Optional" class="input-field" /></div>
               </div>
               <div><label class="block text-sm font-bold text-primary mb-2">Address</label><textarea name="address" required rows="2" placeholder="Enter your residential address" class="input-field resize-none"></textarea></div>
-              <div><label class="block text-sm font-bold text-primary mb-2">Proof of Address (e.g., utility bill)</label><input type="file" name="proofOfAddress" required accept="image/*,application/pdf" class="file-field" /></div>
-              <div><label class="block text-sm font-bold text-primary mb-2">NIN Card (upload front/back or combined)</label><input type="file" name="ninCard" required accept="image/*,application/pdf" class="file-field" /></div>
-              <button type="submit" class="primary-btn">Submit Registration <i data-lucide="check-circle" class="w-4 h-4"></i></button>
+              <div><label class="block text-sm font-bold text-primary mb-2">Proof of Address</label><input type="file" name="proofOfAddress" required accept="image/*,application/pdf" class="file-field" /></div>
+              <div><label class="block text-sm font-bold text-primary mb-2">NIN Card</label><input type="file" name="ninCard" required accept="image/*,application/pdf" class="file-field" /></div>
+              <button type="submit" class="primary-btn">Submit Registration <i data-lucide="check-circle"></i></button>
             </form>
 
-            <!-- AGENCY FORM -->
+            <!-- Agency Form -->
             <form id="agencyForm" class="seller-form form-section space-y-5" data-type="agency" style="display:none;">
               <h2 class="font-headline text-xl font-extrabold text-primary">Real Estate Agency Details</h2>
               <div><label class="block text-sm font-bold text-primary mb-2">Business Name</label><input type="text" name="businessName" required placeholder="Enter business name" class="input-field" /></div>
@@ -165,10 +161,18 @@
               <div><label class="block text-sm font-bold text-primary mb-2">Email Address</label><input type="email" name="email" required placeholder="business@example.com" class="input-field" /></div>
               <div><label class="block text-sm font-bold text-primary mb-2">Phone Number</label><input type="tel" name="phone" required placeholder="08012345678" class="input-field" /></div>
               <div><label class="block text-sm font-bold text-primary mb-2">Office Address</label><textarea name="officeAddress" required rows="2" placeholder="Office address" class="input-field resize-none"></textarea></div>
+              
+              <div class="file-group">
+                <label class="block text-sm font-bold text-primary mb-2">Company Logo (Optional)</label>
+                <input type="file" name="logo" accept="image/jpeg,image/png,image/webp" class="file-field" />
+                <div class="instruction-text"><i data-lucide="info" class="w-3 h-3"></i> <span>Landscape image preferred (e.g., 600x300). Max 2MB.</span></div>
+              </div>
+
               <div><label class="block text-sm font-bold text-primary mb-2">CAC Certificate</label><input type="file" name="cacCertificate" required accept="image/*,application/pdf" class="file-field" /></div>
               <div><label class="block text-sm font-bold text-primary mb-2">TIN (Optional)</label><input type="text" name="tin" placeholder="Tax Identification Number" class="input-field" /></div>
               <div><label class="block text-sm font-bold text-primary mb-2">Proof of Address (office utility bill)</label><input type="file" name="proofOfAddress" required accept="image/*,application/pdf" class="file-field" /></div>
-              <button type="submit" class="primary-btn">Submit Registration <i data-lucide="check-circle" class="w-4 h-4"></i></button>
+              <div class="instruction-text -mt-2"><i data-lucide="alert-circle" class="w-3 h-3"></i> <span>Without a logo, your agency may not be verified.</span></div>
+              <button type="submit" class="primary-btn">Submit Registration <i data-lucide="check-circle"></i></button>
             </form>
           </div>
 
@@ -184,7 +188,6 @@
       import { registerSeller, getMyApplication } from "./slices/sellerService.js";
       import { getStoredToken } from "./js/tokenStorage.js";
 
-      // DOM elements
       const pendingMsgDiv = document.getElementById("pendingMessage");
       const finalMsgDiv = document.getElementById("finalStatusMessage");
       const formContainer = document.getElementById("applicationFormContainer");
@@ -197,46 +200,36 @@
       loadingOverlay.className = "fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden";
       loadingOverlay.innerHTML = '<div class="loader"></div>';
       document.body.appendChild(loadingOverlay);
-
-      function showLoading(show) {
-        loadingOverlay.classList.toggle("hidden", !show);
-      }
+      function showLoading(show) { loadingOverlay.classList.toggle("hidden", !show); }
 
       function showMessage(message, isError = false) {
         const msgDiv = document.createElement("div");
-        msgDiv.className = `mb-6 p-4 rounded-xl text-center temp-message ${isError ? "bg-red-50 border border-red-200 text-red-800" : "bg-green-50 border border-green-200 text-green-800"}`;
+        msgDiv.className = `mb-6 p-4 rounded-xl text-center temp-message ${isError ? "bg-red-50 border-red-200 text-red-800" : "bg-green-50 border-green-200 text-green-800"}`;
         msgDiv.innerHTML = `<p class="text-sm font-semibold">${message}</p>`;
-        const existing = document.querySelector(".temp-message");
-        if (existing) existing.remove();
+        document.querySelector(".temp-message")?.remove();
         formContainer.parentNode.insertBefore(msgDiv, formContainer);
         setTimeout(() => msgDiv.remove(), 5000);
       }
 
-      // Check if user is logged in
-      const token = getStoredToken();
-      if (!token) {
-        window.location.href = "login.html";
-      }
+      // Auth check
+      if (!getStoredToken()) window.location.href = "login.html";
 
-      // Check existing application status using sellerService.js
-      async function checkExistingApplication() {
+      // Fetch existing application
+      async function getExistingApplication() {
         try {
-          const app = await getMyApplication();
-          return app;
+          const result = await getMyApplication();
+          return result?.application || null;
         } catch (err) {
-          // 404 or "No application found" means no application exists — that's fine
-          if (err.message?.includes("404") || err.message?.includes("No application found")) {
-            return null;
-          }
-          console.warn("Could not check existing application:", err.message);
+          if (err.message?.includes("404") || err.message?.includes("No application found")) return null;
+          console.warn("Error fetching application:", err);
           return null;
         }
       }
 
-      // Display UI based on application status
+      // UI logic
       async function handleExistingApplication() {
-        const app = await checkExistingApplication();
-        if (!app) return; // no application → show form as normal
+        const app = await getExistingApplication();
+        if (!app) return;
 
         if (app.status === "pending") {
           pendingMsgDiv.classList.remove("hidden");
@@ -258,45 +251,38 @@
           finalMsgDiv.innerHTML = `
             <i data-lucide="x-circle" class="w-5 h-5 text-red-600 mx-auto mb-2"></i>
             <p class="font-semibold">Your application was rejected.</p>
-            <p class="text-xs mt-1">Contact support or re-apply with correct documents.</p>
+            <p class="text-xs mt-1">You may re-apply with correct documents.</p>
           `;
           finalMsgDiv.className = "mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-center";
           finalMsgDiv.classList.remove("hidden");
-          formContainer.style.display = "none";
-          accountTypeBox.style.display = "none";
+          // Show the form again for re-application
+          formContainer.style.display = "block";
+          accountTypeBox.style.display = "block";
           lucide.createIcons();
         }
       }
 
       // Account type selection
       let selectedType = null;
-      const accountBtns = document.querySelectorAll(".account-btn");
-      accountBtns.forEach(btn => {
+      document.querySelectorAll(".account-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          accountBtns.forEach(b => b.classList.remove("border-primary", "bg-primary/5"));
+          document.querySelectorAll(".account-btn").forEach(b => b.classList.remove("border-primary", "bg-primary/5"));
           btn.classList.add("border-primary", "bg-primary/5");
           selectedType = btn.dataset.type;
-          if (selectedType === "landlord") {
-            landlordForm.style.display = "block";
-            agencyForm.style.display = "none";
-          } else {
-            landlordForm.style.display = "none";
-            agencyForm.style.display = "block";
-          }
+          landlordForm.style.display = selectedType === "landlord" ? "block" : "none";
+          agencyForm.style.display = selectedType === "agency" ? "block" : "none";
           lucide.createIcons();
         });
       });
 
-      // Handle form submission using registerSeller from sellerService.js
+      // Submission
       async function submitForm(formElement, type) {
         const formData = new FormData(formElement);
         formData.append("sellerType", type);
-
         try {
           showLoading(true);
           await registerSeller(formData);
           showMessage("Application submitted successfully! Awaiting admin review.");
-          // Show pending message and hide form
           pendingMsgDiv.classList.remove("hidden");
           formContainer.style.display = "none";
           accountTypeBox.style.display = "none";
@@ -304,7 +290,7 @@
         } catch (err) {
           if (err.message?.includes("already submitted")) {
             showMessage("You have already submitted an application. Check your profile for status.", true);
-            setTimeout(() => { window.location.href = "profile.html"; }, 2000);
+            setTimeout(() => window.location.href = "profile.html", 2000);
           } else {
             showMessage(err.message || "Submission failed. Please try again.", true);
           }
@@ -313,15 +299,8 @@
         }
       }
 
-      landlordForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        submitForm(landlordForm, "landlord");
-      });
-
-      agencyForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        submitForm(agencyForm, "agency");
-      });
+      landlordForm.addEventListener("submit", (e) => { e.preventDefault(); submitForm(landlordForm, "landlord"); });
+      agencyForm.addEventListener("submit", (e) => { e.preventDefault(); submitForm(agencyForm, "agency"); });
 
       // Initial load
       (async () => {
