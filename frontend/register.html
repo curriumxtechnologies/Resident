@@ -19,6 +19,8 @@
   <link rel="manifest" href="images/site.webmanifest" />
   <meta name="theme-color" content="#0D316D" />
 
+  <!-- Google Identity Services (One Tap + button) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -87,7 +89,6 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 14px -6px rgba(0,0,0,0.2);
     }
-    /* Floating toast container - fixed position, independent of form length */
     .toast-stack {
       position: fixed;
       top: 24px;
@@ -125,7 +126,6 @@
 </head>
 <body class="bg-surface text-on-surface font-body antialiased relative">
 
-  <!-- Floating toast container (independent of form) -->
   <div id="toastStack" class="toast-stack"></div>
 
   <main class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden">
@@ -147,16 +147,8 @@
             <p class="text-sm text-on-surface-variant mt-2">Sign up to save properties, request tours, and manage your real estate journey.</p>
           </div>
 
-          <!-- Google Signup -->
-          <button id="googleSignupBtn" type="button" class="w-full flex items-center justify-center gap-3 border border-outline/30 bg-white text-primary rounded-xl py-3 font-bold text-sm hover:bg-surface/90 transition shadow-sm active:scale-[0.98]">
-            <svg class="w-5 h-5" viewBox="0 0 48 48">
-              <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
-              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
-              <path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.5-5.2l-6.2-5.2C29.3 35.1 26.8 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
-              <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.1 5.6l6.2 5.2C36.9 39.3 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/>
-            </svg>
-            <span id="googleBtnText">Sign up with Google</span>
-          </button>
+          <!-- Google One-Tap Button (rendered by Google SDK) -->
+          <div id="googleButtonWrapper" class="w-full"></div>
 
           <div class="flex items-center gap-4 my-6">
             <div class="h-px bg-outline/20 flex-1"></div>
@@ -280,15 +272,13 @@
   <script type="module">
     import { authService } from "./js/authService.js";
 
-    // ---------- Google OAuth Config ----------
+    // Google Client ID (same as before)
     const GOOGLE_CLIENT_ID = "139378208657-e640gtpqqljkrve8u7ho82q5v90k6jfl.apps.googleusercontent.com";
-    const REDIRECT_URI = window.location.origin + "/google-callback.html";
 
     // DOM elements
     const step1 = document.getElementById("signupStep1");
     const step2 = document.getElementById("signupStep2");
     const signupForm = document.getElementById("signupForm");
-    const googleBtn = document.getElementById("googleSignupBtn");
     const otpEmailDisplay = document.getElementById("otpEmailDisplay");
     const otpInputGroup = document.getElementById("otpInputGroup");
     const verifyBtn = document.getElementById("verifyOtpBtn");
@@ -299,7 +289,7 @@
     let currentUserId = null;
     let currentEmail = null;
 
-    // ---------- FLOATING TOAST SYSTEM (independent of form) ----------
+    // ---------- FLOATING TOAST SYSTEM ----------
     const toastStack = document.getElementById("toastStack");
     function showToast(message, type = "info", duration = 4000) {
       const toast = document.createElement("div");
@@ -314,7 +304,7 @@
       }, duration);
     }
 
-    // Helper: loading state for register button
+    // Loading states
     function setRegisterButtonLoading(loading) {
       if (loading) {
         registerSubmitBtn.disabled = true;
@@ -349,7 +339,7 @@
       }
     }
 
-    // OTP inputs with auto-focus, paste support, nice UX
+    // OTP Inputs
     function createOTPInputs() {
       otpInputGroup.innerHTML = "";
       const inputs = [];
@@ -405,7 +395,7 @@
       lucide.createIcons();
     }
 
-    // Password visibility toggle
+    // Password toggle
     document.querySelectorAll(".toggle-password").forEach(btn => {
       btn.addEventListener("click", () => {
         const target = document.getElementById(btn.dataset.target);
@@ -514,23 +504,64 @@
       setRegisterButtonLoading(false);
     });
 
-    // ---------- GOOGLE SIGNUP (redirect) ----------
-    googleBtn.addEventListener("click", () => {
-      googleBtn.disabled = true;
-      googleBtn.innerHTML = `<span class="spinner border-primary/50 mr-2"></span> Redirecting...`;
-      const url = "https://accounts.google.com/o/oauth2/v2/auth" +
-        "?client_id=" + GOOGLE_CLIENT_ID +
-        "&redirect_uri=" + encodeURIComponent(REDIRECT_URI) +
-        "&response_type=token" +
-        "&scope=profile%20email";
-      setTimeout(() => { window.location.href = url; }, 60);
-      setTimeout(() => {
-        if (googleBtn.disabled) {
-          googleBtn.disabled = false;
-          googleBtn.innerHTML = `<span>Sign up with Google</span>`;
-          lucide.createIcons();
+    // ---------- GOOGLE ONE-TAP / BUTTON (Option 2) ----------
+    // Initialize Google Identity Services when the library is ready
+    function initGoogleSignup() {
+      if (!window.google || !window.google.accounts) {
+        setTimeout(initGoogleSignup, 100);
+        return;
+      }
+
+      window.google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: async (response) => {
+          // response.credential is the ID token
+          const idToken = response.credential;
+          if (!idToken) {
+            showToast("Google sign-in failed: no token received", "error");
+            return;
+          }
+          // Show loading state on the button container (optional)
+          const wrapper = document.getElementById("googleButtonWrapper");
+          const originalContent = wrapper.innerHTML;
+          wrapper.innerHTML = `<div class="flex items-center justify-center gap-2 py-3"><span class="spinner border-primary/60 mr-2"></span> Signing in...</div>`;
+          try {
+            await authService.googleAuth(idToken);
+            showToast("Google sign-up successful! Redirecting...", "success");
+            setTimeout(() => { window.location.href = "home.html"; }, 800);
+          } catch (err) {
+            showToast(err.message || "Google authentication failed. Please try again.", "error");
+            wrapper.innerHTML = originalContent;
+            // Re-render the Google button after error
+            window.google.accounts.id.renderButton(wrapper, {
+              theme: "outline",
+              size: "large",
+              width: "100%",
+              text: "signup_with",
+              shape: "rectangular"
+            });
+          }
         }
-      }, 3000);
+      });
+
+      // Render the button inside the wrapper
+      const wrapper = document.getElementById("googleButtonWrapper");
+      window.google.accounts.id.renderButton(wrapper, {
+        theme: "outline",
+        size: "large",
+        width: "100%",
+        text: "signup_with",   // "signup_with" shows "Sign up with Google"
+        shape: "rectangular",
+        logo_alignment: "left"
+      });
+
+      // Optional: Also enable One-Tap (auto popup) for signed-in users
+      window.google.accounts.id.prompt();
+    }
+
+    // Start Google initialization after page load
+    window.addEventListener("load", () => {
+      initGoogleSignup();
     });
 
     // Initial icons
