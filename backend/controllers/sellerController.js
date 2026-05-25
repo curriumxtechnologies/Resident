@@ -1,9 +1,9 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import SellerApplication from "../models/sellerApplicationModel.js";
-import SellerReview from "../models/SellerReview.js";
-import SellerReport from "../models/SellerReport.js";
-import SellerAppeal from "../models/SellerAppeal.js";
+import SellerReview from "../models/sellerReview.js";
+import SellerReport from "../models/sellerReport.js";
+import SellerAppeal from "../models/sellerAppeal.js";
 
 // ========================
 // SELLER APPLICATION (already present, with logo support)
