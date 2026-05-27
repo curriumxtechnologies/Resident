@@ -182,6 +182,67 @@
         background: #1e2a3e;
         border-left-color: #60a5fa;
       }
+      /* Google Button Styling - Bold Font with #001c4a Text Color */
+      .google-signin-container {
+        width: 100%;
+        margin: 12px 0;
+      }
+
+      #googleButtonWrapper {
+        width: 100%;
+      }
+
+      #googleButtonWrapper > div {
+        width: 100% !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        transition: all 0.2s ease !important;
+      }
+
+      #googleButtonWrapper > div:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      #googleButtonWrapper iframe {
+        width: 100% !important;
+        border-radius: 12px !important;
+      }
+
+      /* Target the Google button text - BOLD + #001c4a color */
+      .google-btn-inner [role="button"] {
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          sans-serif !important;
+        font-size: 14px !important;
+        color: #001c4a !important;
+        border: 1px solid #e2e8f0 !important;
+        background: white !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .google-btn-inner [role="button"]:hover {
+        background: #f8fafc !important;
+        border-color: #cbd5e1 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+      }
+
+      /* Make the span text inside bold with correct color */
+      .google-btn-inner [role="button"] span {
+        font-weight: 700 !important;
+        color: #001c4a !important;
+      }
+
+      /* Also target any text nodes inside the button */
+      .google-btn-inner [role="button"] div,
+      .google-btn-inner [role="button"] p {
+        color: #001c4a !important;
+      }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased relative">
@@ -234,7 +295,9 @@
             </div>
 
             <!-- Google One-Tap Button (rendered by Google SDK) -->
-            <div id="googleButtonWrapper" class="w-full"></div>
+            <div class="google-signin-container">
+              <div id="googleButtonWrapper" class="google-btn-inner"></div>
+            </div>
 
             <div class="flex items-center gap-4 my-6">
               <div class="h-px bg-outline/20 flex-1"></div>
