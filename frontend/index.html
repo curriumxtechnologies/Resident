@@ -1801,36 +1801,60 @@
       // CORE FILTER FUNCTIONS
       // ============================================
 
-      // Fetch states and LGAs from backend
-      async function fetchLocationsFromBackend() {
+      // Fetch available locations filtered by listing type
+      async function fetchLocationsByType(listingType) {
         try {
-          console.log("Fetching locations from API...");
-
-          // Show loading state
           const stateSelect = document.getElementById("stateSelect");
           if (stateSelect) {
-            stateSelect.innerHTML =
-              '<option value="">Loading states...</option>';
+            stateSelect.innerHTML = '<option value="">Loading...</option>';
             stateSelect.disabled = true;
           }
 
-          // Use your apiRequest function
-          const result = await apiRequest("/houses/locations");
+          // Fetch a small batch of properties to know which states have listings
+          const result = await apiRequest(
+            `/houses?listingType=${listingType}&status=published&limit=100&fields=state,lga`,
+          );
 
-          console.log("Locations response:", result);
+          if (result.success && result.houses) {
+            // Build filtered locations data
+            const states = new Set();
+            const lgAs = {};
 
-          if (result.success && result.data) {
-            locationsData = result.data;
-            populateStateDropdown(result.data.states);
+            result.houses.forEach((house) => {
+              if (house.state) {
+                states.add(house.state);
+                if (!lgAs[house.state]) {
+                  lgAs[house.state] = new Set();
+                }
+                if (house.lga) {
+                  lgAs[house.state].add(house.lga);
+                }
+              }
+            });
+
+            // Convert Sets to arrays
+            const statesArray = Array.from(states).sort();
+            const lgAsObj = {};
+            Object.keys(lgAs).forEach((state) => {
+              lgAsObj[state] = Array.from(lgAs[state]).sort();
+            });
+
+            locationsData = {
+              states: statesArray,
+              lgAs: lgAsObj,
+            };
+
+            populateStateDropdown(statesArray);
             return true;
           } else {
-            console.error("Failed to fetch locations:", result.message);
-            showErrorForFilters("No locations found");
+            showErrorForFilters(
+              `No ${listingType === "sale" ? "sale" : "rental"} properties found`,
+            );
             return false;
           }
         } catch (error) {
-          console.error("Error fetching locations:", error);
-          showErrorForFilters(error.message || "Failed to load locations");
+          console.error("Error fetching available locations:", error);
+          showErrorForFilters("Failed to load locations");
           return false;
         }
       }
@@ -2117,7 +2141,7 @@
       // BUY/RENT MODE TOGGLE
       // ============================================
 
-      window.setMode = function (selected) {
+      window.setMode = async function (selected) {
         currentListingType = selected === "buy" ? "sale" : "rent";
 
         const buyBtn = document.getElementById("buyBtn");
@@ -2146,7 +2170,11 @@
         // Reset filters
         const stateSelect = document.getElementById("stateSelect");
         const lgaSelect = document.getElementById("lgaSelect");
-        if (stateSelect) stateSelect.value = "";
+
+        // Fetch available locations for this listing type
+        await fetchLocationsByType(currentListingType);
+
+        // Reset LGA dropdown
         if (lgaSelect) {
           lgaSelect.innerHTML = '<option value="">Select LGA</option>';
           lgaSelect.disabled = true;
@@ -2204,11 +2232,8 @@
         // Update navigation based on auth state (MUST be first)
         updateNavigation();
 
-        // Initialize buy/rent mode
-        window.setMode("buy");
-
-        // Fetch locations from backend
-        await fetchLocationsFromBackend();
+        // Initialize buy/rent mode - this will fetch locations for 'sale' type
+        await window.setMode("buy");
 
         // Check if user returned from login with search params
         checkReturnedSearchParams();
