@@ -831,7 +831,7 @@
                   class="w-full bg-transparent border-none focus:ring-0 text-[#0D316D] font-medium text-sm outline-none"
                   disabled
                 >
-                  <option value="">Select LGA first</option>
+                  <option value="">Select LGA</option>
                 </select>
               </div>
               <button
@@ -1870,7 +1870,7 @@
         const lgaSelect = document.getElementById("lgaSelect");
         if (stateSelect) stateSelect.value = "";
         if (lgaSelect) {
-          lgaSelect.innerHTML = '<option value="">Select LGA first</option>';
+          lgaSelect.innerHTML = '<option value="">Select LGA</option>';
           lgaSelect.disabled = true;
         }
 
