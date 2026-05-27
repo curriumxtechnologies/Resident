@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>Profile | Resident</title>
+    <title>Profile | Rezident Homes</title>
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
@@ -17,11 +17,35 @@
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
     <link rel="manifest" href="images/site.webmanifest" />
     <meta name="theme-color" content="#0D316D" />
 
@@ -72,29 +96,50 @@
         margin: 20px auto;
       }
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
     <!-- Loading overlay -->
-    <div id="loadingOverlay" class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden">
+    <div
+      id="loadingOverlay"
+      class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden"
+    >
       <div class="loader"></div>
     </div>
 
-    <header class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10">
+    <header
+      class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
           <a href="home.html">
-            <img src="images/logo.png" alt="Resident" class="h-9 lg:h-11 w-auto object-contain" />
+            <img
+              src="images/logo.png"
+              alt="Rezident Homes Logo"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
           </a>
           <div class="flex items-center gap-3">
-            <a href="settings.html" class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition" aria-label="Settings">
+            <a
+              href="settings.html"
+              class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition"
+              aria-label="Settings"
+            >
               <i data-lucide="settings"></i>
             </a>
-            <button id="logoutBtn" class="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-100 transition" aria-label="Logout">
+            <button
+              id="logoutBtn"
+              class="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-100 transition"
+              aria-label="Logout"
+            >
               <i data-lucide="log-out"></i>
             </button>
           </div>
@@ -105,52 +150,139 @@
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
         <!-- Hero Banner -->
-        <section class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden">
+        <section
+          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden"
+        >
           <div class="absolute inset-0 opacity-15">
-            <img src="images/hero.avif" class="w-full h-full object-cover" alt="" />
+            <img
+              src="images/hero.avif"
+              class="w-full h-full object-cover"
+              alt=""
+            />
           </div>
-          <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div
+            class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+          >
             <div class="flex items-center gap-5">
               <!-- Profile image or fallback initials -->
-              <div id="profileImageContainer" class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg overflow-hidden">
+              <div
+                id="profileImageContainer"
+                class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg overflow-hidden"
+              >
                 <span id="profileInitials">--</span>
-                <img id="profileImage" class="hidden w-full h-full object-cover" alt="Profile" />
+                <img
+                  id="profileImage"
+                  class="hidden w-full h-full object-cover"
+                  alt="Profile"
+                />
               </div>
               <div>
-                <h2 id="profileName" class="font-headline text-3xl md:text-4xl font-extrabold">Loading...</h2>
+                <h2
+                  id="profileName"
+                  class="font-headline text-3xl md:text-4xl font-extrabold"
+                >
+                  Loading...
+                </h2>
               </div>
             </div>
             <!-- Dynamic buttons injected here -->
-            <div id="actionButtons" class="flex flex-col sm:flex-row gap-3"></div>
+            <div
+              id="actionButtons"
+              class="flex flex-col sm:flex-row gap-3"
+            ></div>
           </div>
         </section>
 
         <!-- Profile Details & Activity -->
         <section class="grid lg:grid-cols-3 gap-8 mt-8">
           <div class="lg:col-span-2 space-y-8">
-            <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
               <div class="flex items-center justify-between mb-6">
-                <h2 class="font-headline text-2xl font-extrabold text-primary">Profile Details</h2>
-                <a href="edit-profile.html" class="text-sm font-bold text-tertiary hover:text-primary transition">Edit Profile</a>
+                <h2 class="font-headline text-2xl font-extrabold text-primary">
+                  Profile Details
+                </h2>
+                <a
+                  href="edit-profile.html"
+                  class="text-sm font-bold text-tertiary hover:text-primary transition"
+                  >Edit Profile</a
+                >
               </div>
               <div class="grid sm:grid-cols-2 gap-5">
-                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Full Name</p><p id="detailName" class="font-bold text-primary mt-1">--</p></div>
-                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Email Address</p><p id="detailEmail" class="font-bold text-primary mt-1">--</p></div>
-                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Phone Number</p><p id="detailPhone" class="font-bold text-primary mt-1">--</p></div>
-                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Alternate Phone</p><p id="detailAltPhone" class="font-bold text-primary mt-1">--</p></div>
-                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Username</p><p id="detailUsername" class="font-bold text-primary mt-1">--</p></div>
-                <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Role</p><p id="detailRole" class="font-bold text-primary mt-1">--</p></div>
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Full Name
+                  </p>
+                  <p id="detailName" class="font-bold text-primary mt-1">--</p>
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Email Address
+                  </p>
+                  <p id="detailEmail" class="font-bold text-primary mt-1">--</p>
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Phone Number
+                  </p>
+                  <p id="detailPhone" class="font-bold text-primary mt-1">--</p>
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Alternate Phone
+                  </p>
+                  <p id="detailAltPhone" class="font-bold text-primary mt-1">
+                    --
+                  </p>
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Username
+                  </p>
+                  <p id="detailUsername" class="font-bold text-primary mt-1">
+                    --
+                  </p>
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Role
+                  </p>
+                  <p id="detailRole" class="font-bold text-primary mt-1">--</p>
+                </div>
               </div>
             </div>
           </div>
           <div class="space-y-8">
-            <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
               <div class="flex flex-col gap-4">
                 <div>
-                  <h2 class="font-headline text-xl font-extrabold text-primary">My Property Activity</h2>
-                  <p class="text-sm text-on-surface-variant mt-1">View houses you have rented or bought through Resident.</p>
+                  <h2 class="font-headline text-xl font-extrabold text-primary">
+                    My Property Activity
+                  </h2>
+                  <p class="text-sm text-on-surface-variant mt-1">
+                    View houses you have rented or bought through Rezident
+                    Homes.
+                  </p>
                 </div>
-                <a href="my-properties.html" class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2">
+                <a
+                  href="my-properties.html"
+                  class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
+                >
                   View Bought/Rented Houses
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
@@ -168,12 +300,18 @@
     <script type="module">
       import { getUserProfile } from "./slices/userService.js";
       import { getMyApplication } from "./slices/sellerService.js";
-      import { getStoredToken, clearAuthData, storeUser } from "./js/tokenStorage.js";
+      import {
+        getStoredToken,
+        clearAuthData,
+        storeUser,
+      } from "./js/tokenStorage.js";
       import { authService } from "./js/authService.js";
 
       const loadingOverlay = document.getElementById("loadingOverlay");
       function showLoading(show) {
-        show ? loadingOverlay.classList.remove("hidden") : loadingOverlay.classList.add("hidden");
+        show
+          ? loadingOverlay.classList.remove("hidden")
+          : loadingOverlay.classList.add("hidden");
       }
 
       // Render action buttons based on user role and application status
@@ -193,7 +331,8 @@
         }
 
         // 1. Approved seller (role = seller and verified)
-        const isApprovedSeller = user.role === "seller" && user.sellerVerified === true;
+        const isApprovedSeller =
+          user.role === "seller" && user.sellerVerified === true;
         if (isApprovedSeller) {
           container.innerHTML = `
             <a href="upload-sale.html" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2">
@@ -231,7 +370,8 @@
         if (!user) return;
 
         // Set name
-        document.getElementById("profileName").textContent = user.name || "User";
+        document.getElementById("profileName").textContent =
+          user.name || "User";
 
         // Handle profile image or initials
         const initialsSpan = document.getElementById("profileInitials");
@@ -249,7 +389,7 @@
             initialsSpan.classList.remove("hidden");
             const initials = (user.name || "User")
               .split(" ")
-              .map(n => n[0])
+              .map((n) => n[0])
               .join("")
               .toUpperCase()
               .substring(0, 2);
@@ -261,7 +401,7 @@
           initialsSpan.classList.remove("hidden");
           const initials = (user.name || "User")
             .split(" ")
-            .map(n => n[0])
+            .map((n) => n[0])
             .join("")
             .toUpperCase()
             .substring(0, 2);
@@ -269,11 +409,17 @@
         }
 
         // Details
-        document.getElementById("detailName").textContent = user.name || "Not set";
-        document.getElementById("detailEmail").textContent = user.email || "Not set";
-        document.getElementById("detailPhone").textContent = user.phone || "Not set";
-        document.getElementById("detailAltPhone").textContent = user.alternatePhone || "Not set";
-        document.getElementById("detailUsername").textContent = user.username ? `@${user.username}` : "Not set";
+        document.getElementById("detailName").textContent =
+          user.name || "Not set";
+        document.getElementById("detailEmail").textContent =
+          user.email || "Not set";
+        document.getElementById("detailPhone").textContent =
+          user.phone || "Not set";
+        document.getElementById("detailAltPhone").textContent =
+          user.alternatePhone || "Not set";
+        document.getElementById("detailUsername").textContent = user.username
+          ? `@${user.username}`
+          : "Not set";
         let roleText = "User";
         if (user.role === "admin") roleText = "Admin";
         else if (user.role === "seller") roleText = "Seller";
@@ -340,13 +486,17 @@
           updateProfileUI(user, sellerApplication);
         } catch (err) {
           console.error(err);
-          alert("Session expired or failed to load profile. Please login again.");
+          alert(
+            "Session expired or failed to load profile. Please login again.",
+          );
           clearAuthData();
           window.location.href = "login.html";
         } finally {
           showLoading(false);
         }
-        document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+        document
+          .getElementById("logoutBtn")
+          .addEventListener("click", handleLogout);
       })();
     </script>
   </body>

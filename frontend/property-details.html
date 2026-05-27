@@ -1,222 +1,431 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Property Details | Resident</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="icon" href="images/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
-  <link rel="manifest" href="images/site.webmanifest" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-  <style>
-    * { -webkit-tap-highlight-color: transparent; }
-    body { font-family: "Inter", system-ui, sans-serif; }
-    .font-headline { font-family: "Manrope", system-ui, sans-serif; }
-    .lucide { width: 1.2rem; height: 1.2rem; stroke-width: 1.8; }
-    .loader {
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #c5aa23;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 0.8s linear infinite;
-      margin: 20px auto;
-    }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .toast-stack {
-      position: fixed;
-      top: 24px;
-      left: 0;
-      right: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      z-index: 1100;
-      pointer-events: none;
-    }
-    .toast-message {
-      pointer-events: auto;
-      max-width: 90%;
-      width: 380px;
-      background: #1e293b;
-      backdrop-filter: blur(12px);
-      color: white;
-      border-radius: 60px;
-      padding: 12px 20px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
-      border-left: 4px solid;
-    }
-    .toast-success { background: #0a2f1f; border-left-color: #4ade80; }
-    .toast-error { background: #4a1a1f; border-left-color: #f87171; }
-    .toast-info { background: #1e2a3e; border-left-color: #60a5fa; }
-    .badge-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: bold;
-    }
-    .status-published { background: #d1fae5; color: #065f46; }
-    .status-sold { background: #fee2e2; color: #991b1b; }
-    .status-rented { background: #fef3c7; color: #92400e; }
-    .gallery-thumb { transition: all 0.2s ease; cursor: pointer; }
-    .gallery-thumb:hover { opacity: 0.8; transform: scale(1.02); }
-  </style>
-</head>
-<body class="bg-surface text-on-surface font-body antialiased">
-  <div id="toastStack" class="toast-stack"></div>
-  <div id="loadingOverlay" class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden"><div class="loader"></div></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Property Details | Rezident Homes</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="images/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .font-headline {
+        font-family: "Manrope", system-ui, sans-serif;
+      }
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .toast-stack {
+        position: fixed;
+        top: 24px;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        z-index: 1100;
+        pointer-events: none;
+      }
+      .toast-message {
+        pointer-events: auto;
+        max-width: 90%;
+        width: 380px;
+        background: #1e293b;
+        backdrop-filter: blur(12px);
+        color: white;
+        border-radius: 60px;
+        padding: 12px 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        border-left: 4px solid;
+      }
+      .toast-success {
+        background: #0a2f1f;
+        border-left-color: #4ade80;
+      }
+      .toast-error {
+        background: #4a1a1f;
+        border-left-color: #f87171;
+      }
+      .toast-info {
+        background: #1e2a3e;
+        border-left-color: #60a5fa;
+      }
+      .badge-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: bold;
+      }
+      .status-published {
+        background: #d1fae5;
+        color: #065f46;
+      }
+      .status-sold {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .status-rented {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .gallery-thumb {
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      .gallery-thumb:hover {
+        opacity: 0.8;
+        transform: scale(1.02);
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <div id="toastStack" class="toast-stack"></div>
+    <div
+      id="loadingOverlay"
+      class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden"
+    >
+      <div class="loader"></div>
+    </div>
 
-  <!-- Header (consistent) -->
-  <header class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10">
-    <div class="max-w-7xl mx-auto px-5 md:px-8">
-      <div class="flex items-center justify-between h-16 lg:h-20">
-        <a href="home.html" class="flex-shrink-0"><img src="images/logo.png" alt="Resident" class="h-9 lg:h-11 w-auto object-contain" /></a>
-        <div class="flex items-center gap-3">
-          <span id="userNameDisplay" class="hidden md:inline-block text-sm font-bold text-primary">Guest</span>
-          <a href="profile.html" id="userAvatar" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm overflow-hidden">
-            <span id="avatarInitials">G</span><img id="avatarImage" class="hidden w-full h-full object-cover" alt="Profile" />
-          </a>
+    <!-- Header (consistent) -->
+    <header
+      class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="home.html" class="flex-shrink-0"
+            ><img
+              src="images/logo.png"
+              alt="Rezident Homes Logo"
+              class="h-9 lg:h-11 w-auto object-contain"
+          /></a>
+          <div class="flex items-center gap-3">
+            <span
+              id="userNameDisplay"
+              class="hidden md:inline-block text-sm font-bold text-primary"
+              >Guest</span
+            >
+            <a
+              href="profile.html"
+              id="userAvatar"
+              class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm overflow-hidden"
+            >
+              <span id="avatarInitials">G</span
+              ><img
+                id="avatarImage"
+                class="hidden w-full h-full object-cover"
+                alt="Profile"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-5 md:px-8 py-8 lg:py-12">
+      <div class="max-w-7xl mx-auto">
+        <!-- Loading state -->
+        <div id="loadingState" class="py-20 text-center">
+          <div class="loader"></div>
+        </div>
+        <!-- Error state -->
+        <div
+          id="errorState"
+          class="hidden bg-red-50 text-red-700 p-6 rounded-xl text-center"
+        ></div>
+        <!-- Property content -->
+        <div id="propertyContent" class="hidden"></div>
+      </div>
+    </main>
+
+    <!-- Report Modal -->
+    <div
+      id="reportModal"
+      class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center"
+    >
+      <div class="bg-white rounded-2xl max-w-md w-full p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-headline text-2xl font-extrabold text-primary">
+            Report Seller
+          </h2>
+          <button
+            id="closeReportModal"
+            class="text-on-surface-variant hover:text-primary"
+          >
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <form id="reportForm">
+          <div class="mb-4">
+            <label class="block text-sm font-bold text-primary mb-2"
+              >Reason</label
+            ><select
+              id="reportReason"
+              class="w-full px-4 py-3 rounded-xl border border-outline/20"
+            >
+              <option value="Fake property listing">
+                Fake property listing
+              </option>
+              <option value="Wrong property information">
+                Wrong property information
+              </option>
+              <option value="Suspicious payment request">
+                Suspicious payment request
+              </option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-bold text-primary mb-2"
+              >Message (optional)</label
+            ><textarea
+              id="reportMessage"
+              rows="3"
+              class="w-full px-4 py-3 rounded-xl border border-outline/20"
+              placeholder="Explain..."
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-red-600 text-white py-3 rounded-xl font-bold"
+          >
+            Submit Report
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Payment Modal (Paystack) -->
+    <div
+      id="paymentModal"
+      class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center"
+    >
+      <div class="bg-white rounded-2xl max-w-md w-full p-6">
+        <h2 class="font-headline text-2xl font-extrabold text-primary mb-4">
+          Confirm Transaction
+        </h2>
+        <p class="text-sm mb-2">
+          You are about to <span id="paymentActionText">rent</span> this
+          property.
+        </p>
+        <p class="text-2xl font-bold text-primary mb-4" id="paymentAmount"></p>
+        <div class="mb-4">
+          <label class="block text-sm font-bold text-primary mb-2">Email</label
+          ><input
+            type="email"
+            id="paymentEmail"
+            class="w-full px-4 py-3 rounded-xl border border-outline/20"
+            placeholder="your@email.com"
+          />
+        </div>
+        <div class="flex gap-3">
+          <button
+            id="confirmPaymentBtn"
+            class="flex-1 bg-tertiary-container text-primary py-3 rounded-xl font-bold"
+          >
+            Pay Now</button
+          ><button
+            id="closePaymentModal"
+            class="flex-1 border border-outline/20 py-3 rounded-xl font-bold"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
-  </header>
 
-  <main class="px-5 md:px-8 py-8 lg:py-12">
-    <div class="max-w-7xl mx-auto">
-      <!-- Loading state -->
-      <div id="loadingState" class="py-20 text-center"><div class="loader"></div></div>
-      <!-- Error state -->
-      <div id="errorState" class="hidden bg-red-50 text-red-700 p-6 rounded-xl text-center"></div>
-      <!-- Property content -->
-      <div id="propertyContent" class="hidden"></div>
-    </div>
-  </main>
+    <script type="module">
+      import { getBaseURL, apiRequest } from "./js/apiConfig.js";
+      import { getStoredUser, getStoredToken } from "./js/tokenStorage.js";
+      import { reportSeller, addSellerReview } from "./slices/sellerService.js";
 
-  <!-- Report Modal -->
-  <div id="reportModal" class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6">
-      <div class="flex items-center justify-between mb-5">
-        <h2 class="font-headline text-2xl font-extrabold text-primary">Report Seller</h2>
-        <button id="closeReportModal" class="text-on-surface-variant hover:text-primary"><i data-lucide="x"></i></button>
-      </div>
-      <form id="reportForm">
-        <div class="mb-4"><label class="block text-sm font-bold text-primary mb-2">Reason</label><select id="reportReason" class="w-full px-4 py-3 rounded-xl border border-outline/20"><option value="Fake property listing">Fake property listing</option><option value="Wrong property information">Wrong property information</option><option value="Suspicious payment request">Suspicious payment request</option><option value="Other">Other</option></select></div>
-        <div class="mb-4"><label class="block text-sm font-bold text-primary mb-2">Message (optional)</label><textarea id="reportMessage" rows="3" class="w-full px-4 py-3 rounded-xl border border-outline/20" placeholder="Explain..."></textarea></div>
-        <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold">Submit Report</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Payment Modal (Paystack) -->
-  <div id="paymentModal" class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6">
-      <h2 class="font-headline text-2xl font-extrabold text-primary mb-4">Confirm Transaction</h2>
-      <p class="text-sm mb-2">You are about to <span id="paymentActionText">rent</span> this property.</p>
-      <p class="text-2xl font-bold text-primary mb-4" id="paymentAmount"></p>
-      <div class="mb-4"><label class="block text-sm font-bold text-primary mb-2">Email</label><input type="email" id="paymentEmail" class="w-full px-4 py-3 rounded-xl border border-outline/20" placeholder="your@email.com" /></div>
-      <div class="flex gap-3"><button id="confirmPaymentBtn" class="flex-1 bg-tertiary-container text-primary py-3 rounded-xl font-bold">Pay Now</button><button id="closePaymentModal" class="flex-1 border border-outline/20 py-3 rounded-xl font-bold">Cancel</button></div>
-    </div>
-  </div>
-
-  <script type="module">
-    import { getBaseURL, apiRequest } from "./js/apiConfig.js";
-    import { getStoredUser, getStoredToken } from "./js/tokenStorage.js";
-    import { reportSeller, addSellerReview } from "./slices/sellerService.js";
-
-    // Helpers
-    const toastStack = document.getElementById("toastStack");
-    function showToast(message, type = "info", duration = 4000) {
-      const toast = document.createElement("div");
-      toast.className = `toast-message toast-${type}`;
-      const icon = type === "success" ? "✓" : type === "error" ? "⚠️" : "ℹ️";
-      toast.innerHTML = `<span class="text-base font-bold">${icon}</span><span class="flex-1">${message}</span>`;
-      toast.style.animation = "toastIn 0.3s ease forwards";
-      toastStack.appendChild(toast);
-      setTimeout(() => { toast.style.animation = "toastOut 0.2s ease forwards"; setTimeout(() => toast.remove(), 250); }, duration);
-    }
-    function formatNaira(amount) { return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(amount); }
-    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
-
-    // Get property ID from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const propertyId = urlParams.get('id');
-    if (!propertyId) { document.getElementById("errorState").innerHTML = "No property ID provided."; document.getElementById("errorState").classList.remove("hidden"); document.getElementById("loadingState").classList.add("hidden"); }
-
-    // DOM elements
-    const loadingState = document.getElementById("loadingState");
-    const errorState = document.getElementById("errorState");
-    const propertyContent = document.getElementById("propertyContent");
-
-    // Fetch property details
-    async function fetchProperty() {
-      try {
-        const data = await apiRequest(`/houses/${propertyId}`);
-        return data.house;
-      } catch (err) {
-        throw new Error(err.message || "Property not found");
+      // Helpers
+      const toastStack = document.getElementById("toastStack");
+      function showToast(message, type = "info", duration = 4000) {
+        const toast = document.createElement("div");
+        toast.className = `toast-message toast-${type}`;
+        const icon = type === "success" ? "✓" : type === "error" ? "⚠️" : "ℹ️";
+        toast.innerHTML = `<span class="text-base font-bold">${icon}</span><span class="flex-1">${message}</span>`;
+        toast.style.animation = "toastIn 0.3s ease forwards";
+        toastStack.appendChild(toast);
+        setTimeout(() => {
+          toast.style.animation = "toastOut 0.2s ease forwards";
+          setTimeout(() => toast.remove(), 250);
+        }, duration);
       }
-    }
+      function formatNaira(amount) {
+        return new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          minimumFractionDigits: 0,
+        }).format(amount);
+      }
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, (m) =>
+          m === "&" ? "&amp;" : m === "<" ? "&lt;" : "&gt;",
+        );
+      }
 
-    // Render property
-    async function renderProperty() {
-      loadingState.classList.remove("hidden");
-      errorState.classList.add("hidden");
-      propertyContent.classList.add("hidden");
-      try {
-        const house = await fetchProperty();
-        if (!house) throw new Error("Property not found");
-        const seller = house.user || {};
-        const isRent = house.listingType === "rent";
-        const isSale = house.listingType === "sale";
-        const statusClass = house.status === "sold" ? "status-sold" : (house.status === "rented" ? "status-rented" : "status-published");
-        const statusText = house.status === "sold" ? "Sold" : (house.status === "rented" ? "Rented" : "Available");
-        const sellerLogo = seller.profile || "images/icon.png";
-        const sellerBadge = seller.verificationBadge ? '<span class="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">✓ Verified</span>' : '';
-        const mainImage = house.images?.[0]?.url || "images/hero.avif";
-        const galleryImages = house.images?.slice(1) || [];
-        
-        // Reviews (if any from house.user? Actually reviews are separate, but we can fetch from seller details endpoint later)
-        // For now, we will fetch seller details to get reviews
-        let reviewsHtml = '<p class="text-center text-on-surface-variant">No reviews yet.</p>';
-        let avgRating = 0;
+      // Get property ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const propertyId = urlParams.get("id");
+      if (!propertyId) {
+        document.getElementById("errorState").innerHTML =
+          "No property ID provided.";
+        document.getElementById("errorState").classList.remove("hidden");
+        document.getElementById("loadingState").classList.add("hidden");
+      }
+
+      // DOM elements
+      const loadingState = document.getElementById("loadingState");
+      const errorState = document.getElementById("errorState");
+      const propertyContent = document.getElementById("propertyContent");
+
+      // Fetch property details
+      async function fetchProperty() {
         try {
-          const sellerDetails = await apiRequest(`/sellers/${seller._id}`);
-          if (sellerDetails.reviews && sellerDetails.reviews.list?.length) {
-            const reviews = sellerDetails.reviews.list.slice(0, 3);
-            avgRating = sellerDetails.reviews.averageRating;
-            reviewsHtml = reviews.map(r => `
+          const data = await apiRequest(`/houses/${propertyId}`);
+          return data.house;
+        } catch (err) {
+          throw new Error(err.message || "Property not found");
+        }
+      }
+
+      // Render property
+      async function renderProperty() {
+        loadingState.classList.remove("hidden");
+        errorState.classList.add("hidden");
+        propertyContent.classList.add("hidden");
+        try {
+          const house = await fetchProperty();
+          if (!house) throw new Error("Property not found");
+          const seller = house.user || {};
+          const isRent = house.listingType === "rent";
+          const isSale = house.listingType === "sale";
+          const statusClass =
+            house.status === "sold"
+              ? "status-sold"
+              : house.status === "rented"
+                ? "status-rented"
+                : "status-published";
+          const statusText =
+            house.status === "sold"
+              ? "Sold"
+              : house.status === "rented"
+                ? "Rented"
+                : "Available";
+          const sellerLogo = seller.profile || "images/icon.png";
+          const sellerBadge = seller.verificationBadge
+            ? '<span class="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">✓ Verified</span>'
+            : "";
+          const mainImage = house.images?.[0]?.url || "images/hero.avif";
+          const galleryImages = house.images?.slice(1) || [];
+
+          // Reviews (if any from house.user? Actually reviews are separate, but we can fetch from seller details endpoint later)
+          // For now, we will fetch seller details to get reviews
+          let reviewsHtml =
+            '<p class="text-center text-on-surface-variant">No reviews yet.</p>';
+          let avgRating = 0;
+          try {
+            const sellerDetails = await apiRequest(`/sellers/${seller._id}`);
+            if (sellerDetails.reviews && sellerDetails.reviews.list?.length) {
+              const reviews = sellerDetails.reviews.list.slice(0, 3);
+              avgRating = sellerDetails.reviews.averageRating;
+              reviewsHtml = reviews
+                .map(
+                  (r) => `
               <div class="border-t border-outline/10 pt-4">
-                <div class="flex justify-between"><p class="font-bold">${escapeHtml(r.reviewer?.name || "Anonymous")}</p><div class="flex text-tertiary">${'★'.repeat(Math.floor(r.rating))}${r.rating % 1 ? '½' : ''}</div></div>
+                <div class="flex justify-between"><p class="font-bold">${escapeHtml(r.reviewer?.name || "Anonymous")}</p><div class="flex text-tertiary">${"★".repeat(Math.floor(r.rating))}${r.rating % 1 ? "½" : ""}</div></div>
                 <p class="text-sm text-on-surface-variant mt-1">${escapeHtml(r.comment || "")}</p>
                 <p class="text-xs text-on-surface-variant mt-1">${new Date(r.createdAt).toLocaleDateString()}</p>
               </div>
-            `).join('');
+            `,
+                )
+                .join("");
+            }
+          } catch (e) {
+            console.warn("Reviews not available");
           }
-        } catch(e) { console.warn("Reviews not available"); }
 
-        const html = `
+          const html = `
           <div class="grid lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-6">
               <!-- Main image -->
               <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-outline/10">
                 <img src="${mainImage}" class="w-full h-80 md:h-96 object-cover" id="mainImage" />
-                ${galleryImages.length ? `<div class="p-3 flex gap-2 overflow-x-auto">${galleryImages.map((img, idx) => `<img src="${img.url}" class="w-20 h-20 object-cover rounded-lg gallery-thumb" data-img="${img.url}" />`).join('')}</div>` : ''}
+                ${galleryImages.length ? `<div class="p-3 flex gap-2 overflow-x-auto">${galleryImages.map((img, idx) => `<img src="${img.url}" class="w-20 h-20 object-cover rounded-lg gallery-thumb" data-img="${img.url}" />`).join("")}</div>` : ""}
               </div>
               <!-- Details -->
               <div class="bg-white rounded-2xl p-6 shadow-sm border border-outline/10">
@@ -225,22 +434,22 @@
                   <div><span class="badge-status ${statusClass}">${statusText}</span></div>
                 </div>
                 <div class="grid sm:grid-cols-2 gap-4 mb-6">
-                  <div><span class="text-2xl font-extrabold text-primary">${formatNaira(house.price)}</span>${isRent ? '<span class="text-sm">/year</span>' : ''}</div>
-                  <div class="flex gap-4"><span class="flex items-center gap-1"><i data-lucide="bed"></i> ${house.bedrooms || '?'}</span><span class="flex items-center gap-1"><i data-lucide="bath"></i> ${house.bathrooms || '?'}</span><span class="flex items-center gap-1"><i data-lucide="square"></i> ${house.size || '?'}m²</span></div>
+                  <div><span class="text-2xl font-extrabold text-primary">${formatNaira(house.price)}</span>${isRent ? '<span class="text-sm">/year</span>' : ""}</div>
+                  <div class="flex gap-4"><span class="flex items-center gap-1"><i data-lucide="bed"></i> ${house.bedrooms || "?"}</span><span class="flex items-center gap-1"><i data-lucide="bath"></i> ${house.bathrooms || "?"}</span><span class="flex items-center gap-1"><i data-lucide="square"></i> ${house.size || "?"}m²</span></div>
                 </div>
                 <div class="prose prose-sm max-w-none"><p class="text-on-surface-variant">${escapeHtml(house.description || "No description provided.")}</p></div>
                 <hr class="my-6" />
                 <div class="grid md:grid-cols-2 gap-4 text-sm">
-                  <div><span class="font-bold">Property Type:</span> ${house.propertyType || 'N/A'}</div>
-                  <div><span class="font-bold">Year Built:</span> ${house.yearBuilt || 'N/A'}</div>
-                  ${isRent ? `<div><span class="font-bold">Lease Term:</span> ${house.leaseTerm || 'N/A'}</div><div><span class="font-bold">Security Deposit:</span> ${house.securityDeposit || 'N/A'}</div>` : `<div><span class="font-bold">Ownership Type:</span> ${house.ownershipType || 'N/A'}</div>`}
+                  <div><span class="font-bold">Property Type:</span> ${house.propertyType || "N/A"}</div>
+                  <div><span class="font-bold">Year Built:</span> ${house.yearBuilt || "N/A"}</div>
+                  ${isRent ? `<div><span class="font-bold">Lease Term:</span> ${house.leaseTerm || "N/A"}</div><div><span class="font-bold">Security Deposit:</span> ${house.securityDeposit || "N/A"}</div>` : `<div><span class="font-bold">Ownership Type:</span> ${house.ownershipType || "N/A"}</div>`}
                 </div>
               </div>
               <!-- Seller info -->
               <div class="bg-white rounded-2xl p-6 shadow-sm border border-outline/10">
                 <div class="flex items-center gap-4">
                   <img src="${sellerLogo}" class="w-16 h-16 rounded-full object-cover border-2 border-tertiary" />
-                  <div><h2 class="font-headline text-xl font-bold">${escapeHtml(seller.name || "Seller")} ${sellerBadge}</h2><p class="text-sm text-on-surface-variant">${seller.sellerType === 'agency' ? 'Real Estate Agency' : 'Private Landlord'}</p><a href="seller-profile.html?id=${seller._id}" class="text-tertiary text-sm font-semibold hover:underline">View Profile</a></div>
+                  <div><h2 class="font-headline text-xl font-bold">${escapeHtml(seller.name || "Seller")} ${sellerBadge}</h2><p class="text-sm text-on-surface-variant">${seller.sellerType === "agency" ? "Real Estate Agency" : "Private Landlord"}</p><a href="seller-profile.html?id=${seller._id}" class="text-tertiary text-sm font-semibold hover:underline">View Profile</a></div>
                 </div>
                 <div class="mt-4 flex flex-wrap gap-2">
                   <button id="contactSellerBtn" class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2"><i data-lucide="phone"></i> Contact Seller</button>
@@ -258,127 +467,189 @@
             <div class="space-y-6">
               <div class="bg-white rounded-2xl p-6 shadow-sm border border-outline/10 sticky top-24">
                 <h3 class="font-headline text-xl font-bold mb-4">Take Action</h3>
-                <button id="actionBtn" class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2 mb-3"><i data-lucide="${isRent ? 'calendar' : 'credit-card'}"></i> ${isRent ? 'Rent Now' : 'Buy Now'}</button>
+                <button id="actionBtn" class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2 mb-3"><i data-lucide="${isRent ? "calendar" : "credit-card"}"></i> ${isRent ? "Rent Now" : "Buy Now"}</button>
                 <button id="scheduleTourBtn" class="w-full bg-primary text-white py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"><i data-lucide="eye"></i> Schedule Tour</button>
                 <div class="mt-6 pt-4 border-t"><p class="text-xs text-on-surface-variant text-center">100% secure transaction via Paystack. Legal support included.</p></div>
               </div>
             </div>
           </div>
         `;
-        propertyContent.innerHTML = html;
-        propertyContent.classList.remove("hidden");
-        loadingState.classList.add("hidden");
-        lucide.createIcons();
+          propertyContent.innerHTML = html;
+          propertyContent.classList.remove("hidden");
+          loadingState.classList.add("hidden");
+          lucide.createIcons();
 
-        // Gallery thumbnail click
-        document.querySelectorAll('.gallery-thumb').forEach(thumb => {
-          thumb.addEventListener('click', () => {
-            document.getElementById('mainImage').src = thumb.dataset.img;
+          // Gallery thumbnail click
+          document.querySelectorAll(".gallery-thumb").forEach((thumb) => {
+            thumb.addEventListener("click", () => {
+              document.getElementById("mainImage").src = thumb.dataset.img;
+            });
           });
-        });
-        // Report button
-        const reportBtn = document.getElementById("reportSellerBtn");
-        const reportModal = document.getElementById("reportModal");
-        const closeReport = document.getElementById("closeReportModal");
-        const reportForm = document.getElementById("reportForm");
-        if (reportBtn) {
-          reportBtn.addEventListener("click", () => reportModal.classList.remove("hidden"));
-          closeReport.addEventListener("click", () => reportModal.classList.add("hidden"));
-          reportModal.addEventListener("click", (e) => { if (e.target === reportModal) reportModal.classList.add("hidden"); });
-          reportForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const reason = document.getElementById("reportReason").value;
-            const message = document.getElementById("reportMessage").value;
-            try {
-              await reportSeller(seller._id, reason + (message ? `: ${message}` : ""));
-              showToast("Report submitted. Thank you.", "success");
-              reportModal.classList.add("hidden");
-              reportForm.reset();
-            } catch(err) { showToast(err.message, "error"); }
-          });
-        }
-        // Payment action
-        const actionBtn = document.getElementById("actionBtn");
-        const paymentModal = document.getElementById("paymentModal");
-        const closePayment = document.getElementById("closePaymentModal");
-        const confirmPayment = document.getElementById("confirmPaymentBtn");
-        const paymentEmail = document.getElementById("paymentEmail");
-        const paymentAmountSpan = document.getElementById("paymentAmount");
-        const paymentActionText = document.getElementById("paymentActionText");
-        if (actionBtn) {
-          actionBtn.addEventListener("click", () => {
-            if (!getStoredToken()) { showToast("Please login to continue", "error"); setTimeout(() => window.location.href="login.html", 1500); return; }
-            paymentActionText.innerText = isRent ? "rent" : "buy";
-            paymentAmountSpan.innerText = formatNaira(house.price);
-            paymentEmail.value = getStoredUser()?.email || "";
-            paymentModal.classList.remove("hidden");
-          });
-          closePayment.addEventListener("click", () => paymentModal.classList.add("hidden"));
-          paymentModal.addEventListener("click", (e) => { if (e.target === paymentModal) paymentModal.classList.add("hidden"); });
-          confirmPayment.addEventListener("click", async () => {
-            const email = paymentEmail.value.trim();
-            if (!email) { showToast("Enter your email", "error"); return; }
-            try {
-              const initResponse = await apiRequest("/houses/initiate-payment", { method: "POST", body: JSON.stringify({ houseId: house._id, amount: house.price, email }) });
-              if (initResponse.authorization_url) {
-                window.location.href = initResponse.authorization_url;
-              } else {
-                showToast("Payment initialization failed", "error");
+          // Report button
+          const reportBtn = document.getElementById("reportSellerBtn");
+          const reportModal = document.getElementById("reportModal");
+          const closeReport = document.getElementById("closeReportModal");
+          const reportForm = document.getElementById("reportForm");
+          if (reportBtn) {
+            reportBtn.addEventListener("click", () =>
+              reportModal.classList.remove("hidden"),
+            );
+            closeReport.addEventListener("click", () =>
+              reportModal.classList.add("hidden"),
+            );
+            reportModal.addEventListener("click", (e) => {
+              if (e.target === reportModal) reportModal.classList.add("hidden");
+            });
+            reportForm.addEventListener("submit", async (e) => {
+              e.preventDefault();
+              const reason = document.getElementById("reportReason").value;
+              const message = document.getElementById("reportMessage").value;
+              try {
+                await reportSeller(
+                  seller._id,
+                  reason + (message ? `: ${message}` : ""),
+                );
+                showToast("Report submitted. Thank you.", "success");
+                reportModal.classList.add("hidden");
+                reportForm.reset();
+              } catch (err) {
+                showToast(err.message, "error");
               }
-            } catch(err) { showToast(err.message, "error"); }
-          });
+            });
+          }
+          // Payment action
+          const actionBtn = document.getElementById("actionBtn");
+          const paymentModal = document.getElementById("paymentModal");
+          const closePayment = document.getElementById("closePaymentModal");
+          const confirmPayment = document.getElementById("confirmPaymentBtn");
+          const paymentEmail = document.getElementById("paymentEmail");
+          const paymentAmountSpan = document.getElementById("paymentAmount");
+          const paymentActionText =
+            document.getElementById("paymentActionText");
+          if (actionBtn) {
+            actionBtn.addEventListener("click", () => {
+              if (!getStoredToken()) {
+                showToast("Please login to continue", "error");
+                setTimeout(() => (window.location.href = "login.html"), 1500);
+                return;
+              }
+              paymentActionText.innerText = isRent ? "rent" : "buy";
+              paymentAmountSpan.innerText = formatNaira(house.price);
+              paymentEmail.value = getStoredUser()?.email || "";
+              paymentModal.classList.remove("hidden");
+            });
+            closePayment.addEventListener("click", () =>
+              paymentModal.classList.add("hidden"),
+            );
+            paymentModal.addEventListener("click", (e) => {
+              if (e.target === paymentModal)
+                paymentModal.classList.add("hidden");
+            });
+            confirmPayment.addEventListener("click", async () => {
+              const email = paymentEmail.value.trim();
+              if (!email) {
+                showToast("Enter your email", "error");
+                return;
+              }
+              try {
+                const initResponse = await apiRequest(
+                  "/houses/initiate-payment",
+                  {
+                    method: "POST",
+                    body: JSON.stringify({
+                      houseId: house._id,
+                      amount: house.price,
+                      email,
+                    }),
+                  },
+                );
+                if (initResponse.authorization_url) {
+                  window.location.href = initResponse.authorization_url;
+                } else {
+                  showToast("Payment initialization failed", "error");
+                }
+              } catch (err) {
+                showToast(err.message, "error");
+              }
+            });
+          }
+          // Schedule tour (simple alert)
+          document
+            .getElementById("scheduleTourBtn")
+            ?.addEventListener("click", () => {
+              showToast(
+                "Schedule tour request sent to seller. You will be contacted soon.",
+                "info",
+              );
+            });
+          // Contact seller
+          document
+            .getElementById("contactSellerBtn")
+            ?.addEventListener("click", () => {
+              showToast(
+                `Contact seller via email: ${seller.email || "Not provided"} or phone: ${seller.phone || "N/A"}`,
+                "info",
+                5000,
+              );
+            });
+          // Write review
+          const writeReviewBtn = document.getElementById("writeReviewBtn");
+          if (writeReviewBtn) {
+            writeReviewBtn.addEventListener("click", () => {
+              const reviewText = prompt("Write your review (max 500 chars):");
+              const rating = parseInt(prompt("Rating (1-5 stars):"));
+              if (reviewText && rating >= 1 && rating <= 5) {
+                addSellerReview(seller._id, rating, reviewText, false)
+                  .then(() => {
+                    showToast("Review submitted!", "success");
+                    setTimeout(() => location.reload(), 1500);
+                  })
+                  .catch((err) => showToast(err.message, "error"));
+              } else showToast("Invalid rating or review", "error");
+            });
+          }
+        } catch (err) {
+          console.error(err);
+          errorState.innerHTML =
+            err.message || "Failed to load property details.";
+          errorState.classList.remove("hidden");
+          loadingState.classList.add("hidden");
+          propertyContent.classList.add("hidden");
         }
-        // Schedule tour (simple alert)
-        document.getElementById("scheduleTourBtn")?.addEventListener("click", () => { showToast("Schedule tour request sent to seller. You will be contacted soon.", "info"); });
-        // Contact seller
-        document.getElementById("contactSellerBtn")?.addEventListener("click", () => { showToast(`Contact seller via email: ${seller.email || "Not provided"} or phone: ${seller.phone || "N/A"}`, "info", 5000); });
-        // Write review
-        const writeReviewBtn = document.getElementById("writeReviewBtn");
-        if (writeReviewBtn) {
-          writeReviewBtn.addEventListener("click", () => {
-            const reviewText = prompt("Write your review (max 500 chars):");
-            const rating = parseInt(prompt("Rating (1-5 stars):"));
-            if (reviewText && rating >=1 && rating <=5) {
-              addSellerReview(seller._id, rating, reviewText, false).then(() => { showToast("Review submitted!", "success"); setTimeout(() => location.reload(), 1500); }).catch(err => showToast(err.message, "error"));
-            } else showToast("Invalid rating or review", "error");
-          });
-        }
-      } catch (err) {
-        console.error(err);
-        errorState.innerHTML = err.message || "Failed to load property details.";
-        errorState.classList.remove("hidden");
-        loadingState.classList.add("hidden");
-        propertyContent.classList.add("hidden");
       }
-    }
 
-    // User header
-    function initUserHeader() {
-      const user = getStoredUser();
-      const nameSpan = document.getElementById("userNameDisplay");
-      const avatarInitials = document.getElementById("avatarInitials");
-      const avatarImage = document.getElementById("avatarImage");
-      if (user?.name) {
-        nameSpan.textContent = user.name;
-        const initials = user.name.split(" ").map(n=>n[0]).join("").toUpperCase().substring(0,2);
-        if (user.profile && user.profile.trim() !== "") {
-          avatarImage.src = user.profile;
-          avatarImage.classList.remove("hidden");
-          avatarInitials.classList.add("hidden");
+      // User header
+      function initUserHeader() {
+        const user = getStoredUser();
+        const nameSpan = document.getElementById("userNameDisplay");
+        const avatarInitials = document.getElementById("avatarInitials");
+        const avatarImage = document.getElementById("avatarImage");
+        if (user?.name) {
+          nameSpan.textContent = user.name;
+          const initials = user.name
+            .split(" ")
+            .map((n) => n[0])
+            .join("")
+            .toUpperCase()
+            .substring(0, 2);
+          if (user.profile && user.profile.trim() !== "") {
+            avatarImage.src = user.profile;
+            avatarImage.classList.remove("hidden");
+            avatarInitials.classList.add("hidden");
+          } else {
+            avatarInitials.textContent = initials;
+            avatarInitials.classList.remove("hidden");
+            avatarImage.classList.add("hidden");
+          }
         } else {
-          avatarInitials.textContent = initials;
+          nameSpan.textContent = "Guest";
+          avatarInitials.textContent = "G";
           avatarInitials.classList.remove("hidden");
           avatarImage.classList.add("hidden");
         }
-      } else {
-        nameSpan.textContent = "Guest";
-        avatarInitials.textContent = "G";
-        avatarInitials.classList.remove("hidden");
-        avatarImage.classList.add("hidden");
       }
-    }
-    initUserHeader();
-    renderProperty();
-  </script>
-</body>
+      initUserHeader();
+      renderProperty();
+    </script>
+  </body>
 </html>

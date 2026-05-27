@@ -2,73 +2,238 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Resident | Estates for Sale - Nigeria's Finest Real Estate</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>
+      Rezident Homes | Estates for Sale - Nigeria's Finest Real Estate
+    </title>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="icon" href="images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
     <link rel="manifest" href="images/site.webmanifest" />
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      * { -webkit-tap-highlight-color: transparent; }
-      body { font-family: "Inter", system-ui, sans-serif; background-color: #f9f9fc; color: #1a1c1e; }
-      .font-headline { font-family: "Manrope", system-ui, sans-serif; }
-      html { scroll-behavior: smooth; }
-      
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        background-color: #f9f9fc;
+        color: #1a1c1e;
+      }
+      .font-headline {
+        font-family: "Manrope", system-ui, sans-serif;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
       /* Fade up animation */
-      .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-      .fade-up.revealed { opacity: 1; transform: translateY(0); }
+      .fade-up {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .fade-up.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
       /* Colors */
-      .text-primary { color: #001c4a; }
-      .bg-primary { background-color: #001c4a; }
-      .bg-surface { background-color: #f9f9fc; }
-      .text-tertiary { color: #6e5d00; }
-      .bg-tertiary-container { background-color: #c5aa23; }
-      .hover-bg-tertiary-fixed:hover { background-color: #ffe260; }
+      .text-primary {
+        color: #001c4a;
+      }
+      .bg-primary {
+        background-color: #001c4a;
+      }
+      .bg-surface {
+        background-color: #f9f9fc;
+      }
+      .text-tertiary {
+        color: #6e5d00;
+      }
+      .bg-tertiary-container {
+        background-color: #c5aa23;
+      }
+      .hover-bg-tertiary-fixed:hover {
+        background-color: #ffe260;
+      }
 
       /* Badges */
-      .badge-new { background-color: #c5aa23; color: #001c4a; font-weight: 700; font-size: 10px; padding: 4px 10px; border-radius: 999px; }
-      .badge-price-slash { background-color: #e31b23; color: white; font-weight: 700; font-size: 10px; padding: 4px 10px; border-radius: 999px; }
-      .badge-sold { background-color: #2c3e50; color: white; font-weight: 600; font-size: 10px; padding: 4px 10px; border-radius: 999px; }
+      .badge-new {
+        background-color: #c5aa23;
+        color: #001c4a;
+        font-weight: 700;
+        font-size: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+      .badge-price-slash {
+        background-color: #e31b23;
+        color: white;
+        font-weight: 700;
+        font-size: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+      .badge-sold {
+        background-color: #2c3e50;
+        color: white;
+        font-weight: 600;
+        font-size: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
 
       /* Grid View (default) */
-      .grid-view { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-      @media (min-width: 1024px) { .grid-view { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+      .grid-view {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      @media (min-width: 1024px) {
+        .grid-view {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+        }
+      }
 
-      .grid-card { position: relative; border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-      .grid-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
-      .grid-card .card-img { width: 100%; height: 260px; object-fit: cover; display: block; }
-      @media (min-width: 768px) { .grid-card .card-img { height: 320px; } }
-      .grid-card .card-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 60%, transparent 100%); color: white; }
-      .grid-card .card-badges { position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; gap: 6px; flex-wrap: wrap; }
-      .grid-card .seller-chip { position: absolute; top: 12px; right: 12px; z-index: 10; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 999px; }
-      .grid-card .seller-chip img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
-      .grid-card .seller-chip span { font-size: 11px; font-weight: 700; color: #001c4a; }
+      .grid-card {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .grid-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      }
+      .grid-card .card-img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        display: block;
+      }
+      @media (min-width: 768px) {
+        .grid-card .card-img {
+          height: 320px;
+        }
+      }
+      .grid-card .card-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.9) 0%,
+          rgba(0, 0, 0, 0.5) 60%,
+          transparent 100%
+        );
+        color: white;
+      }
+      .grid-card .card-badges {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 10;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .grid-card .seller-chip {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+      .grid-card .seller-chip img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .grid-card .seller-chip span {
+        font-size: 11px;
+        font-weight: 700;
+        color: #001c4a;
+      }
 
       /* List View - Clean Professional Horizontal Cards */
-      .list-view { display: flex; flex-direction: column; gap: 14px; }
-      
+      .list-view {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
       .list-card {
         display: flex;
         flex-direction: row;
         background: white;
         border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
         border: 1px solid #eeeef0;
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        transition:
+          box-shadow 0.3s ease,
+          transform 0.3s ease;
         min-height: 180px;
       }
-      .list-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
-      
+      .list-card:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
       .list-card .list-img-wrap {
         position: relative;
         width: 35%;
@@ -82,7 +247,7 @@
         object-fit: cover;
         display: block;
       }
-      
+
       .list-card .list-body {
         flex: 1;
         padding: 16px 18px;
@@ -91,7 +256,7 @@
         justify-content: center;
         min-width: 0;
       }
-      
+
       .list-card .list-header {
         display: flex;
         align-items: flex-start;
@@ -99,7 +264,7 @@
         gap: 12px;
         margin-bottom: 6px;
       }
-      
+
       .list-card .list-title {
         font-family: "Manrope", sans-serif;
         font-size: 15px;
@@ -109,12 +274,17 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
+        line-clamp: 2;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
       }
-      
-      .list-card .list-badges { display: flex; gap: 6px; flex-shrink: 0; }
-      
+
+      .list-card .list-badges {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
       .list-card .list-location {
         display: flex;
         align-items: center;
@@ -123,7 +293,7 @@
         font-size: 12px;
         margin-bottom: 10px;
       }
-      
+
       .list-card .list-meta {
         display: flex;
         align-items: center;
@@ -139,8 +309,13 @@
         color: #444650;
         font-weight: 500;
       }
-      .list-card .list-meta i { width: 14px; height: 14px; stroke-width: 2; color: #6e5d00; }
-      
+      .list-card .list-meta i {
+        width: 14px;
+        height: 14px;
+        stroke-width: 2;
+        color: #6e5d00;
+      }
+
       .list-card .list-footer {
         display: flex;
         align-items: center;
@@ -150,14 +325,14 @@
         padding-top: 10px;
         border-top: 1px solid #f0f0f3;
       }
-      
+
       .list-card .list-price {
         font-family: "Manrope", sans-serif;
         font-size: 17px;
         font-weight: 800;
         color: #001c4a;
       }
-      
+
       .list-card .list-seller {
         display: flex;
         align-items: center;
@@ -172,7 +347,7 @@
         border-radius: 50%;
         object-fit: cover;
       }
-      
+
       .list-card .list-btn {
         background: #001c4a;
         color: white;
@@ -187,48 +362,128 @@
         align-items: center;
         gap: 4px;
       }
-      .list-card .list-btn:hover { background: #0d316d; }
+      .list-card .list-btn:hover {
+        background: #0d316d;
+      }
 
       /* Mobile List View */
       @media (max-width: 640px) {
-        .list-card { flex-direction: column; min-height: unset; }
-        .list-card .list-img-wrap { width: 100%; max-width: unset; height: 200px; }
-        .list-card .list-body { padding: 14px; }
-        .list-card .list-title { font-size: 14px; }
-        .list-card .list-price { font-size: 15px; }
-        .list-card .list-footer { flex-wrap: wrap; gap: 8px; }
+        .list-card {
+          flex-direction: column;
+          min-height: unset;
+        }
+        .list-card .list-img-wrap {
+          width: 100%;
+          max-width: unset;
+          height: 200px;
+        }
+        .list-card .list-body {
+          padding: 14px;
+        }
+        .list-card .list-title {
+          font-size: 14px;
+        }
+        .list-card .list-price {
+          font-size: 15px;
+        }
+        .list-card .list-footer {
+          flex-wrap: wrap;
+          gap: 8px;
+        }
       }
 
       /* Tablet adjustments */
       @media (min-width: 641px) and (max-width: 1023px) {
-        .list-card .list-img-wrap { width: 40%; }
+        .list-card .list-img-wrap {
+          width: 40%;
+        }
       }
 
       /* View toggle */
-      .view-toggle { display: flex; align-items: center; gap: 4px; background: #f3f3f6; padding: 4px; border-radius: 10px; border: 1px solid #e2e2e5; }
-      .view-toggle button { padding: 8px; border-radius: 8px; border: none; background: transparent; cursor: pointer; color: #777; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-      .view-toggle button.active { background-color: #001c4a; color: white; }
-      .view-toggle button i { width: 18px; height: 18px; }
+      .view-toggle {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: #f3f3f6;
+        padding: 4px;
+        border-radius: 10px;
+        border: 1px solid #e2e2e5;
+      }
+      .view-toggle button {
+        padding: 8px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        color: #777;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .view-toggle button.active {
+        background-color: #001c4a;
+        color: white;
+      }
+      .view-toggle button i {
+        width: 18px;
+        height: 18px;
+      }
 
       /* Loading */
-      .loading-spinner { border: 3px solid #f3f3f3; border-top: 3px solid #c5aa23; border-radius: 50%; width: 40px; height: 40px; animation: spin 0.8s linear infinite; margin: 20px auto; }
-      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      .loading-spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
       /* Empty state */
-      .empty-state { text-align: center; padding: 48px 24px; background: white; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+      .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      }
     </style>
   </head>
   <body class="antialiased">
-
     <!-- Header -->
-    <header class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]">
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
+    >
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="flex items-center justify-between h-14 lg:h-16">
           <a href="index.html" class="flex-shrink-0">
-            <img src="images/logo.png" alt="Resident" class="h-7 lg:h-8 w-auto object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-lg font-black tracking-tighter text-primary\'>RESIDENT</span>';" />
+            <img
+              src="images/logo.png"
+              alt="Rezident Homes Logo"
+              class="h-7 lg:h-8 w-auto object-contain"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML =
+                  '<span class=\'text-lg font-black tracking-tighter text-primary\'>REZIDENT HOMES</span>';
+              "
+            />
           </a>
           <div class="flex gap-3">
-            <a href="forrent.html" class="inline-flex bg-[#001c4a] text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300">For Rent</a>
+            <a
+              href="forrent.html"
+              class="inline-flex bg-[#001c4a] text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
+              >For Rent</a
+            >
           </div>
         </div>
       </div>
@@ -236,35 +491,72 @@
 
     <main>
       <!-- Hero -->
-      <section class="relative bg-[#001c4a] text-white py-14 lg:py-20 overflow-hidden fade-up">
+      <section
+        class="relative bg-[#001c4a] text-white py-14 lg:py-20 overflow-hidden fade-up"
+      >
         <div class="absolute inset-0 opacity-15">
-          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&h=400&fit=crop" alt="Luxury homes for sale" class="w-full h-full object-cover" />
+          <img
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&h=400&fit=crop"
+            alt="Luxury homes for sale"
+            class="w-full h-full object-cover"
+          />
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
-          <h1 class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3">Homes for Sale</h1>
-          <p class="text-white/75 text-sm md:text-base max-w-xl mx-auto leading-relaxed">Own your dream home today. From affordable townhouses to luxury mansions. Zero hidden fees, transparent buying process.</p>
+          <h1
+            class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3"
+          >
+            Homes for Sale
+          </h1>
+          <p
+            class="text-white/75 text-sm md:text-base max-w-xl mx-auto leading-relaxed"
+          >
+            Own your dream home today. From affordable townhouses to luxury
+            mansions. Zero hidden fees, transparent buying process.
+          </p>
         </div>
       </section>
 
       <!-- Filter Bar -->
-      <div class="sticky top-14 lg:top-16 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-4 shadow-sm fade-up">
+      <div
+        class="sticky top-14 lg:top-16 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-4 shadow-sm fade-up"
+      >
         <div class="max-w-7xl mx-auto px-5 md:px-8">
-          <div class="grid grid-cols-2 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3">
-            <div class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full">
-              <i data-lucide="map-pin" class="text-tertiary w-4 h-4 shrink-0"></i>
-              <select id="stateFilter" class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer">
+          <div
+            class="grid grid-cols-2 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3"
+          >
+            <div
+              class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
+              <i
+                data-lucide="map-pin"
+                class="text-tertiary w-4 h-4 shrink-0"
+              ></i>
+              <select
+                id="stateFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer"
+              >
                 <option value="all">All States</option>
               </select>
             </div>
-            <div class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full">
+            <div
+              class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
               <i data-lucide="map" class="text-tertiary w-4 h-4 shrink-0"></i>
-              <select id="lgaFilter" class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer">
+              <select
+                id="lgaFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer"
+              >
                 <option value="all">All LGAs</option>
               </select>
             </div>
-            <div class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full">
+            <div
+              class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
               <i data-lucide="home" class="text-tertiary w-4 h-4 shrink-0"></i>
-              <select id="typeFilter" class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer">
+              <select
+                id="typeFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer"
+              >
                 <option value="all">Property Type</option>
                 <option value="bungalow">Bungalow</option>
                 <option value="duplex">Duplex</option>
@@ -272,7 +564,10 @@
                 <option value="flat">Flat / Apartment</option>
               </select>
             </div>
-            <button id="searchBtn" class="bg-tertiary-container text-primary px-3 md:px-5 py-2 rounded-xl font-bold hover-bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-xs col-span-2 md:col-span-1 w-full">
+            <button
+              id="searchBtn"
+              class="bg-tertiary-container text-primary px-3 md:px-5 py-2 rounded-xl font-bold hover-bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-xs col-span-2 md:col-span-1 w-full"
+            >
               <i data-lucide="search" class="w-4 h-4"></i> <span>Search</span>
             </button>
           </div>
@@ -284,73 +579,176 @@
         <div class="max-w-7xl mx-auto">
           <div class="flex justify-between items-center mb-8 fade-up">
             <div>
-              <span class="text-tertiary font-bold uppercase tracking-widest text-[11px]">Signature Collection</span>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-[11px]"
+                >Signature Collection</span
+              >
               <p class="text-xs text-[#777] mt-0.5" id="resultCount"></p>
             </div>
             <div class="view-toggle">
-              <button id="gridViewBtn" class="active" title="Grid View"><i data-lucide="grid-2x2"></i></button>
-              <button id="listViewBtn" title="List View"><i data-lucide="list"></i></button>
+              <button id="gridViewBtn" class="active" title="Grid View">
+                <i data-lucide="grid-2x2"></i>
+              </button>
+              <button id="listViewBtn" title="List View">
+                <i data-lucide="list"></i>
+              </button>
             </div>
           </div>
 
           <div id="propertiesContainer" class="grid-view">
-            <div class="col-span-full text-center py-12"><div class="loading-spinner"></div></div>
+            <div class="col-span-full text-center py-12">
+              <div class="loading-spinner"></div>
+            </div>
           </div>
 
           <div id="emptyState" class="hidden empty-state mt-6 fade-up">
-            <i data-lucide="home" class="w-14 h-14 text-[#c4c6d1] mx-auto mb-3"></i>
-            <h3 class="text-lg font-headline font-bold text-primary">No matching properties for sale</h3>
-            <p class="text-[#777] text-xs mt-1">Try adjusting your search or filter.</p>
-            <button id="resetFiltersBtn" class="mt-4 bg-tertiary-container text-primary px-5 py-2 rounded-full text-xs font-bold hover-bg-tertiary-fixed transition">Reset Filters</button>
+            <i
+              data-lucide="home"
+              class="w-14 h-14 text-[#c4c6d1] mx-auto mb-3"
+            ></i>
+            <h3 class="text-lg font-headline font-bold text-primary">
+              No matching properties for sale
+            </h3>
+            <p class="text-[#777] text-xs mt-1">
+              Try adjusting your search or filter.
+            </p>
+            <button
+              id="resetFiltersBtn"
+              class="mt-4 bg-tertiary-container text-primary px-5 py-2 rounded-full text-xs font-bold hover-bg-tertiary-fixed transition"
+            >
+              Reset Filters
+            </button>
           </div>
         </div>
       </section>
 
       <!-- CTA -->
-      <section class="py-14 lg:py-18 px-5 md:px-8 bg-[#001c4a] text-white fade-up">
+      <section
+        class="py-14 lg:py-18 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
+      >
         <div class="max-w-3xl mx-auto text-center">
-          <i data-lucide="handshake" class="w-8 h-8 text-tertiary-container mx-auto mb-3"></i>
-          <h2 class="text-xl md:text-2xl font-headline font-bold mb-2">Ready to own? We simplify the purchase.</h2>
-          <p class="text-white/60 text-xs md:text-sm mb-6 max-w-md mx-auto">Flexible payment plans, legal support & zero hidden fees. Talk to our sales team today.</p>
-          <button id="saleConsultBtn" class="bg-tertiary-container text-primary px-5 py-2.5 rounded-full font-bold hover-bg-tertiary-fixed transition shadow-md text-xs">Request Private Sales Consultation</button>
+          <i
+            data-lucide="handshake"
+            class="w-8 h-8 text-tertiary-container mx-auto mb-3"
+          ></i>
+          <h2 class="text-xl md:text-2xl font-headline font-bold mb-2">
+            Ready to own? We simplify the purchase.
+          </h2>
+          <p class="text-white/60 text-xs md:text-sm mb-6 max-w-md mx-auto">
+            Flexible payment plans, legal support & zero hidden fees. Talk to
+            our sales team today.
+          </p>
+          <button
+            id="saleConsultBtn"
+            class="bg-tertiary-container text-primary px-5 py-2.5 rounded-full font-bold hover-bg-tertiary-fixed transition shadow-md text-xs"
+          >
+            Request Private Sales Consultation
+          </button>
         </div>
       </section>
     </main>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-[#eeeef0] pt-10 pb-6 px-5 md:px-8">
-      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+      >
         <div class="fade-up">
-          <img src="images/logo.png" alt="Resident" class="h-6 mb-3 object-contain" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('afterbegin', '<span class=\'text-base font-black tracking-tighter text-primary mb-2 block\'>RESIDENT</span>');" />
-          <p class="text-xs text-[#555] max-w-xs leading-relaxed">Redefining real estate through precision, trust and transparency. Affordable sale options with zero hidden costs.</p>
+          <img
+            src="images/logo.png"
+            alt="ReZident Homes Logo"
+            class="h-6 mb-3 object-contain"
+            onerror="
+              this.style.display = 'none';
+              this.parentElement.insertAdjacentHTML(
+                'afterbegin',
+                '<span class=\'text-base font-black tracking-tighter text-primary mb-2 block\'>REZIDENT HOMES</span>',
+              );
+            "
+          />
+          <p class="text-xs text-[#555] max-w-xs leading-relaxed">
+            Redefining real estate through precision, trust and transparency.
+            Affordable sale options with zero hidden costs.
+          </p>
         </div>
         <div class="fade-up">
-          <h4 class="font-bold text-primary mb-3 text-xs uppercase tracking-wider">Discover</h4>
+          <h4
+            class="font-bold text-primary mb-3 text-xs uppercase tracking-wider"
+          >
+            Discover
+          </h4>
           <ul class="space-y-2 text-xs">
-            <li><a href="#" class="text-[#555] hover:text-primary transition">Properties for Sale</a></li>
-            <li><a href="#" class="text-[#555] hover:text-primary transition">New Developments</a></li>
-            <li><a href="#" class="text-[#555] hover:text-primary transition">Land & Plots</a></li>
+            <li>
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >Properties for Sale</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >New Developments</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >Land & Plots</a
+              >
+            </li>
           </ul>
         </div>
         <div class="fade-up">
-          <h4 class="font-bold text-primary mb-3 text-xs uppercase tracking-wider">Company</h4>
+          <h4
+            class="font-bold text-primary mb-3 text-xs uppercase tracking-wider"
+          >
+            Company
+          </h4>
           <ul class="space-y-2 text-xs">
-            <li><a href="#" class="text-[#555] hover:text-primary transition">About Resident</a></li>
-            <li><a href="#" class="text-[#555] hover:text-primary transition">Sales Concierge</a></li>
-            <li><a href="#" class="text-[#555] hover:text-primary transition">Careers</a></li>
+            <li>
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >About ReZident Homes</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >Sales Concierge</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >Careers</a
+              >
+            </li>
           </ul>
         </div>
         <div class="fade-up">
-          <h4 class="font-bold text-primary mb-3 text-xs uppercase tracking-wider">Insights</h4>
-          <p class="text-xs text-[#555] mb-2">Get early access to new sale listings</p>
+          <h4
+            class="font-bold text-primary mb-3 text-xs uppercase tracking-wider"
+          >
+            Insights
+          </h4>
+          <p class="text-xs text-[#555] mb-2">
+            Get early access to new sale listings
+          </p>
           <div class="flex">
-            <input type="email" placeholder="Email address" class="bg-[#f3f3f6] border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-tertiary outline-none" />
-            <button class="bg-[#001c4a] text-white px-4 rounded-r-lg text-xs font-semibold hover:bg-[#0d316d] transition">Join</button>
+            <input
+              type="email"
+              placeholder="Email address"
+              class="bg-[#f3f3f6] border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-tertiary outline-none"
+            />
+            <button
+              class="bg-[#001c4a] text-white px-4 rounded-r-lg text-xs font-semibold hover:bg-[#0d316d] transition"
+            >
+              Join
+            </button>
           </div>
         </div>
       </div>
-      <div class="max-w-7xl mx-auto pt-6 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-2 text-[11px] text-[#777]">
-        <p>© 2025 Resident Luxury — All rights reserved. Transparent pricing on all sale listings.</p>
+      <div
+        class="max-w-7xl mx-auto pt-6 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-2 text-[11px] text-[#777]"
+      >
+        <p>
+          © 2025 Rezident Homes, All rights reserved. Transparent pricing on all
+          sale listings.
+        </p>
         <div class="flex gap-4">
           <a href="#" class="hover:text-primary transition">Privacy Policy</a>
           <a href="#" class="hover:text-primary transition">Terms of Service</a>
@@ -363,29 +761,42 @@
       import { getStoredUser } from "./js/tokenStorage.js";
 
       function formatNaira(amount) {
-        return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(amount);
+        return new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          minimumFractionDigits: 0,
+        }).format(amount);
       }
 
       function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; });
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function (m) {
+          if (m === "&") return "&amp;";
+          if (m === "<") return "&lt;";
+          if (m === ">") return "&gt;";
+          return m;
+        });
       }
 
       function getBadge(house) {
-        if (house.status === 'sold') return { class: 'badge-sold', text: 'Sold' };
-        if (house.originalPrice && house.originalPrice > house.price) return { class: 'badge-price-slash', text: 'Price Slash' };
+        if (house.status === "sold")
+          return { class: "badge-sold", text: "Sold" };
+        if (house.originalPrice && house.originalPrice > house.price)
+          return { class: "badge-price-slash", text: "Price Slash" };
         const created = new Date(house.createdAt);
         const now = new Date();
         const diffDays = (now - created) / (1000 * 60 * 60 * 24);
-        if (diffDays <= 7) return { class: 'badge-new', text: 'New Listing' };
+        if (diffDays <= 7) return { class: "badge-new", text: "New Listing" };
         return null;
       }
 
       async function fetchHouses() {
         const url = `${getBaseURL()}/houses?listingType=sale&status=published&limit=100`;
-        const token = localStorage.getItem('auth_token');
-        const res = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
-        if (!res.ok) throw new Error('Failed to fetch houses');
+        const token = localStorage.getItem("auth_token");
+        const res = await fetch(url, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+        if (!res.ok) throw new Error("Failed to fetch houses");
         const data = await res.json();
         return data.houses || [];
       }
@@ -393,7 +804,7 @@
       function buildFilterOptions(houses) {
         const states = new Set();
         const lgaMap = new Map();
-        houses.forEach(house => {
+        houses.forEach((house) => {
           if (house.state) {
             states.add(house.state);
             if (!lgaMap.has(house.state)) lgaMap.set(house.state, new Set());
@@ -404,10 +815,10 @@
       }
 
       function populateStates(states) {
-        const stateSelect = document.getElementById('stateFilter');
+        const stateSelect = document.getElementById("stateFilter");
         stateSelect.innerHTML = '<option value="all">All States</option>';
-        states.forEach(state => {
-          const opt = document.createElement('option');
+        states.forEach((state) => {
+          const opt = document.createElement("option");
           opt.value = state;
           opt.textContent = state;
           stateSelect.appendChild(opt);
@@ -415,12 +826,12 @@
       }
 
       function populateLgas(lgaMap, selectedState) {
-        const lgaSelect = document.getElementById('lgaFilter');
+        const lgaSelect = document.getElementById("lgaFilter");
         lgaSelect.innerHTML = '<option value="all">All LGAs</option>';
-        if (selectedState !== 'all' && lgaMap.has(selectedState)) {
+        if (selectedState !== "all" && lgaMap.has(selectedState)) {
           const lgas = Array.from(lgaMap.get(selectedState)).sort();
-          lgas.forEach(lga => {
-            const opt = document.createElement('option');
+          lgas.forEach((lga) => {
+            const opt = document.createElement("option");
             opt.value = lga;
             opt.textContent = lga;
             lgaSelect.appendChild(opt);
@@ -429,31 +840,38 @@
       }
 
       function renderGridCard(house) {
-        const image = house.images && house.images[0] ? house.images[0].url : 'images/hero.avif';
+        const image =
+          house.images && house.images[0]
+            ? house.images[0].url
+            : "images/hero.avif";
         const seller = house.user || {};
-        const sellerLogo = seller.profile || 'images/icon.png';
-        const sellerName = seller.name || 'Resident';
+        const sellerLogo = seller.profile || "images/icon.png";
+        const sellerName = seller.name || "Rezident Homes";
         const sellerId = seller._id;
         const badge = getBadge(house);
-        const badgeHtml = badge ? `<span class="${badge.class}">${badge.text}</span>` : '';
-        const verifiedBadge = seller.verificationBadge ? '<span class="ml-0.5 text-[10px] bg-blue-100 text-blue-700 px-1 rounded-full">✓</span>' : '';
+        const badgeHtml = badge
+          ? `<span class="${badge.class}">${badge.text}</span>`
+          : "";
+        const verifiedBadge = seller.verificationBadge
+          ? '<span class="ml-0.5 text-[10px] bg-blue-100 text-blue-700 px-1 rounded-full">✓</span>'
+          : "";
 
         return `
-          <div class="grid-card group" data-state="${house.state || ''}" data-lga="${house.lga || ''}" data-type="${house.propertyType || ''}">
-            <img src="${image}" class="card-img" loading="lazy" alt="${escapeHtml(house.title || 'Property')}" />
+          <div class="grid-card group" data-state="${house.state || ""}" data-lga="${house.lga || ""}" data-type="${house.propertyType || ""}">
+            <img src="${image}" class="card-img" loading="lazy" alt="${escapeHtml(house.title || "Property")}" />
             <div class="card-badges">${badgeHtml}</div>
             <a href="seller-profile.html?id=${sellerId}" class="seller-chip">
               <img src="${sellerLogo}" alt="Seller" />
               <span>${escapeHtml(sellerName.substring(0, 15))}${verifiedBadge}</span>
             </a>
             <div class="card-overlay">
-              <h3 class="font-headline text-base font-bold leading-tight mb-1">${escapeHtml(house.title || 'Property')}</h3>
+              <h3 class="font-headline text-base font-bold leading-tight mb-1">${escapeHtml(house.title || "Property")}</h3>
               <p class="text-xs text-white/70 mb-2">${escapeHtml(house.address || `${house.lga}, ${house.state}`)}</p>
               <div class="text-white font-extrabold text-lg mb-2">${formatNaira(house.price)}</div>
               <div class="flex gap-3 text-[11px] text-white/70 mb-3">
-                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-3.5 h-3.5"></i> ${house.bedrooms || '?'}</span>
-                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-3.5 h-3.5"></i> ${house.bathrooms || '?'}</span>
-                <span class="flex items-center gap-1"><i data-lucide="square" class="w-3.5 h-3.5"></i> ${house.size || '?'}m²</span>
+                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-3.5 h-3.5"></i> ${house.bedrooms || "?"}</span>
+                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-3.5 h-3.5"></i> ${house.bathrooms || "?"}</span>
+                <span class="flex items-center gap-1"><i data-lucide="square" class="w-3.5 h-3.5"></i> ${house.size || "?"}m²</span>
               </div>
               <a href="property-details.html?id=${house._id}" class="w-full bg-white text-black font-bold py-2 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition text-xs">View More <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
             </div>
@@ -462,23 +880,30 @@
       }
 
       function renderListCard(house) {
-        const image = house.images && house.images[0] ? house.images[0].url : 'images/hero.avif';
+        const image =
+          house.images && house.images[0]
+            ? house.images[0].url
+            : "images/hero.avif";
         const seller = house.user || {};
-        const sellerLogo = seller.profile || 'images/icon.png';
-        const sellerName = seller.name || 'Resident';
+        const sellerLogo = seller.profile || "images/icon.png";
+        const sellerName = seller.name || "Rezident Homes";
         const sellerId = seller._id;
         const badge = getBadge(house);
-        const badgeHtml = badge ? `<span class="${badge.class}">${badge.text}</span>` : '';
-        const verifiedBadge = seller.verificationBadge ? '<span class="text-[10px] bg-blue-100 text-blue-700 px-1 rounded-full ml-0.5">✓</span>' : '';
+        const badgeHtml = badge
+          ? `<span class="${badge.class}">${badge.text}</span>`
+          : "";
+        const verifiedBadge = seller.verificationBadge
+          ? '<span class="text-[10px] bg-blue-100 text-blue-700 px-1 rounded-full ml-0.5">✓</span>'
+          : "";
 
         return `
-          <div class="list-card" data-state="${house.state || ''}" data-lga="${house.lga || ''}" data-type="${house.propertyType || ''}">
+          <div class="list-card" data-state="${house.state || ""}" data-lga="${house.lga || ""}" data-type="${house.propertyType || ""}">
             <div class="list-img-wrap">
-              <img src="${image}" loading="lazy" alt="${escapeHtml(house.title || 'Property')}" />
+              <img src="${image}" loading="lazy" alt="${escapeHtml(house.title || "Property")}" />
             </div>
             <div class="list-body">
               <div class="list-header">
-                <h3 class="list-title">${escapeHtml(house.title || 'Property')}</h3>
+                <h3 class="list-title">${escapeHtml(house.title || "Property")}</h3>
                 <div class="list-badges">${badgeHtml}</div>
               </div>
               <div class="list-location">
@@ -486,9 +911,9 @@
                 <span>${escapeHtml(house.address || `${house.lga}, ${house.state}`)}</span>
               </div>
               <div class="list-meta">
-                <span><i data-lucide="bed"></i> ${house.bedrooms || '?'} Beds</span>
-                <span><i data-lucide="bath"></i> ${house.bathrooms || '?'} Baths</span>
-                <span><i data-lucide="square"></i> ${house.size || '?'} m²</span>
+                <span><i data-lucide="bed"></i> ${house.bedrooms || "?"} Beds</span>
+                <span><i data-lucide="bath"></i> ${house.bathrooms || "?"} Baths</span>
+                <span><i data-lucide="square"></i> ${house.size || "?"} m²</span>
               </div>
               <div class="list-footer">
                 <div>
@@ -506,62 +931,77 @@
       }
 
       function renderHouses(houses, container, viewMode) {
-        const countEl = document.getElementById('resultCount');
+        const countEl = document.getElementById("resultCount");
         if (!houses.length) {
-          container.innerHTML = '';
-          document.getElementById('emptyState').classList.remove('hidden');
-          if (countEl) countEl.textContent = '0 properties found';
+          container.innerHTML = "";
+          document.getElementById("emptyState").classList.remove("hidden");
+          if (countEl) countEl.textContent = "0 properties found";
           return;
         }
-        document.getElementById('emptyState').classList.add('hidden');
-        if (countEl) countEl.textContent = `${houses.length} propert${houses.length === 1 ? 'y' : 'ies'} found`;
+        document.getElementById("emptyState").classList.add("hidden");
+        if (countEl)
+          countEl.textContent = `${houses.length} propert${houses.length === 1 ? "y" : "ies"} found`;
 
-        if (viewMode === 'list') {
-          container.innerHTML = houses.map(renderListCard).join('');
+        if (viewMode === "list") {
+          container.innerHTML = houses.map(renderListCard).join("");
         } else {
-          container.innerHTML = houses.map(renderGridCard).join('');
+          container.innerHTML = houses.map(renderGridCard).join("");
         }
         lucide.createIcons();
       }
 
-      (async function() {
-        const container = document.getElementById('propertiesContainer');
-        const stateSelect = document.getElementById('stateFilter');
-        const lgaSelect = document.getElementById('lgaFilter');
-        const typeSelect = document.getElementById('typeFilter');
-        const searchBtn = document.getElementById('searchBtn');
-        const resetBtn = document.getElementById('resetFiltersBtn');
-        const gridBtn = document.getElementById('gridViewBtn');
-        const listBtn = document.getElementById('listViewBtn');
-        
-        let allHouses = [];
-        let currentFilters = { state: 'all', lga: 'all', type: 'all' };
-        let lgaMap = new Map();
-        let viewMode = 'grid';
+      (async function () {
+        const container = document.getElementById("propertiesContainer");
+        const stateSelect = document.getElementById("stateFilter");
+        const lgaSelect = document.getElementById("lgaFilter");
+        const typeSelect = document.getElementById("typeFilter");
+        const searchBtn = document.getElementById("searchBtn");
+        const resetBtn = document.getElementById("resetFiltersBtn");
+        const gridBtn = document.getElementById("gridViewBtn");
+        const listBtn = document.getElementById("listViewBtn");
 
-        container.innerHTML = '<div class="col-span-full text-center py-12"><div class="loading-spinner"></div></div>';
+        let allHouses = [];
+        let currentFilters = { state: "all", lga: "all", type: "all" };
+        let lgaMap = new Map();
+        let viewMode = "grid";
+
+        container.innerHTML =
+          '<div class="col-span-full text-center py-12"><div class="loading-spinner"></div></div>';
         try {
           allHouses = await fetchHouses();
           if (!allHouses.length) {
-            container.innerHTML = '';
-            document.getElementById('emptyState').classList.remove('hidden');
+            container.innerHTML = "";
+            document.getElementById("emptyState").classList.remove("hidden");
             return;
           }
           const { states, lgaMap: lgaMapData } = buildFilterOptions(allHouses);
           lgaMap = lgaMapData;
           populateStates(states);
-          populateLgas(lgaMap, 'all');
+          populateLgas(lgaMap, "all");
           renderHouses(allHouses, container, viewMode);
         } catch (err) {
           console.error(err);
-          container.innerHTML = '<div class="col-span-full text-center py-10 text-red-600 text-sm">Failed to load properties. Please try again later.</div>';
+          container.innerHTML =
+            '<div class="col-span-full text-center py-10 text-red-600 text-sm">Failed to load properties. Please try again later.</div>';
         }
 
         function getFiltered() {
-          return allHouses.filter(house => {
-            if (currentFilters.state !== 'all' && house.state !== currentFilters.state) return false;
-            if (currentFilters.lga !== 'all' && house.lga !== currentFilters.lga) return false;
-            if (currentFilters.type !== 'all' && house.propertyType !== currentFilters.type) return false;
+          return allHouses.filter((house) => {
+            if (
+              currentFilters.state !== "all" &&
+              house.state !== currentFilters.state
+            )
+              return false;
+            if (
+              currentFilters.lga !== "all" &&
+              house.lga !== currentFilters.lga
+            )
+              return false;
+            if (
+              currentFilters.type !== "all" &&
+              house.propertyType !== currentFilters.type
+            )
+              return false;
             return true;
           });
         }
@@ -570,61 +1010,73 @@
           renderHouses(getFiltered(), container, viewMode);
         }
 
-        stateSelect.addEventListener('change', () => {
+        stateSelect.addEventListener("change", () => {
           currentFilters.state = stateSelect.value;
           populateLgas(lgaMap, currentFilters.state);
-          currentFilters.lga = 'all';
-          lgaSelect.value = 'all';
+          currentFilters.lga = "all";
+          lgaSelect.value = "all";
           applyFilters();
         });
-        lgaSelect.addEventListener('change', () => {
+        lgaSelect.addEventListener("change", () => {
           currentFilters.lga = lgaSelect.value;
           applyFilters();
         });
-        typeSelect.addEventListener('change', () => {
+        typeSelect.addEventListener("change", () => {
           currentFilters.type = typeSelect.value;
           applyFilters();
         });
-        searchBtn.addEventListener('click', applyFilters);
+        searchBtn.addEventListener("click", applyFilters);
         if (resetBtn) {
-          resetBtn.addEventListener('click', () => {
-            currentFilters = { state: 'all', lga: 'all', type: 'all' };
-            stateSelect.value = 'all';
-            typeSelect.value = 'all';
-            populateLgas(lgaMap, 'all');
-            lgaSelect.value = 'all';
+          resetBtn.addEventListener("click", () => {
+            currentFilters = { state: "all", lga: "all", type: "all" };
+            stateSelect.value = "all";
+            typeSelect.value = "all";
+            populateLgas(lgaMap, "all");
+            lgaSelect.value = "all";
             applyFilters();
           });
         }
 
-        gridBtn.addEventListener('click', () => {
-          viewMode = 'grid';
-          container.classList.remove('list-view');
-          container.classList.add('grid-view');
-          gridBtn.classList.add('active');
-          listBtn.classList.remove('active');
+        gridBtn.addEventListener("click", () => {
+          viewMode = "grid";
+          container.classList.remove("list-view");
+          container.classList.add("grid-view");
+          gridBtn.classList.add("active");
+          listBtn.classList.remove("active");
           applyFilters();
         });
-        listBtn.addEventListener('click', () => {
-          viewMode = 'list';
-          container.classList.remove('grid-view');
-          container.classList.add('list-view');
-          listBtn.classList.add('active');
-          gridBtn.classList.remove('active');
+        listBtn.addEventListener("click", () => {
+          viewMode = "list";
+          container.classList.remove("grid-view");
+          container.classList.add("list-view");
+          listBtn.classList.add("active");
+          gridBtn.classList.remove("active");
           applyFilters();
         });
 
-        const consultBtn = document.getElementById('saleConsultBtn');
+        const consultBtn = document.getElementById("saleConsultBtn");
         if (consultBtn) {
-          consultBtn.addEventListener('click', () => alert('Connect with our home buying specialists: +234 (0) 123 456 7890 or sales@resident.ng — No hidden charges, transparent process.'));
+          consultBtn.addEventListener("click", () =>
+            alert(
+              "Connect with our home buying specialists: +234 (0) 123 456 7890 or sales@rezidenthomes.com, No hidden charges, transparent process.",
+            ),
+          );
         }
 
         const fadeElements = document.querySelectorAll(".fade-up");
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("revealed"); observer.unobserve(entry.target); } });
-        }, { threshold: 0.1 });
-        fadeElements.forEach(el => observer.observe(el));
-        
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+        fadeElements.forEach((el) => observer.observe(el));
+
         lucide.createIcons();
       })();
     </script>

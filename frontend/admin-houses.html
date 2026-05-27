@@ -2,20 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Manage Houses | Admin | Resident</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Manage Houses | Admin | Rezident Homes</title>
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
     <link rel="manifest" href="images/site.webmanifest" />
     <meta name="theme-color" content="#0D316D" />
 
@@ -47,8 +77,14 @@
     </script>
 
     <style>
-      * { -webkit-tap-highlight-color: transparent; }
-      .lucide { width: 1.2rem; height: 1.2rem; stroke-width: 1.8; }
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
       .loader {
         border: 3px solid #f3f3f3;
         border-top: 3px solid #c5aa23;
@@ -59,20 +95,24 @@
         margin: 20px auto;
       }
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
       .input-field {
         padding: 0.65rem 1rem;
         border-radius: 0.75rem;
         background: white;
-        border: 1px solid rgba(116,119,129,0.25);
+        border: 1px solid rgba(116, 119, 129, 0.25);
         outline: none;
         font-size: 0.875rem;
       }
       .input-field:focus {
         border-color: #001c4a;
-        box-shadow: 0 0 0 3px rgba(0,28,74,0.14);
+        box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
       }
       .status-badge {
         display: inline-flex;
@@ -84,11 +124,26 @@
         font-weight: bold;
         text-transform: capitalize;
       }
-      .status-published { background: #d1fae5; color: #065f46; }
-      .status-draft { background: #fef3c7; color: #92400e; }
-      .status-inactive { background: #fee2e2; color: #991b1b; }
-      .status-sold { background: #e0e7ff; color: #3730a3; }
-      .status-rented { background: #fce7f3; color: #9d174d; }
+      .status-published {
+        background: #d1fae5;
+        color: #065f46;
+      }
+      .status-draft {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .status-inactive {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .status-sold {
+        background: #e0e7ff;
+        color: #3730a3;
+      }
+      .status-rented {
+        background: #fce7f3;
+        color: #9d174d;
+      }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
@@ -96,13 +151,24 @@
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8"
+        >
           <div>
-            <h1 class="font-headline text-3xl font-extrabold text-primary">Manage House Listings</h1>
-            <p class="text-on-surface-variant mt-1">View, update status, or delete any property listing.</p>
+            <h1 class="font-headline text-3xl font-extrabold text-primary">
+              Manage House Listings
+            </h1>
+            <p class="text-on-surface-variant mt-1">
+              View, update status, or delete any property listing.
+            </p>
           </div>
           <div class="flex gap-3">
-            <input type="text" id="searchInput" placeholder="Search by title, address, seller..." class="input-field w-64" />
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by title, address, seller..."
+              class="input-field w-64"
+            />
             <select id="statusFilter" class="input-field w-40">
               <option value="">All Status</option>
               <option value="published">Published</option>
@@ -120,36 +186,91 @@
         </div>
 
         <!-- Loading & Error -->
-        <div id="loadingOverlay" class="hidden py-10"><div class="loader"></div></div>
-        <div id="errorMsg" class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"></div>
+        <div id="loadingOverlay" class="hidden py-10">
+          <div class="loader"></div>
+        </div>
+        <div
+          id="errorMsg"
+          class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"
+        ></div>
 
         <!-- Houses Table -->
-        <div class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden">
+        <div
+          class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden"
+        >
           <div class="overflow-x-auto">
             <table class="w-full text-left">
-              <thead class="bg-surface-container-low border-b border-outline/10">
+              <thead
+                class="bg-surface-container-low border-b border-outline/10"
+              >
                 <tr>
-                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Property</th>
-                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Type / Price</th>
-                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Seller</th>
-                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Status</th>
-                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Date</th>
-                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Actions</th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Property
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Type / Price
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Seller
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Status
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Date
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody id="housesTableBody">
-                <tr><td colspan="6" class="text-center py-8 text-on-surface-variant">Loading houses...</td></tr>
+                <tr>
+                  <td
+                    colspan="6"
+                    class="text-center py-8 text-on-surface-variant"
+                  >
+                    Loading houses...
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
           <!-- Pagination -->
-          <div class="px-6 py-4 border-t border-outline/10 flex items-center justify-between flex-wrap gap-3">
+          <div
+            class="px-6 py-4 border-t border-outline/10 flex items-center justify-between flex-wrap gap-3"
+          >
             <div class="text-sm text-on-surface-variant">
-              Showing <span id="pageStart">0</span> - <span id="pageEnd">0</span> of <span id="totalCount">0</span>
+              Showing <span id="pageStart">0</span> -
+              <span id="pageEnd">0</span> of <span id="totalCount">0</span>
             </div>
             <div class="flex gap-2">
-              <button id="prevPage" class="px-4 py-2 border rounded-lg text-sm font-bold hover:bg-primary/5 disabled:opacity-50" disabled>Previous</button>
-              <button id="nextPage" class="px-4 py-2 border rounded-lg text-sm font-bold hover:bg-primary/5 disabled:opacity-50" disabled>Next</button>
+              <button
+                id="prevPage"
+                class="px-4 py-2 border rounded-lg text-sm font-bold hover:bg-primary/5 disabled:opacity-50"
+                disabled
+              >
+                Previous
+              </button>
+              <button
+                id="nextPage"
+                class="px-4 py-2 border rounded-lg text-sm font-bold hover:bg-primary/5 disabled:opacity-50"
+                disabled
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
@@ -163,7 +284,11 @@
     <script type="module">
       import { renderAdminNavbar } from "./js/adminNavbar.js";
       import { getStoredToken, getStoredUser } from "./js/tokenStorage.js";
-      import { getHouses, toggleHouseStatus, deleteHouse } from "./slices/houseService.js";
+      import {
+        getHouses,
+        toggleHouseStatus,
+        deleteHouse,
+      } from "./slices/houseService.js";
 
       // Admin check
       const token = getStoredToken();
@@ -174,7 +299,9 @@
       }
 
       // Insert navbar
-      document.getElementById("navbar-container").appendChild(renderAdminNavbar("houses"));
+      document
+        .getElementById("navbar-container")
+        .appendChild(renderAdminNavbar("houses"));
 
       // State
       let houses = [];
@@ -216,7 +343,7 @@
             search,
             status: statusFilter,
             listingType: typeFilter,
-            sort: "-createdAt"
+            sort: "-createdAt",
           };
           const data = await getHouses(params);
           houses = data.houses;
@@ -243,7 +370,11 @@
       }
 
       async function handleDelete(houseId) {
-        if (confirm("Are you sure you want to delete this listing? This action cannot be undone.")) {
+        if (
+          confirm(
+            "Are you sure you want to delete this listing? This action cannot be undone.",
+          )
+        ) {
           try {
             await deleteHouse(houseId);
             showError("Listing deleted successfully");
@@ -255,17 +386,17 @@
       }
 
       function formatDate(dateString) {
-        if (!dateString) return 'N/A';
+        if (!dateString) return "N/A";
         const date = new Date(dateString);
         return date.toLocaleDateString();
       }
 
       function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-          if (m === '&') return '&amp;';
-          if (m === '<') return '&lt;';
-          if (m === '>') return '&gt;';
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function (m) {
+          if (m === "&") return "&amp;";
+          if (m === "<") return "&lt;";
+          if (m === ">") return "&gt;";
           return m;
         });
       }
@@ -276,33 +407,35 @@
           return;
         }
 
-        tableBody.innerHTML = houses.map(house => {
-          const statusClass = `status-${house.status}`;
-          const priceDisplay = house.listingType === 'rent' 
-            ? `₦${Number(house.price).toLocaleString()}/mo` 
-            : `₦${Number(house.price).toLocaleString()}`;
-          return `
+        tableBody.innerHTML = houses
+          .map((house) => {
+            const statusClass = `status-${house.status}`;
+            const priceDisplay =
+              house.listingType === "rent"
+                ? `₦${Number(house.price).toLocaleString()}/mo`
+                : `₦${Number(house.price).toLocaleString()}`;
+            return `
             <tr class="border-b border-outline/10 hover:bg-primary/5">
               <td class="px-6 py-4">
                 <div class="font-bold text-primary">${escapeHtml(house.title)}</div>
                 <div class="text-xs text-on-surface-variant">${escapeHtml(house.address)}</div>
-                <div class="text-xs text-on-surface-variant mt-1">${house.bedrooms || '?'} beds · ${house.bathrooms || '?'} baths</div>
+                <div class="text-xs text-on-surface-variant mt-1">${house.bedrooms || "?"} beds · ${house.bathrooms || "?"} baths</div>
               </td>
               <td class="px-6 py-4 text-sm">
-                <span class="inline-block px-2 py-1 rounded text-xs font-bold bg-primary/10 text-primary mb-1">${house.listingType === 'rent' ? 'Rent' : 'Sale'}</span>
+                <span class="inline-block px-2 py-1 rounded text-xs font-bold bg-primary/10 text-primary mb-1">${house.listingType === "rent" ? "Rent" : "Sale"}</span>
                 <div class="font-bold text-primary">${priceDisplay}</div>
               </td>
               <td class="px-6 py-4 text-sm">
-                <div>${escapeHtml(house.user?.name || 'Unknown')}</div>
-                <div class="text-xs text-on-surface-variant">${escapeHtml(house.user?.email || '')}</div>
+                <div>${escapeHtml(house.user?.name || "Unknown")}</div>
+                <div class="text-xs text-on-surface-variant">${escapeHtml(house.user?.email || "")}</div>
               </td>
               <td class="px-6 py-4">
                 <select class="status-select text-sm border rounded-lg px-2 py-1" data-house-id="${house._id}" data-current-status="${house.status}">
-                  <option value="published" ${house.status === 'published' ? 'selected' : ''}>Published</option>
-                  <option value="draft" ${house.status === 'draft' ? 'selected' : ''}>Draft</option>
-                  <option value="inactive" ${house.status === 'inactive' ? 'selected' : ''}>Inactive</option>
-                  <option value="sold" ${house.status === 'sold' ? 'selected' : ''}>Sold</option>
-                  <option value="rented" ${house.status === 'rented' ? 'selected' : ''}>Rented</option>
+                  <option value="published" ${house.status === "published" ? "selected" : ""}>Published</option>
+                  <option value="draft" ${house.status === "draft" ? "selected" : ""}>Draft</option>
+                  <option value="inactive" ${house.status === "inactive" ? "selected" : ""}>Inactive</option>
+                  <option value="sold" ${house.status === "sold" ? "selected" : ""}>Sold</option>
+                  <option value="rented" ${house.status === "rented" ? "selected" : ""}>Rented</option>
                 </select>
               </td>
               <td class="px-6 py-4 text-sm">${formatDate(house.createdAt)}</td>
@@ -314,20 +447,21 @@
               </td>
             </tr>
           `;
-        }).join('');
+          })
+          .join("");
 
         // Attach event listeners
-        document.querySelectorAll('.update-status-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
+        document.querySelectorAll(".update-status-btn").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
             const houseId = btn.dataset.houseId;
-            const select = btn.closest('tr').querySelector('.status-select');
+            const select = btn.closest("tr").querySelector(".status-select");
             const newStatus = select.value;
             handleStatusChange(houseId, newStatus);
           });
         });
 
-        document.querySelectorAll('.delete-house-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
+        document.querySelectorAll(".delete-house-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
             const houseId = btn.dataset.houseId;
             handleDelete(houseId);
           });
@@ -346,28 +480,28 @@
       }
 
       // Event listeners
-      searchInput.addEventListener('input', (e) => {
+      searchInput.addEventListener("input", (e) => {
         search = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
-      statusFilterSelect.addEventListener('change', (e) => {
+      statusFilterSelect.addEventListener("change", (e) => {
         statusFilter = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
-      typeFilterSelect.addEventListener('change', (e) => {
+      typeFilterSelect.addEventListener("change", (e) => {
         typeFilter = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
-      prevBtn.addEventListener('click', () => {
+      prevBtn.addEventListener("click", () => {
         if (currentPage > 1) {
           currentPage--;
           fetchHouses();
         }
       });
-      nextBtn.addEventListener('click', () => {
+      nextBtn.addEventListener("click", () => {
         currentPage++;
         fetchHouses();
       });

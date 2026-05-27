@@ -1,198 +1,699 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Resident | Estates for Rent - Nigeria's Finest Real Estate</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <!-- Favicon -->
-  <link rel="icon" href="images/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
-  <link rel="manifest" href="images/site.webmanifest" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    * { -webkit-tap-highlight-color: transparent; }
-    body { font-family: "Inter", system-ui, sans-serif; }
-    .font-headline { font-family: "Manrope", system-ui, sans-serif; }
-    .hover-lift { transition: transform 0.25s ease, box-shadow 0.3s ease; }
-    .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15); }
-    .lucide { width: 1.25rem; height: 1.25rem; stroke-width: 1.75; }
-    html { scroll-behavior: smooth; }
-    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
-    .fade-up.revealed { opacity: 1; transform: translateY(0); }
-    .bg-surface { background-color: #f9f9fc; }
-    .text-primary { color: #001c4a; }
-    .bg-tertiary-container { background-color: #c5aa23; }
-    .hover\:bg-tertiary-fixed:hover { background-color: #ffe260; }
-    .text-tertiary { color: #6e5d00; }
-    .gradient-overlay { background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.1) 100%); }
-    .badge-new { background-color: #c5aa23; color: #001c4a; font-weight: 700; }
-    .badge-rented { background-color: #2c2c2e; color: white; font-weight: 500; }
-    .badge-price-slash { background-color: #e31b23; color: white; font-weight: 700; }
-    .price-tag { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>
+      Rezident Homes | Estates for Rent - Nigeria's Finest Real Estate
+    </title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .font-headline {
+        font-family: "Manrope", system-ui, sans-serif;
+      }
+      .hover-lift {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+      }
+      .lucide {
+        width: 1.25rem;
+        height: 1.25rem;
+        stroke-width: 1.75;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+          transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      }
+      .fade-up.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .bg-surface {
+        background-color: #f9f9fc;
+      }
+      .text-primary {
+        color: #001c4a;
+      }
+      .bg-tertiary-container {
+        background-color: #c5aa23;
+      }
+      .hover\:bg-tertiary-fixed:hover {
+        background-color: #ffe260;
+      }
+      .text-tertiary {
+        color: #6e5d00;
+      }
+      .gradient-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.6) 50%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+      }
+      .badge-new {
+        background-color: #c5aa23;
+        color: #001c4a;
+        font-weight: 700;
+      }
+      .badge-rented {
+        background-color: #2c2c2e;
+        color: white;
+        font-weight: 500;
+      }
+      .badge-price-slash {
+        background-color: #e31b23;
+        color: white;
+        font-weight: 700;
+      }
+      .price-tag {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
 
-    /* Mobile styles */
-    @media (max-width: 768px) {
-      .property-card { border-radius: 1rem; }
-      .property-card img { height: 260px !important; }
-      .property-card .gradient-overlay { padding: 12px !important; }
-      .property-card h3 { font-size: 0.85rem; line-height: 1.3; }
-      .property-card p { font-size: 0.7rem; }
-      .property-card .text-xl { font-size: 0.95rem !important; }
-      .property-card .flex.gap-4 { gap: 8px; font-size: 0.65rem; }
-      .property-card a { padding: 6px 8px; font-size: 0.7rem; border-radius: 0.6rem; }
-      .property-card .absolute.top-4.left-4 span { font-size: 9px !important; padding: 4px 8px !important; }
-      #propertiesContainer { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
-      .hero-title { font-size: 1.8rem !important; }
-      .list-view .property-card { flex-direction: column; height: auto; }
-      .list-view .property-card img { width: 100%; height: 180px !important; }
-      .list-view .property-card .gradient-overlay { width: 100%; background: white; color: #1a1c1e; padding: 14px; }
-    }
-    @media (max-width: 480px) {
-      #propertiesContainer { gap: 10px !important; }
-      .property-card img { height: 220px !important; }
-      .property-card .gradient-overlay { padding: 10px !important; }
-      .property-card h3 { font-size: 0.75rem; }
-      .property-card .text-xl { font-size: 0.85rem !important; }
-      .property-card a { padding: 5px 6px; font-size: 0.65rem; }
-    }
-    .view-toggle button.active { background-color: #001c4a; color: white; }
+      /* Mobile styles */
+      @media (max-width: 768px) {
+        .property-card {
+          border-radius: 1rem;
+        }
+        .property-card img {
+          height: 260px !important;
+        }
+        .property-card .gradient-overlay {
+          padding: 12px !important;
+        }
+        .property-card h3 {
+          font-size: 0.85rem;
+          line-height: 1.3;
+        }
+        .property-card p {
+          font-size: 0.7rem;
+        }
+        .property-card .text-xl {
+          font-size: 0.95rem !important;
+        }
+        .property-card .flex.gap-4 {
+          gap: 8px;
+          font-size: 0.65rem;
+        }
+        .property-card a {
+          padding: 6px 8px;
+          font-size: 0.7rem;
+          border-radius: 0.6rem;
+        }
+        .property-card .absolute.top-4.left-4 span {
+          font-size: 9px !important;
+          padding: 4px 8px !important;
+        }
+        #propertiesContainer {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 12px !important;
+        }
+        .hero-title {
+          font-size: 1.8rem !important;
+        }
+        .list-view .property-card {
+          flex-direction: column;
+          height: auto;
+        }
+        .list-view .property-card img {
+          width: 100%;
+          height: 180px !important;
+        }
+        .list-view .property-card .gradient-overlay {
+          width: 100%;
+          background: white;
+          color: #1a1c1e;
+          padding: 14px;
+        }
+      }
+      @media (max-width: 480px) {
+        #propertiesContainer {
+          gap: 10px !important;
+        }
+        .property-card img {
+          height: 220px !important;
+        }
+        .property-card .gradient-overlay {
+          padding: 10px !important;
+        }
+        .property-card h3 {
+          font-size: 0.75rem;
+        }
+        .property-card .text-xl {
+          font-size: 0.85rem !important;
+        }
+        .property-card a {
+          padding: 5px 6px;
+          font-size: 0.65rem;
+        }
+      }
+      .view-toggle button.active {
+        background-color: #001c4a;
+        color: white;
+      }
 
-    /* Professional list view */
-    .list-view { display: flex; flex-direction: column; gap: 20px; }
-    .list-view .property-card { display: flex; flex-direction: row; height: 160px; border-radius: 1rem; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
-    .list-view .property-card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -10px rgba(0,0,0,0.12); }
-    .list-view .property-card img { width: 160px; height: 100% !important; object-fit: cover; border-radius: 1rem 0 0 1rem; }
-    .list-view .property-card .gradient-overlay { position: relative; background: white; color: #1a1c1e; width: calc(100% - 160px); padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; border-radius: 0 1rem 1rem 0; }
-    .list-view .property-card h3 { font-size: 1.1rem; font-weight: 700; color: #001c4a; margin-bottom: 4px; }
-    .list-view .property-card p { font-size: 0.8rem; color: #5b5e6b; margin-bottom: 6px; }
-    .list-view .property-card .text-xl { font-size: 1.1rem !important; font-weight: 800; color: #001c4a; }
-    .list-view .property-card .flex.gap-4 { display: flex; margin-top: 8px; gap: 16px; font-size: 0.7rem; color: #5b5e6b; }
-    .list-view .property-card a { margin-top: 10px; width: fit-content; padding: 6px 16px; font-size: 0.75rem; background: #001c4a; color: white; border-radius: 2rem; font-weight: 600; transition: background 0.2s; }
-    .list-view .property-card a:hover { background: #0d316d; }
-    .list-view .property-card .absolute.top-4 { position: absolute; top: 12px; left: 12px; z-index: 10; }
-    @media (min-width: 1024px) { .list-view { display: flex; flex-direction: column; max-width: 1000px; margin: 0 auto; } }
-    .loading-spinner { border: 3px solid #f3f3f3; border-top: 3px solid #c5aa23; border-radius: 50%; width: 40px; height: 40px; animation: spin 0.8s linear infinite; margin: 20px auto; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  </style>
-</head>
-<body class="bg-surface text-[#1a1c1e] antialiased">
-  <!-- Navigation -->
-  <header class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]">
-    <div class="max-w-7xl mx-auto px-5 md:px-8">
-      <div class="flex items-center justify-between h-16 lg:h-20">
-        <a href="index.html" class="flex-shrink-0"><img src="images/logo.png" alt="Resident" class="h-9 lg:h-11 w-auto object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-xl font-black tracking-tighter text-primary\'>RESIDENT</span>';" /></a>
-        <div><a href="forsale.html" class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300">For Sale</a></div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <!-- Hero -->
-    <section class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden fade-up">
-      <div class="absolute inset-0 opacity-20"><img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=1600&h=400&fit=crop" alt="Luxury rental homes" class="w-full h-full object-cover" /></div>
-      <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
-        <h1 class="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 hero-title">Homes for Rent</h1>
-        <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">Discover premium estates & budget-friendly apartments. <span class="font-semibold text-tertiary-container">No hidden charges, transparent pricing.</span></p>
-      </div>
-    </section>
-
-    <!-- Filter Bar -->
-    <div class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up">
+      /* Professional list view */
+      .list-view {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .list-view .property-card {
+        display: flex;
+        flex-direction: row;
+        height: 160px;
+        border-radius: 1rem;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .list-view .property-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.12);
+      }
+      .list-view .property-card img {
+        width: 160px;
+        height: 100% !important;
+        object-fit: cover;
+        border-radius: 1rem 0 0 1rem;
+      }
+      .list-view .property-card .gradient-overlay {
+        position: relative;
+        background: white;
+        color: #1a1c1e;
+        width: calc(100% - 160px);
+        padding: 14px 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 0 1rem 1rem 0;
+      }
+      .list-view .property-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #001c4a;
+        margin-bottom: 4px;
+      }
+      .list-view .property-card p {
+        font-size: 0.8rem;
+        color: #5b5e6b;
+        margin-bottom: 6px;
+      }
+      .list-view .property-card .text-xl {
+        font-size: 1.1rem !important;
+        font-weight: 800;
+        color: #001c4a;
+      }
+      .list-view .property-card .flex.gap-4 {
+        display: flex;
+        margin-top: 8px;
+        gap: 16px;
+        font-size: 0.7rem;
+        color: #5b5e6b;
+      }
+      .list-view .property-card a {
+        margin-top: 10px;
+        width: fit-content;
+        padding: 6px 16px;
+        font-size: 0.75rem;
+        background: #001c4a;
+        color: white;
+        border-radius: 2rem;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      .list-view .property-card a:hover {
+        background: #0d316d;
+      }
+      .list-view .property-card .absolute.top-4 {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 10;
+      }
+      @media (min-width: 1024px) {
+        .list-view {
+          display: flex;
+          flex-direction: column;
+          max-width: 1000px;
+          margin: 0 auto;
+        }
+      }
+      .loading-spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-[#1a1c1e] antialiased">
+    <!-- Navigation -->
+    <header
+      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
+    >
       <div class="max-w-7xl mx-auto px-5 md:px-8">
-        <div class="grid grid-cols-3 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3">
-          <div class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full">
-            <i data-lucide="map-pin" class="text-tertiary w-5 h-5 shrink-0"></i>
-            <select id="stateFilter" class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"><option value="all">All States</option></select>
-          </div>
-          <div class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full">
-            <i data-lucide="map" class="text-tertiary w-5 h-5 shrink-0"></i>
-            <select id="lgaFilter" class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"><option value="all">All LGAs</option></select>
-          </div>
-          <button id="searchBtn" class="bg-tertiary-container text-primary px-3 md:px-6 py-2.5 rounded-xl font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-xs md:text-sm whitespace-nowrap w-full"><i data-lucide="search" class="w-4 h-4"></i><span class="hidden sm:inline">Search</span></button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Properties Grid -->
-    <section class="py-16 lg:py-20 px-5 md:px-8">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-10 flex-wrap gap-3 fade-up">
-          <div><span class="text-tertiary font-bold uppercase tracking-widest text-xs">Signature Collection</span></div>
-          <div class="view-toggle flex items-center gap-2 bg-[#f3f3f6] p-1 rounded-xl border border-[#e2e2e5]">
-            <button id="gridViewBtn" class="active p-2 rounded-lg"><i data-lucide="grid-2x2"></i></button>
-            <button id="listViewBtn" class="p-2 rounded-lg"><i data-lucide="list"></i></button>
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="index.html" class="flex-shrink-0"
+            ><img
+              src="images/logo.png"
+              alt="Rezident Homes Logo"
+              class="h-9 lg:h-11 w-auto object-contain"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML =
+                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>REZIDENT HOMES</span>';
+              "
+          /></a>
+          <div>
+            <a
+              href="forsale.html"
+              class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
+              >For Sale</a
+            >
           </div>
         </div>
-        <div id="propertiesContainer" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-7 lg:gap-8"><div class="col-span-full text-center py-10"><div class="loading-spinner"></div></div></div>
-        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8 fade-up">
-          <i data-lucide="home" class="w-16 h-16 text-[#c4c6d1] mx-auto mb-4"></i>
-          <h3 class="text-xl font-headline font-semibold text-primary">No matching rental properties</h3>
-          <p class="text-[#444650] text-sm mt-1">Try adjusting your search or filter.</p>
-          <button id="resetFiltersBtn" class="mt-4 bg-tertiary-container text-primary px-5 py-2 rounded-full text-sm font-semibold">Reset Filters</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section
+        class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden fade-up"
+      >
+        <div class="absolute inset-0 opacity-20">
+          <img
+            src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=1600&h=400&fit=crop"
+            alt="Luxury rental homes"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
+          <h1
+            class="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 hero-title"
+          >
+            Homes for Rent
+          </h1>
+          <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
+            Discover premium estates & budget-friendly apartments.
+            <span class="font-semibold text-tertiary-container"
+              >No hidden charges, transparent pricing.</span
+            >
+          </p>
+        </div>
+      </section>
+
+      <!-- Filter Bar -->
+      <div
+        class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
+      >
+        <div class="max-w-7xl mx-auto px-5 md:px-8">
+          <div
+            class="grid grid-cols-3 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3"
+          >
+            <div
+              class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
+              <i
+                data-lucide="map-pin"
+                class="text-tertiary w-5 h-5 shrink-0"
+              ></i>
+              <select
+                id="stateFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
+              >
+                <option value="all">All States</option>
+              </select>
+            </div>
+            <div
+              class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
+              <i data-lucide="map" class="text-tertiary w-5 h-5 shrink-0"></i>
+              <select
+                id="lgaFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
+              >
+                <option value="all">All LGAs</option>
+              </select>
+            </div>
+            <button
+              id="searchBtn"
+              class="bg-tertiary-container text-primary px-3 md:px-6 py-2.5 rounded-xl font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-xs md:text-sm whitespace-nowrap w-full"
+            >
+              <i data-lucide="search" class="w-4 h-4"></i
+              ><span class="hidden sm:inline">Search</span>
+            </button>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- CTA -->
-    <section class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up">
-      <div class="max-w-4xl mx-auto text-center">
-        <i data-lucide="calendar-check" class="w-10 h-10 text-tertiary-container mx-auto mb-4"></i>
-        <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">Looking for flexible lease options?</h2>
-        <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">Including low-income apartments with zero hidden fees. Let's find your perfect home.</p>
-        <button id="rentalConsultBtn" class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm">Request Private Rental Consultation</button>
+      <!-- Properties Grid -->
+      <section class="py-16 lg:py-20 px-5 md:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="flex justify-between items-center mb-10 flex-wrap gap-3 fade-up"
+          >
+            <div>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+                >Signature Collection</span
+              >
+            </div>
+            <div
+              class="view-toggle flex items-center gap-2 bg-[#f3f3f6] p-1 rounded-xl border border-[#e2e2e5]"
+            >
+              <button id="gridViewBtn" class="active p-2 rounded-lg">
+                <i data-lucide="grid-2x2"></i>
+              </button>
+              <button id="listViewBtn" class="p-2 rounded-lg">
+                <i data-lucide="list"></i>
+              </button>
+            </div>
+          </div>
+          <div
+            id="propertiesContainer"
+            class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-7 lg:gap-8"
+          >
+            <div class="col-span-full text-center py-10">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+          <div
+            id="emptyState"
+            class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8 fade-up"
+          >
+            <i
+              data-lucide="home"
+              class="w-16 h-16 text-[#c4c6d1] mx-auto mb-4"
+            ></i>
+            <h3 class="text-xl font-headline font-semibold text-primary">
+              No matching rental properties
+            </h3>
+            <p class="text-[#444650] text-sm mt-1">
+              Try adjusting your search or filter.
+            </p>
+            <button
+              id="resetFiltersBtn"
+              class="mt-4 bg-tertiary-container text-primary px-5 py-2 rounded-full text-sm font-semibold"
+            >
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section
+        class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
+      >
+        <div class="max-w-4xl mx-auto text-center">
+          <i
+            data-lucide="calendar-check"
+            class="w-10 h-10 text-tertiary-container mx-auto mb-4"
+          ></i>
+          <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">
+            Looking for flexible lease options?
+          </h2>
+          <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">
+            Including low-income apartments with zero hidden fees. Let's find
+            your perfect home.
+          </p>
+          <button
+            id="rentalConsultBtn"
+            class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm"
+          >
+            Request Private Rental Consultation
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8">
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
+      >
+        <div class="fade-up">
+          <img
+            src="images/logo.png"
+            alt="Rezident Homes Logo"
+            class="h-8 mb-3"
+            onerror="this.style.display = 'none'"
+          />
+          <p class="text-xs text-[#444650] max-w-xs">
+            Redefining real estate through precision, trust and transparency.
+            Affordable options with no hidden charges.
+          </p>
+        </div>
+        <div class="fade-up">
+          <h4 class="font-bold text-primary mb-4 text-sm">Discover</h4>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Rent Properties</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Buy Properties</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Short-term Leases</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="fade-up">
+          <h4 class="font-bold text-primary mb-4 text-sm">Company</h4>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >About Rezident Homes</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Concierge Team</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-[#444650] hover:text-primary transition"
+                >Careers</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="fade-up">
+          <h4 class="font-bold text-primary mb-4 text-sm">Insights</h4>
+          <p class="text-xs text-[#444650] mb-2">
+            Get early access to new rental listings
+          </p>
+          <div class="flex">
+            <input
+              type="email"
+              placeholder="Email address"
+              class="bg-[#f3f3f6] border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-tertiary"
+            /><button
+              class="bg-[#001c4a] text-white px-4 rounded-r-lg text-xs font-semibold"
+            >
+              Join
+            </button>
+          </div>
+        </div>
       </div>
-    </section>
-  </main>
+      <div
+        class="max-w-7xl mx-auto pt-8 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-[#444650]"
+      >
+        <p>
+          © 2025 Rezident Homes, All rights reserved. No hidden charges on any
+          rental.
+        </p>
+        <div class="flex gap-5">
+          <a href="#" class="hover:text-primary transition">Privacy Policy</a
+          ><a href="#" class="hover:text-primary transition"
+            >Terms of Service</a
+          >
+        </div>
+      </div>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-      <div class="fade-up"><img src="images/logo.png" alt="Resident" class="h-8 mb-3" onerror="this.style.display='none'" /><p class="text-xs text-[#444650] max-w-xs">Redefining real estate through precision, trust and transparency. Affordable options with no hidden charges.</p></div>
-      <div class="fade-up"><h4 class="font-bold text-primary mb-4 text-sm">Discover</h4><ul class="space-y-2 text-xs"><li><a href="#" class="text-[#444650] hover:text-primary transition">Rent Properties</a></li><li><a href="#" class="text-[#444650] hover:text-primary transition">Buy Properties</a></li><li><a href="#" class="text-[#444650] hover:text-primary transition">Short-term Leases</a></li></ul></div>
-      <div class="fade-up"><h4 class="font-bold text-primary mb-4 text-sm">Company</h4><ul class="space-y-2 text-xs"><li><a href="#" class="text-[#444650] hover:text-primary transition">About Resident</a></li><li><a href="#" class="text-[#444650] hover:text-primary transition">Concierge Team</a></li><li><a href="#" class="text-[#444650] hover:text-primary transition">Careers</a></li></ul></div>
-      <div class="fade-up"><h4 class="font-bold text-primary mb-4 text-sm">Insights</h4><p class="text-xs text-[#444650] mb-2">Get early access to new rental listings</p><div class="flex"><input type="email" placeholder="Email address" class="bg-[#f3f3f6] border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-tertiary" /><button class="bg-[#001c4a] text-white px-4 rounded-r-lg text-xs font-semibold">Join</button></div></div>
-    </div>
-    <div class="max-w-7xl mx-auto pt-8 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-[#444650]"><p>© 2025 Resident Luxury — All rights reserved. No hidden charges on any rental.</p><div class="flex gap-5"><a href="#" class="hover:text-primary transition">Privacy Policy</a><a href="#" class="hover:text-primary transition">Terms of Service</a></div></div>
-  </footer>
-
-  <script type="module">
-    import { getBaseURL } from "./js/apiConfig.js";
-    function formatNaira(amount) { return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(amount); }
-    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
-    function getBadge(house) {
-      if (house.status === 'rented') return { class: 'badge-rented', text: 'Rented' };
-      if (house.originalPrice && house.originalPrice > house.price) return { class: 'badge-price-slash', text: 'Price Slash' };
-      const created = new Date(house.createdAt); const now = new Date(); const diffDays = (now - created) / (1000 * 60 * 60 * 24);
-      if (diffDays <= 7) return { class: 'badge-new', text: 'New Listing' };
-      return null;
-    }
-    async function fetchHouses() { const url = `${getBaseURL()}/houses?listingType=rent&status=published&limit=100`; const token = localStorage.getItem('auth_token'); const res = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {} }); if (!res.ok) throw new Error('Failed to fetch'); const data = await res.json(); return data.houses || []; }
-    function buildFilterOptions(houses) { const states = new Set(); const lgaMap = new Map(); houses.forEach(house => { if (house.state) { states.add(house.state); if (!lgaMap.has(house.state)) lgaMap.set(house.state, new Set()); if (house.lga) lgaMap.get(house.state).add(house.lga); } }); return { states: Array.from(states).sort(), lgaMap }; }
-    function populateStates(states) { const stateSelect = document.getElementById('stateFilter'); stateSelect.innerHTML = '<option value="all">All States</option>'; states.forEach(state => { const opt = document.createElement('option'); opt.value = state; opt.textContent = state; stateSelect.appendChild(opt); }); }
-    function populateLgas(lgaMap, selectedState) { const lgaSelect = document.getElementById('lgaFilter'); lgaSelect.innerHTML = '<option value="all">All LGAs</option>'; if (selectedState !== 'all' && lgaMap.has(selectedState)) { Array.from(lgaMap.get(selectedState)).sort().forEach(lga => { const opt = document.createElement('option'); opt.value = lga; opt.textContent = lga; lgaSelect.appendChild(opt); }); } }
-    function renderHouses(houses, container) {
-      if (!houses.length) { container.innerHTML = '<div class="col-span-full text-center py-10 text-on-surface-variant">No rental houses found.</div>'; document.getElementById('emptyState').classList.remove('hidden'); return; }
-      document.getElementById('emptyState').classList.add('hidden');
-      container.innerHTML = houses.map(house => {
-        const image = house.images?.[0]?.url || 'images/hero.avif';
-        const seller = house.user || {};
-        const sellerLogo = seller.profile || 'images/icon.png';
-        const sellerName = seller.name || 'Resident';
-        const sellerId = seller._id;
-        const badge = getBadge(house);
-        const badgeHtml = badge ? `<span class="${badge.class} text-[11px] px-3 py-1 rounded-full shadow-sm">${badge.text}</span>` : '';
-        const verifiedBadge = seller.verificationBadge ? '<span class="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">✓</span>' : '';
-        return `
-          <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up" data-state="${house.state || ''}" data-lga="${house.lga || ''}">
+    <script type="module">
+      import { getBaseURL } from "./js/apiConfig.js";
+      function formatNaira(amount) {
+        return new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          minimumFractionDigits: 0,
+        }).format(amount);
+      }
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function (m) {
+          if (m === "&") return "&amp;";
+          if (m === "<") return "&lt;";
+          if (m === ">") return "&gt;";
+          return m;
+        });
+      }
+      function getBadge(house) {
+        if (house.status === "rented")
+          return { class: "badge-rented", text: "Rented" };
+        if (house.originalPrice && house.originalPrice > house.price)
+          return { class: "badge-price-slash", text: "Price Slash" };
+        const created = new Date(house.createdAt);
+        const now = new Date();
+        const diffDays = (now - created) / (1000 * 60 * 60 * 24);
+        if (diffDays <= 7) return { class: "badge-new", text: "New Listing" };
+        return null;
+      }
+      async function fetchHouses() {
+        const url = `${getBaseURL()}/houses?listingType=rent&status=published&limit=100`;
+        const token = localStorage.getItem("auth_token");
+        const res = await fetch(url, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        return data.houses || [];
+      }
+      function buildFilterOptions(houses) {
+        const states = new Set();
+        const lgaMap = new Map();
+        houses.forEach((house) => {
+          if (house.state) {
+            states.add(house.state);
+            if (!lgaMap.has(house.state)) lgaMap.set(house.state, new Set());
+            if (house.lga) lgaMap.get(house.state).add(house.lga);
+          }
+        });
+        return { states: Array.from(states).sort(), lgaMap };
+      }
+      function populateStates(states) {
+        const stateSelect = document.getElementById("stateFilter");
+        stateSelect.innerHTML = '<option value="all">All States</option>';
+        states.forEach((state) => {
+          const opt = document.createElement("option");
+          opt.value = state;
+          opt.textContent = state;
+          stateSelect.appendChild(opt);
+        });
+      }
+      function populateLgas(lgaMap, selectedState) {
+        const lgaSelect = document.getElementById("lgaFilter");
+        lgaSelect.innerHTML = '<option value="all">All LGAs</option>';
+        if (selectedState !== "all" && lgaMap.has(selectedState)) {
+          Array.from(lgaMap.get(selectedState))
+            .sort()
+            .forEach((lga) => {
+              const opt = document.createElement("option");
+              opt.value = lga;
+              opt.textContent = lga;
+              lgaSelect.appendChild(opt);
+            });
+        }
+      }
+      function renderHouses(houses, container) {
+        if (!houses.length) {
+          container.innerHTML =
+            '<div class="col-span-full text-center py-10 text-on-surface-variant">No rental houses found.</div>';
+          document.getElementById("emptyState").classList.remove("hidden");
+          return;
+        }
+        document.getElementById("emptyState").classList.add("hidden");
+        container.innerHTML = houses
+          .map((house) => {
+            const image = house.images?.[0]?.url || "images/hero.avif";
+            const seller = house.user || {};
+            const sellerLogo = seller.profile || "images/icon.png";
+            const sellerName = seller.name || "Rezident Homes";
+            const sellerId = seller._id;
+            const badge = getBadge(house);
+            const badgeHtml = badge
+              ? `<span class="${badge.class} text-[11px] px-3 py-1 rounded-full shadow-sm">${badge.text}</span>`
+              : "";
+            const verifiedBadge = seller.verificationBadge
+              ? '<span class="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">✓</span>'
+              : "";
+            return `
+          <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up" data-state="${house.state || ""}" data-lga="${house.lga || ""}">
             <img src="${image}" class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700" loading="lazy" />
             <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
               <div class="flex gap-2">${badgeHtml}</div>
@@ -202,64 +703,124 @@
               </a>
             </div>
             <div class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay">
-              <h3 class="font-headline text-lg font-bold">${escapeHtml(house.title || 'Property')}</h3>
+              <h3 class="font-headline text-lg font-bold">${escapeHtml(house.title || "Property")}</h3>
               <p class="text-xs text-white/80 mt-1">${escapeHtml(house.address || `${house.lga}, ${house.state}`)}</p>
               <div class="mt-2 price-tag"><span class="text-white font-bold text-xl">${formatNaira(house.price)}</span><span class="text-sm font-normal">/ year</span></div>
               <div class="flex gap-4 mt-3 text-xs text-white/80">
-                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> ${house.bedrooms || '?'}</span>
-                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> ${house.bathrooms || '?'}</span>
-                <span class="flex items-center gap-1"><i data-lucide="square" class="w-4 h-4"></i> ${house.size || '?'}m²</span>
+                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> ${house.bedrooms || "?"}</span>
+                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> ${house.bathrooms || "?"}</span>
+                <span class="flex items-center gap-1"><i data-lucide="square" class="w-4 h-4"></i> ${house.size || "?"}m²</span>
               </div>
               <a href="property-details.html?id=${house._id}" class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition">View More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
             </div>
           </div>
         `;
-      }).join('');
-      lucide.createIcons();
-    }
-
-    (async function() {
-      const container = document.getElementById('propertiesContainer');
-      const stateSelect = document.getElementById('stateFilter');
-      const lgaSelect = document.getElementById('lgaFilter');
-      const searchBtn = document.getElementById('searchBtn');
-      const resetBtn = document.getElementById('resetFiltersBtn');
-      const gridBtn = document.getElementById('gridViewBtn');
-      const listBtn = document.getElementById('listViewBtn');
-      let allHouses = [];
-      let currentFilters = { state: 'all', lga: 'all' };
-      let lgaMap = new Map();
-      container.innerHTML = '<div class="col-span-full text-center py-10"><div class="loading-spinner"></div></div>';
-      try {
-        allHouses = await fetchHouses();
-        if (!allHouses.length) { container.innerHTML = '<div class="col-span-full text-center py-10 text-on-surface-variant">No rental properties available.</div>'; return; }
-        const { states, lgaMap: lgaMapData } = buildFilterOptions(allHouses);
-        lgaMap = lgaMapData;
-        populateStates(states);
-        populateLgas(lgaMap, 'all');
-        renderHouses(allHouses, container);
-      } catch(err) { console.error(err); container.innerHTML = '<div class="col-span-full text-center py-10 text-red-600">Failed to load properties.</div>'; }
-      function applyFilters() {
-        const filtered = allHouses.filter(house => {
-          if (currentFilters.state !== 'all' && house.state !== currentFilters.state) return false;
-          if (currentFilters.lga !== 'all' && house.lga !== currentFilters.lga) return false;
-          return true;
-        });
-        renderHouses(filtered, container);
+          })
+          .join("");
+        lucide.createIcons();
       }
-      stateSelect.addEventListener('change', () => { currentFilters.state = stateSelect.value; populateLgas(lgaMap, currentFilters.state); currentFilters.lga = 'all'; lgaSelect.value = 'all'; applyFilters(); });
-      lgaSelect.addEventListener('change', () => { currentFilters.lga = lgaSelect.value; applyFilters(); });
-      searchBtn.addEventListener('click', applyFilters);
-      if (resetBtn) resetBtn.addEventListener('click', () => { currentFilters = { state: 'all', lga: 'all' }; stateSelect.value = 'all'; populateLgas(lgaMap, 'all'); lgaSelect.value = 'all'; applyFilters(); });
-      // view toggle
-      gridBtn.addEventListener('click', () => { container.classList.remove('list-view'); container.classList.add('grid'); gridBtn.classList.add('active'); listBtn.classList.remove('active'); });
-      listBtn.addEventListener('click', () => { container.classList.add('list-view'); container.classList.remove('grid'); listBtn.classList.add('active'); gridBtn.classList.remove('active'); });
-      const consultBtn = document.getElementById('rentalConsultBtn'); if(consultBtn) consultBtn.addEventListener('click', () => alert('Connect with our leasing concierge: +234 (0) 123 456 7890 or rentals@resident.ng — No hidden charges.'));
-      const fadeElements = document.querySelectorAll(".fade-up");
-      const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("revealed"); observer.unobserve(entry.target); } }); }, { threshold: 0.1 });
-      fadeElements.forEach(el => observer.observe(el));
-      lucide.createIcons();
-    })();
-  </script>
-</body>
+
+      (async function () {
+        const container = document.getElementById("propertiesContainer");
+        const stateSelect = document.getElementById("stateFilter");
+        const lgaSelect = document.getElementById("lgaFilter");
+        const searchBtn = document.getElementById("searchBtn");
+        const resetBtn = document.getElementById("resetFiltersBtn");
+        const gridBtn = document.getElementById("gridViewBtn");
+        const listBtn = document.getElementById("listViewBtn");
+        let allHouses = [];
+        let currentFilters = { state: "all", lga: "all" };
+        let lgaMap = new Map();
+        container.innerHTML =
+          '<div class="col-span-full text-center py-10"><div class="loading-spinner"></div></div>';
+        try {
+          allHouses = await fetchHouses();
+          if (!allHouses.length) {
+            container.innerHTML =
+              '<div class="col-span-full text-center py-10 text-on-surface-variant">No rental properties available.</div>';
+            return;
+          }
+          const { states, lgaMap: lgaMapData } = buildFilterOptions(allHouses);
+          lgaMap = lgaMapData;
+          populateStates(states);
+          populateLgas(lgaMap, "all");
+          renderHouses(allHouses, container);
+        } catch (err) {
+          console.error(err);
+          container.innerHTML =
+            '<div class="col-span-full text-center py-10 text-red-600">Failed to load properties.</div>';
+        }
+        function applyFilters() {
+          const filtered = allHouses.filter((house) => {
+            if (
+              currentFilters.state !== "all" &&
+              house.state !== currentFilters.state
+            )
+              return false;
+            if (
+              currentFilters.lga !== "all" &&
+              house.lga !== currentFilters.lga
+            )
+              return false;
+            return true;
+          });
+          renderHouses(filtered, container);
+        }
+        stateSelect.addEventListener("change", () => {
+          currentFilters.state = stateSelect.value;
+          populateLgas(lgaMap, currentFilters.state);
+          currentFilters.lga = "all";
+          lgaSelect.value = "all";
+          applyFilters();
+        });
+        lgaSelect.addEventListener("change", () => {
+          currentFilters.lga = lgaSelect.value;
+          applyFilters();
+        });
+        searchBtn.addEventListener("click", applyFilters);
+        if (resetBtn)
+          resetBtn.addEventListener("click", () => {
+            currentFilters = { state: "all", lga: "all" };
+            stateSelect.value = "all";
+            populateLgas(lgaMap, "all");
+            lgaSelect.value = "all";
+            applyFilters();
+          });
+        // view toggle
+        gridBtn.addEventListener("click", () => {
+          container.classList.remove("list-view");
+          container.classList.add("grid");
+          gridBtn.classList.add("active");
+          listBtn.classList.remove("active");
+        });
+        listBtn.addEventListener("click", () => {
+          container.classList.add("list-view");
+          container.classList.remove("grid");
+          listBtn.classList.add("active");
+          gridBtn.classList.remove("active");
+        });
+        const consultBtn = document.getElementById("rentalConsultBtn");
+        if (consultBtn)
+          consultBtn.addEventListener("click", () =>
+            alert(
+              "Connect with our leasing concierge: +234 (0) 123 456 7890 or rentals@rezidenthomes.com — No hidden charges.",
+            ),
+          );
+        const fadeElements = document.querySelectorAll(".fade-up");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+        fadeElements.forEach((el) => observer.observe(el));
+        lucide.createIcons();
+      })();
+    </script>
+  </body>
 </html>

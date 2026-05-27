@@ -2,19 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Seller Applications | Admin | Resident</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Seller Applications | Admin | Rezident Homes</title>
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
     <link rel="icon" href="images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
     <link rel="manifest" href="images/site.webmanifest" />
     <meta name="theme-color" content="#0D316D" />
 
@@ -46,8 +76,14 @@
     </script>
 
     <style>
-      * { -webkit-tap-highlight-color: transparent; }
-      .lucide { width: 1.2rem; height: 1.2rem; stroke-width: 1.8; }
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
       .loader {
         border: 3px solid #f3f3f3;
         border-top: 3px solid #c5aa23;
@@ -58,20 +94,24 @@
         margin: 20px auto;
       }
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
       .input-field {
         padding: 0.65rem 1rem;
         border-radius: 0.75rem;
         background: white;
-        border: 1px solid rgba(116,119,129,0.25);
+        border: 1px solid rgba(116, 119, 129, 0.25);
         outline: none;
         font-size: 0.875rem;
       }
       .input-field:focus {
         border-color: #001c4a;
-        box-shadow: 0 0 0 3px rgba(0,28,74,0.14);
+        box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
       }
       .status-badge {
         display: inline-flex;
@@ -82,10 +122,22 @@
         font-size: 0.75rem;
         font-weight: bold;
       }
-      .status-pending { background: #fef3c7; color: #92400e; }
-      .status-approved { background: #d1fae5; color: #065f46; }
-      .status-rejected { background: #fee2e2; color: #991b1b; }
-      .badge-verified { background: #dbeafe; color: #1e40af; }
+      .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .status-approved {
+        background: #d1fae5;
+        color: #065f46;
+      }
+      .status-rejected {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .badge-verified {
+        background: #dbeafe;
+        color: #1e40af;
+      }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
@@ -93,10 +145,17 @@
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8"
+        >
           <div>
-            <h1 class="font-headline text-3xl font-extrabold text-primary">Seller Applications</h1>
-            <p class="text-on-surface-variant mt-1">Review applications, manage sellers, grant verification badges, and handle suspensions.</p>
+            <h1 class="font-headline text-3xl font-extrabold text-primary">
+              Seller Applications
+            </h1>
+            <p class="text-on-surface-variant mt-1">
+              Review applications, manage sellers, grant verification badges,
+              and handle suspensions.
+            </p>
           </div>
           <select id="statusFilter" class="input-field w-48">
             <option value="">All Applications</option>
@@ -106,72 +165,152 @@
           </select>
         </div>
 
-        <div id="loadingOverlay" class="hidden py-10"><div class="loader"></div></div>
-        <div id="errorMsg" class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"></div>
+        <div id="loadingOverlay" class="hidden py-10">
+          <div class="loader"></div>
+        </div>
+        <div
+          id="errorMsg"
+          class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"
+        ></div>
         <div id="applicationsContainer" class="space-y-6"></div>
       </div>
     </main>
 
     <!-- Review Application Modal -->
-    <div id="reviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div
+      id="reviewModal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm"
+    >
       <div class="bg-white rounded-2xl max-w-md w-full mx-4 p-6">
-        <h2 class="font-headline text-xl font-extrabold text-primary mb-4">Review Application</h2>
-        <p class="text-sm text-on-surface-variant mb-4">Applicant: <span id="modalApplicantName"></span></p>
+        <h2 class="font-headline text-xl font-extrabold text-primary mb-4">
+          Review Application
+        </h2>
+        <p class="text-sm text-on-surface-variant mb-4">
+          Applicant: <span id="modalApplicantName"></span>
+        </p>
         <div class="mb-4">
-          <label class="block text-sm font-bold text-primary mb-2">Decision</label>
+          <label class="block text-sm font-bold text-primary mb-2"
+            >Decision</label
+          >
           <select id="modalStatus" class="input-field w-full">
             <option value="approved">Approve</option>
             <option value="rejected">Reject</option>
           </select>
         </div>
         <div class="mb-6">
-          <label class="block text-sm font-bold text-primary mb-2">Admin Note (optional)</label>
-          <textarea id="modalNote" rows="3" class="input-field w-full resize-none" placeholder="Reason for approval/rejection..."></textarea>
+          <label class="block text-sm font-bold text-primary mb-2"
+            >Admin Note (optional)</label
+          >
+          <textarea
+            id="modalNote"
+            rows="3"
+            class="input-field w-full resize-none"
+            placeholder="Reason for approval/rejection..."
+          ></textarea>
         </div>
         <div class="flex gap-3">
-          <button id="modalConfirmBtn" class="bg-tertiary-container text-primary px-4 py-2 rounded-xl font-bold flex-1">Confirm</button>
-          <button id="modalCancelBtn" class="border border-outline/25 text-on-surface-variant px-4 py-2 rounded-xl font-bold flex-1">Cancel</button>
+          <button
+            id="modalConfirmBtn"
+            class="bg-tertiary-container text-primary px-4 py-2 rounded-xl font-bold flex-1"
+          >
+            Confirm
+          </button>
+          <button
+            id="modalCancelBtn"
+            class="border border-outline/25 text-on-surface-variant px-4 py-2 rounded-xl font-bold flex-1"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Manage Seller Modal (for approved sellers) -->
-    <div id="manageSellerModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div
+      id="manageSellerModal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm"
+    >
       <div class="bg-white rounded-2xl max-w-lg w-full mx-4 p-6">
-        <h2 class="font-headline text-xl font-extrabold text-primary mb-4">Manage Seller</h2>
-        <p class="text-sm text-on-surface-variant mb-2">Seller: <span id="manageSellerName"></span></p>
+        <h2 class="font-headline text-xl font-extrabold text-primary mb-4">
+          Manage Seller
+        </h2>
+        <p class="text-sm text-on-surface-variant mb-2">
+          Seller: <span id="manageSellerName"></span>
+        </p>
         <div class="space-y-4">
           <div class="flex items-center justify-between border-b pb-2">
             <span class="font-bold">Verification Badge</span>
             <div class="flex gap-2">
-              <button id="grantBadgeBtn" class="bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm font-bold">Grant</button>
-              <button id="revokeBadgeBtn" class="bg-red-100 text-red-800 px-3 py-1 rounded-lg text-sm font-bold">Revoke</button>
+              <button
+                id="grantBadgeBtn"
+                class="bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm font-bold"
+              >
+                Grant
+              </button>
+              <button
+                id="revokeBadgeBtn"
+                class="bg-red-100 text-red-800 px-3 py-1 rounded-lg text-sm font-bold"
+              >
+                Revoke
+              </button>
             </div>
           </div>
           <div class="flex items-center justify-between border-b pb-2">
             <span class="font-bold">Account Status</span>
             <div class="flex gap-2">
-              <button id="suspendBtn" class="bg-orange-100 text-orange-800 px-3 py-1 rounded-lg text-sm font-bold">Suspend</button>
-              <button id="unsuspendBtn" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-lg text-sm font-bold">Unsuspend</button>
+              <button
+                id="suspendBtn"
+                class="bg-orange-100 text-orange-800 px-3 py-1 rounded-lg text-sm font-bold"
+              >
+                Suspend
+              </button>
+              <button
+                id="unsuspendBtn"
+                class="bg-blue-100 text-blue-800 px-3 py-1 rounded-lg text-sm font-bold"
+              >
+                Unsuspend
+              </button>
             </div>
           </div>
           <div>
-            <button id="viewReportsBtn" class="w-full bg-primary/10 text-primary py-2 rounded-xl font-bold text-sm">View Reports</button>
+            <button
+              id="viewReportsBtn"
+              class="w-full bg-primary/10 text-primary py-2 rounded-xl font-bold text-sm"
+            >
+              View Reports
+            </button>
           </div>
         </div>
         <div class="mt-6">
-          <button id="closeManageModal" class="w-full border border-outline/25 text-on-surface-variant py-2 rounded-xl font-bold">Close</button>
+          <button
+            id="closeManageModal"
+            class="w-full border border-outline/25 text-on-surface-variant py-2 rounded-xl font-bold"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Reports Modal -->
-    <div id="reportsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 p-6 max-h-[80vh] overflow-y-auto">
-        <h2 class="font-headline text-xl font-extrabold text-primary mb-4">Seller Reports</h2>
+    <div
+      id="reportsModal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm"
+    >
+      <div
+        class="bg-white rounded-2xl max-w-2xl w-full mx-4 p-6 max-h-[80vh] overflow-y-auto"
+      >
+        <h2 class="font-headline text-xl font-extrabold text-primary mb-4">
+          Seller Reports
+        </h2>
         <div id="reportsList" class="space-y-3"></div>
         <div class="mt-6">
-          <button id="closeReportsModal" class="w-full border border-outline/25 text-on-surface-variant py-2 rounded-xl font-bold">Close</button>
+          <button
+            id="closeReportsModal"
+            class="w-full border border-outline/25 text-on-surface-variant py-2 rounded-xl font-bold"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -183,13 +322,13 @@
     <script type="module">
       import { renderAdminNavbar } from "./js/adminNavbar.js";
       import { getStoredToken, getStoredUser } from "./js/tokenStorage.js";
-      import { 
-        getSellerApplications, 
+      import {
+        getSellerApplications,
         reviewSellerApplication,
         grantVerificationBadge,
         suspendSeller,
         getReports,
-        resolveReport
+        resolveReport,
       } from "./slices/sellerService.js";
 
       // ========== Admin check ==========
@@ -202,7 +341,8 @@
 
       // ========== Insert navbar ==========
       const navContainer = document.getElementById("navbar-container");
-      if (navContainer) navContainer.appendChild(renderAdminNavbar("applications"));
+      if (navContainer)
+        navContainer.appendChild(renderAdminNavbar("applications"));
 
       // ========== DOM elements ==========
       const container = document.getElementById("applicationsContainer");
@@ -232,7 +372,7 @@
       const closeReportsModal = document.getElementById("closeReportsModal");
 
       // ========== State ==========
-      let applications = [];          // will hold the array of applications
+      let applications = []; // will hold the array of applications
       let statusFilter = "";
       let selectedAppId = null;
       let currentSellerId = null;
@@ -249,17 +389,21 @@
       }
 
       function formatDate(dateString) {
-        if (!dateString) return 'N/A';
+        if (!dateString) return "N/A";
         const date = new Date(dateString);
-        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        return (
+          date.toLocaleDateString() +
+          " " +
+          date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        );
       }
 
       function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-          if (m === '&') return '&amp;';
-          if (m === '<') return '&lt;';
-          if (m === '>') return '&gt;';
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function (m) {
+          if (m === "&") return "&amp;";
+          if (m === "<") return "&lt;";
+          if (m === ">") return "&gt;";
           return m;
         });
       }
@@ -271,36 +415,38 @@
           return;
         }
 
-        container.innerHTML = applications.map(app => {
-          const isLandlord = app.sellerType === 'landlord';
-          const statusClass = `status-${app.status}`;
-          let logoHtml = '';
-          if (!isLandlord && app.logoUrl) {
-            logoHtml = `<img src="${app.logoUrl}" class="w-12 h-12 object-contain rounded-lg border border-outline/20" />`;
-          }
-          let detailsHtml = '';
-          if (isLandlord) {
-            detailsHtml = `
+        container.innerHTML = applications
+          .map((app) => {
+            const isLandlord = app.sellerType === "landlord";
+            const statusClass = `status-${app.status}`;
+            let logoHtml = "";
+            if (!isLandlord && app.logoUrl) {
+              logoHtml = `<img src="${app.logoUrl}" class="w-12 h-12 object-contain rounded-lg border border-outline/20" />`;
+            }
+            let detailsHtml = "";
+            if (isLandlord) {
+              detailsHtml = `
               <div class="grid md:grid-cols-2 gap-3 text-sm">
-                <div><span class="font-bold">Address:</span> ${escapeHtml(app.address || 'N/A')}</div>
+                <div><span class="font-bold">Address:</span> ${escapeHtml(app.address || "N/A")}</div>
                 <div><span class="font-bold">Proof of Address:</span> <a href="${app.proofOfAddressUrl}" target="_blank" class="text-tertiary hover:underline">View Document</a></div>
                 <div><span class="font-bold">NIN Card:</span> <a href="${app.ninCardUrl}" target="_blank" class="text-tertiary hover:underline">View Document</a></div>
               </div>
             `;
-          } else {
-            detailsHtml = `
+            } else {
+              detailsHtml = `
               <div class="grid md:grid-cols-2 gap-3 text-sm">
-                <div><span class="font-bold">Business Name:</span> ${escapeHtml(app.businessName || 'N/A')}</div>
-                <div><span class="font-bold">Owner Name:</span> ${escapeHtml(app.ownerName || 'N/A')}</div>
-                <div><span class="font-bold">Office Address:</span> ${escapeHtml(app.officeAddress || 'N/A')}</div>
-                <div><span class="font-bold">TIN:</span> ${escapeHtml(app.tin || 'Not provided')}</div>
+                <div><span class="font-bold">Business Name:</span> ${escapeHtml(app.businessName || "N/A")}</div>
+                <div><span class="font-bold">Owner Name:</span> ${escapeHtml(app.ownerName || "N/A")}</div>
+                <div><span class="font-bold">Office Address:</span> ${escapeHtml(app.officeAddress || "N/A")}</div>
+                <div><span class="font-bold">TIN:</span> ${escapeHtml(app.tin || "Not provided")}</div>
                 <div><span class="font-bold">CAC Certificate:</span> <a href="${app.cacCertificateUrl}" target="_blank" class="text-tertiary hover:underline">View Document</a></div>
                 <div><span class="font-bold">Proof of Address:</span> <a href="${app.proofOfAddressUrl}" target="_blank" class="text-tertiary hover:underline">View Document</a></div>
               </div>
             `;
-          }
-          const userBadge = (app.user && app.user.verificationBadge) ? '✓ Verified' : '';
-          return `
+            }
+            const userBadge =
+              app.user && app.user.verificationBadge ? "✓ Verified" : "";
+            return `
             <div class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden" data-app-id="${app._id}">
               <div class="p-6">
                 <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
@@ -308,51 +454,52 @@
                     ${logoHtml}
                     <div>
                       <h3 class="font-headline text-xl font-extrabold text-primary">${escapeHtml(app.fullName)}</h3>
-                      <p class="text-sm text-on-surface-variant">${escapeHtml(app.email)} · ${app.phone || 'No phone'} ${userBadge ? `<span class="badge-verified inline-block ml-2 text-xs">${userBadge}</span>` : ''}</p>
+                      <p class="text-sm text-on-surface-variant">${escapeHtml(app.email)} · ${app.phone || "No phone"} ${userBadge ? `<span class="badge-verified inline-block ml-2 text-xs">${userBadge}</span>` : ""}</p>
                     </div>
                   </div>
                   <div class="flex items-center gap-3">
                     <span class="status-badge ${statusClass}">${app.status.toUpperCase()}</span>
-                    ${app.status === 'pending' ? `<button class="review-btn bg-tertiary-container text-primary px-4 py-2 rounded-xl text-sm font-bold" data-app-id="${app._id}">Review</button>` : ''}
-                    ${app.status === 'approved' ? `<button class="manage-seller-btn bg-primary/10 text-primary px-4 py-2 rounded-xl text-sm font-bold" data-user-id="${app.user?._id}" data-user-name="${escapeHtml(app.user?.name || app.fullName)}">Manage Seller</button>` : ''}
+                    ${app.status === "pending" ? `<button class="review-btn bg-tertiary-container text-primary px-4 py-2 rounded-xl text-sm font-bold" data-app-id="${app._id}">Review</button>` : ""}
+                    ${app.status === "approved" ? `<button class="manage-seller-btn bg-primary/10 text-primary px-4 py-2 rounded-xl text-sm font-bold" data-user-id="${app.user?._id}" data-user-name="${escapeHtml(app.user?.name || app.fullName)}">Manage Seller</button>` : ""}
                   </div>
                 </div>
                 <div class="border-t border-outline/10 pt-4 mt-2">
-                  <p class="text-xs font-bold text-on-surface-variant uppercase mb-2">${isLandlord ? 'Landlord' : 'Agency'} Details</p>
+                  <p class="text-xs font-bold text-on-surface-variant uppercase mb-2">${isLandlord ? "Landlord" : "Agency"} Details</p>
                   ${detailsHtml}
-                  ${app.adminNote ? `<div class="mt-3 p-3 bg-surface-container-low rounded-lg text-sm"><span class="font-bold">Admin Note:</span> ${escapeHtml(app.adminNote)}</div>` : ''}
+                  ${app.adminNote ? `<div class="mt-3 p-3 bg-surface-container-low rounded-lg text-sm"><span class="font-bold">Admin Note:</span> ${escapeHtml(app.adminNote)}</div>` : ""}
                   <div class="mt-3 text-xs text-on-surface-variant">Submitted: ${formatDate(app.createdAt)}</div>
                 </div>
               </div>
             </div>
           `;
-        }).join('');
+          })
+          .join("");
 
         // Attach review buttons
-        document.querySelectorAll('.review-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
+        document.querySelectorAll(".review-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
             const appId = btn.dataset.appId;
-            const app = applications.find(a => a._id === appId);
+            const app = applications.find((a) => a._id === appId);
             if (app) {
               selectedAppId = appId;
               modalApplicantName.textContent = app.fullName;
-              modalStatus.value = 'approved';
-              modalNote.value = '';
-              reviewModal.classList.remove('hidden');
-              reviewModal.classList.add('flex');
+              modalStatus.value = "approved";
+              modalNote.value = "";
+              reviewModal.classList.remove("hidden");
+              reviewModal.classList.add("flex");
             }
           });
         });
 
         // Attach manage seller buttons
-        document.querySelectorAll('.manage-seller-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
+        document.querySelectorAll(".manage-seller-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
             const userId = btn.dataset.userId;
             const userName = btn.dataset.userName;
             currentSellerId = userId;
             manageSellerName.textContent = userName;
-            manageModal.classList.remove('hidden');
-            manageModal.classList.add('flex');
+            manageModal.classList.remove("hidden");
+            manageModal.classList.add("flex");
           });
         });
       }
@@ -383,8 +530,8 @@
           showLoading(true);
           await reviewSellerApplication(selectedAppId, status, adminNote);
           showError(`Application ${status} successfully`);
-          reviewModal.classList.add('hidden');
-          reviewModal.classList.remove('flex');
+          reviewModal.classList.add("hidden");
+          reviewModal.classList.remove("flex");
           await fetchApplications();
         } catch (err) {
           showError(err.message);
@@ -427,7 +574,11 @@
         const reason = prompt("Reason for suspension (optional):");
         try {
           showLoading(true);
-          await suspendSeller(currentSellerId, true, reason || "Suspended by admin");
+          await suspendSeller(
+            currentSellerId,
+            true,
+            reason || "Suspended by admin",
+          );
           showError("Seller suspended");
           await fetchApplications();
         } catch (err) {
@@ -456,21 +607,30 @@
         try {
           showLoading(true);
           const reportsData = await getReports();
-          const sellerReports = reportsData.reports ? reportsData.reports.filter(r => r.reportedSeller?._id === currentSellerId) : [];
+          const sellerReports = reportsData.reports
+            ? reportsData.reports.filter(
+                (r) => r.reportedSeller?._id === currentSellerId,
+              )
+            : [];
           if (sellerReports.length === 0) {
-            reportsList.innerHTML = '<p class="text-center text-on-surface-variant">No reports found for this seller.</p>';
+            reportsList.innerHTML =
+              '<p class="text-center text-on-surface-variant">No reports found for this seller.</p>';
           } else {
-            reportsList.innerHTML = sellerReports.map(r => `
+            reportsList.innerHTML = sellerReports
+              .map(
+                (r) => `
               <div class="border-b pb-3 mb-3">
                 <p class="text-sm"><span class="font-bold">Reason:</span> ${escapeHtml(r.reason)}</p>
-                <p class="text-xs text-on-surface-variant">Reported by: ${r.reportedBy?.name || 'Unknown'} on ${formatDate(r.createdAt)}</p>
+                <p class="text-xs text-on-surface-variant">Reported by: ${r.reportedBy?.name || "Unknown"} on ${formatDate(r.createdAt)}</p>
                 <p class="text-xs"><span class="font-bold">Status:</span> ${r.status}</p>
-                ${r.adminNote ? `<p class="text-xs mt-1"><span class="font-bold">Admin Note:</span> ${escapeHtml(r.adminNote)}</p>` : ''}
+                ${r.adminNote ? `<p class="text-xs mt-1"><span class="font-bold">Admin Note:</span> ${escapeHtml(r.adminNote)}</p>` : ""}
               </div>
-            `).join('');
+            `,
+              )
+              .join("");
           }
-          reportsModal.classList.remove('hidden');
-          reportsModal.classList.add('flex');
+          reportsModal.classList.remove("hidden");
+          reportsModal.classList.add("flex");
         } catch (err) {
           showError(err.message);
         } finally {
@@ -479,50 +639,50 @@
       }
 
       // ========== Event listeners ==========
-      statusFilterSelect.addEventListener('change', (e) => {
+      statusFilterSelect.addEventListener("change", (e) => {
         statusFilter = e.target.value;
         fetchApplications();
       });
 
-      modalConfirmBtn.addEventListener('click', submitReview);
-      modalCancelBtn.addEventListener('click', () => {
-        reviewModal.classList.add('hidden');
-        reviewModal.classList.remove('flex');
+      modalConfirmBtn.addEventListener("click", submitReview);
+      modalCancelBtn.addEventListener("click", () => {
+        reviewModal.classList.add("hidden");
+        reviewModal.classList.remove("flex");
         selectedAppId = null;
       });
-      reviewModal.addEventListener('click', (e) => {
+      reviewModal.addEventListener("click", (e) => {
         if (e.target === reviewModal) {
-          reviewModal.classList.add('hidden');
-          reviewModal.classList.remove('flex');
+          reviewModal.classList.add("hidden");
+          reviewModal.classList.remove("flex");
           selectedAppId = null;
         }
       });
 
-      grantBadgeBtn.addEventListener('click', handleGrantBadge);
-      revokeBadgeBtn.addEventListener('click', handleRevokeBadge);
-      suspendBtn.addEventListener('click', handleSuspend);
-      unsuspendBtn.addEventListener('click', handleUnsuspend);
-      viewReportsBtn.addEventListener('click', handleViewReports);
-      closeManageModal.addEventListener('click', () => {
-        manageModal.classList.add('hidden');
-        manageModal.classList.remove('flex');
+      grantBadgeBtn.addEventListener("click", handleGrantBadge);
+      revokeBadgeBtn.addEventListener("click", handleRevokeBadge);
+      suspendBtn.addEventListener("click", handleSuspend);
+      unsuspendBtn.addEventListener("click", handleUnsuspend);
+      viewReportsBtn.addEventListener("click", handleViewReports);
+      closeManageModal.addEventListener("click", () => {
+        manageModal.classList.add("hidden");
+        manageModal.classList.remove("flex");
         currentSellerId = null;
       });
-      manageModal.addEventListener('click', (e) => {
+      manageModal.addEventListener("click", (e) => {
         if (e.target === manageModal) {
-          manageModal.classList.add('hidden');
-          manageModal.classList.remove('flex');
+          manageModal.classList.add("hidden");
+          manageModal.classList.remove("flex");
           currentSellerId = null;
         }
       });
-      closeReportsModal.addEventListener('click', () => {
-        reportsModal.classList.add('hidden');
-        reportsModal.classList.remove('flex');
+      closeReportsModal.addEventListener("click", () => {
+        reportsModal.classList.add("hidden");
+        reportsModal.classList.remove("flex");
       });
-      reportsModal.addEventListener('click', (e) => {
+      reportsModal.addEventListener("click", (e) => {
         if (e.target === reportsModal) {
-          reportsModal.classList.add('hidden');
-          reportsModal.classList.remove('flex');
+          reportsModal.classList.add("hidden");
+          reportsModal.classList.remove("flex");
         }
       });
 

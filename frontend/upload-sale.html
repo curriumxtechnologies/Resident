@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>Upload House for Sale | Resident</title>
+    <title>Upload House for Sale | Rezident Homes</title>
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
@@ -17,11 +17,35 @@
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
     <link rel="manifest" href="images/site.webmanifest" />
     <meta name="theme-color" content="#0D316D" />
 
@@ -98,30 +122,55 @@
         margin: 20px auto;
       }
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
     <!-- Loading overlay -->
-    <div id="loadingOverlay" class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden">
+    <div
+      id="loadingOverlay"
+      class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden"
+    >
       <div class="loader"></div>
     </div>
 
     <!-- Toast message container -->
-    <div id="toast" class="fixed top-20 right-5 z-50 hidden max-w-sm bg-white shadow-lg rounded-xl p-4 border-l-4 border-tertiary"></div>
+    <div
+      id="toast"
+      class="fixed top-20 right-5 z-50 hidden max-w-sm bg-white shadow-lg rounded-xl p-4 border-l-4 border-tertiary"
+    ></div>
 
-    <header class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10">
+    <header
+      class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
           <a href="home.html">
-            <img src="images/logo.png" alt="Resident" class="h-9 lg:h-11 w-auto object-contain" />
+            <img
+              src="images/logo.png"
+              alt="Rezident Homes Logo"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
           </a>
           <div class="flex items-center gap-3">
-            <span id="userNameDisplay" class="hidden md:inline-block text-sm font-bold text-primary">Loading...</span>
-            <a href="profile.html" class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm" id="userInitials">--</a>
+            <span
+              id="userNameDisplay"
+              class="hidden md:inline-block text-sm font-bold text-primary"
+              >Loading...</span
+            >
+            <a
+              href="profile.html"
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
+              id="userInitials"
+              >--</a
+            >
           </div>
         </div>
       </div>
@@ -130,18 +179,28 @@
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
         <!-- Hero Section -->
-        <section class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8">
+        <section
+          class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8"
+        >
           <div class="absolute inset-0 opacity-15">
             <img src="images/hero.avif" class="w-full h-full object-cover" />
           </div>
           <div class="relative z-10 max-w-3xl">
-            <span class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-bold mb-4">
-              <i data-lucide="badge-dollar-sign" class="w-4 h-4 text-tertiary-fixed"></i>
+            <span
+              class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-bold mb-4"
+            >
+              <i
+                data-lucide="badge-dollar-sign"
+                class="w-4 h-4 text-tertiary-fixed"
+              ></i>
               Sale Listing
             </span>
-            <h1 class="font-headline text-3xl md:text-5xl font-extrabold">Upload House for Sale</h1>
+            <h1 class="font-headline text-3xl md:text-5xl font-extrabold">
+              Upload House for Sale
+            </h1>
             <p class="text-white/75 text-sm md:text-base mt-3 max-w-2xl">
-              Add full property information, images, title documents, and seller contact details for buyer inquiries.
+              Add full property information, images, title documents, and seller
+              contact details for buyer inquiries.
             </p>
           </div>
         </section>
@@ -150,20 +209,44 @@
         <form id="saleForm" class="grid lg:grid-cols-3 gap-8">
           <div class="lg:col-span-2 space-y-8">
             <!-- Property Information -->
-            <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-              <h2 class="font-headline text-2xl font-extrabold text-primary mb-6">Property Information</h2>
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Property Information
+              </h2>
               <div class="space-y-5">
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Property Title</label>
-                  <input type="text" name="title" class="input-field" placeholder="Example: The Pearl Haven" required />
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Property Title</label
+                  >
+                  <input
+                    type="text"
+                    name="title"
+                    class="input-field"
+                    placeholder="Example: The Pearl Haven"
+                    required
+                  />
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Description</label>
-                  <textarea name="description" rows="4" class="input-field resize-none" placeholder="Describe the property, location advantage, finishing, and unique features." required></textarea>
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Description</label
+                  >
+                  <textarea
+                    name="description"
+                    rows="4"
+                    class="input-field resize-none"
+                    placeholder="Describe the property, location advantage, finishing, and unique features."
+                    required
+                  ></textarea>
                 </div>
                 <div class="grid sm:grid-cols-2 gap-5">
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">Property Type</label>
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >Property Type</label
+                    >
                     <select name="propertyType" class="input-field" required>
                       <option value="">Select property type</option>
                       <option>Luxury Villa</option>
@@ -175,31 +258,69 @@
                     </select>
                   </div>
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">Sale Price (₦)</label>
-                    <input type="number" name="price" class="input-field" placeholder="78500000" required />
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >Sale Price (₦)</label
+                    >
+                    <input
+                      type="number"
+                      name="price"
+                      class="input-field"
+                      placeholder="78500000"
+                      required
+                    />
                   </div>
                 </div>
                 <div class="grid sm:grid-cols-3 gap-5">
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">Bedrooms</label>
-                    <input type="number" name="bedrooms" class="input-field" placeholder="4" />
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >Bedrooms</label
+                    >
+                    <input
+                      type="number"
+                      name="bedrooms"
+                      class="input-field"
+                      placeholder="4"
+                    />
                   </div>
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">Bathrooms</label>
-                    <input type="number" name="bathrooms" class="input-field" placeholder="4" />
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >Bathrooms</label
+                    >
+                    <input
+                      type="number"
+                      name="bathrooms"
+                      class="input-field"
+                      placeholder="4"
+                    />
                   </div>
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">Size (m²)</label>
-                    <input type="text" name="size" class="input-field" placeholder="320" />
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >Size (m²)</label
+                    >
+                    <input
+                      type="text"
+                      name="size"
+                      class="input-field"
+                      placeholder="320"
+                    />
                   </div>
                 </div>
                 <div class="grid sm:grid-cols-2 gap-5">
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">Year Built</label>
-                    <input type="number" name="yearBuilt" class="input-field" placeholder="2023" />
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >Year Built</label
+                    >
+                    <input
+                      type="number"
+                      name="yearBuilt"
+                      class="input-field"
+                      placeholder="2023"
+                    />
                   </div>
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">Ownership Type</label>
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >Ownership Type</label
+                    >
                     <select name="ownershipType" class="input-field">
                       <option>Freehold</option>
                       <option>Leasehold</option>
@@ -212,12 +333,20 @@
             </div>
 
             <!-- Location Details -->
-            <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-              <h2 class="font-headline text-2xl font-extrabold text-primary mb-6">Location Details</h2>
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Location Details
+              </h2>
               <div class="space-y-5">
                 <div class="grid sm:grid-cols-2 gap-5">
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">State</label>
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >State</label
+                    >
                     <select name="state" class="input-field" required>
                       <option value="">Select state</option>
                       <option>Lagos</option>
@@ -226,92 +355,283 @@
                     </select>
                   </div>
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">LGA / Area</label>
-                    <input type="text" name="lga" class="input-field" placeholder="Lekki Phase 1" required />
+                    <label class="block text-sm font-bold text-primary mb-2"
+                      >LGA / Area</label
+                    >
+                    <input
+                      type="text"
+                      name="lga"
+                      class="input-field"
+                      placeholder="Lekki Phase 1"
+                      required
+                    />
                   </div>
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Full Property Address</label>
-                  <textarea name="address" rows="3" class="input-field resize-none" placeholder="Enter the full house address" required></textarea>
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Full Property Address</label
+                  >
+                  <textarea
+                    name="address"
+                    rows="3"
+                    class="input-field resize-none"
+                    placeholder="Enter the full house address"
+                    required
+                  ></textarea>
                 </div>
               </div>
             </div>
 
             <!-- Images & Documents -->
-            <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-              <h2 class="font-headline text-2xl font-extrabold text-primary mb-6">Images & Documents</h2>
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Images & Documents
+              </h2>
               <div class="space-y-5">
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Property Images (can select multiple)</label>
-                  <p class="text-xs text-on-surface-variant mb-2">Upload clear exterior, interior, kitchen, bedroom, bathroom, and compound images.</p>
-                  <input type="file" name="images" multiple accept="image/*" class="file-field" required />
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Property Images (can select multiple)</label
+                  >
+                  <p class="text-xs text-on-surface-variant mb-2">
+                    Upload clear exterior, interior, kitchen, bedroom, bathroom,
+                    and compound images.
+                  </p>
+                  <input
+                    type="file"
+                    name="images"
+                    multiple
+                    accept="image/*"
+                    class="file-field"
+                    required
+                  />
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Title Document (C of O, Deed, etc.)</label>
-                  <p class="text-xs text-on-surface-variant mb-2">Upload C of O, Governor's Consent, Deed of Assignment, or valid ownership document.</p>
-                  <input type="file" name="titleDocument" accept=".pdf,image/*" class="file-field" required />
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Title Document (C of O, Deed, etc.)</label
+                  >
+                  <p class="text-xs text-on-surface-variant mb-2">
+                    Upload C of O, Governor's Consent, Deed of Assignment, or
+                    valid ownership document.
+                  </p>
+                  <input
+                    type="file"
+                    name="titleDocument"
+                    accept=".pdf,image/*"
+                    class="file-field"
+                    required
+                  />
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Survey Plan (optional)</label>
-                  <input type="file" name="surveyPlan" accept=".pdf,image/*" class="file-field" />
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Survey Plan (optional)</label
+                  >
+                  <input
+                    type="file"
+                    name="surveyPlan"
+                    accept=".pdf,image/*"
+                    class="file-field"
+                  />
                 </div>
               </div>
             </div>
 
             <!-- Key Features -->
-            <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-              <h2 class="font-headline text-2xl font-extrabold text-primary mb-6">Key Features</h2>
-              <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4" id="featuresCheckboxes">
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="Smart home system" class="feature-checkbox rounded text-primary focus:ring-primary" /> Smart home system</label>
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="Swimming pool" class="feature-checkbox rounded text-primary focus:ring-primary" /> Swimming pool</label>
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="24/7 security" class="feature-checkbox rounded text-primary focus:ring-primary" /> 24/7 security</label>
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="Backup generator" class="feature-checkbox rounded text-primary focus:ring-primary" /> Backup generator</label>
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="Staff quarters" class="feature-checkbox rounded text-primary focus:ring-primary" /> Staff quarters</label>
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="Gym" class="feature-checkbox rounded text-primary focus:ring-primary" /> Gym</label>
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="Parking space" class="feature-checkbox rounded text-primary focus:ring-primary" /> Parking space</label>
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="CCTV" class="feature-checkbox rounded text-primary focus:ring-primary" /> CCTV</label>
-                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" value="Water treatment" class="feature-checkbox rounded text-primary focus:ring-primary" /> Water treatment</label>
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+            >
+              <h2
+                class="font-headline text-2xl font-extrabold text-primary mb-6"
+              >
+                Key Features
+              </h2>
+              <div
+                class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"
+                id="featuresCheckboxes"
+              >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="Smart home system"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  Smart home system</label
+                >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="Swimming pool"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  Swimming pool</label
+                >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="24/7 security"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  24/7 security</label
+                >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="Backup generator"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  Backup generator</label
+                >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="Staff quarters"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  Staff quarters</label
+                >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="Gym"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  Gym</label
+                >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="Parking space"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  Parking space</label
+                >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="CCTV"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  CCTV</label
+                >
+                <label class="flex items-center gap-2 text-sm font-medium"
+                  ><input
+                    type="checkbox"
+                    value="Water treatment"
+                    class="feature-checkbox rounded text-primary focus:ring-primary"
+                  />
+                  Water treatment</label
+                >
               </div>
               <div class="mt-5">
-                <label class="block text-sm font-bold text-primary mb-2">Other Features</label>
-                <textarea name="otherFeatures" rows="3" class="input-field resize-none" placeholder="Add other features separated by commas"></textarea>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Other Features</label
+                >
+                <textarea
+                  name="otherFeatures"
+                  rows="3"
+                  class="input-field resize-none"
+                  placeholder="Add other features separated by commas"
+                ></textarea>
               </div>
             </div>
           </div>
 
           <!-- Sidebar (Seller Contact & Submit) -->
           <aside class="lg:col-span-1">
-            <div class="bg-white rounded-2xl shadow-lg border border-outline/10 p-6 lg:sticky lg:top-24">
-              <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Seller Contact</h2>
+            <div
+              class="bg-white rounded-2xl shadow-lg border border-outline/10 p-6 lg:sticky lg:top-24"
+            >
+              <h2
+                class="font-headline text-xl font-extrabold text-primary mb-5"
+              >
+                Seller Contact
+              </h2>
               <div class="space-y-5">
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Contact Name</label>
-                  <input type="text" name="contactName" id="contactName" class="input-field" required />
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Contact Name</label
+                  >
+                  <input
+                    type="text"
+                    name="contactName"
+                    id="contactName"
+                    class="input-field"
+                    required
+                  />
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Contact Email</label>
-                  <input type="email" name="contactEmail" id="contactEmail" class="input-field" required />
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Contact Email</label
+                  >
+                  <input
+                    type="email"
+                    name="contactEmail"
+                    id="contactEmail"
+                    class="input-field"
+                    required
+                  />
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Phone Number</label>
-                  <input type="tel" name="contactPhone" id="contactPhone" class="input-field" required />
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="tel"
+                    name="contactPhone"
+                    id="contactPhone"
+                    class="input-field"
+                    required
+                  />
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-primary mb-2">Alternate Phone</label>
-                  <input type="tel" name="contactAlternatePhone" id="contactAlternatePhone" class="input-field" />
+                  <label class="block text-sm font-bold text-primary mb-2"
+                    >Alternate Phone</label
+                  >
+                  <input
+                    type="tel"
+                    name="contactAlternatePhone"
+                    id="contactAlternatePhone"
+                    class="input-field"
+                  />
                 </div>
                 <div class="bg-surface-container-low rounded-xl p-4">
-                  <h3 class="font-bold text-primary text-sm mb-2">Listing Review</h3>
-                  <p class="text-xs text-on-surface-variant leading-relaxed">Your property will be reviewed before it appears on Resident. Make sure all details and documents are correct.</p>
+                  <h3 class="font-bold text-primary text-sm mb-2">
+                    Listing Review
+                  </h3>
+                  <p class="text-xs text-on-surface-variant leading-relaxed">
+                    Your property will be reviewed before it appears on Rezident
+                    Homes. Make sure all details and documents are correct.
+                  </p>
                 </div>
-                <label class="flex items-start gap-3 text-sm text-on-surface-variant">
-                  <input type="checkbox" id="confirmCheck" required class="mt-1 rounded text-primary focus:ring-primary" />
-                  <span>I confirm that this property information is accurate and I have the right to list it for sale.</span>
+                <label
+                  class="flex items-start gap-3 text-sm text-on-surface-variant"
+                >
+                  <input
+                    type="checkbox"
+                    id="confirmCheck"
+                    required
+                    class="mt-1 rounded text-primary focus:ring-primary"
+                  />
+                  <span
+                    >I confirm that this property information is accurate and I
+                    have the right to list it for sale.</span
+                  >
                 </label>
-                <button type="submit" class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2 shadow-md">
-                  Submit Sale Listing <i data-lucide="check-circle" class="w-4 h-4"></i>
+                <button
+                  type="submit"
+                  class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2 shadow-md"
+                >
+                  Submit Sale Listing
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
                 </button>
-                <button type="button" id="draftBtn" class="w-full border border-outline/20 text-primary py-3 rounded-xl font-bold text-sm hover:bg-primary/5 transition flex items-center justify-center gap-2">
+                <button
+                  type="button"
+                  id="draftBtn"
+                  class="w-full border border-outline/20 text-primary py-3 rounded-xl font-bold text-sm hover:bg-primary/5 transition flex items-center justify-center gap-2"
+                >
                   Save as Draft <i data-lucide="save" class="w-4 h-4"></i>
                 </button>
               </div>
@@ -327,7 +647,11 @@
 
     <script type="module">
       import { createHouseListing } from "./slices/houseService.js";
-      import { getStoredToken, getStoredUser, clearAuthData } from "./js/tokenStorage.js";
+      import {
+        getStoredToken,
+        getStoredUser,
+        clearAuthData,
+      } from "./js/tokenStorage.js";
       import { authService } from "./js/authService.js";
 
       // DOM elements
@@ -339,11 +663,17 @@
       const contactName = document.getElementById("contactName");
       const contactEmail = document.getElementById("contactEmail");
       const contactPhone = document.getElementById("contactPhone");
-      const contactAlternatePhone = document.getElementById("contactAlternatePhone");
+      const contactAlternatePhone = document.getElementById(
+        "contactAlternatePhone",
+      );
 
       function showToast(message, isError = false) {
         toast.textContent = message;
-        toast.classList.remove("hidden", "border-l-tertiary", "border-l-red-500");
+        toast.classList.remove(
+          "hidden",
+          "border-l-tertiary",
+          "border-l-red-500",
+        );
         toast.classList.add(isError ? "border-l-red-500" : "border-l-tertiary");
         toast.style.display = "block";
         setTimeout(() => {
@@ -364,14 +694,16 @@
       // Only approved sellers can access this page
       if (user.role !== "seller" || !user.sellerVerified) {
         showToast("You must be an approved seller to list properties.", true);
-        setTimeout(() => { window.location.href = "profile.html"; }, 2000);
+        setTimeout(() => {
+          window.location.href = "profile.html";
+        }, 2000);
       }
 
       // Update header with user info
       userNameSpan.textContent = user.name || "User";
       const initials = (user.name || "User")
         .split(" ")
-        .map(n => n[0])
+        .map((n) => n[0])
         .join("")
         .toUpperCase()
         .substring(0, 2);
@@ -385,8 +717,10 @@
 
       // Helper: get selected features from checkboxes
       function getSelectedFeatures() {
-        const checkboxes = document.querySelectorAll(".feature-checkbox:checked");
-        return Array.from(checkboxes).map(cb => cb.value);
+        const checkboxes = document.querySelectorAll(
+          ".feature-checkbox:checked",
+        );
+        return Array.from(checkboxes).map((cb) => cb.value);
       }
 
       // Form submit handler
@@ -394,7 +728,10 @@
         e.preventDefault();
         const confirmCheck = document.getElementById("confirmCheck");
         if (!confirmCheck.checked) {
-          showToast("Please confirm that the property information is accurate.", true);
+          showToast(
+            "Please confirm that the property information is accurate.",
+            true,
+          );
           return;
         }
 
@@ -403,7 +740,25 @@
         formData.append("listingType", "sale");
 
         // Text fields
-        const textFields = ["title", "description", "propertyType", "price", "bedrooms", "bathrooms", "size", "yearBuilt", "ownershipType", "state", "lga", "address", "otherFeatures", "contactName", "contactEmail", "contactPhone", "contactAlternatePhone"];
+        const textFields = [
+          "title",
+          "description",
+          "propertyType",
+          "price",
+          "bedrooms",
+          "bathrooms",
+          "size",
+          "yearBuilt",
+          "ownershipType",
+          "state",
+          "lga",
+          "address",
+          "otherFeatures",
+          "contactName",
+          "contactEmail",
+          "contactPhone",
+          "contactAlternatePhone",
+        ];
         for (const field of textFields) {
           const value = form.querySelector(`[name="${field}"]`).value;
           if (value) formData.append(field, value);
@@ -412,7 +767,7 @@
         // Features array
         const features = getSelectedFeatures();
         if (features.length) {
-          features.forEach(f => formData.append("features[]", f));
+          features.forEach((f) => formData.append("features[]", f));
         }
 
         // Files
@@ -441,10 +796,15 @@
         try {
           const result = await createHouseListing(formData);
           showToast("House listed successfully! It will be reviewed shortly.");
-          setTimeout(() => { window.location.href = "profile.html"; }, 2000);
+          setTimeout(() => {
+            window.location.href = "profile.html";
+          }, 2000);
         } catch (err) {
           console.error(err);
-          showToast(err.message || "Failed to create listing. Please try again.", true);
+          showToast(
+            err.message || "Failed to create listing. Please try again.",
+            true,
+          );
         } finally {
           showLoading(false);
         }
