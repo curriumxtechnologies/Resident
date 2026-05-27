@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>Resident | Nigeria's Finest Real Estate</title>
+    <title>Rezident | Nigeria's Finest Real Estate</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -249,12 +249,12 @@
           <div class="flex-shrink-0">
             <img
               src="images/logo.png"
-              alt="Resident"
+              alt="Rezident"
               class="h-9 lg:h-11 w-auto object-contain"
               onerror="
                 this.style.display = 'none';
                 this.parentElement.innerHTML =
-                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>RESIDENT</span>';
+                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>REZIDENT</span>';
               "
             />
           </div>
@@ -359,7 +359,7 @@
             <p
               class="text-white/85 text-base md:text-lg max-w-lg mb-8 leading-relaxed hero-anim"
             >
-              Premium residences curated for visionaries, connoisseurs & those
+              Premium rezidences curated for visionaries, connoisseurs & those
               who demand the exceptional.
             </p>
             <!-- BUY / RENT TOGGLE -->
@@ -369,12 +369,14 @@
               >
                 <button
                   id="buyBtn"
+                  onclick="setMode('buy')"
                   class="px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition"
                 >
                   Buy
                 </button>
                 <button
                   id="rentBtn"
+                  onclick="setMode('rent')"
                   class="px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition"
                 >
                   Rent
@@ -524,7 +526,7 @@
         </div>
       </section>
 
-      <!-- ========== FEATURED RESIDENCES (Premium Cards matching forsale page) ========= -->
+      <!-- ========== FEATURED REZIDENCES (Premium Cards matching forsale page) ========= -->
       <section class="py-20 lg:py-28 bg-surface-container-low px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
           <div
@@ -668,13 +670,13 @@
         </div>
       </section>
 
-      <!-- ========== WHY RESIDENT ========= -->
+      <!-- ========== WHY REZIDENT ========= -->
       <section id="experience" class="py-20 lg:py-28 px-5 md:px-8 bg-surface">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <div class="order-2 lg:order-1 fade-up">
             <span
               class="text-tertiary font-bold uppercase tracking-widest text-xs"
-              >The Resident standard</span
+              >The Rezident standard</span
             >
             <h2
               class="text-3xl md:text-4xl lg:text-5xl font-headline font-extrabold text-primary mt-3 mb-5 leading-tight"
@@ -682,7 +684,7 @@
               Beyond property. A legacy of trust.
             </h2>
             <p class="text-on-surface-variant text-base mb-8">
-              We don't just list homes — we engineer experiences where prestige
+              We don't just list homes, we engineer experiences where prestige
               meets transparency.
             </p>
             <div class="grid sm:grid-cols-2 gap-6">
@@ -749,7 +751,7 @@
               class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-5 rounded-lg shadow-lg"
             >
               <p class="font-headline italic text-primary text-sm mb-2">
-                "Flawless curation. Resident turned my real estate vision into a
+                "Flawless curation. Rezident turned my real estate vision into a
                 tangible, appreciating asset."
               </p>
               <div class="flex items-center gap-2">
@@ -841,7 +843,7 @@
           <h2
             class="text-3xl md:text-4xl font-headline font-extrabold text-primary mb-2"
           >
-            The Resident Path
+            The Rezident Path
           </h2>
           <p class="text-on-surface-variant text-sm">
             Effortless, elevated, secure, from discovery to closing.
@@ -941,12 +943,12 @@
         <div>
           <img
             src="images/logo.png"
-            alt="Resident"
+            alt="Rezident"
             class="h-8 mb-3"
             onerror="
               this.style.display = 'none';
               this.parentElement.innerHTML +=
-                '<span class=\'text-xl font-black text-primary\'>RESIDENT</span>';
+                '<span class=\'text-xl font-black text-primary\'>REZIDENT</span>';
             "
           />
           <p class="text-xs text-on-surface-variant max-w-xs">
@@ -987,7 +989,7 @@
               <a
                 href="#"
                 class="text-on-surface-variant hover:text-primary transition"
-                >About Resident</a
+                >About Rezident</a
               >
             </li>
             <li>
@@ -1035,7 +1037,7 @@
       <div
         class="max-w-7xl mx-auto pt-8 mt-6 border-t border-surface-container flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-on-surface-variant"
       >
-        <p>© 2026 Resident Luxury. All rights reserved.</p>
+        <p>© 2026 Rezident Luxury. All rights reserved.</p>
         <div class="flex gap-5">
           <a href="#" class="hover:text-primary transition">Privacy Policy</a
           ><a href="#" class="hover:text-primary transition"
@@ -1046,26 +1048,37 @@
     </footer>
 
     <script>
-      let mode = null;
+      let mode = "buy";
+
       function setMode(selected) {
         mode = selected;
-        const buyBtn = document.getElementById("buyBtn"),
-          rentBtn = document.getElementById("rentBtn");
-        const activeClasses = ["bg-white", "text-[#0D316D]"],
-          inactiveClasses = ["text-white/80"];
+        const buyBtn = document.getElementById("buyBtn");
+        const rentBtn = document.getElementById("rentBtn");
+
         if (selected === "buy") {
-          buyBtn.classList.add(...activeClasses);
-          buyBtn.classList.remove(...inactiveClasses);
-          rentBtn.classList.remove(...activeClasses);
-          rentBtn.classList.add(...inactiveClasses);
+          buyBtn.className =
+            "px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition";
+          rentBtn.className =
+            "px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition";
         } else {
-          rentBtn.classList.add(...activeClasses);
-          rentBtn.classList.remove(...inactiveClasses);
-          buyBtn.classList.remove(...activeClasses);
-          buyBtn.classList.add(...inactiveClasses);
+          rentBtn.className =
+            "px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition";
+          buyBtn.className =
+            "px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition";
+        }
+
+        const searchBtn = document.querySelector(".glass-card button");
+        if (searchBtn) {
+          searchBtn.innerHTML =
+            mode === "buy"
+              ? 'Search <i data-lucide="arrow-right" class="w-4 h-4"></i>'
+              : 'Search <i data-lucide="arrow-right" class="w-4 h-4"></i>';
+          lucide.createIcons();
         }
       }
+
       window.setMode = setMode;
+      setMode("buy");
 
       const mobileMenuBtn = document.getElementById("mobileMenuBtn");
       const mobileMenu = document.getElementById("mobileMenu");
@@ -1073,13 +1086,10 @@
       if (mobileMenuBtn && mobileMenu) {
         mobileMenuBtn.addEventListener("click", () => {
           mobileMenu.classList.toggle("hidden");
-
           const isOpen = !mobileMenu.classList.contains("hidden");
-
           mobileMenuBtn.innerHTML = isOpen
             ? '<i data-lucide="x"></i>'
             : '<i data-lucide="menu"></i>';
-
           lucide.createIcons();
         });
 
@@ -1094,6 +1104,7 @@
 
       lucide.createIcons();
       gsap.registerPlugin(ScrollTrigger);
+
       gsap.from(".hero-anim", {
         y: 40,
         opacity: 0,
@@ -1102,6 +1113,7 @@
         stagger: 0.15,
         delay: 0.2,
       });
+
       const fadeElements = document.querySelectorAll(".fade-up");
       const observer = new IntersectionObserver(
         (entries) => {
@@ -1115,6 +1127,7 @@
         { threshold: 0.15, rootMargin: "0px 0px -30px 0px" },
       );
       fadeElements.forEach((el) => observer.observe(el));
+
       const statNumbers = document.querySelectorAll(".stat-number");
       const counterObserver = new IntersectionObserver(
         (entries) => {
@@ -1153,6 +1166,7 @@
         { threshold: 0.5 },
       );
       statNumbers.forEach((el) => counterObserver.observe(el));
+
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           const href = this.getAttribute("href");
@@ -1163,7 +1177,7 @@
           }
         });
       });
-      // Reinitialize icons for dynamic content
+
       setTimeout(() => lucide.createIcons(), 100);
     </script>
   </body>
