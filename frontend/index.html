@@ -344,6 +344,21 @@
           padding: 20px;
         }
       }
+      /* Add this to your existing styles */
+      .user-avatar {
+        transition: all 0.2s ease;
+      }
+
+      .user-avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(0, 28, 74, 0.15);
+      }
+
+      /* Optional: Add a subtle animation when switching between auth states */
+      #desktopAuthArea,
+      #mobileAuthArea {
+        transition: opacity 0.3s ease;
+      }
     </style>
   </head>
   <body
@@ -688,7 +703,8 @@
             <a href="#connect" class="nav-link">Connect</a>
           </div>
 
-          <div class="hidden lg:flex items-center gap-3">
+          <!-- Desktop Auth Area - Will be dynamically updated -->
+          <div id="desktopAuthArea" class="hidden lg:flex items-center gap-3">
             <a
               href="login.html"
               class="text-sm font-bold text-primary hover:text-tertiary transition"
@@ -712,6 +728,7 @@
           </button>
         </div>
 
+        <!-- Mobile Menu -->
         <div
           id="mobileMenu"
           class="hidden lg:hidden pb-5 pt-2 border-t border-surface-container/60"
@@ -723,7 +740,8 @@
             <a href="#journey" class="mobile-nav-link">Journey</a>
             <a href="#connect" class="mobile-nav-link">Connect</a>
 
-            <div class="grid grid-cols-2 gap-3 pt-3">
+            <!-- Mobile Auth Area - Will be dynamically updated -->
+            <div id="mobileAuthArea" class="grid grid-cols-2 gap-3 pt-3">
               <a
                 href="login.html"
                 class="border border-primary/20 text-primary text-center py-3 rounded-xl font-bold text-sm"
@@ -1476,10 +1494,10 @@
       </div>
     </footer>
 
-    <!-- In your HTML head or before closing body, add this -->
     <script type="module">
       // Import your existing API functions
       import { getBaseURL, apiRequest } from "./js/apiConfig.js";
+      import { getStoredToken, getStoredUser } from "./js/tokenStorage.js";
 
       // ============================================
       // CONFIGURATION
@@ -1490,6 +1508,294 @@
       // Get API base URL from your config
       const API_BASE_URL = getBaseURL();
       console.log("API Base URL:", API_BASE_URL);
+
+      // ============================================
+      // AUTHENTICATION CHECK (Using your tokenStorage)
+      // ============================================
+
+      // Check if user is authenticated
+      function isAuthenticated() {
+        const token = getStoredToken();
+        const user = getStoredUser();
+
+        console.log("Auth check - Token:", !!token, "User:", !!user);
+
+        return !!(token && user); // Returns true if both token and user exist
+      }
+
+      // Get user data from storage
+      function getUserData() {
+        try {
+          const user = getStoredUser();
+          console.log("User data from storage:", user);
+          return user;
+        } catch (error) {
+          console.error("Error getting user data:", error);
+          return null;
+        }
+      }
+
+      // Redirect to login page with return URL
+      function redirectToLogin() {
+        // Store the current search parameters to restore after login
+        const stateSelect = document.getElementById("stateSelect");
+        const lgaSelect = document.getElementById("lgaSelect");
+
+        const searchParams = new URLSearchParams();
+        if (stateSelect?.value) searchParams.set("state", stateSelect.value);
+        if (lgaSelect?.value) searchParams.set("lga", lgaSelect.value);
+        searchParams.set("listingType", currentListingType);
+
+        // Encode the full return URL
+        const currentUrl = window.location.origin + window.location.pathname;
+        const returnTo = `${currentUrl}?${searchParams.toString()}`;
+
+        // Redirect to login with return parameter
+        window.location.href = `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+      }
+
+      // Check for saved search parameters on page load (after login)
+      function checkReturnedSearchParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // If we have search params in URL, restore them
+        if (urlParams.has("state") || urlParams.has("listingType")) {
+          const state = urlParams.get("state");
+          const lga = urlParams.get("lga");
+          const listingType = urlParams.get("listingType");
+
+          // Set the listing type mode
+          if (listingType) {
+            const mode = listingType === "sale" ? "buy" : "rent";
+            window.setMode(mode);
+          }
+
+          // Restore state selection
+          if (state) {
+            setTimeout(() => {
+              const stateSelect = document.getElementById("stateSelect");
+              if (stateSelect && locationsData) {
+                stateSelect.value = state;
+                populateLGADropdown(state);
+
+                // Restore LGA selection if available
+                if (lga) {
+                  setTimeout(() => {
+                    const lgaSelect = document.getElementById("lgaSelect");
+                    if (lgaSelect) {
+                      lgaSelect.value = lga;
+                    }
+                  }, 100);
+                }
+
+                // Perform the search automatically
+                setTimeout(() => {
+                  searchWithFilters();
+                }, 300);
+              }
+            }, 500);
+          }
+
+          // Clean URL without reloading
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname,
+          );
+        }
+      }
+
+      // ============================================
+      // USER INTERFACE FUNCTIONS
+      // ============================================
+
+      // Get user initials for avatar fallback
+      function getUserInitials(userData) {
+        if (!userData) return "U";
+
+        const name = userData.name || "";
+        const firstName = userData.firstName || userData.firstname || "";
+        const lastName = userData.lastName || userData.lastname || "";
+        const email = userData.email || "";
+        const username = userData.username || "";
+
+        // If we have a name, split it
+        if (name) {
+          const nameParts = name.split(" ");
+          if (nameParts.length >= 2) {
+            return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+          }
+          return nameParts[0][0].toUpperCase();
+        }
+
+        if (firstName && lastName) {
+          return (firstName[0] + lastName[0]).toUpperCase();
+        } else if (firstName) {
+          return firstName[0].toUpperCase();
+        } else if (username) {
+          return username[0].toUpperCase();
+        } else if (email) {
+          return email[0].toUpperCase();
+        }
+
+        return "U";
+      }
+
+      // Get user display name
+      function getUserDisplayName(userData) {
+        if (!userData) return "User";
+
+        const name = userData.name || "";
+        const firstName = userData.firstName || userData.firstname || "";
+        const lastName = userData.lastName || userData.lastname || "";
+        const username = userData.username || "";
+        const email = userData.email || "";
+
+        if (name) return name;
+        if (firstName && lastName) return `${firstName} ${lastName}`;
+        if (firstName) return firstName;
+        if (username) return username;
+        if (email) return email.split("@")[0];
+
+        return "User";
+      }
+
+      // Update navigation based on authentication state
+      function updateNavigation() {
+        const desktopAuthArea = document.getElementById("desktopAuthArea");
+        const mobileAuthArea = document.getElementById("mobileAuthArea");
+
+        if (!desktopAuthArea || !mobileAuthArea) {
+          console.error("Auth areas not found in DOM");
+          return;
+        }
+
+        if (isAuthenticated()) {
+          const userData = getUserData();
+          const displayName = getUserDisplayName(userData);
+          const initials = getUserInitials(userData);
+          const avatarUrl =
+            userData?.profile?.avatar ||
+            userData?.avatar ||
+            userData?.profilePicture ||
+            userData?.image ||
+            null;
+
+          console.log("Updating nav for authenticated user:", displayName);
+
+          // Update desktop auth area
+          desktopAuthArea.innerHTML = `
+        <a href="profile.html" class="flex items-center gap-2 group">
+          <div class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm overflow-hidden border-2 border-transparent group-hover:border-tertiary transition-all user-avatar">
+            ${
+              avatarUrl
+                ? `<img src="${avatarUrl}" alt="${displayName}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.textContent='${initials}';">`
+                : initials
+            }
+          </div>
+          <span class="text-sm font-bold text-primary group-hover:text-tertiary transition hidden xl:inline">
+            ${displayName}
+          </span>
+        </a>
+        <button 
+          onclick="window.handleLogout()" 
+          class="text-xs font-semibold text-on-surface-variant hover:text-red-600 transition ml-2 hidden xl:inline"
+          title="Logout"
+        >
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      `;
+
+          // Update mobile auth area
+          mobileAuthArea.innerHTML = `
+        <a href="profile.html" class="col-span-2 flex items-center justify-center gap-2 bg-primary/5 text-primary py-3 rounded-xl font-bold text-sm">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs overflow-hidden">
+            ${
+              avatarUrl
+                ? `<img src="${avatarUrl}" alt="${displayName}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.textContent='${initials}';">`
+                : initials
+            }
+          </div>
+          ${displayName}
+        </a>
+        <button 
+          onclick="window.handleLogout()" 
+          class="border border-red-200 text-red-600 text-center py-3 rounded-xl font-bold text-sm hover:bg-red-50 transition"
+        >
+          Logout
+        </button>
+      `;
+        } else {
+          console.log("Updating nav for unauthenticated user");
+
+          // Show login/register buttons
+          desktopAuthArea.innerHTML = `
+        <a
+          href="login.html"
+          class="text-sm font-bold text-primary hover:text-tertiary transition"
+        >
+          Login
+        </a>
+        <a
+          href="register.html"
+          class="bg-tertiary-container text-primary px-5 py-2.5 rounded-full text-sm font-extrabold hover:bg-tertiary-fixed transition shadow-sm"
+        >
+          Register
+        </a>
+      `;
+
+          mobileAuthArea.innerHTML = `
+        <a
+          href="login.html"
+          class="border border-primary/20 text-primary text-center py-3 rounded-xl font-bold text-sm"
+        >
+          Login
+        </a>
+        <a
+          href="register.html"
+          class="bg-tertiary-container text-primary text-center py-3 rounded-xl font-extrabold text-sm"
+        >
+          Register
+        </a>
+      `;
+        }
+
+        // Reinitialize Lucide icons for the new elements
+        if (typeof lucide !== "undefined") {
+          setTimeout(() => lucide.createIcons(), 50);
+        }
+      }
+
+      // Handle logout
+      async function handleLogout() {
+        try {
+          // Import and use authService logout
+          const { authService } = await import("./js/authService.js");
+          await authService.logout();
+        } catch (error) {
+          console.error("Logout error:", error);
+          // Fallback: clear auth data directly
+          const { clearAuthData } = await import("./js/tokenStorage.js");
+          clearAuthData();
+        }
+
+        // Update navigation
+        updateNavigation();
+
+        // Show notification
+        showNotification("Logged out successfully", "success");
+
+        // Reload featured properties if they were loaded
+        if (typeof loadFeaturedProperties === "function") {
+          loadFeaturedProperties();
+        }
+      }
+
+      // Make functions available globally
+      window.handleLogout = handleLogout;
+      window.updateNavigation = updateNavigation;
+      window.getUserData = getUserData;
+      window.isAuthenticated = isAuthenticated;
 
       // ============================================
       // CORE FILTER FUNCTIONS
@@ -1584,6 +1890,13 @@
 
       // Search properties with filters
       async function searchWithFilters() {
+        // Check authentication first
+        if (!isAuthenticated()) {
+          showNotification("Please login to search for properties", "warning");
+          setTimeout(() => redirectToLogin(), 1000);
+          return;
+        }
+
         const stateSelect = document.getElementById("stateSelect");
         const lgaSelect = document.getElementById("lgaSelect");
 
@@ -1597,60 +1910,25 @@
           return;
         }
 
-        // Show loading state on search button
-        const searchBtn = document.getElementById("searchBtn");
-        const originalBtnText = searchBtn?.innerHTML;
-        if (searchBtn) {
-          searchBtn.innerHTML =
-            '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div> Searching...';
-          searchBtn.disabled = true;
+        // Build query parameters
+        const queryParams = new URLSearchParams();
+        queryParams.set("state", selectedState);
+        if (selectedLGA && selectedLGA !== "") {
+          queryParams.set("lga", selectedLGA);
         }
+        queryParams.set("listingType", currentListingType);
 
-        try {
-          const queryParams = new URLSearchParams({
-            listingType: currentListingType,
-            state: selectedState,
-            limit: 20,
-          });
+        // Determine which page to redirect to
+        const targetPage =
+          currentListingType === "sale" ? "forsale.html" : "forrent.html";
 
-          if (selectedLGA && selectedLGA !== "") {
-            queryParams.append("lga", selectedLGA);
-          }
+        // Build the redirect URL with search parameters
+        const redirectUrl = `${targetPage}?${queryParams.toString()}`;
 
-          console.log("Searching with params:", queryParams.toString());
+        console.log("Redirecting to:", redirectUrl);
 
-          // Use your apiRequest function for search
-          const result = await apiRequest(`/houses/search?${queryParams}`);
-
-          if (result.success) {
-            updatePropertiesGrid(result.data);
-            showNotification(
-              `Found ${result.data.length} properties`,
-              "success",
-            );
-
-            // Scroll to results
-            document.getElementById("portfolio")?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          } else {
-            showNotification(result.message || "No properties found", "error");
-            updatePropertiesGrid([]);
-          }
-        } catch (error) {
-          console.error("Search error:", error);
-          showNotification(
-            error.message || "Failed to search properties",
-            "error",
-          );
-          updatePropertiesGrid([]);
-        } finally {
-          if (searchBtn) {
-            searchBtn.innerHTML = originalBtnText;
-            searchBtn.disabled = false;
-          }
-        }
+        // Redirect to the appropriate page with search parameters
+        window.location.href = redirectUrl;
       }
 
       // Load featured properties for homepage
@@ -1923,14 +2201,22 @@
         console.log("DOM loaded, initializing...");
         console.log("API Base URL from config:", API_BASE_URL);
 
+        // Update navigation based on auth state (MUST be first)
+        updateNavigation();
+
         // Initialize buy/rent mode
         window.setMode("buy");
 
         // Fetch locations from backend
         await fetchLocationsFromBackend();
 
-        // Load featured properties
-        await loadFeaturedProperties();
+        // Check if user returned from login with search params
+        checkReturnedSearchParams();
+
+        // Only load featured properties if not performing a search from return
+        if (!window.location.search.includes("state=")) {
+          await loadFeaturedProperties();
+        }
 
         // Setup event listeners for dynamic filters
         const stateSelect = document.getElementById("stateSelect");
@@ -1987,6 +2273,19 @@
             if (typeof lucide !== "undefined") lucide.createIcons();
           });
 
+          // Handle all mobile menu links including dynamic auth links
+          mobileMenu.addEventListener("click", (e) => {
+            // Close menu if a link or button is clicked
+            if (e.target.closest("a") || e.target.closest("button")) {
+              setTimeout(() => {
+                mobileMenu.classList.add("hidden");
+                mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+                if (typeof lucide !== "undefined") lucide.createIcons();
+              }, 150);
+            }
+          });
+
+          // Original mobile nav links
           document.querySelectorAll(".mobile-nav-link").forEach((link) => {
             link.addEventListener("click", () => {
               mobileMenu.classList.add("hidden");
@@ -2000,6 +2299,8 @@
         if (typeof lucide !== "undefined") {
           lucide.createIcons();
           setTimeout(() => lucide.createIcons(), 100);
+          // Additional call to ensure dynamic icons are rendered
+          setTimeout(() => lucide.createIcons(), 300);
         }
 
         // GSAP Animations
@@ -2083,6 +2384,22 @@
                 .scrollIntoView({ behavior: "smooth" });
             }
           });
+        });
+
+        // Listen for auth changes
+        const { authService } = await import("./js/authService.js");
+        authService.onAuthChange(({ token, user }) => {
+          console.log("Auth state changed:", !!token, !!user);
+          updateNavigation();
+          if (typeof loadFeaturedProperties === "function") {
+            loadFeaturedProperties();
+          }
+        });
+
+        // Handle browser back/forward buttons for auth state
+        window.addEventListener("pageshow", function (event) {
+          // Update navigation when page is shown from cache
+          updateNavigation();
         });
 
         console.log("Initialization complete");

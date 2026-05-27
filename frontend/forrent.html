@@ -597,6 +597,7 @@
 
     <script type="module">
       import { getBaseURL } from "./js/apiConfig.js";
+
       function formatNaira(amount) {
         return new Intl.NumberFormat("en-NG", {
           style: "currency",
@@ -604,6 +605,7 @@
           minimumFractionDigits: 0,
         }).format(amount);
       }
+
       function escapeHtml(str) {
         if (!str) return "";
         return str.replace(/[&<>]/g, function (m) {
@@ -613,6 +615,7 @@
           return m;
         });
       }
+
       function getBadge(house) {
         if (house.status === "rented")
           return { class: "badge-rented", text: "Rented" };
@@ -624,6 +627,7 @@
         if (diffDays <= 7) return { class: "badge-new", text: "New Listing" };
         return null;
       }
+
       async function fetchHouses() {
         const url = `${getBaseURL()}/houses?listingType=rent&status=published&limit=100`;
         const token = localStorage.getItem("auth_token");
@@ -634,6 +638,7 @@
         const data = await res.json();
         return data.houses || [];
       }
+
       function buildFilterOptions(houses) {
         const states = new Set();
         const lgaMap = new Map();
@@ -646,6 +651,7 @@
         });
         return { states: Array.from(states).sort(), lgaMap };
       }
+
       function populateStates(states) {
         const stateSelect = document.getElementById("stateFilter");
         stateSelect.innerHTML = '<option value="all">All States</option>';
@@ -656,6 +662,7 @@
           stateSelect.appendChild(opt);
         });
       }
+
       function populateLgas(lgaMap, selectedState) {
         const lgaSelect = document.getElementById("lgaFilter");
         lgaSelect.innerHTML = '<option value="all">All LGAs</option>';
@@ -670,6 +677,14 @@
             });
         }
       }
+
+      function getSearchParamsFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const state = urlParams.get("state");
+        const lga = urlParams.get("lga");
+        return { state, lga };
+      }
+
       function renderHouses(houses, container) {
         if (!houses.length) {
           container.innerHTML =
@@ -693,28 +708,28 @@
               ? '<span class="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">✓</span>'
               : "";
             return `
-          <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up" data-state="${house.state || ""}" data-lga="${house.lga || ""}">
-            <img src="${image}" class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700" loading="lazy" />
-            <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
-              <div class="flex gap-2">${badgeHtml}</div>
-              <a href="seller-profile.html?id=${sellerId}" class="flex items-center gap-2 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full shadow-sm hover:bg-white transition-all cursor-pointer">
-                <img src="${sellerLogo}" alt="Seller" class="w-5 h-5 rounded-full object-cover" />
-                <span class="text-[11px] font-bold text-primary">${escapeHtml(sellerName.substring(0, 15))}${verifiedBadge}</span>
-              </a>
-            </div>
-            <div class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay">
-              <h3 class="font-headline text-lg font-bold">${escapeHtml(house.title || "Property")}</h3>
-              <p class="text-xs text-white/80 mt-1">${escapeHtml(house.address || `${house.lga}, ${house.state}`)}</p>
-              <div class="mt-2 price-tag"><span class="text-white font-bold text-xl">${formatNaira(house.price)}</span><span class="text-sm font-normal">/ year</span></div>
-              <div class="flex gap-4 mt-3 text-xs text-white/80">
-                <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> ${house.bedrooms || "?"}</span>
-                <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> ${house.bathrooms || "?"}</span>
-                <span class="flex items-center gap-1"><i data-lucide="square" class="w-4 h-4"></i> ${house.size || "?"}m²</span>
-              </div>
-              <a href="property-details.html?id=${house._id}" class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition">View More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-            </div>
+      <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up" data-state="${house.state || ""}" data-lga="${house.lga || ""}">
+        <img src="${image}" class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700" loading="lazy" />
+        <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
+          <div class="flex gap-2">${badgeHtml}</div>
+          <a href="seller-profile.html?id=${sellerId}" class="flex items-center gap-2 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full shadow-sm hover:bg-white transition-all cursor-pointer">
+            <img src="${sellerLogo}" alt="Seller" class="w-5 h-5 rounded-full object-cover" />
+            <span class="text-[11px] font-bold text-primary">${escapeHtml(sellerName.substring(0, 15))}${verifiedBadge}</span>
+          </a>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay">
+          <h3 class="font-headline text-lg font-bold">${escapeHtml(house.title || "Property")}</h3>
+          <p class="text-xs text-white/80 mt-1">${escapeHtml(house.address || `${house.lga}, ${house.state}`)}</p>
+          <div class="mt-2 price-tag"><span class="text-white font-bold text-xl">${formatNaira(house.price)}</span><span class="text-sm font-normal">/ year</span></div>
+          <div class="flex gap-4 mt-3 text-xs text-white/80">
+            <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> ${house.bedrooms || "?"}</span>
+            <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> ${house.bathrooms || "?"}</span>
+            <span class="flex items-center gap-1"><i data-lucide="square" class="w-4 h-4"></i> ${house.size || "?"}m²</span>
           </div>
-        `;
+          <a href="property-details.html?id=${house._id}" class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition">View More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    `;
           })
           .join("");
         lucide.createIcons();
@@ -744,7 +759,21 @@
           lgaMap = lgaMapData;
           populateStates(states);
           populateLgas(lgaMap, "all");
-          renderHouses(allHouses, container);
+
+          // CHECK FOR URL PARAMETERS FROM INDEX PAGE
+          const urlParams = getSearchParamsFromUrl();
+          if (urlParams.state) {
+            stateSelect.value = urlParams.state;
+            currentFilters.state = urlParams.state;
+            populateLgas(lgaMap, urlParams.state);
+            if (urlParams.lga) {
+              currentFilters.lga = urlParams.lga;
+              lgaSelect.value = urlParams.lga;
+            }
+            applyFilters();
+          } else {
+            renderHouses(allHouses, container);
+          }
         } catch (err) {
           console.error(err);
           container.innerHTML =
