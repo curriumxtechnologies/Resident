@@ -236,11 +236,431 @@
         padding: 0.75rem 0;
         border-bottom: 1px solid rgba(116, 119, 129, 0.18);
       }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 20px;
+      }
+
+      .modal.active {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 16px;
+        max-width: 800px;
+        width: 100%;
+        margin: 40px auto;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .modal-header {
+        padding: 24px 32px;
+        border-bottom: 1px solid #f3f3f6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 10;
+        border-radius: 16px 16px 0 0;
+      }
+
+      .modal-body {
+        padding: 32px;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      .modal-body::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .modal-body::-webkit-scrollbar-track {
+        background: #f3f3f6;
+        border-radius: 3px;
+      }
+
+      .modal-body::-webkit-scrollbar-thumb {
+        background: #c5aa23;
+        border-radius: 3px;
+      }
+
+      .close-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: #f3f3f6;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        font-size: 20px;
+        color: #001c4a;
+      }
+
+      .close-btn:hover {
+        background: #e31b23;
+        color: white;
+        transform: rotate(90deg);
+      }
+
+      @media (max-width: 768px) {
+        .modal-content {
+          margin: 20px auto;
+        }
+        .modal-header {
+          padding: 20px;
+        }
+        .modal-body {
+          padding: 20px;
+        }
+      }
     </style>
   </head>
   <body
     class="bg-surface text-on-surface font-body antialiased overflow-x-hidden"
   >
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="text-2xl font-headline font-extrabold text-primary">
+            Privacy Policy
+          </h2>
+          <button class="close-btn" onclick="closeModal('privacyModal')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="space-y-6 text-on-surface-variant">
+            <div>
+              <p class="text-sm mb-4">Last updated: January 2026</p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                1. Introduction
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Rezident ("we," "our," or "us") is committed to protecting your
+                privacy. This Privacy Policy explains how we collect, use,
+                disclose, and safeguard your information when you visit our
+                website or use our real estate services. Please read this
+                privacy policy carefully. If you do not agree with the terms of
+                this privacy policy, please do not access the site.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                2. Information We Collect
+              </h3>
+              <p class="text-sm leading-relaxed mb-2">
+                We may collect information about you in a variety of ways:
+              </p>
+              <ul class="list-disc pl-5 text-sm space-y-2">
+                <li>
+                  <strong>Personal Data:</strong> Name, email address, phone
+                  number, and other contact information you provide when
+                  registering or contacting us.
+                </li>
+                <li>
+                  <strong>Financial Data:</strong> Payment information for
+                  property transactions, including bank details and transaction
+                  history.
+                </li>
+                <li>
+                  <strong>Property Preferences:</strong> Information about your
+                  real estate interests, budget, and location preferences.
+                </li>
+                <li>
+                  <strong>Automatically Collected Data:</strong> IP address,
+                  browser type, operating system, access times, and pages viewed
+                  directly before and after accessing the site.
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                3. How We Use Your Information
+              </h3>
+              <p class="text-sm leading-relaxed mb-2">
+                We use the information we collect for the following purposes:
+              </p>
+              <ul class="list-disc pl-5 text-sm space-y-2">
+                <li>
+                  To process property purchases, rentals, and transactions
+                </li>
+                <li>To provide personalized property recommendations</li>
+                <li>
+                  To communicate with you about our services and respond to
+                  inquiries
+                </li>
+                <li>To verify your identity and prevent fraud</li>
+                <li>
+                  To comply with legal and regulatory obligations in Nigeria
+                </li>
+                <li>To improve our website and service offerings</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                4. Data Protection & Security
+              </h3>
+              <p class="text-sm leading-relaxed">
+                We implement appropriate technical and organizational security
+                measures to protect your personal information against
+                unauthorized access, alteration, disclosure, or destruction.
+                These include encryption, secure servers, and restricted access
+                protocols. However, no method of transmission over the Internet
+                is 100% secure, and we cannot guarantee absolute security.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                5. Sharing Your Information
+              </h3>
+              <p class="text-sm leading-relaxed">
+                We do not sell, trade, or rent your personal information to
+                third parties. We may share your information with trusted
+                partners who assist us in operating our website, conducting our
+                business, or servicing you, provided those parties agree to keep
+                this information confidential. We may also release information
+                when required by law or to protect our rights.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                6. Your Rights
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Under the Nigeria Data Protection Regulation (NDPR), you have
+                the right to access, correct, or delete your personal
+                information. You may also object to processing, request data
+                portability, and withdraw consent at any time. To exercise these
+                rights, contact us at privacy@rezident.com.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                7. Contact Us
+              </h3>
+              <p class="text-sm leading-relaxed">
+                If you have questions about this Privacy Policy, please contact
+                us at:<br />
+                <strong>Email:</strong> privacy@rezident.com<br />
+                <strong>Address:</strong> 15 Adeola Odeku Street, Victoria
+                Island, Lagos, Nigeria<br />
+                <strong>Phone:</strong> +234 800 000 0000
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="text-2xl font-headline font-extrabold text-primary">
+            Terms of Service
+          </h2>
+          <button class="close-btn" onclick="closeModal('termsModal')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="space-y-6 text-on-surface-variant">
+            <div>
+              <p class="text-sm mb-4">Last updated: January 2026</p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                1. Acceptance of Terms
+              </h3>
+              <p class="text-sm leading-relaxed">
+                By accessing and using the Rezident website and services, you
+                accept and agree to be bound by the terms and provisions of this
+                agreement. If you do not agree to these terms, please do not use
+                our services.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                2. Description of Services
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Rezident provides a premium real estate platform connecting
+                buyers, sellers, landlords, and tenants in Nigeria. Our services
+                include property listings, property management, concierge
+                services, and transaction facilitation. All property listings
+                are subject to availability and verification.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                3. User Obligations
+              </h3>
+              <p class="text-sm leading-relaxed mb-2">
+                As a user of our services, you agree to:
+              </p>
+              <ul class="list-disc pl-5 text-sm space-y-2">
+                <li>
+                  Provide accurate and complete information when registering or
+                  transacting
+                </li>
+                <li>
+                  Maintain the confidentiality of your account credentials
+                </li>
+                <li>
+                  Use our services only for lawful purposes and in compliance
+                  with Nigerian law
+                </li>
+                <li>
+                  Not engage in fraudulent or misleading activities on our
+                  platform
+                </li>
+                <li>
+                  Respect the intellectual property rights of Rezident and third
+                  parties
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                4. Property Transactions
+              </h3>
+              <p class="text-sm leading-relaxed">
+                All property transactions conducted through Rezident are subject
+                to verification, due diligence, and legal compliance. We reserve
+                the right to refuse or cancel any transaction that appears
+                suspicious or violates our policies. Property prices, rental
+                rates, and availability are subject to change without notice.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                5. Fees and Payments
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Rezident charges service fees for premium listings, concierge
+                services, and transaction facilitation. All fees are
+                non-refundable unless otherwise stated. Payment terms will be
+                disclosed before any transaction is initiated. We use secure
+                payment processors and comply with all applicable financial
+                regulations in Nigeria.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                6. Limitation of Liability
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Rezident acts as an intermediary between buyers, sellers,
+                landlords, and tenants. While we verify listings to the best of
+                our ability, we do not guarantee the accuracy of all property
+                information provided by third parties. Rezident shall not be
+                liable for any indirect, incidental, or consequential damages
+                arising from the use of our services.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                7. Intellectual Property
+              </h3>
+              <p class="text-sm leading-relaxed">
+                All content on the Rezident website, including logos, text,
+                images, and software, is the property of Rezident and protected
+                by Nigerian and international copyright laws. You may not
+                reproduce, distribute, or create derivative works without
+                express written permission.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                8. Termination
+              </h3>
+              <p class="text-sm leading-relaxed">
+                We reserve the right to terminate or suspend your account and
+                access to our services at our sole discretion, without prior
+                notice, for conduct that we believe violates these Terms or is
+                harmful to other users, us, or third parties.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                9. Governing Law
+              </h3>
+              <p class="text-sm leading-relaxed">
+                These Terms shall be governed and construed in accordance with
+                the laws of the Federal Republic of Nigeria. Any disputes
+                arising from these terms shall be subject to the exclusive
+                jurisdiction of the courts in Lagos, Nigeria.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                10. Contact Information
+              </h3>
+              <p class="text-sm leading-relaxed">
+                For any questions regarding these Terms of Service, please
+                contact:<br />
+                <strong>Email:</strong> legal@rezident.com<br />
+                <strong>Address:</strong> 15 Adeola Odeku Street, Victoria
+                Island, Lagos, Nigeria<br />
+                <strong>Phone:</strong> +234 800 000 0000
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <header
       class="sticky top-0 w-full z-50 bg-white/85 backdrop-blur-xl shadow-sm transition-all duration-300 border-b border-surface-container/50"
     >
@@ -1039,8 +1459,21 @@
       >
         <p>© 2026 Rezident Luxury. All rights reserved.</p>
         <div class="flex gap-5">
-          <a href="#" class="hover:text-primary transition">Privacy Policy</a
-          ><a href="#" class="hover:text-primary transition"
+          <a
+            href="#"
+            onclick="
+              openModal('privacyModal');
+              return false;
+            "
+            class="hover:text-primary transition"
+            >Privacy Policy</a
+          ><a
+            href="#"
+            onclick="
+              openModal('termsModal');
+              return false;
+            "
+            class="hover:text-primary transition"
             >Terms of Service</a
           >
         </div>
@@ -1079,6 +1512,50 @@
 
       window.setMode = setMode;
       setMode("buy");
+
+      // Modal functions
+      function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add("active");
+          document.body.style.overflow = "hidden";
+          // Scroll modal content to top
+          const modalBody = modal.querySelector(".modal-body");
+          if (modalBody) {
+            modalBody.scrollTop = 0;
+          }
+        }
+      }
+
+      function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+      }
+
+      // Close modal when clicking outside
+      document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("modal")) {
+          event.target.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          const activeModals = document.querySelectorAll(".modal.active");
+          activeModals.forEach((modal) => {
+            modal.classList.remove("active");
+          });
+          document.body.style.overflow = "";
+        }
+      });
+
+      window.openModal = openModal;
+      window.closeModal = closeModal;
 
       const mobileMenuBtn = document.getElementById("mobileMenuBtn");
       const mobileMenu = document.getElementById("mobileMenu");
