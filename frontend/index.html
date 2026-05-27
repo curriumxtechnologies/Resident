@@ -913,7 +913,11 @@
                   districts.
                 </p>
                 <a
-                  href="forsale.html"
+                  href="#"
+                  onclick="
+                    event.preventDefault();
+                    window.navigateToProtectedPage('forsale.html');
+                  "
                   class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/40 px-5 py-2 rounded-full font-semibold text-sm hover:bg-white hover:text-primary transition"
                   >Explore Houses
                   <i data-lucide="arrow-right" class="w-4 h-4"></i
@@ -948,7 +952,11 @@
                   concierge.
                 </p>
                 <a
-                  href="forrent.html"
+                  href="#"
+                  onclick="
+                    event.preventDefault();
+                    window.navigateToProtectedPage('forrent.html');
+                  "
                   class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/40 px-5 py-2 rounded-full font-semibold text-sm hover:bg-white hover:text-primary transition"
                   >Discover Rentals
                   <i data-lucide="arrow-right" class="w-4 h-4"></i
@@ -1660,6 +1668,25 @@
         return "User";
       }
 
+      // Handle protected page navigation
+      function navigateToProtectedPage(page) {
+        if (isAuthenticated()) {
+          window.location.href = page;
+        } else {
+          // Store the intended destination as relative path
+          // This will be the current path + the target page
+          const currentPath = window.location.pathname.substring(
+            0,
+            window.location.pathname.lastIndexOf("/") + 1,
+          );
+          const returnTo = currentPath + page;
+          window.location.href = `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+        }
+      }
+
+      // Make it available globally
+      window.navigateToProtectedPage = navigateToProtectedPage;
+
       // Update navigation based on authentication state
       function updateNavigation() {
         const desktopAuthArea = document.getElementById("desktopAuthArea");
@@ -1708,26 +1735,26 @@
 
           // Update mobile auth area
           mobileAuthArea.innerHTML = `
-  <div class="col-span-2 grid grid-cols-2 gap-3">
-    <a href="profile.html" class="flex items-center justify-center gap-2 bg-primary/5 text-primary py-3 rounded-xl font-bold text-sm">
-      <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs overflow-hidden">
-        ${
-          avatarUrl
-            ? `<img src="${avatarUrl}" alt="${displayName}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.textContent='${initials}';">`
-            : initials
-        }
-      </div>
-      <span class="truncate max-w-[100px]">${displayName}</span>
-    </a>
-    <button 
-      onclick="window.handleLogout()" 
-      class="flex items-center justify-center gap-2 border border-red-200 text-red-600 py-3 rounded-xl font-bold text-sm hover:bg-red-50 transition"
-    >
-      <i data-lucide="log-out" class="w-4 h-4"></i>
-      <span>Logout</span>
-    </button>
-  </div>
-`;
+          <div class="col-span-2 grid grid-cols-2 gap-3">
+            <a href="profile.html" class="flex items-center justify-center gap-2 bg-primary/5 text-primary py-3 rounded-xl font-bold text-sm">
+              <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs overflow-hidden">
+                ${
+                  avatarUrl
+                    ? `<img src="${avatarUrl}" alt="${displayName}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.textContent='${initials}';">`
+                    : initials
+                }
+              </div>
+              <span class="truncate max-w-[100px]">${displayName}</span>
+            </a>
+            <button 
+              onclick="window.handleLogout()" 
+              class="flex items-center justify-center gap-2 border border-red-200 text-red-600 py-3 rounded-xl font-bold text-sm hover:bg-red-50 transition"
+            >
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+              <span>Logout</span>
+            </button>
+          </div>
+        `;
         } else {
           console.log("Updating nav for unauthenticated user");
 

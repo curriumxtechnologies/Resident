@@ -426,6 +426,16 @@
       let currentUserId = null;
       let currentEmail = null;
 
+      // ----- Helper: Get redirect URL after login -----
+      function getRedirectUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const returnTo = urlParams.get("returnTo");
+        if (returnTo) {
+          return decodeURIComponent(returnTo);
+        }
+        return "home.html";
+      }
+
       // ----- Toast system -----
       const toastContainer = document.getElementById("toastRoot");
       function showToast(message, type = "info", duration = 3500) {
@@ -567,7 +577,7 @@
           await authService.verifySigninOTP({ userId: currentUserId, otp });
           showToast("Login successful! Redirecting...", "success", 1500);
           setTimeout(() => {
-            window.location.href = "home.html";
+            window.location.href = getRedirectUrl();
           }, 500);
         } catch (err) {
           showToast(err.message || "Invalid verification code", "error");
@@ -623,7 +633,7 @@
               await authService.googleAuth(idToken);
               showToast("Google sign-in successful! Redirecting...", "success");
               setTimeout(() => {
-                window.location.href = "home.html";
+                window.location.href = getRedirectUrl();
               }, 800);
             } catch (err) {
               showToast(
