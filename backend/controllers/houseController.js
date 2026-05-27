@@ -404,6 +404,147 @@ const getHouses = asyncHandler(async (req, res) => {
     paystackReq.end();
   });
 
+  // backend/controllers/houseController.js
+
+  // @desc    Get all unique states and their LGAs from published houses
+  // @route   GET /api/houses/locations
+  // @access  Public
+  const getLocations = asyncHandler(async (req, res) => {
+    try {
+      // Get all published houses (excluding suspended sellers)
+      const suspendedSellers = await User.find({ isSuspended: true, role: "seller" }).distinct("_id");
+      
+      const filter = { status: "published" };
+      if (suspendedSellers.length) {
+        filter.user = { $nin: suspendedSellers };
+      }
+      
+      const houses = await House.find(filter, 'state lga');
+      
+      // Create a map of unique states and their LGAs
+      const statesMap = new Map();
+      
+      houses.forEach(house => {
+        if (house.state && house.lga) {
+          if (!statesMap.has(house.state)) {
+            statesMap.set(house.state, new Set());
+          }
+          statesMap.get(house.state).add(house.lga);
+        }
+      });
+      
+      // Convert to the required format
+      const states = Array.from(statesMap.keys()).sort();
+      const lgAs = {};
+      
+      statesMap.forEach((lgas, state) => {
+        lgAs[state] = Array.from(lgas).sort();
+      });
+      
+      res.status(200).json({
+        success: true,
+        data: { states, lgAs }
+      });
+    } catch (error) {
+      console.error('Error fetching locations:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch locations',
+        error: error.message
+      });
+    }
+  });
+
+  // @desc    Search houses with filters (enhanced for homepage)
+  // @route   GET /api/houses/search
+  // @access  Public
+  const searchHouses = asyncHandler(async (req, res) => {
+    const {
+      state,
+      lga,
+      listingType,
+      minPrice,
+      maxPrice,
+      bedrooms,
+      limit = 9,
+    } = req.query;
+    
+    // Base filter - only published listings
+    const filter = { status: "published" };
+    
+    // Apply filters
+    if (listingType && ['rent', 'sale'].includes(listingType)) {
+      filter.listingType = listingType;
+    }
+    
+    if (state && state !== '') {
+      filter.state = { $regex: new RegExp(`^${state}$`, 'i') };
+    }
+    
+    if (lga && lga !== '') {
+      filter.lga = { $regex: new RegExp(`^${lga}$`, 'i') };
+    }
+    
+    if (bedrooms && !isNaN(parseInt(bedrooms))) {
+      filter.bedrooms = { $gte: parseInt(bedrooms) };
+    }
+    
+    // Price range
+    if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice && !isNaN(parseFloat(minPrice))) filter.price.$gte = parseFloat(minPrice);
+      if (maxPrice && !isNaN(parseFloat(maxPrice))) filter.price.$lte = parseFloat(maxPrice);
+    }
+    
+    // Exclude houses from suspended sellers
+    const suspendedSellers = await User.find({ isSuspended: true, role: "seller" }).distinct("_id");
+    if (suspendedSellers.length) {
+      filter.user = { $nin: suspendedSellers };
+    }
+    
+    // Fetch houses with seller details
+    const houses = await House.find(filter)
+      .populate("user", "name email phone profile verificationBadge sellerType sellerVerified isSuspended")
+      .sort({ createdAt: -1 })
+      .limit(parseInt(limit));
+    
+    res.status(200).json({
+      success: true,
+      count: houses.length,
+      data: houses
+    });
+  });
+
+  // @desc    Get featured/trending houses for homepage
+  // @route   GET /api/houses/featured
+  // @access  Public
+  const getFeaturedHouses = asyncHandler(async (req, res) => {
+    const { listingType, limit = 6 } = req.query;
+    
+    const filter = { status: "published" };
+    
+    if (listingType && ['rent', 'sale'].includes(listingType)) {
+      filter.listingType = listingType;
+    }
+    
+    // Exclude suspended sellers
+    const suspendedSellers = await User.find({ isSuspended: true, role: "seller" }).distinct("_id");
+    if (suspendedSellers.length) {
+      filter.user = { $nin: suspendedSellers };
+    }
+    
+    // Get newest listings as featured (you can modify this logic)
+    const houses = await House.find(filter)
+      .populate("user", "name email phone profile verificationBadge sellerType sellerVerified")
+      .sort({ createdAt: -1 })
+      .limit(parseInt(limit));
+    
+    res.status(200).json({
+      success: true,
+      data: houses
+    });
+  });
+
   // -------------------------------------------------------------------
   //  PAYSTACK VERIFY PAYMENT (after callback)
   // -------------------------------------------------------------------
@@ -460,4 +601,7 @@ const getHouses = asyncHandler(async (req, res) => {
     toggleStatus,
     initiatePayment,
     verifyPayment,
+    getLocations,        // Add this
+    searchHouses,        // Add this
+    getFeaturedHouses,   // Add this
   };
