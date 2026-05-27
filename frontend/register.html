@@ -1,580 +1,886 @@
-<!DOCTYPE html>
+<!doctype html>
 <html class="scroll-smooth" lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Create Account | Resident</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Register | Rezident Homes</title>
 
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Favicon -->
-  <link rel="icon" href="images/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="images/android-chrome-192x192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="images/android-chrome-512x512.png" />
-  <link rel="manifest" href="images/site.webmanifest" />
-  <meta name="theme-color" content="#0D316D" />
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
 
-  <!-- Google Identity Services (One Tap + button) -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Identity Services (One Tap + button) -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: "#001c4a",
-            "primary-container": "#0d316d",
-            tertiary: "#6e5d00",
-            "tertiary-container": "#c5aa23",
-            "tertiary-fixed": "#ffe260",
-            surface: "#f9f9fc",
-            "on-surface": "#1a1c1e",
-            "on-surface-variant": "#444650",
-            outline: "#747781",
-          },
-          fontFamily: {
-            headline: ["Manrope", "system-ui", "sans-serif"],
-            body: ["Inter", "system-ui", "sans-serif"],
-          },
-          animation: {
-            'toast-in': 'toastIn 0.3s cubic-bezier(0.21, 1.11, 0.35, 1) forwards',
-            'toast-out': 'toastOut 0.2s ease-in forwards',
-          },
-          keyframes: {
-            toastIn: {
-              '0%': { opacity: '0', transform: 'translateY(-20px) scale(0.95)' },
-              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
             },
-            toastOut: {
-              '0%': { opacity: '1', transform: 'translateY(0)' },
-              '100%': { opacity: '0', transform: 'translateY(-15px)' },
-            }
-          }
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+            animation: {
+              "toast-in":
+                "toastIn 0.3s cubic-bezier(0.21, 1.11, 0.35, 1) forwards",
+              "toast-out": "toastOut 0.2s ease-in forwards",
+            },
+            keyframes: {
+              toastIn: {
+                "0%": {
+                  opacity: "0",
+                  transform: "translateY(-20px) scale(0.95)",
+                },
+                "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+              },
+              toastOut: {
+                "0%": { opacity: "1", transform: "translateY(0)" },
+                "100%": { opacity: "0", transform: "translateY(-15px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      .hero-radial-mask {
+        background: radial-gradient(
+          circle at 70% 30%,
+          rgba(0, 28, 74, 0.25) 0%,
+          rgba(0, 28, 74, 0.75) 75%,
+          #001c4a 100%
+        );
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+      }
+      button:active {
+        transform: scale(0.97);
+        transition: transform 0.05s;
+      }
+      .btn-loading {
+        pointer-events: none;
+        opacity: 0.8;
+      }
+      .spinner {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+        border-top-color: currentColor;
+        animation: spin 0.6s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
       }
-    };
-  </script>
+      .otp-digit:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.2);
+      }
+      .toast-stack {
+        position: fixed;
+        top: 24px;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        z-index: 1100;
+        pointer-events: none;
+      }
+      .toast-message {
+        pointer-events: auto;
+        max-width: 90%;
+        width: 380px;
+        background: #1e293b;
+        backdrop-filter: blur(12px);
+        color: white;
+        border-radius: 60px;
+        padding: 12px 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        border-left: 4px solid;
+        font-family: "Inter", system-ui;
+      }
+      .toast-success {
+        background: #0a2f1f;
+        border-left-color: #4ade80;
+      }
+      .toast-error {
+        background: #4a1a1f;
+        border-left-color: #f87171;
+      }
+      .toast-info {
+        background: #1e2a3e;
+        border-left-color: #60a5fa;
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body antialiased relative">
+    <div id="toastStack" class="toast-stack"></div>
 
-  <style>
-    * { -webkit-tap-highlight-color: transparent; }
-    .hero-radial-mask {
-      background: radial-gradient(circle at 70% 30%, rgba(0, 28, 74, 0.25) 0%, rgba(0, 28, 74, 0.75) 75%, #001c4a 100%);
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
-    }
-    button:active { transform: scale(0.97); transition: transform 0.05s; }
-    .btn-loading { pointer-events: none; opacity: 0.8; }
-    .spinner {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(0,0,0,0.2);
-      border-radius: 50%;
-      border-top-color: currentColor;
-      animation: spin 0.6s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .otp-digit:focus {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px -6px rgba(0,0,0,0.2);
-    }
-    .toast-stack {
-      position: fixed;
-      top: 24px;
-      left: 0;
-      right: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      z-index: 1100;
-      pointer-events: none;
-    }
-    .toast-message {
-      pointer-events: auto;
-      max-width: 90%;
-      width: 380px;
-      background: #1e293b;
-      backdrop-filter: blur(12px);
-      color: white;
-      border-radius: 60px;
-      padding: 12px 20px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
-      border-left: 4px solid;
-      font-family: 'Inter', system-ui;
-    }
-    .toast-success { background: #0a2f1f; border-left-color: #4ade80; }
-    .toast-error { background: #4a1a1f; border-left-color: #f87171; }
-    .toast-info { background: #1e2a3e; border-left-color: #60a5fa; }
-  </style>
-</head>
-<body class="bg-surface text-on-surface font-body antialiased relative">
-
-  <div id="toastStack" class="toast-stack"></div>
-
-  <main class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden">
-    <div class="absolute inset-0 z-0">
-      <img src="images/hero.avif" alt="Luxury residence" class="w-full h-full object-cover brightness-[0.58] saturate-110" />
-      <div class="absolute inset-0 hero-radial-mask mix-blend-multiply"></div>
-    </div>
-
-    <section class="relative z-10 w-full max-w-xl">
-      <div class="glass-card rounded-2xl shadow-2xl p-6 sm:p-8">
-        <!-- Step 1: Signup Form -->
-        <div id="signupStep1">
-          <div class="text-center mb-8">
-            <img src="images/logo.png" alt="Resident" class="h-10 mx-auto mb-5 object-contain" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('afterbegin','<h1 class=\'text-2xl font-black tracking-tighter text-primary mb-5\'>RESIDENT</h1>')">
-            <span class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
-              <i data-lucide="user-plus" class="w-4 h-4"></i> User Registration
-            </span>
-            <h1 class="font-headline text-3xl font-extrabold text-primary">Create Your Account</h1>
-            <p class="text-sm text-on-surface-variant mt-2">Sign up to save properties, request tours, and manage your real estate journey.</p>
-          </div>
-
-          <!-- Google One-Tap Button (rendered by Google SDK) -->
-          <div id="googleButtonWrapper" class="w-full"></div>
-
-          <div class="flex items-center gap-4 my-6">
-            <div class="h-px bg-outline/20 flex-1"></div>
-            <span class="text-xs text-on-surface-variant font-semibold">OR</span>
-            <div class="h-px bg-outline/20 flex-1"></div>
-          </div>
-
-          <!-- Local Signup Form -->
-          <form id="signupForm" class="space-y-5">
-            <div>
-              <label for="fullName" class="block text-sm font-bold text-primary mb-2">Full Name *</label>
-              <div class="relative">
-                <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
-                <input id="fullName" type="text" name="name" placeholder="Enter your full name" required class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
-              </div>
-            </div>
-
-            <div>
-              <label for="username" class="block text-sm font-bold text-primary mb-2">Username *</label>
-              <div class="relative">
-                <i data-lucide="at-sign" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
-                <input id="username" type="text" name="username" placeholder="Choose a username" required class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
-              </div>
-            </div>
-
-            <div>
-              <label for="email" class="block text-sm font-bold text-primary mb-2">Email Address *</label>
-              <div class="relative">
-                <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
-                <input id="email" type="email" name="email" placeholder="you@example.com" required class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
-              </div>
-            </div>
-
-            <div class="grid sm:grid-cols-2 gap-5">
-              <div>
-                <label for="phone" class="block text-sm font-bold text-primary mb-2">Phone Number</label>
-                <div class="relative">
-                  <i data-lucide="phone" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
-                  <input id="phone" type="tel" name="phone" placeholder="08012345678" class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
-                </div>
-              </div>
-              <div>
-                <label for="alternatePhone" class="block text-sm font-bold text-primary mb-2">Alternate Phone</label>
-                <div class="relative">
-                  <i data-lucide="phone-call" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
-                  <input id="alternatePhone" type="tel" name="alternatePhone" placeholder="Optional" class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
-                </div>
-              </div>
-            </div>
-
-            <div class="grid sm:grid-cols-2 gap-5">
-              <div>
-                <label for="password" class="block text-sm font-bold text-primary mb-2">Password *</label>
-                <div class="relative">
-                  <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
-                  <input id="password" type="password" name="password" placeholder="Create password" required minlength="6" class="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
-                  <button type="button" class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition" data-target="password">
-                    <i data-lucide="eye" class="w-5 h-5"></i>
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label for="confirmPassword" class="block text-sm font-bold text-primary mb-2">Confirm Password *</label>
-                <div class="relative">
-                  <i data-lucide="lock-keyhole" class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"></i>
-                  <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm password" required class="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition" />
-                  <button type="button" class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition" data-target="confirmPassword">
-                    <i data-lucide="eye" class="w-5 h-5"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <label class="flex items-start gap-3 text-sm text-on-surface-variant">
-              <input type="checkbox" id="agreeTerms" required class="mt-1 rounded border-outline/40 text-primary focus:ring-primary" />
-              <span>I agree to Resident’s <a href="#" class="font-bold text-primary hover:text-tertiary transition">Terms</a> and <a href="#" class="font-bold text-primary hover:text-tertiary transition">Privacy Policy</a>.</span>
-            </label>
-
-            <button type="submit" id="registerSubmitBtn" class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md flex items-center justify-center gap-2 active:scale-[0.98]">
-              <span>Register</span>
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
-          </form>
-
-          <p class="text-center text-sm text-on-surface-variant mt-7">
-            Already have an account?
-            <a href="login.html" class="font-bold text-primary hover:text-tertiary transition">Sign in</a>
-          </p>
-        </div>
-
-        <!-- Step 2: OTP Verification -->
-        <div id="signupStep2" class="hidden">
-          <div class="text-center mb-8">
-            <span class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
-              <i data-lucide="smartphone" class="w-4 h-4"></i> Verify Email
-            </span>
-            <h1 class="font-headline text-3xl font-extrabold text-primary">Check Your Email</h1>
-            <p class="text-sm text-on-surface-variant mt-2">We've sent a 6‑digit code to <span id="otpEmailDisplay" class="font-bold text-primary"></span></p>
-          </div>
-
-          <div id="otpInputGroup" class="flex justify-center gap-3 my-8 flex-wrap"></div>
-
-          <button id="verifyOtpBtn" class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md flex items-center justify-center gap-2 active:scale-[0.98]">
-            <span>Verify Account</span>
-            <i data-lucide="check-circle" class="w-4 h-4"></i>
-          </button>
-
-          <div class="text-center mt-6 text-sm">
-            <p class="text-on-surface-variant">
-              Didn't receive the code?
-              <button id="resendOtpBtn" class="font-bold text-primary hover:text-tertiary transition disabled:opacity-50 disabled:cursor-not-allowed">Resend OTP</button>
-            </p>
-            <button id="backToSignup" class="text-outline hover:text-primary mt-2 inline-block font-medium transition">← Back to signup</button>
-          </div>
-        </div>
+    <main
+      class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden"
+    >
+      <div class="absolute inset-0 z-0">
+        <img
+          src="images/hero.avif"
+          alt="Luxury residence"
+          class="w-full h-full object-cover brightness-[0.58] saturate-110"
+        />
+        <div class="absolute inset-0 hero-radial-mask mix-blend-multiply"></div>
       </div>
-      <p class="text-center text-white/70 text-xs mt-6">© 2026 Resident Luxury. All rights reserved.</p>
-    </section>
-  </main>
 
-  <script type="module">
-    import { authService } from "./js/authService.js";
+      <section class="relative z-10 w-full max-w-xl">
+        <div class="glass-card rounded-2xl shadow-2xl p-6 sm:p-8">
+          <!-- Step 1: Signup Form -->
+          <div id="signupStep1">
+            <div class="text-center mb-8">
+              <img
+                src="images/logo.png"
+                alt="Resident"
+                class="h-10 mx-auto mb-5 object-contain"
+                onerror="
+                  this.style.display = 'none';
+                  this.parentElement.insertAdjacentHTML(
+                    'afterbegin',
+                    '<h1 class=\'text-2xl font-black tracking-tighter text-primary mb-5\'>RESIDENT</h1>',
+                  );
+                "
+              />
+              <span
+                class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+              >
+                <i data-lucide="user-plus" class="w-4 h-4"></i> User
+                Registration
+              </span>
+              <h1 class="font-headline text-3xl font-extrabold text-primary">
+                Create Your Account
+              </h1>
+              <p class="text-sm text-on-surface-variant mt-2">
+                Sign up to save properties, request tours, and manage your real
+                estate journey.
+              </p>
+            </div>
 
-    // Google Client ID (same as before)
-    const GOOGLE_CLIENT_ID = "139378208657-e640gtpqqljkrve8u7ho82q5v90k6jfl.apps.googleusercontent.com";
+            <!-- Google One-Tap Button (rendered by Google SDK) -->
+            <div id="googleButtonWrapper" class="w-full"></div>
 
-    // DOM elements
-    const step1 = document.getElementById("signupStep1");
-    const step2 = document.getElementById("signupStep2");
-    const signupForm = document.getElementById("signupForm");
-    const otpEmailDisplay = document.getElementById("otpEmailDisplay");
-    const otpInputGroup = document.getElementById("otpInputGroup");
-    const verifyBtn = document.getElementById("verifyOtpBtn");
-    const resendBtn = document.getElementById("resendOtpBtn");
-    const backBtn = document.getElementById("backToSignup");
-    const registerSubmitBtn = document.getElementById("registerSubmitBtn");
+            <div class="flex items-center gap-4 my-6">
+              <div class="h-px bg-outline/20 flex-1"></div>
+              <span class="text-xs text-on-surface-variant font-semibold"
+                >OR</span
+              >
+              <div class="h-px bg-outline/20 flex-1"></div>
+            </div>
 
-    let currentUserId = null;
-    let currentEmail = null;
+            <!-- Local Signup Form -->
+            <form id="signupForm" class="space-y-5">
+              <div>
+                <label
+                  for="fullName"
+                  class="block text-sm font-bold text-primary mb-2"
+                  >Full Name *</label
+                >
+                <div class="relative">
+                  <i
+                    data-lucide="user"
+                    class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
+                  ></i>
+                  <input
+                    id="fullName"
+                    type="text"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
+                  />
+                </div>
+              </div>
 
-    // ---------- FLOATING TOAST SYSTEM ----------
-    const toastStack = document.getElementById("toastStack");
-    function showToast(message, type = "info", duration = 4000) {
-      const toast = document.createElement("div");
-      toast.className = `toast-message toast-${type}`;
-      let icon = type === "success" ? "✓" : type === "error" ? "⚠️" : "ℹ️";
-      toast.innerHTML = `<span class="text-base font-bold">${icon}</span><span class="flex-1">${message}</span>`;
-      toast.style.animation = "toastIn 0.3s cubic-bezier(0.21, 1.11, 0.35, 1) forwards";
-      toastStack.appendChild(toast);
-      setTimeout(() => {
-        toast.style.animation = "toastOut 0.2s ease-in forwards";
-        setTimeout(() => toast.remove(), 250);
-      }, duration);
-    }
+              <div>
+                <label
+                  for="username"
+                  class="block text-sm font-bold text-primary mb-2"
+                  >Username *</label
+                >
+                <div class="relative">
+                  <i
+                    data-lucide="at-sign"
+                    class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
+                  ></i>
+                  <input
+                    id="username"
+                    type="text"
+                    name="username"
+                    placeholder="Choose a username"
+                    required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
+                  />
+                </div>
+              </div>
 
-    // Loading states
-    function setRegisterButtonLoading(loading) {
-      if (loading) {
-        registerSubmitBtn.disabled = true;
-        registerSubmitBtn.classList.add("opacity-80");
-        registerSubmitBtn.innerHTML = `<span class="spinner border-current mr-2"></span> Sending code...`;
-      } else {
-        registerSubmitBtn.disabled = false;
-        registerSubmitBtn.classList.remove("opacity-80");
-        registerSubmitBtn.innerHTML = `<span>Register</span><i data-lucide="arrow-right" class="w-4 h-4"></i>`;
-        lucide.createIcons();
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-bold text-primary mb-2"
+                  >Email Address *</label
+                >
+                <div class="relative">
+                  <i
+                    data-lucide="mail"
+                    class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
+                  ></i>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+                    class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
+                  />
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label
+                    for="phone"
+                    class="block text-sm font-bold text-primary mb-2"
+                    >Phone Number</label
+                  >
+                  <div class="relative">
+                    <i
+                      data-lucide="phone"
+                      class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
+                    ></i>
+                    <input
+                      id="phone"
+                      type="tel"
+                      name="phone"
+                      placeholder="08012345678"
+                      class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="alternatePhone"
+                    class="block text-sm font-bold text-primary mb-2"
+                    >Alternate Phone</label
+                  >
+                  <div class="relative">
+                    <i
+                      data-lucide="phone-call"
+                      class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
+                    ></i>
+                    <input
+                      id="alternatePhone"
+                      type="tel"
+                      name="alternatePhone"
+                      placeholder="Optional"
+                      class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label
+                    for="password"
+                    class="block text-sm font-bold text-primary mb-2"
+                    >Password *</label
+                  >
+                  <div class="relative">
+                    <i
+                      data-lucide="lock"
+                      class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
+                    ></i>
+                    <input
+                      id="password"
+                      type="password"
+                      name="password"
+                      placeholder="Create password"
+                      required
+                      minlength="6"
+                      class="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
+                    />
+                    <button
+                      type="button"
+                      class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition"
+                      data-target="password"
+                    >
+                      <i data-lucide="eye" class="w-5 h-5"></i>
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="confirmPassword"
+                    class="block text-sm font-bold text-primary mb-2"
+                    >Confirm Password *</label
+                  >
+                  <div class="relative">
+                    <i
+                      data-lucide="lock-keyhole"
+                      class="absolute left-4 top-1/2 -translate-y-1/2 text-outline w-5 h-5"
+                    ></i>
+                    <input
+                      id="confirmPassword"
+                      type="password"
+                      name="confirmPassword"
+                      placeholder="Confirm password"
+                      required
+                      class="w-full pl-12 pr-12 py-3 rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm font-medium transition"
+                    />
+                    <button
+                      type="button"
+                      class="toggle-password absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition"
+                      data-target="confirmPassword"
+                    >
+                      <i data-lucide="eye" class="w-5 h-5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <label
+                class="flex items-start gap-3 text-sm text-on-surface-variant"
+              >
+                <input
+                  type="checkbox"
+                  id="agreeTerms"
+                  required
+                  class="mt-1 rounded border-outline/40 text-primary focus:ring-primary"
+                />
+                <span
+                  >I agree to Resident’s
+                  <a
+                    href="#"
+                    class="font-bold text-primary hover:text-tertiary transition"
+                    >Terms</a
+                  >
+                  and
+                  <a
+                    href="#"
+                    class="font-bold text-primary hover:text-tertiary transition"
+                    >Privacy Policy</a
+                  >.</span
+                >
+              </label>
+
+              <button
+                type="submit"
+                id="registerSubmitBtn"
+                class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md flex items-center justify-center gap-2 active:scale-[0.98]"
+              >
+                <span>Register</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </form>
+
+            <p class="text-center text-sm text-on-surface-variant mt-7">
+              Already have an account?
+              <a
+                href="login.html"
+                class="font-bold text-primary hover:text-tertiary transition"
+                >Sign in</a
+              >
+            </p>
+          </div>
+
+          <!-- Step 2: OTP Verification -->
+          <div id="signupStep2" class="hidden">
+            <div class="text-center mb-8">
+              <span
+                class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+              >
+                <i data-lucide="smartphone" class="w-4 h-4"></i> Verify Email
+              </span>
+              <h1 class="font-headline text-3xl font-extrabold text-primary">
+                Check Your Email
+              </h1>
+              <p class="text-sm text-on-surface-variant mt-2">
+                We've sent a 6‑digit code to
+                <span
+                  id="otpEmailDisplay"
+                  class="font-bold text-primary"
+                ></span>
+              </p>
+            </div>
+
+            <div
+              id="otpInputGroup"
+              class="flex justify-center gap-3 my-8 flex-wrap"
+            ></div>
+
+            <button
+              id="verifyOtpBtn"
+              class="w-full bg-tertiary-container text-primary py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md flex items-center justify-center gap-2 active:scale-[0.98]"
+            >
+              <span>Verify Account</span>
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+            </button>
+
+            <div class="text-center mt-6 text-sm">
+              <p class="text-on-surface-variant">
+                Didn't receive the code?
+                <button
+                  id="resendOtpBtn"
+                  class="font-bold text-primary hover:text-tertiary transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Resend OTP
+                </button>
+              </p>
+              <button
+                id="backToSignup"
+                class="text-outline hover:text-primary mt-2 inline-block font-medium transition"
+              >
+                ← Back to signup
+              </button>
+            </div>
+          </div>
+        </div>
+        <p class="text-center text-white/70 text-xs mt-6">
+          © 2026 Resident Luxury. All rights reserved.
+        </p>
+      </section>
+    </main>
+
+    <script type="module">
+      import { authService } from "./js/authService.js";
+
+      // Google Client ID (same as before)
+      const GOOGLE_CLIENT_ID =
+        "139378208657-e640gtpqqljkrve8u7ho82q5v90k6jfl.apps.googleusercontent.com";
+
+      // DOM elements
+      const step1 = document.getElementById("signupStep1");
+      const step2 = document.getElementById("signupStep2");
+      const signupForm = document.getElementById("signupForm");
+      const otpEmailDisplay = document.getElementById("otpEmailDisplay");
+      const otpInputGroup = document.getElementById("otpInputGroup");
+      const verifyBtn = document.getElementById("verifyOtpBtn");
+      const resendBtn = document.getElementById("resendOtpBtn");
+      const backBtn = document.getElementById("backToSignup");
+      const registerSubmitBtn = document.getElementById("registerSubmitBtn");
+
+      let currentUserId = null;
+      let currentEmail = null;
+
+      // ---------- FLOATING TOAST SYSTEM ----------
+      const toastStack = document.getElementById("toastStack");
+      function showToast(message, type = "info", duration = 4000) {
+        const toast = document.createElement("div");
+        toast.className = `toast-message toast-${type}`;
+        let icon = type === "success" ? "✓" : type === "error" ? "⚠️" : "ℹ️";
+        toast.innerHTML = `<span class="text-base font-bold">${icon}</span><span class="flex-1">${message}</span>`;
+        toast.style.animation =
+          "toastIn 0.3s cubic-bezier(0.21, 1.11, 0.35, 1) forwards";
+        toastStack.appendChild(toast);
+        setTimeout(() => {
+          toast.style.animation = "toastOut 0.2s ease-in forwards";
+          setTimeout(() => toast.remove(), 250);
+        }, duration);
       }
-    }
 
-    function setVerifyButtonLoading(loading) {
-      if (loading) {
-        verifyBtn.disabled = true;
-        verifyBtn.innerHTML = `<span class="spinner border-current mr-2"></span> Verifying...`;
-      } else {
-        verifyBtn.disabled = false;
-        verifyBtn.innerHTML = `<span>Verify Account</span><i data-lucide="check-circle" class="w-4 h-4"></i>`;
-        lucide.createIcons();
+      // Loading states
+      function setRegisterButtonLoading(loading) {
+        if (loading) {
+          registerSubmitBtn.disabled = true;
+          registerSubmitBtn.classList.add("opacity-80");
+          registerSubmitBtn.innerHTML = `<span class="spinner border-current mr-2"></span> Sending code...`;
+        } else {
+          registerSubmitBtn.disabled = false;
+          registerSubmitBtn.classList.remove("opacity-80");
+          registerSubmitBtn.innerHTML = `<span>Register</span><i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+          lucide.createIcons();
+        }
       }
-    }
 
-    function setResendButtonLoading(loading) {
-      if (loading) {
-        resendBtn.disabled = true;
-        resendBtn.innerHTML = `<span class="spinner inline-block w-3 h-3 border-2 border-primary/40 border-t-primary rounded-full mr-1"></span> Sending...`;
-      } else {
-        resendBtn.disabled = false;
-        resendBtn.innerHTML = `Resend OTP`;
+      function setVerifyButtonLoading(loading) {
+        if (loading) {
+          verifyBtn.disabled = true;
+          verifyBtn.innerHTML = `<span class="spinner border-current mr-2"></span> Verifying...`;
+        } else {
+          verifyBtn.disabled = false;
+          verifyBtn.innerHTML = `<span>Verify Account</span><i data-lucide="check-circle" class="w-4 h-4"></i>`;
+          lucide.createIcons();
+        }
       }
-    }
 
-    // OTP Inputs
-    function createOTPInputs() {
-      otpInputGroup.innerHTML = "";
-      const inputs = [];
-      for (let i = 0; i < 6; i++) {
-        const input = document.createElement("input");
-        input.type = "text";
-        input.maxLength = 1;
-        input.inputMode = "numeric";
-        input.autocomplete = "one-time-code";
-        input.className = "otp-digit w-12 h-14 text-center text-xl font-bold rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all";
-        otpInputGroup.appendChild(input);
-        inputs.push(input);
+      function setResendButtonLoading(loading) {
+        if (loading) {
+          resendBtn.disabled = true;
+          resendBtn.innerHTML = `<span class="spinner inline-block w-3 h-3 border-2 border-primary/40 border-t-primary rounded-full mr-1"></span> Sending...`;
+        } else {
+          resendBtn.disabled = false;
+          resendBtn.innerHTML = `Resend OTP`;
+        }
       }
-      inputs.forEach((inp, idx) => {
-        inp.addEventListener("input", (e) => {
-          let val = e.target.value.replace(/\D/g, "");
-          if (val.length > 1) val = val[0];
-          inp.value = val;
-          if (val && idx < 5) inputs[idx + 1].focus();
+
+      // OTP Inputs
+      function createOTPInputs() {
+        otpInputGroup.innerHTML = "";
+        const inputs = [];
+        for (let i = 0; i < 6; i++) {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.maxLength = 1;
+          input.inputMode = "numeric";
+          input.autocomplete = "one-time-code";
+          input.className =
+            "otp-digit w-12 h-14 text-center text-xl font-bold rounded-xl bg-white border border-outline/25 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all";
+          otpInputGroup.appendChild(input);
+          inputs.push(input);
+        }
+        inputs.forEach((inp, idx) => {
+          inp.addEventListener("input", (e) => {
+            let val = e.target.value.replace(/\D/g, "");
+            if (val.length > 1) val = val[0];
+            inp.value = val;
+            if (val && idx < 5) inputs[idx + 1].focus();
+          });
+          inp.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !inp.value && idx > 0)
+              inputs[idx - 1].focus();
+            if (e.key === "ArrowLeft" && idx > 0) inputs[idx - 1].focus();
+            if (e.key === "ArrowRight" && idx < 5) inputs[idx + 1].focus();
+          });
         });
-        inp.addEventListener("keydown", (e) => {
-          if (e.key === "Backspace" && !inp.value && idx > 0) inputs[idx - 1].focus();
-          if (e.key === "ArrowLeft" && idx > 0) inputs[idx - 1].focus();
-          if (e.key === "ArrowRight" && idx < 5) inputs[idx + 1].focus();
+        inputs[0].addEventListener("paste", (e) => {
+          e.preventDefault();
+          const paste = (e.clipboardData || window.clipboardData).getData(
+            "text",
+          );
+          const digits = paste.replace(/\D/g, "").slice(0, 6).split("");
+          digits.forEach((digit, idx) => {
+            if (inputs[idx]) inputs[idx].value = digit;
+          });
+          if (digits.length < 6 && inputs[digits.length])
+            inputs[digits.length].focus();
+          else if (digits.length >= 6) inputs[5]?.focus();
         });
-      });
-      inputs[0].addEventListener("paste", (e) => {
-        e.preventDefault();
-        const paste = (e.clipboardData || window.clipboardData).getData("text");
-        const digits = paste.replace(/\D/g, "").slice(0, 6).split("");
-        digits.forEach((digit, idx) => { if (inputs[idx]) inputs[idx].value = digit; });
-        if (digits.length < 6 && inputs[digits.length]) inputs[digits.length].focus();
-        else if (digits.length >= 6) inputs[5]?.focus();
-      });
-      setTimeout(() => inputs[0]?.focus(), 120);
-    }
-
-    function getOTPValue() {
-      return Array.from(otpInputGroup.querySelectorAll("input")).map(i => i.value).join("");
-    }
-
-    function clearOtpFields() {
-      const inputs = otpInputGroup.querySelectorAll("input");
-      inputs.forEach(inp => inp.value = "");
-      if (inputs[0]) inputs[0].focus();
-    }
-
-    function showStep(stepElement) {
-      step1.classList.add("hidden");
-      step2.classList.add("hidden");
-      stepElement.classList.remove("hidden");
-      stepElement.style.animation = "fadeSlideUp 0.3s ease-out forwards";
-      lucide.createIcons();
-    }
-
-    // Password toggle
-    document.querySelectorAll(".toggle-password").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const target = document.getElementById(btn.dataset.target);
-        const isPassword = target.type === "password";
-        target.type = isPassword ? "text" : "password";
-        btn.innerHTML = isPassword ? '<i data-lucide="eye-off" class="w-5 h-5"></i>' : '<i data-lucide="eye" class="w-5 h-5"></i>';
-        lucide.createIcons();
-      });
-    });
-
-    // ---------- REGISTRATION SUBMIT ----------
-    signupForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById("fullName").value.trim();
-      const username = document.getElementById("username").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const confirm = document.getElementById("confirmPassword").value;
-      const phone = document.getElementById("phone").value.trim();
-      const alternatePhone = document.getElementById("alternatePhone").value.trim();
-      const agree = document.getElementById("agreeTerms").checked;
-
-      if (!name || !username || !email || !password || !confirm) {
-        showToast("All required fields must be filled", "error");
-        return;
-      }
-      if (password.length < 6) {
-        showToast("Password must be at least 6 characters", "error");
-        return;
-      }
-      if (password !== confirm) {
-        showToast("Passwords do not match", "error");
-        return;
-      }
-      if (!agree) {
-        showToast("You must agree to the Terms & Privacy Policy", "error");
-        return;
+        setTimeout(() => inputs[0]?.focus(), 120);
       }
 
-      setRegisterButtonLoading(true);
-      try {
-        const data = await authService.sendSignupOTP({ name, username, email, password, phone, alternatePhone });
-        currentUserId = data.userId;
-        currentEmail = email;
-        otpEmailDisplay.textContent = email;
-        createOTPInputs();
-        showToast(`✨ Verification code sent to ${email}! Check your inbox.`, "success", 4500);
-        showStep(step2);
-      } catch (err) {
-        let errorMsg = err.message || "Signup failed. Please try again.";
-        if (errorMsg.toLowerCase().includes("username already taken")) errorMsg = "Username already taken. Please choose another.";
-        else if (errorMsg.toLowerCase().includes("user already exists")) errorMsg = "User already exists. Please sign in instead.";
-        showToast(errorMsg, "error");
-      } finally {
-        setRegisterButtonLoading(false);
+      function getOTPValue() {
+        return Array.from(otpInputGroup.querySelectorAll("input"))
+          .map((i) => i.value)
+          .join("");
       }
-    });
 
-    // ---------- VERIFY OTP ----------
-    verifyBtn.addEventListener("click", async () => {
-      const otp = getOTPValue();
-      if (otp.length !== 6) {
-        showToast("Please enter the full 6-digit verification code", "error");
-        return;
-      }
-      setVerifyButtonLoading(true);
-      try {
-        await authService.verifySignupOTP({ userId: currentUserId, otp });
-        showToast("Account verified successfully! Redirecting...", "success", 1800);
-        setTimeout(() => { window.location.href = "home.html"; }, 800);
-      } catch (err) {
-        let errorMsg = err.message || "Verification failed. Invalid code.";
-        if (errorMsg.toLowerCase().includes("expired")) errorMsg = "OTP has expired. Please request a new one.";
-        showToast(errorMsg, "error");
-        setVerifyButtonLoading(false);
+      function clearOtpFields() {
         const inputs = otpInputGroup.querySelectorAll("input");
-        inputs.forEach(inp => inp.classList.add("border-red-400"));
-        setTimeout(() => inputs.forEach(inp => inp.classList.remove("border-red-400")), 500);
-      }
-    });
-
-    // ---------- RESEND OTP ----------
-    resendBtn.addEventListener("click", async () => {
-      if (!currentUserId) {
-        showToast("Session expired. Please go back and sign up again.", "error");
-        return;
-      }
-      setResendButtonLoading(true);
-      try {
-        await authService.resendOTP({ userId: currentUserId });
-        showToast("📬 A new code has been sent to your email.", "success", 4000);
-        clearOtpFields();
-      } catch (err) {
-        showToast(err.message || "Failed to resend OTP. Please try again.", "error");
-      } finally {
-        setResendButtonLoading(false);
-      }
-    });
-
-    // ---------- BACK TO SIGNUP STEP ----------
-    backBtn.addEventListener("click", () => {
-      currentUserId = null;
-      currentEmail = null;
-      showStep(step1);
-      setRegisterButtonLoading(false);
-    });
-
-    // ---------- GOOGLE ONE-TAP / BUTTON (Option 2) ----------
-    // Initialize Google Identity Services when the library is ready
-    function initGoogleSignup() {
-      if (!window.google || !window.google.accounts) {
-        setTimeout(initGoogleSignup, 100);
-        return;
+        inputs.forEach((inp) => (inp.value = ""));
+        if (inputs[0]) inputs[0].focus();
       }
 
-      window.google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: async (response) => {
-          // response.credential is the ID token
-          const idToken = response.credential;
-          if (!idToken) {
-            showToast("Google sign-in failed: no token received", "error");
-            return;
-          }
-          // Show loading state on the button container (optional)
-          const wrapper = document.getElementById("googleButtonWrapper");
-          const originalContent = wrapper.innerHTML;
-          wrapper.innerHTML = `<div class="flex items-center justify-center gap-2 py-3"><span class="spinner border-primary/60 mr-2"></span> Signing in...</div>`;
-          try {
-            await authService.googleAuth(idToken);
-            showToast("Google sign-up successful! Redirecting...", "success");
-            setTimeout(() => { window.location.href = "home.html"; }, 800);
-          } catch (err) {
-            showToast(err.message || "Google authentication failed. Please try again.", "error");
-            wrapper.innerHTML = originalContent;
-            // Re-render the Google button after error
-            window.google.accounts.id.renderButton(wrapper, {
-              theme: "outline",
-              size: "large",
-              width: "100%",
-              text: "signup_with",
-              shape: "rectangular"
-            });
-          }
+      function showStep(stepElement) {
+        step1.classList.add("hidden");
+        step2.classList.add("hidden");
+        stepElement.classList.remove("hidden");
+        stepElement.style.animation = "fadeSlideUp 0.3s ease-out forwards";
+        lucide.createIcons();
+      }
+
+      // Password toggle
+      document.querySelectorAll(".toggle-password").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = document.getElementById(btn.dataset.target);
+          const isPassword = target.type === "password";
+          target.type = isPassword ? "text" : "password";
+          btn.innerHTML = isPassword
+            ? '<i data-lucide="eye-off" class="w-5 h-5"></i>'
+            : '<i data-lucide="eye" class="w-5 h-5"></i>';
+          lucide.createIcons();
+        });
+      });
+
+      // ---------- REGISTRATION SUBMIT ----------
+      signupForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("fullName").value.trim();
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirm = document.getElementById("confirmPassword").value;
+        const phone = document.getElementById("phone").value.trim();
+        const alternatePhone = document
+          .getElementById("alternatePhone")
+          .value.trim();
+        const agree = document.getElementById("agreeTerms").checked;
+
+        if (!name || !username || !email || !password || !confirm) {
+          showToast("All required fields must be filled", "error");
+          return;
+        }
+        if (password.length < 6) {
+          showToast("Password must be at least 6 characters", "error");
+          return;
+        }
+        if (password !== confirm) {
+          showToast("Passwords do not match", "error");
+          return;
+        }
+        if (!agree) {
+          showToast("You must agree to the Terms & Privacy Policy", "error");
+          return;
+        }
+
+        setRegisterButtonLoading(true);
+        try {
+          const data = await authService.sendSignupOTP({
+            name,
+            username,
+            email,
+            password,
+            phone,
+            alternatePhone,
+          });
+          currentUserId = data.userId;
+          currentEmail = email;
+          otpEmailDisplay.textContent = email;
+          createOTPInputs();
+          showToast(
+            `✨ Verification code sent to ${email}! Check your inbox.`,
+            "success",
+            4500,
+          );
+          showStep(step2);
+        } catch (err) {
+          let errorMsg = err.message || "Signup failed. Please try again.";
+          if (errorMsg.toLowerCase().includes("username already taken"))
+            errorMsg = "Username already taken. Please choose another.";
+          else if (errorMsg.toLowerCase().includes("user already exists"))
+            errorMsg = "User already exists. Please sign in instead.";
+          showToast(errorMsg, "error");
+        } finally {
+          setRegisterButtonLoading(false);
         }
       });
 
-      // Render the button inside the wrapper
-      const wrapper = document.getElementById("googleButtonWrapper");
-      window.google.accounts.id.renderButton(wrapper, {
-        theme: "outline",
-        size: "large",
-        width: "100%",
-        text: "signup_with",   // "signup_with" shows "Sign up with Google"
-        shape: "rectangular",
-        logo_alignment: "left"
+      // ---------- VERIFY OTP ----------
+      verifyBtn.addEventListener("click", async () => {
+        const otp = getOTPValue();
+        if (otp.length !== 6) {
+          showToast("Please enter the full 6-digit verification code", "error");
+          return;
+        }
+        setVerifyButtonLoading(true);
+        try {
+          await authService.verifySignupOTP({ userId: currentUserId, otp });
+          showToast(
+            "Account verified successfully! Redirecting...",
+            "success",
+            1800,
+          );
+          setTimeout(() => {
+            window.location.href = "home.html";
+          }, 800);
+        } catch (err) {
+          let errorMsg = err.message || "Verification failed. Invalid code.";
+          if (errorMsg.toLowerCase().includes("expired"))
+            errorMsg = "OTP has expired. Please request a new one.";
+          showToast(errorMsg, "error");
+          setVerifyButtonLoading(false);
+          const inputs = otpInputGroup.querySelectorAll("input");
+          inputs.forEach((inp) => inp.classList.add("border-red-400"));
+          setTimeout(
+            () =>
+              inputs.forEach((inp) => inp.classList.remove("border-red-400")),
+            500,
+          );
+        }
       });
 
-      // Optional: Also enable One-Tap (auto popup) for signed-in users
-      window.google.accounts.id.prompt();
-    }
+      // ---------- RESEND OTP ----------
+      resendBtn.addEventListener("click", async () => {
+        if (!currentUserId) {
+          showToast(
+            "Session expired. Please go back and sign up again.",
+            "error",
+          );
+          return;
+        }
+        setResendButtonLoading(true);
+        try {
+          await authService.resendOTP({ userId: currentUserId });
+          showToast(
+            "📬 A new code has been sent to your email.",
+            "success",
+            4000,
+          );
+          clearOtpFields();
+        } catch (err) {
+          showToast(
+            err.message || "Failed to resend OTP. Please try again.",
+            "error",
+          );
+        } finally {
+          setResendButtonLoading(false);
+        }
+      });
 
-    // Start Google initialization after page load
-    window.addEventListener("load", () => {
-      initGoogleSignup();
-    });
+      // ---------- BACK TO SIGNUP STEP ----------
+      backBtn.addEventListener("click", () => {
+        currentUserId = null;
+        currentEmail = null;
+        showStep(step1);
+        setRegisterButtonLoading(false);
+      });
 
-    // Initial icons
-    lucide.createIcons();
+      // ---------- GOOGLE ONE-TAP / BUTTON (Option 2) ----------
+      // Initialize Google Identity Services when the library is ready
+      function initGoogleSignup() {
+        if (!window.google || !window.google.accounts) {
+          setTimeout(initGoogleSignup, 100);
+          return;
+        }
 
-    // Auto-focus first OTP when step2 becomes visible
-    const step2Observer = new MutationObserver(() => {
-      if (!step2.classList.contains("hidden")) {
-        const firstInput = otpInputGroup.querySelector("input");
-        if (firstInput && document.activeElement !== firstInput) firstInput?.focus();
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: async (response) => {
+            // response.credential is the ID token
+            const idToken = response.credential;
+            if (!idToken) {
+              showToast("Google sign-in failed: no token received", "error");
+              return;
+            }
+            // Show loading state on the button container (optional)
+            const wrapper = document.getElementById("googleButtonWrapper");
+            const originalContent = wrapper.innerHTML;
+            wrapper.innerHTML = `<div class="flex items-center justify-center gap-2 py-3"><span class="spinner border-primary/60 mr-2"></span> Signing in...</div>`;
+            try {
+              await authService.googleAuth(idToken);
+              showToast("Google sign-up successful! Redirecting...", "success");
+              setTimeout(() => {
+                window.location.href = "home.html";
+              }, 800);
+            } catch (err) {
+              showToast(
+                err.message ||
+                  "Google authentication failed. Please try again.",
+                "error",
+              );
+              wrapper.innerHTML = originalContent;
+              // Re-render the Google button after error
+              window.google.accounts.id.renderButton(wrapper, {
+                theme: "outline",
+                size: "large",
+                width: "100%",
+                text: "signup_with",
+                shape: "rectangular",
+              });
+            }
+          },
+        });
+
+        // Render the button inside the wrapper
+        const wrapper = document.getElementById("googleButtonWrapper");
+        window.google.accounts.id.renderButton(wrapper, {
+          theme: "outline",
+          size: "large",
+          width: "100%",
+          text: "signup_with", // "signup_with" shows "Sign up with Google"
+          shape: "rectangular",
+          logo_alignment: "left",
+        });
+
+        // Optional: Also enable One-Tap (auto popup) for signed-in users
+        window.google.accounts.id.prompt();
       }
-    });
-    step2Observer.observe(step2, { attributes: true, attributeFilter: ["class"] });
-  </script>
-</body>
+
+      // Start Google initialization after page load
+      window.addEventListener("load", () => {
+        initGoogleSignup();
+      });
+
+      // Initial icons
+      lucide.createIcons();
+
+      // Auto-focus first OTP when step2 becomes visible
+      const step2Observer = new MutationObserver(() => {
+        if (!step2.classList.contains("hidden")) {
+          const firstInput = otpInputGroup.querySelector("input");
+          if (firstInput && document.activeElement !== firstInput)
+            firstInput?.focus();
+        }
+      });
+      step2Observer.observe(step2, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+    </script>
+  </body>
 </html>
