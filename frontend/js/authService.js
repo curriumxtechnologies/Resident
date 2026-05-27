@@ -106,13 +106,15 @@ export const authService = {
       method: "POST",
       body: JSON.stringify({ token }),
     });
-    setAuthData(data.token, {
-      _id: data._id,
-      name: data.name,
-      email: data.email,
-      profile: data.profile,
-      authMethod: data.authMethod,
-    });
+  setAuthData(data.token, {
+    _id: data._id,
+    name: data.name,
+    email: data.email,
+    username: data.username,
+    role: data.role || "user",      // ← ADD THIS
+    profile: data.profile,
+    authMethod: data.authMethod,
+  });
     return data;
   },
 
