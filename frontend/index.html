@@ -1708,23 +1708,26 @@
 
           // Update mobile auth area
           mobileAuthArea.innerHTML = `
-        <a href="profile.html" class="col-span-2 flex items-center justify-center gap-2 bg-primary/5 text-primary py-3 rounded-xl font-bold text-sm">
-          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs overflow-hidden">
-            ${
-              avatarUrl
-                ? `<img src="${avatarUrl}" alt="${displayName}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.textContent='${initials}';">`
-                : initials
-            }
-          </div>
-          ${displayName}
-        </a>
-        <button 
-          onclick="window.handleLogout()" 
-          class="border border-red-200 text-red-600 text-center py-3 rounded-xl font-bold text-sm hover:bg-red-50 transition"
-        >
-          Logout
-        </button>
-      `;
+  <div class="col-span-2 grid grid-cols-2 gap-3">
+    <a href="profile.html" class="flex items-center justify-center gap-2 bg-primary/5 text-primary py-3 rounded-xl font-bold text-sm">
+      <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs overflow-hidden">
+        ${
+          avatarUrl
+            ? `<img src="${avatarUrl}" alt="${displayName}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.textContent='${initials}';">`
+            : initials
+        }
+      </div>
+      <span class="truncate max-w-[100px]">${displayName}</span>
+    </a>
+    <button 
+      onclick="window.handleLogout()" 
+      class="flex items-center justify-center gap-2 border border-red-200 text-red-600 py-3 rounded-xl font-bold text-sm hover:bg-red-50 transition"
+    >
+      <i data-lucide="log-out" class="w-4 h-4"></i>
+      <span>Logout</span>
+    </button>
+  </div>
+`;
         } else {
           console.log("Updating nav for unauthenticated user");
 
