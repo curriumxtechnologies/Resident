@@ -95,6 +95,7 @@ const googleAuth = asyncHandler(async (req, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
+    role: user.role || "user",           // ← ADD THIS
     profile: user.profile,
     authMethod: user.authMethod,
     token,
@@ -298,7 +299,7 @@ const verifySigninOTP = asyncHandler(async (req, res) => {
     name: user.name,
     email: user.email,
     username: user.username,
-    role: user.role,
+    role: user.role || "user",           // ← FALLBACK to "user"
     profile: user.profile,
     authMethod: user.authMethod,
     token,

@@ -1295,6 +1295,10 @@
             <li>
               <a
                 href="#"
+                onclick="
+                  event.preventDefault();
+                  window.navigateToProtectedPage('forsale.html');
+                "
                 class="text-on-surface-variant hover:text-primary transition"
                 >Buy Properties</a
               >
@@ -1302,6 +1306,10 @@
             <li>
               <a
                 href="#"
+                onclick="
+                  event.preventDefault();
+                  window.navigateToProtectedPage('forrent.html');
+                "
                 class="text-on-surface-variant hover:text-primary transition"
                 >Rent Properties</a
               >
@@ -1313,7 +1321,11 @@
           <ul class="space-y-2 text-xs">
             <li>
               <a
-                href="seller-register.html"
+                href="#"
+                onclick="
+                  event.preventDefault();
+                  window.navigateToSellerRegister();
+                "
                 class="text-on-surface-variant hover:text-primary transition"
               >
                 Register as a Seller
@@ -1547,6 +1559,33 @@
           window.location.href = `login.html?returnTo=${encodeURIComponent(returnTo)}`;
         }
       }
+
+      // Handle navigation to seller register with auth and role check
+      function navigateToSellerRegister() {
+        const userData = getUserData();
+
+        if (isAuthenticated() && userData) {
+          // User is logged in
+          if (userData.role === "seller") {
+            window.location.href = "profile.html";
+          } else {
+            window.location.href = "seller-register.html";
+          }
+        } else {
+          // Not logged in - always go to login first
+          // The login page will check the role AFTER authentication
+          // and redirect to profile.html if they're a seller
+          const currentPath = window.location.pathname.substring(
+            0,
+            window.location.pathname.lastIndexOf("/") + 1,
+          );
+          const returnTo = currentPath + "seller-register.html";
+          window.location.href = `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+        }
+      }
+
+      // Make it available globally
+      window.navigateToSellerRegister = navigateToSellerRegister;
 
       // Make it available globally
       window.navigateToProtectedPage = navigateToProtectedPage;

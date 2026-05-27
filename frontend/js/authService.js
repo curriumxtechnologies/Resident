@@ -85,12 +85,15 @@ export const authService = {
       method: "POST",
       body: JSON.stringify({ userId, otp }),
     });
+    
+    console.log("API response:", data); // Check what the API actually returns
+    
     setAuthData(data.token, {
       _id: data._id,
       name: data.name,
       email: data.email,
       username: data.username,
-      role: data.role,
+      role: data.role || data.userRole || data.accountType || "user", // Try multiple possible field names
       profile: data.profile,
       authMethod: data.authMethod,
     });

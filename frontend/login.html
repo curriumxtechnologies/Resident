@@ -408,6 +408,7 @@
 
     <script type="module">
       import { authService } from "./js/authService.js";
+      import { getStoredUser } from "./js/tokenStorage.js";
 
       const GOOGLE_CLIENT_ID =
         "139378208657-e640gtpqqljkrve8u7ho82q5v90k6jfl.apps.googleusercontent.com";
@@ -427,12 +428,50 @@
       let currentEmail = null;
 
       // ----- Helper: Get redirect URL after login -----
-      function getRedirectUrl() {
+      async function getRedirectUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         const returnTo = urlParams.get("returnTo");
+
         if (returnTo) {
-          return decodeURIComponent(returnTo);
+          const decodedUrl = decodeURIComponent(returnTo);
+
+          // If returnTo is seller-register.html, check if user is already a seller
+          if (decodedUrl.includes("seller-register.html")) {
+            // Wait for user data to be stored (retry up to 20 times, 200ms apart = 4 seconds)
+            let userData = null;
+            for (let i = 0; i < 20; i++) {
+              const userDataStr = localStorage.getItem("auth_user");
+              console.log(
+                `Attempt ${i + 1}: auth_user =`,
+                userDataStr ? "found" : "not yet",
+              );
+
+              if (userDataStr) {
+                try {
+                  userData = JSON.parse(userDataStr);
+                  console.log("User data found:", userData);
+                  break;
+                } catch (e) {
+                  console.log("Parse error:", e);
+                }
+              }
+              // Wait 200ms before checking again
+              await new Promise((resolve) => setTimeout(resolve, 200));
+            }
+
+            if (userData && userData.role === "seller") {
+              console.log("User is a seller, redirecting to profile.html");
+              return decodedUrl.replace("seller-register.html", "profile.html");
+            } else {
+              console.log(
+                "Not a seller or no data, staying with seller-register.html",
+              );
+            }
+          }
+
+          return decodedUrl;
         }
+
         return "home.html";
       }
 
@@ -574,10 +613,49 @@
         }
         setVerifyButtonLoading(true);
         try {
-          await authService.verifySigninOTP({ userId: currentUserId, otp });
+          const data = await authService.verifySigninOTP({
+            userId: currentUserId,
+            otp,
+          });
+
+          // Save debug info to localStorage so it persists after redirect
+          localStorage.setItem(
+            "DEBUG_LOGIN_DATA",
+            JSON.stringify({
+              fullData: data,
+              role: data.role,
+              typeOfRole: typeof data.role,
+              allKeys: Object.keys(data),
+              auth_token: localStorage.getItem("auth_token"),
+              auth_user: localStorage.getItem("auth_user"),
+              urlParams: window.location.search,
+              returnTo: new URLSearchParams(window.location.search).get(
+                "returnTo",
+              ),
+            }),
+          );
+
           showToast("Login successful! Redirecting...", "success", 1500);
+
           setTimeout(() => {
-            window.location.href = getRedirectUrl();
+            const urlParams = new URLSearchParams(window.location.search);
+            const returnTo = urlParams.get("returnTo");
+            let redirectUrl = "home.html";
+
+            if (returnTo) {
+              redirectUrl = decodeURIComponent(returnTo);
+              if (
+                redirectUrl.includes("seller-register.html") &&
+                data.role === "seller"
+              ) {
+                redirectUrl = redirectUrl.replace(
+                  "seller-register.html",
+                  "profile.html",
+                );
+              }
+            }
+
+            window.location.href = redirectUrl;
           }, 500);
         } catch (err) {
           showToast(err.message || "Invalid verification code", "error");
@@ -619,22 +697,43 @@
 
         window.google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
+          // Google sign-in callback
           callback: async (response) => {
             const idToken = response.credential;
             if (!idToken) {
               showToast("Google sign-in failed: no token received", "error");
               return;
             }
-            // Show loading inside the button wrapper
             const wrapper = document.getElementById("googleButtonWrapper");
             const originalHTML = wrapper.innerHTML;
             wrapper.innerHTML = `<div class="flex items-center justify-center gap-2 py-3"><span class="spinner border-primary/60 mr-2"></span> Signing in...</div>`;
             try {
-              await authService.googleAuth(idToken);
+              const data = await authService.googleAuth(idToken);
               showToast("Google sign-in successful! Redirecting...", "success");
-              setTimeout(() => {
-                window.location.href = getRedirectUrl();
-              }, 800);
+
+              // Get the returnTo URL
+              const urlParams = new URLSearchParams(window.location.search);
+              const returnTo = urlParams.get("returnTo");
+
+              let redirectUrl = "home.html";
+
+              if (returnTo) {
+                redirectUrl = decodeURIComponent(returnTo);
+
+                // Check if user is a seller and trying to go to seller-register
+                if (
+                  redirectUrl.includes("seller-register.html") &&
+                  data.role === "seller"
+                ) {
+                  redirectUrl = redirectUrl.replace(
+                    "seller-register.html",
+                    "profile.html",
+                  );
+                }
+              }
+
+              console.log("Redirecting to:", redirectUrl);
+              window.location.href = redirectUrl;
             } catch (err) {
               showToast(
                 err.message ||
@@ -642,7 +741,6 @@
                 "error",
               );
               wrapper.innerHTML = originalHTML;
-              // Re-render the button
               window.google.accounts.id.renderButton(wrapper, {
                 theme: "outline",
                 size: "large",
@@ -659,7 +757,7 @@
           theme: "outline",
           size: "large",
           width: "100%",
-          text: "signin_with", // "signin_with" shows "Sign in with Google"
+          text: "signin_with",
           shape: "rectangular",
           logo_alignment: "left",
         });
