@@ -1554,12 +1554,13 @@
         if (lgaSelect?.value) searchParams.set("lga", lgaSelect.value);
         searchParams.set("listingType", currentListingType);
 
-        // Encode the full return URL
-        const currentUrl = window.location.origin + window.location.pathname;
-        const returnTo = `${currentUrl}?${searchParams.toString()}`;
+        // Build the target page URL with search parameters
+        const targetPage =
+          currentListingType === "sale" ? "forsale.html" : "forrent.html";
+        const targetUrl = `${targetPage}?${searchParams.toString()}`;
 
-        // Redirect to login with return parameter
-        window.location.href = `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+        // Encode the target URL as the returnTo parameter
+        window.location.href = `login.html?returnTo=${encodeURIComponent(targetUrl)}`;
       }
 
       // Check for saved search parameters on page load (after login)
