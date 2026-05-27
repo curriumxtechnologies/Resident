@@ -182,35 +182,36 @@
         background: #1e2a3e;
         border-left-color: #60a5fa;
       }
-      /* Google Button Styling - Bold Font with #001c4a Text Color */
-      .google-signin-container {
-        width: 100%;
-        margin: 12px 0;
-      }
-
+      /* Google Button Styling - FIXED SIZE, NEVER CHANGES SHAPE */
       #googleButtonWrapper {
         width: 100%;
+        min-width: 100%;
+        max-width: 100%;
       }
 
       #googleButtonWrapper > div {
         width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
         border-radius: 12px !important;
         overflow: hidden !important;
-        transition: all 0.2s ease !important;
-      }
-
-      #googleButtonWrapper > div:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        height: 52px !important;
+        min-height: 52px !important;
+        max-height: 52px !important;
       }
 
       #googleButtonWrapper iframe {
         width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
         border-radius: 12px !important;
+        height: 52px !important;
+        min-height: 52px !important;
+        max-height: 52px !important;
       }
 
-      /* Target the Google button text - BOLD + #001c4a color */
-      .google-btn-inner [role="button"] {
+      /* Target the Google button - FIXED DIMENSIONS */
+      #googleButtonWrapper [role="button"] {
         border-radius: 12px !important;
         font-weight: 700 !important;
         font-family:
@@ -222,26 +223,43 @@
         color: #001c4a !important;
         border: 1px solid #e2e8f0 !important;
         background: white !important;
-        transition: all 0.2s ease !important;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+        height: 52px !important;
+        min-height: 52px !important;
+        max-height: 52px !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        transition: none !important;
+        transform: none !important;
+        box-sizing: border-box !important;
       }
 
-      .google-btn-inner [role="button"]:hover {
-        background: #f8fafc !important;
-        border-color: #cbd5e1 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+      /* NO hover effects - completely static */
+      #googleButtonWrapper [role="button"]:hover {
+        background: white !important;
+        border-color: #e2e8f0 !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+        transform: none !important;
+        height: 52px !important;
       }
 
       /* Make the span text inside bold with correct color */
-      .google-btn-inner [role="button"] span {
+      #googleButtonWrapper [role="button"] span {
         font-weight: 700 !important;
         color: #001c4a !important;
+        font-size: 14px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
 
-      /* Also target any text nodes inside the button */
-      .google-btn-inner [role="button"] div,
-      .google-btn-inner [role="button"] p {
-        color: #001c4a !important;
+      /* Force the container to have fixed dimensions */
+      .google-signin-container,
+      #googleButtonWrapper {
+        width: 100%;
+        height: 52px;
+        display: block;
       }
     </style>
   </head>
