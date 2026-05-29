@@ -374,12 +374,14 @@
             Flexible payment plans, legal support & zero hidden fees. Talk to
             our sales team today.
           </p>
-          <button
-            id="saleConsultBtn"
-            class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover-bg-tertiary-fixed transition shadow-md text-sm"
+          <a
+            href="https://wa.me/2349032280032"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover-bg-tertiary-fixed transition shadow-md text-sm"
           >
             Request Private Sales Consultation
-          </button>
+          </a>
         </div>
       </section>
     </main>
@@ -624,15 +626,6 @@
             lgaSelect.value = "all";
             applyFilters();
           });
-        }
-
-        const consultBtn = document.getElementById("saleConsultBtn");
-        if (consultBtn) {
-          consultBtn.addEventListener("click", () =>
-            alert(
-              "Connect with our home buying specialists: +234 (0) 123 456 7890 or sales@rezidenthomes.com, No hidden charges, transparent process.",
-            ),
-          );
         }
 
         const fadeElements = document.querySelectorAll(".fade-up");
