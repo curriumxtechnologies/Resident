@@ -216,12 +216,47 @@
               "
             />
           </a>
-          <div class="flex gap-3">
+          <div class="flex gap-3 items-center">
             <a
               href="forrent.html"
               class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
               >For Rent</a
             >
+
+            <!-- User Avatar -->
+            <a
+              href="profile.html"
+              id="userAvatarLink"
+              class="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
+              <div
+                id="userAvatar"
+                class="w-10 h-10 rounded-full overflow-hidden border-2 border-[#c5aa23] shadow-sm"
+              >
+                <div
+                  id="avatarPlaceholder"
+                  class="w-full h-full bg-[#001c4a] flex items-center justify-center text-white font-bold text-sm"
+                >
+                  <span id="avatarInitials">U</span>
+                </div>
+                <img
+                  id="avatarImage"
+                  src=""
+                  alt="User avatar"
+                  class="w-full h-full object-cover hidden"
+                  onerror="
+                    this.style.display = 'none';
+                    document.getElementById('avatarPlaceholder').style.display =
+                      'flex';
+                  "
+                />
+              </div>
+              <span
+                id="userName"
+                class="hidden md:inline text-sm font-medium text-primary"
+                >User</span
+              >
+            </a>
           </div>
         </div>
       </div>
@@ -389,6 +424,70 @@
     <script type="module">
       import { getBaseURL } from "./js/apiConfig.js";
       import { getStoredUser } from "./js/tokenStorage.js";
+
+      // Function to load user profile and update avatar
+      async function loadUserProfile() {
+        const user = getStoredUser();
+        const avatarImage = document.getElementById("avatarImage");
+        const avatarPlaceholder = document.getElementById("avatarPlaceholder");
+        const avatarInitials = document.getElementById("avatarInitials");
+        const userName = document.getElementById("userName");
+
+        if (user) {
+          // Display user name
+          if (userName) {
+            userName.textContent = user.firstName || user.name || "User";
+          }
+
+          // Set initials
+          if (avatarInitials) {
+            const firstName = user.firstName || user.name || "U";
+            const lastName = user.lastName || "";
+            avatarInitials.textContent = (
+              firstName.charAt(0) + (lastName ? lastName.charAt(0) : "")
+            ).toUpperCase();
+          }
+
+          // Try to load profile image
+          if (user.profileImage || user.avatar) {
+            avatarImage.src = user.profileImage || user.avatar;
+            avatarImage.classList.remove("hidden");
+            avatarPlaceholder.style.display = "none";
+          } else {
+            // Try to fetch full profile from API
+            try {
+              const token = localStorage.getItem("auth_token");
+              if (token) {
+                const response = await fetch(`${getBaseURL()}/users/profile`, {
+                  headers: { Authorization: `Bearer ${token}` },
+                });
+                if (response.ok) {
+                  const profileData = await response.json();
+                  if (profileData.profileImage || profileData.avatar) {
+                    avatarImage.src =
+                      profileData.profileImage || profileData.avatar;
+                    avatarImage.classList.remove("hidden");
+                    avatarPlaceholder.style.display = "none";
+
+                    // Update stored user data
+                    const storedUser = getStoredUser() || {};
+                    storedUser.profileImage =
+                      profileData.profileImage || profileData.avatar;
+                    localStorage.setItem("user", JSON.stringify(storedUser));
+                  }
+                }
+              }
+            } catch (error) {
+              console.log("Could not fetch user profile:", error);
+            }
+          }
+        }
+      }
+
+      // Call this function after DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        loadUserProfile();
+      });
 
       function formatNaira(amount) {
         return new Intl.NumberFormat("en-NG", {
