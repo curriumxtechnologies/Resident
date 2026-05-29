@@ -159,6 +159,22 @@
           transform: rotate(360deg);
         }
       }
+      .hero-full-bleed {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .hero-full-bleed::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 1;
+      }
+      .hero-full-bleed > * {
+        position: relative;
+        z-index: 2;
+      }
     </style>
   </head>
 
@@ -203,90 +219,100 @@
     </header>
 
     <main>
-      <!-- Hero section with dynamic background -->
+      <!-- Hero Section with Search Overlay - Image fills everything -->
       <section
         id="heroSection"
-        class="relative bg-primary px-5 md:px-8 pt-14 pb-28 lg:pt-20 lg:pb-36 hero-bg"
-        style="background-image: url(&quot;images/hero.avif&quot;)"
+        class="relative w-full min-h-[90vh] flex items-start pt-20 lg:pt-28 hero-full-bleed"
+        style="
+          background-image: url(&quot;https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1600&quot;);
+          background-size: cover;
+          background-position: center 35%;
+        "
       >
-        <div class="absolute inset-0 bg-black/40"></div>
-        <div class="max-w-7xl mx-auto relative z-10">
-          <div class="max-w-3xl">
+        <div class="absolute inset-0 bg-black/45"></div>
+
+        <div class="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10">
+          <!-- Hero Text -->
+          <div class="max-w-3xl mb-12">
             <span
-              class="inline-flex items-center gap-2 bg-white/10 text-tertiary-fixed px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+              class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-yellow-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide mb-5"
             >
-              <i data-lucide="sparkles"></i> Welcome to Rezident Homes
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Welcome to
+              Rezident Homes
             </span>
             <h1
-              class="font-headline text-4xl md:text-6xl font-extrabold text-white leading-tight"
+              class="font-headline text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight drop-shadow-lg"
             >
               Find your next home with ease.
             </h1>
-            <p class="text-white/75 mt-4 max-w-xl">
+            <p
+              class="text-white/80 mt-5 max-w-xl text-base md:text-lg font-medium"
+            >
               Search premium homes for sale and rent. Save your best picks and
               continue from where you stopped.
             </p>
           </div>
-        </div>
-      </section>
 
-      <!-- Search Hero (overlapped) -->
-      <section
-        id="search"
-        class="relative bg-primary px-5 md:px-8 pb-12 -mt-12 z-20"
-      >
-        <div class="max-w-7xl mx-auto">
-          <div class="mb-3 max-w-xl">
-            <div
-              class="bg-white/10 backdrop-blur-md rounded-full p-1 flex gap-1 border border-white/20 w-fit"
-            >
-              <button
-                id="buyToggleBtn"
-                class="toggle-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all"
+          <!-- Search Box - Directly on the image -->
+          <div class="max-w-2xl">
+            <!-- Buy/Rent Toggle -->
+            <div class="mb-4">
+              <div
+                class="bg-white/20 backdrop-blur-md rounded-full p-1 flex gap-1 border border-white/30 w-fit"
               >
-                Buy
-              </button>
-              <button
-                id="rentToggleBtn"
-                class="toggle-btn px-4 py-1.5 rounded-full text-sm font-semibold transition-all"
-              >
-                Rent
-              </button>
+                <button
+                  id="buyToggleBtn"
+                  class="toggle-btn px-6 py-2 rounded-full text-sm font-semibold transition-all bg-white text-primary"
+                >
+                  Buy
+                </button>
+                <button
+                  id="rentToggleBtn"
+                  class="toggle-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-white"
+                >
+                  Rent
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div
-            class="glass-card rounded-xl p-1.5 flex flex-col md:flex-row items-stretch gap-1.5 shadow-2xl max-w-xl"
-          >
+            <!-- Search Inputs Card -->
             <div
-              class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
+              class="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-white/40"
             >
-              <i data-lucide="map-pin" class="text-tertiary-fixed w-5 h-5"></i>
-              <select
-                id="stateSelect"
-                class="w-full bg-transparent border-none focus:ring-0 text-primary font-medium text-sm outline-none"
-              >
-                <option value="">All States</option>
-              </select>
+              <div class="flex flex-col md:flex-row items-stretch gap-2">
+                <!-- State Select -->
+                <div
+                  class="flex-1 flex items-center gap-2 px-4 py-3 bg-gray-50/90 rounded-xl"
+                >
+                  <i data-lucide="map-pin" class="text-primary w-5 h-5"></i>
+                  <select
+                    id="stateSelect"
+                    class="w-full bg-transparent border-none focus:ring-0 text-gray-800 font-medium text-sm outline-none"
+                  >
+                    <option value="">All States</option>
+                  </select>
+                </div>
+                <!-- LGA Select -->
+                <div
+                  class="flex-1 flex items-center gap-2 px-4 py-3 bg-gray-50/90 rounded-xl"
+                >
+                  <i data-lucide="map" class="text-primary w-5 h-5"></i>
+                  <select
+                    id="lgaSelect"
+                    class="w-full bg-transparent border-none focus:ring-0 text-gray-800 font-medium text-sm outline-none"
+                  >
+                    <option value="">All LGAs</option>
+                  </select>
+                </div>
+                <!-- Search Button -->
+                <button
+                  id="searchBtn"
+                  class="bg-tertiary-container text-primary px-8 py-3 rounded-xl font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-sm whitespace-nowrap"
+                >
+                  Search <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </div>
             </div>
-            <div class="hidden md:block w-px h-6 bg-white/30"></div>
-            <div
-              class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
-            >
-              <i data-lucide="map" class="text-tertiary-fixed w-5 h-5"></i>
-              <select
-                id="lgaSelect"
-                class="w-full bg-transparent border-none focus:ring-0 text-primary font-medium text-sm outline-none"
-              >
-                <option value="">All LGAs</option>
-              </select>
-            </div>
-            <button
-              id="searchBtn"
-              class="bg-tertiary-container text-primary px-6 py-2.5 rounded-lg font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-1 text-sm"
-            >
-              Search <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
           </div>
         </div>
       </section>
