@@ -88,22 +88,20 @@
       }
       .property-card {
         border-radius: 1rem;
-        overflow: hidden;
-        transition:
-          transform 0.25s ease,
-          box-shadow 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(0, 28, 74, 0.06);
       }
       .property-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 20px 40px -12px rgba(0, 28, 74, 0.18);
+        border-color: rgba(197, 170, 35, 0.2);
       }
-      .gradient-overlay {
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.92) 0%,
-          rgba(0, 0, 0, 0.55) 50%,
-          rgba(0, 0, 0, 0.08) 100%
-        );
+      .property-card .line-clamp-1 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
       }
       .glass-card {
         background: rgba(255, 255, 255, 0.92);
@@ -122,11 +120,8 @@
         transition: background-image 0.5s ease;
       }
       @media (max-width: 768px) {
-        .property-card > img {
+        .property-card img {
           height: 260px !important;
-        }
-        .property-card .gradient-overlay {
-          padding: 12px !important;
         }
         .property-card h3 {
           font-size: 0.85rem;
@@ -140,6 +135,11 @@
         .property-card .flex.gap-4 {
           gap: 8px;
           font-size: 0.65rem;
+        }
+        .property-card a {
+          padding: 6px 8px;
+          font-size: 0.7rem;
+          border-radius: 0.6rem;
         }
       }
       .loading-spinner {
@@ -174,6 +174,15 @@
       .hero-full-bleed > * {
         position: relative;
         z-index: 2;
+      }
+      .hover-lift {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
       }
     </style>
   </head>
@@ -340,7 +349,7 @@
           </div>
           <div
             id="saleContainer"
-            class="grid md:grid-cols-2 lg:grid-cols-3 gap-7"
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
           >
             <div class="col-span-full text-center py-10">
               <div class="loading-spinner"></div>
@@ -380,7 +389,7 @@
           </div>
           <div
             id="rentContainer"
-            class="grid md:grid-cols-2 lg:grid-cols-3 gap-7"
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
           >
             <div class="col-span-full text-center py-10">
               <div class="loading-spinner"></div>
@@ -477,7 +486,15 @@
         }).format(amount);
       }
 
-      // ---------- Create property card ----------
+      // ---------- Helper: escape HTML ----------
+      function escapeHtml(text) {
+        if (!text) return "";
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // ---------- Create property card (Updated design matching index page) ----------
       function createPropertyCard(house) {
         const imageUrl =
           house.images && house.images[0]
@@ -490,28 +507,51 @@
         const badge = seller.verificationBadge
           ? '<span class="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">✓</span>'
           : "";
-        const listingLabel =
-          house.listingType === "sale" ? "For Sale" : "For Rent";
+        const listingLabel = house.listingType === "sale" ? "SALE" : "RENT";
+        const priceLabel = house.listingType === "rent" ? "/yr" : "";
+
         return `
-          <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group">
-            <img src="${imageUrl}" class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700" />
-            <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
-              <span class="badge-new text-[11px] px-3 py-1 rounded-full">${listingLabel}</span>
-              <a href="seller-profile.html?id=${sellerId}" class="flex items-center gap-2 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full shadow-sm hover:bg-white transition-all cursor-pointer">
-                <img src="${sellerLogo}" alt="Seller" class="w-5 h-5 rounded-full object-cover" />
-                <span class="text-[11px] font-bold text-primary">${sellerName.substring(0, 15)}${badge}</span>
-              </a>
-            </div>
-            <div class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay">
-              <h3 class="font-headline text-lg font-bold">${house.title || "Property"}</h3>
-              <p class="text-xs text-white/80 mt-1">${house.address || `${house.lga}, ${house.state}`}</p>
-              <span class="block text-xl font-bold mt-2">${formatNaira(house.price)}${house.listingType === "rent" ? "/year" : ""}</span>
-              <div class="flex gap-4 mt-3 text-xs text-white/80">
-                <span class="flex items-center gap-1"><i data-lucide="bed"></i>${house.bedrooms || "?"}</span>
-                <span class="flex items-center gap-1"><i data-lucide="bath"></i>${house.bathrooms || "?"}</span>
-                <span class="flex items-center gap-1"><i data-lucide="square"></i>${house.size || "?"}m²</span>
+          <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up bg-white">
+            <div class="relative h-[260px] md:h-[300px] overflow-hidden">
+              <img 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-700" 
+                src="${imageUrl}" 
+                alt="${escapeHtml(house.title || "Property")}"
+                loading="lazy"
+                onerror="this.src='/images/placeholder.jpg'"
+              />
+              <div class="absolute top-0 left-0 right-0 p-4 flex justify-between items-start">
+                <span class="bg-primary/90 backdrop-blur-sm text-white text-[10px] tracking-wider px-3 py-1 rounded-md font-semibold uppercase">
+                  ${listingLabel}
+                </span>
+                <span class="bg-white/95 backdrop-blur-sm text-primary font-bold text-sm px-3 py-1 rounded-md shadow-md">
+                  ${formatNaira(house.price || 0)}${priceLabel}
+                </span>
               </div>
-              <a href="property-details.html?id=${house._id}" class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition">View More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+            </div>
+            <div class="p-4 md:p-5">
+              <h3 class="font-headline font-bold text-primary text-sm md:text-base mb-1 line-clamp-1">${escapeHtml(house.title || "Luxury Property")}</h3>
+              <p class="text-xs text-on-surface-variant/70 mb-3 flex items-center gap-1">
+                <i data-lucide="map-pin" class="w-3 h-3 text-tertiary"></i>
+                ${escapeHtml(house.lga || "")}, ${escapeHtml(house.state || "")}
+              </p>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4 text-xs">
+                  <span class="flex items-center gap-1 text-on-surface-variant">
+                    <i data-lucide="bed-single" class="w-3.5 h-3.5 text-tertiary"></i>
+                    <span class="font-semibold text-primary">${house.bedrooms || 0}</span> bed
+                  </span>
+                  <span class="flex items-center gap-1 text-on-surface-variant">
+                    <i data-lucide="bath" class="w-3.5 h-3.5 text-tertiary"></i>
+                    <span class="font-semibold text-primary">${house.bathrooms || 0}</span> bath
+                  </span>
+                </div>
+                <a href="property-details.html?id=${house._id}" 
+                   class="text-xs font-bold text-tertiary hover:text-primary transition-colors flex items-center gap-1">
+                  View <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                </a>
+              </div>
             </div>
           </div>
         `;
