@@ -281,7 +281,7 @@
                 id="stateFilter"
                 class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none cursor-pointer truncate"
               >
-                <option value="all">All States</option>
+                <option value="all">State</option>
               </select>
             </div>
             <div
@@ -295,7 +295,7 @@
                 id="lgaFilter"
                 class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none cursor-pointer truncate"
               >
-                <option value="all">All LGAs</option>
+                <option value="all">LGA</option>
               </select>
             </div>
             <div
@@ -309,7 +309,10 @@
                 id="typeFilter"
                 class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none cursor-pointer truncate"
               >
-                <option value="all">Type</option>
+                <option value="all" class="md:hidden">Type</option>
+                <option value="all" class="hidden md:block">
+                  Property Type
+                </option>
                 <option value="bungalow">Bungalow</option>
                 <option value="duplex">Duplex</option>
                 <option value="terrace">Terrace</option>
@@ -462,7 +465,7 @@
 
       function populateStates(states) {
         const stateSelect = document.getElementById("stateFilter");
-        stateSelect.innerHTML = '<option value="all">All States</option>';
+        stateSelect.innerHTML = '<option value="all">States</option>';
         states.forEach((state) => {
           const opt = document.createElement("option");
           opt.value = state;
@@ -473,7 +476,7 @@
 
       function populateLgas(lgaMap, selectedState) {
         const lgaSelect = document.getElementById("lgaFilter");
-        lgaSelect.innerHTML = '<option value="all">All LGAs</option>';
+        lgaSelect.innerHTML = '<option value="all">LGA</option>';
         if (selectedState !== "all" && lgaMap.has(selectedState)) {
           Array.from(lgaMap.get(selectedState))
             .sort()
