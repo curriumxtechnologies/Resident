@@ -258,53 +258,60 @@
       >
         <div class="max-w-7xl mx-auto px-5 md:px-8">
           <div
-            class="grid grid-cols-2 md:flex md:flex-row items-stretch md:items-center gap-3 md:gap-4"
+            class="grid grid-cols-4 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-4"
           >
             <div
-              class="flex items-center gap-3 px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+              class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
             >
               <i
                 data-lucide="map-pin"
-                class="text-tertiary w-5 h-5 shrink-0"
+                class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
               ></i>
               <select
                 id="stateFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none cursor-pointer truncate"
               >
                 <option value="all">All States</option>
               </select>
             </div>
             <div
-              class="flex items-center gap-3 px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+              class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
             >
-              <i data-lucide="map" class="text-tertiary w-5 h-5 shrink-0"></i>
+              <i
+                data-lucide="map"
+                class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
+              ></i>
               <select
                 id="lgaFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none cursor-pointer truncate"
               >
                 <option value="all">All LGAs</option>
               </select>
             </div>
             <div
-              class="flex items-center gap-3 px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+              class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
             >
-              <i data-lucide="home" class="text-tertiary w-5 h-5 shrink-0"></i>
+              <i
+                data-lucide="home"
+                class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
+              ></i>
               <select
                 id="typeFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none cursor-pointer truncate"
               >
-                <option value="all">Property Type</option>
+                <option value="all">Type</option>
                 <option value="bungalow">Bungalow</option>
                 <option value="duplex">Duplex</option>
-                <option value="terrace">Terrace / Townhouse</option>
-                <option value="flat">Flat / Apartment</option>
+                <option value="terrace">Terrace</option>
+                <option value="flat">Flat</option>
               </select>
             </div>
             <button
               id="searchBtn"
-              class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-bold hover-bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-sm col-span-2 md:col-span-1 w-full"
+              class="bg-tertiary-container text-primary px-3 md:px-5 py-3 rounded-xl font-bold hover-bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-1 md:gap-2 text-xs md:text-sm w-full"
             >
-              <i data-lucide="search" class="w-5 h-5"></i> <span>Search</span>
+              <i data-lucide="search" class="w-4 h-4 md:w-5 md:h-5"></i>
+              <span class="hidden md:inline">Search</span>
             </button>
           </div>
         </div>
