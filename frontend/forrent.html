@@ -7,14 +7,12 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <title>Homes for Rent | Rezident Homes</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
     <link
       rel="icon"
@@ -54,254 +52,337 @@
       }
       body {
         font-family: "Inter", system-ui, sans-serif;
+        background-color: #f9f9fc;
+        color: #1a1c1e;
       }
       .font-headline {
         font-family: "Manrope", system-ui, sans-serif;
       }
-      .hover-lift {
-        transition:
-          transform 0.25s ease,
-          box-shadow 0.3s ease;
-      }
-      .hover-lift:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
-      }
-      .lucide {
-        width: 1.25rem;
-        height: 1.25rem;
-        stroke-width: 1.75;
-      }
       html {
         scroll-behavior: smooth;
       }
+
+      /* Fade up animation */
       .fade-up {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(24px);
         transition:
-          opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1),
-          transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+          opacity 0.6s ease,
+          transform 0.6s ease;
       }
       .fade-up.revealed {
         opacity: 1;
         transform: translateY(0);
       }
-      .bg-surface {
-        background-color: #f9f9fc;
-      }
+
+      /* Colors */
       .text-primary {
         color: #001c4a;
       }
-      .bg-tertiary-container {
-        background-color: #c5aa23;
+      .bg-primary {
+        background-color: #001c4a;
       }
-      .hover\:bg-tertiary-fixed:hover {
-        background-color: #ffe260;
+      .bg-surface {
+        background-color: #f9f9fc;
       }
       .text-tertiary {
         color: #6e5d00;
       }
-      .gradient-overlay {
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.92) 0%,
-          rgba(0, 0, 0, 0.6) 50%,
-          rgba(0, 0, 0, 0.1) 100%
-        );
+      .bg-tertiary-container {
+        background-color: #c5aa23;
       }
+      .hover-bg-tertiary-fixed:hover {
+        background-color: #ffe260;
+      }
+
+      /* Property Card Styles */
+      .property-card {
+        border-radius: 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(0, 28, 74, 0.06);
+        background: white;
+        overflow: hidden;
+      }
+
+      .property-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px -12px rgba(0, 28, 74, 0.18);
+        border-color: rgba(197, 170, 35, 0.2);
+      }
+
+      .property-card .line-clamp-1 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+      }
+
+      .hover-lift {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+      }
+
+      /* Grid View */
+      .grid-view {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      @media (min-width: 768px) {
+        .grid-view {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 24px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .grid-view {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 28px;
+        }
+      }
+
+      /* List View */
+      .list-view {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .list-card {
+        display: flex;
+        flex-direction: row;
+        background: white;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 28, 74, 0.06);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        min-height: 180px;
+      }
+      .list-card:hover {
+        box-shadow: 0 20px 40px -12px rgba(0, 28, 74, 0.18);
+        transform: translateY(-4px);
+        border-color: rgba(197, 170, 35, 0.2);
+      }
+
+      .list-card .list-img-wrap {
+        position: relative;
+        width: 35%;
+        min-width: 140px;
+        max-width: 280px;
+        flex-shrink: 0;
+      }
+      .list-card .list-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .list-card .list-body {
+        flex: 1;
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .list-card .list-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 6px;
+      }
+
+      .list-card .list-title {
+        font-family: "Manrope", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: #001c4a;
+        line-height: 1.3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      .list-card .list-badges {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      .list-card .list-location {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #555;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      .list-card .list-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .list-card .list-meta span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        color: #444650;
+        font-weight: 500;
+      }
+      .list-card .list-meta i {
+        width: 14px;
+        height: 14px;
+        stroke-width: 2;
+        color: #6e5d00;
+      }
+
+      .list-card .list-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: auto;
+        padding-top: 10px;
+        border-top: 1px solid #f0f0f3;
+      }
+
+      .list-card .list-price {
+        font-family: "Manrope", sans-serif;
+        font-size: 17px;
+        font-weight: 800;
+        color: #001c4a;
+      }
+
+      .list-card .list-btn {
+        background: #001c4a;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        white-space: nowrap;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .list-card .list-btn:hover {
+        background: #0d316d;
+      }
+
+      /* Badges */
       .badge-new {
         background-color: #c5aa23;
         color: #001c4a;
         font-weight: 700;
-      }
-      .badge-rented {
-        background-color: #2c2c2e;
-        color: white;
-        font-weight: 500;
+        font-size: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        backdrop-filter: blur(4px);
       }
       .badge-price-slash {
         background-color: #e31b23;
         color: white;
         font-weight: 700;
+        font-size: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        backdrop-filter: blur(4px);
       }
-      .price-tag {
-        display: flex;
-        align-items: baseline;
-        flex-wrap: wrap;
-        gap: 4px;
+      .badge-rented {
+        background-color: #2c3e50;
+        color: white;
+        font-weight: 600;
+        font-size: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        backdrop-filter: blur(4px);
       }
 
-      /* Mobile styles */
-      @media (max-width: 768px) {
-        .property-card {
-          border-radius: 1rem;
-        }
-        .property-card img {
-          height: 260px !important;
-        }
-        .property-card .gradient-overlay {
-          padding: 12px !important;
-        }
-        .property-card h3 {
-          font-size: 0.85rem;
-          line-height: 1.3;
-        }
-        .property-card p {
-          font-size: 0.7rem;
-        }
-        .property-card .text-xl {
-          font-size: 0.95rem !important;
-        }
-        .property-card .flex.gap-4 {
-          gap: 8px;
-          font-size: 0.65rem;
-        }
-        .property-card a {
-          padding: 6px 8px;
-          font-size: 0.7rem;
-          border-radius: 0.6rem;
-        }
-        .property-card .absolute.top-4.left-4 span {
-          font-size: 9px !important;
-          padding: 4px 8px !important;
-        }
-        #propertiesContainer {
-          grid-template-columns: repeat(2, 1fr) !important;
-          gap: 12px !important;
-        }
-        .hero-title {
-          font-size: 1.8rem !important;
-        }
-        .list-view .property-card {
+      /* Mobile List View */
+      @media (max-width: 640px) {
+        .list-card {
           flex-direction: column;
-          height: auto;
+          min-height: unset;
         }
-        .list-view .property-card img {
+        .list-card .list-img-wrap {
           width: 100%;
-          height: 180px !important;
+          max-width: unset;
+          height: 200px;
         }
-        .list-view .property-card .gradient-overlay {
-          width: 100%;
-          background: white;
-          color: #1a1c1e;
+        .list-card .list-body {
           padding: 14px;
         }
+        .list-card .list-title {
+          font-size: 14px;
+        }
+        .list-card .list-price {
+          font-size: 15px;
+        }
+        .list-card .list-footer {
+          flex-wrap: wrap;
+          gap: 8px;
+        }
       }
-      @media (max-width: 480px) {
-        #propertiesContainer {
-          gap: 10px !important;
+
+      /* Tablet adjustments */
+      @media (min-width: 641px) and (max-width: 1023px) {
+        .list-card .list-img-wrap {
+          width: 40%;
         }
-        .property-card img {
-          height: 220px !important;
-        }
-        .property-card .gradient-overlay {
-          padding: 10px !important;
-        }
-        .property-card h3 {
-          font-size: 0.75rem;
-        }
-        .property-card .text-xl {
-          font-size: 0.85rem !important;
-        }
-        .property-card a {
-          padding: 5px 6px;
-          font-size: 0.65rem;
-        }
+      }
+
+      /* View toggle */
+      .view-toggle {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: #f3f3f6;
+        padding: 4px;
+        border-radius: 10px;
+        border: 1px solid #e2e2e5;
+      }
+      .view-toggle button {
+        padding: 8px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        color: #777;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
       }
       .view-toggle button.active {
         background-color: #001c4a;
         color: white;
       }
+      .view-toggle button i {
+        width: 18px;
+        height: 18px;
+      }
 
-      /* Professional list view */
-      .list-view {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-      .list-view .property-card {
-        display: flex;
-        flex-direction: row;
-        height: 160px;
-        border-radius: 1rem;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        transition:
-          transform 0.2s,
-          box-shadow 0.2s;
-      }
-      .list-view .property-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.12);
-      }
-      .list-view .property-card img {
-        width: 160px;
-        height: 100% !important;
-        object-fit: cover;
-        border-radius: 1rem 0 0 1rem;
-      }
-      .list-view .property-card .gradient-overlay {
-        position: relative;
-        background: white;
-        color: #1a1c1e;
-        width: calc(100% - 160px);
-        padding: 14px 18px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-radius: 0 1rem 1rem 0;
-      }
-      .list-view .property-card h3 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #001c4a;
-        margin-bottom: 4px;
-      }
-      .list-view .property-card p {
-        font-size: 0.8rem;
-        color: #5b5e6b;
-        margin-bottom: 6px;
-      }
-      .list-view .property-card .text-xl {
-        font-size: 1.1rem !important;
-        font-weight: 800;
-        color: #001c4a;
-      }
-      .list-view .property-card .flex.gap-4 {
-        display: flex;
-        margin-top: 8px;
-        gap: 16px;
-        font-size: 0.7rem;
-        color: #5b5e6b;
-      }
-      .list-view .property-card a {
-        margin-top: 10px;
-        width: fit-content;
-        padding: 6px 16px;
-        font-size: 0.75rem;
-        background: #001c4a;
-        color: white;
-        border-radius: 2rem;
-        font-weight: 600;
-        transition: background 0.2s;
-      }
-      .list-view .property-card a:hover {
-        background: #0d316d;
-      }
-      .list-view .property-card .absolute.top-4 {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        z-index: 10;
-      }
-      @media (min-width: 1024px) {
-        .list-view {
-          display: flex;
-          flex-direction: column;
-          max-width: 1000px;
-          margin: 0 auto;
-        }
-      }
+      /* Loading */
       .loading-spinner {
         border: 3px solid #f3f3f3;
         border-top: 3px solid #c5aa23;
@@ -319,30 +400,65 @@
           transform: rotate(360deg);
         }
       }
+
+      /* Empty state */
+      .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      }
+
+      /* Mobile grid card adjustments */
+      @media (max-width: 768px) {
+        .property-card img {
+          height: 260px !important;
+        }
+        .property-card h3 {
+          font-size: 0.85rem;
+        }
+        .property-card p {
+          font-size: 0.7rem;
+        }
+        .property-card .text-xl {
+          font-size: 0.95rem !important;
+        }
+        .property-card .flex.gap-4 {
+          gap: 8px;
+          font-size: 0.65rem;
+        }
+        .property-card a {
+          padding: 6px 8px;
+          font-size: 0.7rem;
+          border-radius: 0.6rem;
+        }
+      }
     </style>
   </head>
-  <body class="bg-surface text-[#1a1c1e] antialiased">
-    <!-- Navigation -->
+  <body class="antialiased">
+    <!-- Header -->
     <header
       class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
     >
       <div class="max-w-7xl mx-auto px-5 md:px-8">
-        <div class="flex items-center justify-between h-16 lg:h-20">
-          <a href="home.html" class="flex-shrink-0"
-            ><img
+        <div class="flex items-center justify-between h-14 lg:h-16">
+          <a href="index.html" class="flex-shrink-0">
+            <img
               src="images/logo.png"
               alt="Rezident Homes Logo"
-              class="h-9 lg:h-11 w-auto object-contain"
+              class="h-7 lg:h-8 w-auto object-contain"
               onerror="
                 this.style.display = 'none';
                 this.parentElement.innerHTML =
-                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>REZIDENT HOMES</span>';
+                  '<span class=\'text-lg font-black tracking-tighter text-primary\'>REZIDENT HOMES</span>';
               "
-          /></a>
-          <div>
+            />
+          </a>
+          <div class="flex gap-3">
             <a
               href="forsale.html"
-              class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
+              class="inline-flex bg-[#001c4a] text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
               >For Sale</a
             >
           </div>
@@ -353,9 +469,9 @@
     <main>
       <!-- Hero -->
       <section
-        class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden fade-up"
+        class="relative bg-[#001c4a] text-white py-14 lg:py-20 overflow-hidden fade-up"
       >
-        <div class="absolute inset-0 opacity-20">
+        <div class="absolute inset-0 opacity-15">
           <img
             src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=1600&h=400&fit=crop"
             alt="Luxury rental homes"
@@ -364,111 +480,118 @@
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
           <h1
-            class="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 hero-title"
+            class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3"
           >
             Homes for Rent
           </h1>
-          <p class="text-white/80 text-base md:text-lg max-w-2xl mx-auto">
-            Discover premium estates & budget-friendly apartments.
-            <span class="font-semibold text-tertiary-container"
-              >No hidden charges, transparent pricing.</span
-            >
+          <p
+            class="text-white/75 text-sm md:text-base max-w-xl mx-auto leading-relaxed"
+          >
+            Discover premium estates & budget-friendly apartments. No hidden
+            charges, transparent pricing.
           </p>
         </div>
       </section>
 
       <!-- Filter Bar -->
       <div
-        class="sticky top-16 lg:top-20 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
+        class="sticky top-14 lg:top-16 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-4 shadow-sm fade-up"
       >
         <div class="max-w-7xl mx-auto px-5 md:px-8">
           <div
-            class="grid grid-cols-3 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3"
+            class="grid grid-cols-2 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-3"
           >
             <div
-              class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+              class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
             >
               <i
                 data-lucide="map-pin"
-                class="text-tertiary w-5 h-5 shrink-0"
+                class="text-tertiary w-4 h-4 shrink-0"
               ></i>
               <select
                 id="stateFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer"
               >
                 <option value="all">All States</option>
               </select>
             </div>
             <div
-              class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+              class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
             >
-              <i data-lucide="map" class="text-tertiary w-5 h-5 shrink-0"></i>
+              <i data-lucide="map" class="text-tertiary w-4 h-4 shrink-0"></i>
               <select
                 id="lgaFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs md:text-sm outline-none"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer"
               >
                 <option value="all">All LGAs</option>
               </select>
             </div>
+            <div
+              class="flex items-center gap-2 px-3 py-2 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+            >
+              <i data-lucide="home" class="text-tertiary w-4 h-4 shrink-0"></i>
+              <select
+                id="typeFilter"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-xs outline-none cursor-pointer"
+              >
+                <option value="all">Property Type</option>
+                <option value="bungalow">Bungalow</option>
+                <option value="duplex">Duplex</option>
+                <option value="terrace">Terrace / Townhouse</option>
+                <option value="flat">Flat / Apartment</option>
+              </select>
+            </div>
             <button
               id="searchBtn"
-              class="bg-tertiary-container text-primary px-3 md:px-6 py-2.5 rounded-xl font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-xs md:text-sm whitespace-nowrap w-full"
+              class="bg-tertiary-container text-primary px-3 md:px-5 py-2 rounded-xl font-bold hover-bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-2 text-xs col-span-2 md:col-span-1 w-full"
             >
-              <i data-lucide="search" class="w-4 h-4"></i
-              ><span class="hidden sm:inline">Search</span>
+              <i data-lucide="search" class="w-4 h-4"></i> <span>Search</span>
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Properties Grid -->
-      <section class="py-16 lg:py-20 px-5 md:px-8">
+      <!-- Properties Section -->
+      <section class="py-12 lg:py-16 px-5 md:px-8">
         <div class="max-w-7xl mx-auto">
-          <div
-            class="flex justify-between items-center mb-10 flex-wrap gap-3 fade-up"
-          >
+          <div class="flex justify-between items-center mb-8 fade-up">
             <div>
               <span
-                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+                class="text-tertiary font-bold uppercase tracking-widest text-[11px]"
                 >Signature Collection</span
               >
+              <p class="text-xs text-[#777] mt-0.5" id="resultCount"></p>
             </div>
-            <div
-              class="view-toggle flex items-center gap-2 bg-[#f3f3f6] p-1 rounded-xl border border-[#e2e2e5]"
-            >
-              <button id="gridViewBtn" class="active p-2 rounded-lg">
+            <div class="view-toggle">
+              <button id="gridViewBtn" class="active" title="Grid View">
                 <i data-lucide="grid-2x2"></i>
               </button>
-              <button id="listViewBtn" class="p-2 rounded-lg">
+              <button id="listViewBtn" title="List View">
                 <i data-lucide="list"></i>
               </button>
             </div>
           </div>
-          <div
-            id="propertiesContainer"
-            class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-7 lg:gap-8"
-          >
-            <div class="col-span-full text-center py-10">
+
+          <div id="propertiesContainer" class="grid-view">
+            <div class="col-span-full text-center py-12">
               <div class="loading-spinner"></div>
             </div>
           </div>
-          <div
-            id="emptyState"
-            class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-8 fade-up"
-          >
+
+          <div id="emptyState" class="hidden empty-state mt-6 fade-up">
             <i
               data-lucide="home"
-              class="w-16 h-16 text-[#c4c6d1] mx-auto mb-4"
+              class="w-14 h-14 text-[#c4c6d1] mx-auto mb-3"
             ></i>
-            <h3 class="text-xl font-headline font-semibold text-primary">
+            <h3 class="text-lg font-headline font-bold text-primary">
               No matching rental properties
             </h3>
-            <p class="text-[#444650] text-sm mt-1">
+            <p class="text-[#777] text-xs mt-1">
               Try adjusting your search or filter.
             </p>
             <button
               id="resetFiltersBtn"
-              class="mt-4 bg-tertiary-container text-primary px-5 py-2 rounded-full text-sm font-semibold"
+              class="mt-4 bg-tertiary-container text-primary px-5 py-2 rounded-full text-xs font-bold hover-bg-tertiary-fixed transition"
             >
               Reset Filters
             </button>
@@ -478,23 +601,23 @@
 
       <!-- CTA -->
       <section
-        class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
+        class="py-14 lg:py-18 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
       >
-        <div class="max-w-4xl mx-auto text-center">
+        <div class="max-w-3xl mx-auto text-center">
           <i
             data-lucide="calendar-check"
-            class="w-10 h-10 text-tertiary-container mx-auto mb-4"
+            class="w-8 h-8 text-tertiary-container mx-auto mb-3"
           ></i>
-          <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">
+          <h2 class="text-xl md:text-2xl font-headline font-bold mb-2">
             Looking for flexible lease options?
           </h2>
-          <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">
+          <p class="text-white/60 text-xs md:text-sm mb-6 max-w-md mx-auto">
             Including low-income apartments with zero hidden fees. Let's find
             your perfect home.
           </p>
           <button
             id="rentalConsultBtn"
-            class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm"
+            class="bg-tertiary-container text-primary px-5 py-2.5 rounded-full font-bold hover-bg-tertiary-fixed transition shadow-md text-xs"
           >
             Request Private Rental Consultation
           </button>
@@ -503,74 +626,93 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8">
+    <footer class="bg-white border-t border-[#eeeef0] pt-10 pb-6 px-5 md:px-8">
       <div
-        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
       >
         <div class="fade-up">
           <img
             src="images/logo.png"
-            alt="Rezident Homes Logo"
-            class="h-8 mb-3"
-            onerror="this.style.display = 'none'"
+            alt="ReZident Homes Logo"
+            class="h-6 mb-3 object-contain"
+            onerror="
+              this.style.display = 'none';
+              this.parentElement.insertAdjacentHTML(
+                'afterbegin',
+                '<span class=\'text-base font-black tracking-tighter text-primary mb-2 block\'>REZIDENT HOMES</span>',
+              );
+            "
           />
-          <p class="text-xs text-[#444650] max-w-xs">
+          <p class="text-xs text-[#555] max-w-xs leading-relaxed">
             Redefining real estate through precision, trust and transparency.
-            Affordable options with no hidden charges.
+            Affordable rental options with no hidden charges.
           </p>
         </div>
         <div class="fade-up">
-          <h4 class="font-bold text-primary mb-4 text-sm">Discover</h4>
+          <h4
+            class="font-bold text-primary mb-3 text-xs uppercase tracking-wider"
+          >
+            Discover
+          </h4>
           <ul class="space-y-2 text-xs">
             <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Rent Properties</a
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >Properties for Rent</a
               >
             </li>
             <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Buy Properties</a
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >New Developments</a
               >
             </li>
             <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
+              <a href="#" class="text-[#555] hover:text-primary transition"
                 >Short-term Leases</a
               >
             </li>
           </ul>
         </div>
         <div class="fade-up">
-          <h4 class="font-bold text-primary mb-4 text-sm">Company</h4>
+          <h4
+            class="font-bold text-primary mb-3 text-xs uppercase tracking-wider"
+          >
+            Company
+          </h4>
           <ul class="space-y-2 text-xs">
             <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >About Rezident Homes</a
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >About ReZident Homes</a
               >
             </li>
             <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Concierge Team</a
+              <a href="#" class="text-[#555] hover:text-primary transition"
+                >Rental Concierge</a
               >
             </li>
             <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
+              <a href="#" class="text-[#555] hover:text-primary transition"
                 >Careers</a
               >
             </li>
           </ul>
         </div>
         <div class="fade-up">
-          <h4 class="font-bold text-primary mb-4 text-sm">Insights</h4>
-          <p class="text-xs text-[#444650] mb-2">
+          <h4
+            class="font-bold text-primary mb-3 text-xs uppercase tracking-wider"
+          >
+            Insights
+          </h4>
+          <p class="text-xs text-[#555] mb-2">
             Get early access to new rental listings
           </p>
           <div class="flex">
             <input
               type="email"
               placeholder="Email address"
-              class="bg-[#f3f3f6] border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-tertiary"
-            /><button
-              class="bg-[#001c4a] text-white px-4 rounded-r-lg text-xs font-semibold"
+              class="bg-[#f3f3f6] border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-tertiary outline-none"
+            />
+            <button
+              class="bg-[#001c4a] text-white px-4 rounded-r-lg text-xs font-semibold hover:bg-[#0d316d] transition"
             >
               Join
             </button>
@@ -578,17 +720,15 @@
         </div>
       </div>
       <div
-        class="max-w-7xl mx-auto pt-8 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-[#444650]"
+        class="max-w-7xl mx-auto pt-6 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-2 text-[11px] text-[#777]"
       >
         <p>
           © 2025 Rezident Homes, All rights reserved. No hidden charges on any
           rental.
         </p>
-        <div class="flex gap-5">
-          <a href="#" class="hover:text-primary transition">Privacy Policy</a
-          ><a href="#" class="hover:text-primary transition"
-            >Terms of Service</a
-          >
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-primary transition">Privacy Policy</a>
+          <a href="#" class="hover:text-primary transition">Terms of Service</a>
         </div>
       </div>
     </footer>
@@ -606,12 +746,9 @@
 
       function escapeHtml(str) {
         if (!str) return "";
-        return str.replace(/[&<>]/g, function (m) {
-          if (m === "&") return "&amp;";
-          if (m === "<") return "&lt;";
-          if (m === ">") return "&gt;";
-          return m;
-        });
+        const div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
       }
 
       function getBadge(house) {
@@ -632,7 +769,7 @@
         const res = await fetch(url, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
-        if (!res.ok) throw new Error("Failed to fetch");
+        if (!res.ok) throw new Error("Failed to fetch houses");
         const data = await res.json();
         return data.houses || [];
       }
@@ -665,14 +802,13 @@
         const lgaSelect = document.getElementById("lgaFilter");
         lgaSelect.innerHTML = '<option value="all">All LGAs</option>';
         if (selectedState !== "all" && lgaMap.has(selectedState)) {
-          Array.from(lgaMap.get(selectedState))
-            .sort()
-            .forEach((lga) => {
-              const opt = document.createElement("option");
-              opt.value = lga;
-              opt.textContent = lga;
-              lgaSelect.appendChild(opt);
-            });
+          const lgas = Array.from(lgaMap.get(selectedState)).sort();
+          lgas.forEach((lga) => {
+            const opt = document.createElement("option");
+            opt.value = lga;
+            opt.textContent = lga;
+            lgaSelect.appendChild(opt);
+          });
         }
       }
 
@@ -683,53 +819,121 @@
         return { state, lga };
       }
 
-      function renderHouses(houses, container) {
+      // Grid Card - Matching the exact sale page design
+      function renderGridCard(house) {
+        const image =
+          house.images && house.images[0]
+            ? house.images[0].url
+            : "images/hero.avif";
+        const badge = getBadge(house);
+        const badgeHtml = badge
+          ? `<span class="${badge.class}">${badge.text}</span>`
+          : "";
+
+        return `
+          <div class="property-card hover-lift group fade-up" data-state="${house.state || ""}" data-lga="${house.lga || ""}" data-type="${house.propertyType || ""}">
+            <div class="relative h-[260px] md:h-[300px] overflow-hidden">
+              <img 
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-700" 
+                src="${image}" 
+                alt="${escapeHtml(house.title || "Property")}"
+                loading="lazy"
+                onerror="this.src='/images/placeholder.jpg'"
+              />
+              <div class="absolute top-0 left-0 right-0 p-4 flex justify-between items-start">
+                <span class="bg-primary/90 backdrop-blur-sm text-white text-[10px] tracking-wider px-3 py-1 rounded-md font-semibold uppercase">
+                  RENT
+                </span>
+                <span class="bg-white/95 backdrop-blur-sm text-primary font-bold text-sm px-3 py-1 rounded-md shadow-md">
+                  ${formatNaira(house.price || 0)}<span class="text-[10px] font-normal">/yr</span>
+                </span>
+              </div>
+              ${badgeHtml ? `<div class="absolute top-12 left-4 z-10">${badgeHtml}</div>` : ""}
+            </div>
+            <div class="p-4 md:p-5">
+              <h3 class="font-headline font-bold text-primary text-sm md:text-base mb-1 line-clamp-1">${escapeHtml(house.title || "Luxury Property")}</h3>
+              <p class="text-xs text-on-surface-variant/70 mb-3 flex items-center gap-1" style="color: #444650;">
+                <i data-lucide="map-pin" class="w-3 h-3 text-tertiary"></i>
+                ${escapeHtml(house.lga || "")}, ${escapeHtml(house.state || "")}
+              </p>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4 text-xs">
+                  <span class="flex items-center gap-1" style="color: #444650;">
+                    <i data-lucide="bed-single" class="w-3.5 h-3.5 text-tertiary"></i>
+                    <span class="font-semibold text-primary">${house.bedrooms || 0}</span> bed
+                  </span>
+                  <span class="flex items-center gap-1" style="color: #444650;">
+                    <i data-lucide="bath" class="w-3.5 h-3.5 text-tertiary"></i>
+                    <span class="font-semibold text-primary">${house.bathrooms || 0}</span> bath
+                  </span>
+                </div>
+                <a href="property-details.html?id=${house._id}" 
+                   class="text-xs font-bold text-tertiary hover:text-primary transition-colors flex items-center gap-1">
+                  View <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // List Card - Matching the exact sale page design
+      function renderListCard(house) {
+        const image =
+          house.images && house.images[0]
+            ? house.images[0].url
+            : "images/hero.avif";
+        const badge = getBadge(house);
+        const badgeHtml = badge
+          ? `<span class="${badge.class}">${badge.text}</span>`
+          : "";
+
+        return `
+          <div class="list-card" data-state="${house.state || ""}" data-lga="${house.lga || ""}" data-type="${house.propertyType || ""}">
+            <div class="list-img-wrap">
+              <img src="${image}" loading="lazy" alt="${escapeHtml(house.title || "Property")}" />
+            </div>
+            <div class="list-body">
+              <div class="list-header">
+                <h3 class="list-title">${escapeHtml(house.title || "Property")}</h3>
+                <div class="list-badges">${badgeHtml}</div>
+              </div>
+              <div class="list-location">
+                <i data-lucide="map-pin" class="w-3 h-3"></i>
+                <span>${escapeHtml(house.address || `${house.lga}, ${house.state}`)}</span>
+              </div>
+              <div class="list-meta">
+                <span><i data-lucide="bed-single"></i> ${house.bedrooms || "?"} Beds</span>
+                <span><i data-lucide="bath"></i> ${house.bathrooms || "?"} Baths</span>
+                <span><i data-lucide="square"></i> ${house.size || "?"} m²</span>
+              </div>
+              <div class="list-footer">
+                <div class="list-price">${formatNaira(house.price)}<span class="text-xs font-normal text-gray-500">/yr</span></div>
+                <a href="property-details.html?id=${house._id}" class="list-btn">View Details <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderHouses(houses, container, viewMode) {
+        const countEl = document.getElementById("resultCount");
         if (!houses.length) {
-          container.innerHTML =
-            '<div class="col-span-full text-center py-10 text-on-surface-variant">No rental houses found.</div>';
+          container.innerHTML = "";
           document.getElementById("emptyState").classList.remove("hidden");
+          if (countEl) countEl.textContent = "0 properties found";
           return;
         }
         document.getElementById("emptyState").classList.add("hidden");
-        container.innerHTML = houses
-          .map((house) => {
-            const image = house.images?.[0]?.url || "images/hero.avif";
-            const seller = house.user || {};
-            const sellerLogo = seller.profile || "images/icon.png";
-            const sellerName = seller.name || "Rezident Homes";
-            const sellerId = seller._id;
-            const badge = getBadge(house);
-            const badgeHtml = badge
-              ? `<span class="${badge.class} text-[11px] px-3 py-1 rounded-full shadow-sm">${badge.text}</span>`
-              : "";
-            const verifiedBadge = seller.verificationBadge
-              ? '<span class="ml-1 text-xs bg-blue-100 text-blue-800 px-1.5 rounded-full">✓</span>'
-              : "";
-            return `
-      <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up" data-state="${house.state || ""}" data-lga="${house.lga || ""}">
-        <img src="${image}" class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700" loading="lazy" />
-        <div class="absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
-          <div class="flex gap-2">${badgeHtml}</div>
-          <a href="seller-profile.html?id=${sellerId}" class="flex items-center gap-2 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full shadow-sm hover:bg-white transition-all cursor-pointer">
-            <img src="${sellerLogo}" alt="Seller" class="w-5 h-5 rounded-full object-cover" />
-            <span class="text-[11px] font-bold text-primary">${escapeHtml(sellerName.substring(0, 15))}${verifiedBadge}</span>
-          </a>
-        </div>
-        <div class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay">
-          <h3 class="font-headline text-lg font-bold">${escapeHtml(house.title || "Property")}</h3>
-          <p class="text-xs text-white/80 mt-1">${escapeHtml(house.address || `${house.lga}, ${house.state}`)}</p>
-          <div class="mt-2 price-tag"><span class="text-white font-bold text-xl">${formatNaira(house.price)}</span><span class="text-sm font-normal">/ year</span></div>
-          <div class="flex gap-4 mt-3 text-xs text-white/80">
-            <span class="flex items-center gap-1"><i data-lucide="bed" class="w-4 h-4"></i> ${house.bedrooms || "?"}</span>
-            <span class="flex items-center gap-1"><i data-lucide="bath" class="w-4 h-4"></i> ${house.bathrooms || "?"}</span>
-            <span class="flex items-center gap-1"><i data-lucide="square" class="w-4 h-4"></i> ${house.size || "?"}m²</span>
-          </div>
-          <a href="property-details.html?id=${house._id}" class="mt-4 w-full bg-white text-black font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-white/90 transition">View More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-        </div>
-      </div>
-    `;
-          })
-          .join("");
+        if (countEl)
+          countEl.textContent = `${houses.length} propert${houses.length === 1 ? "y" : "ies"} found`;
+
+        if (viewMode === "list") {
+          container.innerHTML = houses.map(renderListCard).join("");
+        } else {
+          container.innerHTML = houses.map(renderGridCard).join("");
+        }
         lucide.createIcons();
       }
 
@@ -737,20 +941,24 @@
         const container = document.getElementById("propertiesContainer");
         const stateSelect = document.getElementById("stateFilter");
         const lgaSelect = document.getElementById("lgaFilter");
+        const typeSelect = document.getElementById("typeFilter");
         const searchBtn = document.getElementById("searchBtn");
         const resetBtn = document.getElementById("resetFiltersBtn");
         const gridBtn = document.getElementById("gridViewBtn");
         const listBtn = document.getElementById("listViewBtn");
+
         let allHouses = [];
-        let currentFilters = { state: "all", lga: "all" };
+        let currentFilters = { state: "all", lga: "all", type: "all" };
         let lgaMap = new Map();
+        let viewMode = "grid";
+
         container.innerHTML =
-          '<div class="col-span-full text-center py-10"><div class="loading-spinner"></div></div>';
+          '<div class="col-span-full text-center py-12"><div class="loading-spinner"></div></div>';
         try {
           allHouses = await fetchHouses();
           if (!allHouses.length) {
-            container.innerHTML =
-              '<div class="col-span-full text-center py-10 text-on-surface-variant">No rental properties available.</div>';
+            container.innerHTML = "";
+            document.getElementById("emptyState").classList.remove("hidden");
             return;
           }
           const { states, lgaMap: lgaMapData } = buildFilterOptions(allHouses);
@@ -770,15 +978,16 @@
             }
             applyFilters();
           } else {
-            renderHouses(allHouses, container);
+            renderHouses(allHouses, container, viewMode);
           }
         } catch (err) {
           console.error(err);
           container.innerHTML =
-            '<div class="col-span-full text-center py-10 text-red-600">Failed to load properties.</div>';
+            '<div class="col-span-full text-center py-10 text-red-600 text-sm">Failed to load properties. Please try again later.</div>';
         }
-        function applyFilters() {
-          const filtered = allHouses.filter((house) => {
+
+        function getFiltered() {
+          return allHouses.filter((house) => {
             if (
               currentFilters.state !== "all" &&
               house.state !== currentFilters.state
@@ -789,10 +998,19 @@
               house.lga !== currentFilters.lga
             )
               return false;
+            if (
+              currentFilters.type !== "all" &&
+              house.propertyType !== currentFilters.type
+            )
+              return false;
             return true;
           });
-          renderHouses(filtered, container);
         }
+
+        function applyFilters() {
+          renderHouses(getFiltered(), container, viewMode);
+        }
+
         stateSelect.addEventListener("change", () => {
           currentFilters.state = stateSelect.value;
           populateLgas(lgaMap, currentFilters.state);
@@ -804,35 +1022,48 @@
           currentFilters.lga = lgaSelect.value;
           applyFilters();
         });
+        typeSelect.addEventListener("change", () => {
+          currentFilters.type = typeSelect.value;
+          applyFilters();
+        });
         searchBtn.addEventListener("click", applyFilters);
-        if (resetBtn)
+        if (resetBtn) {
           resetBtn.addEventListener("click", () => {
-            currentFilters = { state: "all", lga: "all" };
+            currentFilters = { state: "all", lga: "all", type: "all" };
             stateSelect.value = "all";
+            typeSelect.value = "all";
             populateLgas(lgaMap, "all");
             lgaSelect.value = "all";
             applyFilters();
           });
-        // view toggle
+        }
+
         gridBtn.addEventListener("click", () => {
+          viewMode = "grid";
           container.classList.remove("list-view");
-          container.classList.add("grid");
+          container.classList.add("grid-view");
           gridBtn.classList.add("active");
           listBtn.classList.remove("active");
+          applyFilters();
         });
         listBtn.addEventListener("click", () => {
+          viewMode = "list";
+          container.classList.remove("grid-view");
           container.classList.add("list-view");
-          container.classList.remove("grid");
           listBtn.classList.add("active");
           gridBtn.classList.remove("active");
+          applyFilters();
         });
+
         const consultBtn = document.getElementById("rentalConsultBtn");
-        if (consultBtn)
+        if (consultBtn) {
           consultBtn.addEventListener("click", () =>
             alert(
               "Connect with our leasing concierge: +234 (0) 123 456 7890 or rentals@rezidenthomes.com — No hidden charges.",
             ),
           );
+        }
+
         const fadeElements = document.querySelectorAll(".fade-up");
         const observer = new IntersectionObserver(
           (entries) => {
@@ -846,6 +1077,7 @@
           { threshold: 0.1 },
         );
         fadeElements.forEach((el) => observer.observe(el));
+
         lucide.createIcons();
       })();
     </script>
