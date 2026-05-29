@@ -582,11 +582,10 @@
         <div class="property-card hover-lift group fade-up" data-state="${house.state || ""}" data-lga="${house.lga || ""}" data-type="${house.propertyType || ""}">
           <div class="relative h-[280px] md:h-[320px] overflow-hidden">
             <img class="w-full h-full object-cover group-hover:scale-105 transition duration-700" src="${image}" alt="${escapeHtml(house.title || "Property")}" loading="lazy" onerror="this.src='/images/placeholder.jpg'" />
-            <div class="absolute top-0 left-0 right-0 p-5 flex justify-between items-start">
-              <span class="bg-primary/90 backdrop-blur-sm text-white text-xs tracking-wider px-4 py-1.5 rounded-lg font-semibold uppercase">SALE</span>
+            <div class="absolute top-0 left-0 right-0 p-5 flex items-start ${badgeHtml ? "justify-between" : "justify-end"}">
+              ${badgeHtml ? `<span class="${badge.class}">${badge.text}</span>` : ""}
               <span class="bg-white/95 backdrop-blur-sm text-primary font-bold text-base px-4 py-1.5 rounded-lg shadow-md">${formatNaira(house.price || 0)}</span>
             </div>
-            ${badgeHtml ? `<div class="absolute top-14 left-5 z-10">${badgeHtml}</div>` : ""}
           </div>
           <div class="p-5 md:p-6 flex flex-col flex-1">
             <h3 class="font-headline font-bold text-primary text-base md:text-lg mb-2 line-clamp-1">${escapeHtml(house.title || "Luxury Property")}</h3>
