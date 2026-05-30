@@ -244,27 +244,94 @@ const getHouses = asyncHandler(async (req, res) => {
       throw new Error("Not authorized to update this listing");
     }
 
-    // Whitelist allowed updates (no file changes via this endpoint for simplicity)
+    // Handle removed images
+    if (req.body.removedImages) {
+      try {
+        const removedIds = JSON.parse(req.body.removedImages);
+        
+        // Delete images from Cloudinary
+        for (const publicId of removedIds) {
+          try {
+            // Using cloudinary v2
+            const cloudinary = (await import("cloudinary")).v2;
+            await cloudinary.uploader.destroy(publicId);
+          } catch (err) {
+            console.warn("Failed to delete image from Cloudinary:", publicId, err.message);
+          }
+        }
+        
+        // Remove from house.images array
+        house.images = house.images.filter(img => {
+          const imgId = img.public_id || img._id?.toString();
+          return !removedIds.includes(imgId);
+        });
+      } catch (err) {
+        console.error("Error processing removedImages:", err);
+      }
+    }
+
+    // Handle new images upload
+    if (req.files?.images && req.files.images.length > 0) {
+      const newImages = req.files.images.map((file) => ({
+        url: file.path,
+        public_id: file.filename,
+      }));
+      
+      house.images = [...house.images, ...newImages];
+    }
+
+    // Handle features - they come as features[0], features[1], etc. from FormData
+    if (req.body.features || Object.keys(req.body).some(key => key.startsWith("features["))) {
+      let features = [];
+      
+      // Extract features from FormData format
+      Object.keys(req.body).forEach(key => {
+        if (key.startsWith("features[")) {
+          const value = req.body[key];
+          if (value && value.trim() !== "") {
+            features.push(value.trim());
+          }
+        }
+      });
+      
+      // If features is a string (JSON), parse it
+      if (req.body.features && typeof req.body.features === "string") {
+        try {
+          features = JSON.parse(req.body.features);
+        } catch (e) {
+          // If not valid JSON, use the FormData extracted features
+          if (features.length === 0) {
+            features = [req.body.features];
+          }
+        }
+      }
+      
+      if (features.length > 0) {
+        house.features = features;
+      }
+    }
+
+    // Whitelist allowed updates
     const allowedFields = [
       "title", "description", "propertyType", "price",
       "bedrooms", "bathrooms", "size", "yearBuilt",
       "furnishing", "leaseTerm", "securityDeposit", "serviceCharge",
       "availability", "utilityTerms", "petPolicy",
       "ownershipType", "state", "lga", "address",
-      "features", "otherFeatures",
+      "status", "listingType",
       "contactName", "contactEmail", "contactPhone", "contactAlternatePhone",
     ];
 
     allowedFields.forEach((field) => {
-      if (req.body[field] !== undefined) {
-        house[field] = req.body[field];
+      if (req.body[field] !== undefined && req.body[field] !== "") {
+        // Convert numeric fields
+        if (["price", "bedrooms", "bathrooms", "size", "yearBuilt"].includes(field)) {
+          house[field] = Number(req.body[field]);
+        } else {
+          house[field] = req.body[field];
+        }
       }
     });
-
-    // If features is a string, parse it to array
-    if (req.body.features && typeof req.body.features === "string") {
-      house.features = JSON.parse(req.body.features);
-    }
 
     const updatedHouse = await house.save();
 

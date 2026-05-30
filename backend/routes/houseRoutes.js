@@ -15,7 +15,7 @@ import {
   getLocations,
   searchHouses,
   getFeaturedHouses,
-  getSellerListings,  // Add this import
+  getSellerListings,
 } from "../controllers/houseController.js";
 
 const router = Router();
@@ -26,7 +26,7 @@ router.get("/locations", getLocations);
 router.get("/search", searchHouses);
 router.get("/featured", getFeaturedHouses);
 router.get("/verify-payment", verifyPayment);
-router.get("/seller/:sellerId", getSellerListings);  // ADD THIS LINE - must be before /:id
+router.get("/seller/:sellerId", getSellerListings);
 
 // Protected routes
 router.use(protect);
@@ -37,7 +37,7 @@ router.post("/initiate-payment", initiatePayment);
 
 // Routes with :id
 router.get("/:id", getHouseById);
-router.put("/:id", updateHouse);
+router.put("/:id", uploadHouseFiles, updateHouse); // ADD uploadHouseFiles middleware
 router.patch("/:id/status", toggleStatus);
 router.delete("/:id", deleteHouse);
 

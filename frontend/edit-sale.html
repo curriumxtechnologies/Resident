@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Edit House for Sale | Rezident Homes</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      .lucide {
+        width: 1.2rem;
+        height: 1.2rem;
+        stroke-width: 1.8;
+      }
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .image-preview-wrapper {
+        position: relative;
+        display: inline-block;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .image-preview-wrapper .remove-image-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(239, 68, 68, 0.9);
+        color: white;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.2s;
+        border: none;
+        z-index: 10;
+      }
+      .image-preview-wrapper .remove-image-btn:hover {
+        background: #dc2626;
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <!-- Loading overlay -->
+    <div
+      id="loadingOverlay"
+      class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center"
+    >
+      <div class="loader"></div>
+    </div>
+
+    <header
+      class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <a href="home.html">
+            <img
+              src="images/logo.png"
+              alt="Rezident Homes Logo"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
+          </a>
+          <div class="flex items-center gap-3">
+            <a
+              href="myhomes.html"
+              class="text-sm font-bold text-primary hover:text-tertiary transition"
+            >
+              ← Back to My Homes
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="px-5 md:px-8 py-10 lg:py-14">
+      <div class="max-w-4xl mx-auto">
+        <div class="mb-8">
+          <h1
+            class="font-headline text-3xl md:text-4xl font-extrabold text-primary"
+          >
+            Edit House for Sale
+          </h1>
+          <p class="text-sm text-on-surface-variant mt-2">
+            Update your property listing details and images.
+          </p>
+        </div>
+
+        <form id="editSaleForm" class="space-y-8">
+          <!-- Images Section -->
+          <div
+            class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+          >
+            <h2 class="font-headline text-xl font-extrabold text-primary mb-4">
+              Property Images
+            </h2>
+            <p class="text-sm text-on-surface-variant mb-4">
+              Add or remove images. The first image will be the main display
+              image.
+            </p>
+
+            <!-- Existing Images -->
+            <div
+              id="existingImages"
+              class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4"
+            >
+              <!-- Existing images will be loaded here -->
+            </div>
+
+            <!-- Upload New Images -->
+            <div class="mt-4">
+              <label class="block text-sm font-bold text-primary mb-2">
+                Add New Images
+              </label>
+              <input
+                type="file"
+                id="newImages"
+                name="newImages"
+                accept="image/*"
+                multiple
+                class="w-full text-sm text-on-surface-variant file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-tertiary-container/20 file:text-primary hover:file:bg-tertiary-container/40 transition cursor-pointer"
+              />
+              <p class="text-xs text-on-surface-variant mt-2">
+                You can select multiple images. Supported formats: JPG, PNG,
+                WebP
+              </p>
+            </div>
+          </div>
+
+          <!-- Basic Information -->
+          <div
+            class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+          >
+            <h2 class="font-headline text-xl font-extrabold text-primary mb-6">
+              Basic Information
+            </h2>
+            <div class="grid md:grid-cols-2 gap-5">
+              <div class="md:col-span-2">
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Property Title *</label
+                >
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  required
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., Luxury 4-Bedroom Detached House"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Property Type *</label
+                >
+                <select
+                  id="propertyType"
+                  name="propertyType"
+                  required
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                >
+                  <option value="">Select type</option>
+                  <option value="Detached House">Detached House</option>
+                  <option value="Semi-Detached House">
+                    Semi-Detached House
+                  </option>
+                  <option value="Terraced House">Terraced House</option>
+                  <option value="Bungalow">Bungalow</option>
+                  <option value="Flat/Apartment">Flat/Apartment</option>
+                  <option value="Penthouse">Penthouse</option>
+                  <option value="Mansion">Mansion</option>
+                  <option value="Duplex">Duplex</option>
+                  <option value="Townhouse">Townhouse</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Price (₦) *</label
+                >
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  required
+                  min="0"
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., 50000000"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Bedrooms *</label
+                >
+                <input
+                  type="number"
+                  id="bedrooms"
+                  name="bedrooms"
+                  required
+                  min="0"
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., 4"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Bathrooms *</label
+                >
+                <input
+                  type="number"
+                  id="bathrooms"
+                  name="bathrooms"
+                  required
+                  min="0"
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., 3"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Living Area (m²)</label
+                >
+                <input
+                  type="number"
+                  id="size"
+                  name="size"
+                  min="0"
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., 250"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Year Built</label
+                >
+                <input
+                  type="number"
+                  id="yearBuilt"
+                  name="yearBuilt"
+                  min="1900"
+                  max="2026"
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., 2020"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div
+            class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+          >
+            <h2 class="font-headline text-xl font-extrabold text-primary mb-6">
+              Location
+            </h2>
+            <div class="grid md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >State *</label
+                >
+                <input
+                  type="text"
+                  id="state"
+                  name="state"
+                  required
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., Lagos"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >LGA *</label
+                >
+                <input
+                  type="text"
+                  id="lga"
+                  name="lga"
+                  required
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., Ikeja"
+                />
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Full Address</label
+                >
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                  placeholder="e.g., 123 Adeola Odeku Street, Victoria Island"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Features -->
+          <div
+            class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+          >
+            <h2 class="font-headline text-xl font-extrabold text-primary mb-6">
+              Features
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4" id="featuresContainer">
+              <!-- Dynamic feature inputs -->
+            </div>
+            <button
+              type="button"
+              id="addFeatureBtn"
+              class="mt-4 text-sm font-bold text-tertiary hover:text-primary transition flex items-center gap-1"
+            >
+              <i data-lucide="plus" class="w-4 h-4"></i> Add Feature
+            </button>
+          </div>
+
+          <!-- Description -->
+          <div
+            class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+          >
+            <h2 class="font-headline text-xl font-extrabold text-primary mb-6">
+              Description
+            </h2>
+            <textarea
+              id="description"
+              name="description"
+              rows="6"
+              class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15 resize-none"
+              placeholder="Describe your property in detail..."
+            ></textarea>
+          </div>
+
+          <!-- Ownership Details -->
+          <div
+            class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
+          >
+            <h2 class="font-headline text-xl font-extrabold text-primary mb-6">
+              Ownership Details
+            </h2>
+            <div class="grid md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Ownership Type</label
+                >
+                <select
+                  id="ownershipType"
+                  name="ownershipType"
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                >
+                  <option value="Freehold">Freehold</option>
+                  <option value="Leasehold">Leasehold</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-primary mb-2"
+                  >Status</label
+                >
+                <select
+                  id="status"
+                  name="status"
+                  class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+                >
+                  <option value="published">Published</option>
+                  <option value="draft">Draft</option>
+                  <option value="sold">Sold</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="flex gap-4">
+            <button
+              type="submit"
+              class="flex-1 bg-tertiary-container text-primary py-4 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition shadow-md"
+            >
+              Save Changes
+            </button>
+            <a
+              href="myhomes.html"
+              class="flex-1 border border-outline/20 text-primary py-4 rounded-xl font-bold text-sm hover:bg-gray-50 transition text-center"
+            >
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+    </script>
+
+    <script type="module">
+      import { getBaseURL } from "./js/apiConfig.js";
+      import { getStoredToken, clearAuthData } from "./js/tokenStorage.js";
+
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      const form = document.getElementById("editSaleForm");
+      const featuresContainer = document.getElementById("featuresContainer");
+      const addFeatureBtn = document.getElementById("addFeatureBtn");
+      const existingImagesContainer = document.getElementById("existingImages");
+      const newImagesInput = document.getElementById("newImages");
+
+      let featureCount = 0;
+      let existingImages = [];
+      let removedImageIds = [];
+
+      function showLoading(show) {
+        if (show) {
+          loadingOverlay.classList.remove("hidden");
+        } else {
+          loadingOverlay.classList.add("hidden");
+        }
+      }
+
+      function escapeHtml(str) {
+        if (!str) return "";
+        const div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      // Render existing images
+      function renderExistingImages(images) {
+        existingImagesContainer.innerHTML = "";
+
+        if (images.length === 0) {
+          existingImagesContainer.innerHTML = `
+            <div class="col-span-full text-center py-8 text-sm text-on-surface-variant">
+              No images uploaded yet. Add images below.
+            </div>
+          `;
+          return;
+        }
+
+        images.forEach((image, index) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "image-preview-wrapper";
+          wrapper.innerHTML = `
+            <img
+              src="${image.url}"
+              alt="Property image ${index + 1}"
+              class="w-full h-32 object-cover rounded-lg"
+            />
+            <button
+              type="button"
+              class="remove-image-btn"
+              data-image-id="${image._id || image.public_id}"
+              title="Remove image"
+            >
+              ×
+            </button>
+            ${index === 0 ? '<span class="absolute bottom-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded-full">Main</span>' : ""}
+          `;
+
+          existingImagesContainer.appendChild(wrapper);
+
+          // Add remove event
+          wrapper
+            .querySelector(".remove-image-btn")
+            .addEventListener("click", () => {
+              const imageId =
+                wrapper.querySelector(".remove-image-btn").dataset.imageId;
+              if (confirm("Remove this image?")) {
+                removedImageIds.push(imageId);
+                existingImages = existingImages.filter(
+                  (img) => (img._id || img.public_id) !== imageId,
+                );
+                renderExistingImages(existingImages);
+              }
+            });
+        });
+      }
+
+      // Add feature input
+      function addFeatureInput(value = "") {
+        featureCount++;
+        const div = document.createElement("div");
+        div.className = "flex gap-2 items-start";
+        div.innerHTML = `
+          <input
+            type="text"
+            name="features[]"
+            value="${escapeHtml(value)}"
+            class="flex-1 px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
+            placeholder="e.g., Swimming Pool, CCTV, Security Gate"
+          />
+          <button
+            type="button"
+            class="remove-feature-btn p-3 text-red-500 hover:text-red-700 transition"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        `;
+        featuresContainer.appendChild(div);
+
+        div
+          .querySelector(".remove-feature-btn")
+          .addEventListener("click", () => {
+            div.remove();
+            featureCount--;
+            updateRemoveButtons();
+          });
+
+        updateRemoveButtons();
+        lucide.createIcons();
+      }
+
+      function updateRemoveButtons() {
+        const buttons = featuresContainer.querySelectorAll(
+          ".remove-feature-btn",
+        );
+        buttons.forEach((btn) => {
+          btn.style.display =
+            featuresContainer.children.length > 1 ? "block" : "none";
+        });
+      }
+
+      addFeatureBtn.addEventListener("click", () => addFeatureInput());
+
+      // Load house data
+      async function loadHouseData() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const houseId = urlParams.get("id");
+
+        if (!houseId) {
+          alert("No property ID provided");
+          window.location.href = "myhomes.html";
+          return;
+        }
+
+        try {
+          const token = getStoredToken();
+          if (!token) {
+            window.location.href = "login.html";
+            return;
+          }
+
+          const response = await fetch(`${getBaseURL()}/houses/${houseId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to load property");
+          }
+
+          const data = await response.json();
+          const house = data.house || data;
+
+          // Load existing images
+          existingImages = house.images || [];
+          renderExistingImages(existingImages);
+
+          // Fill form fields
+          document.getElementById("title").value = house.title || "";
+          document.getElementById("propertyType").value =
+            house.propertyType || "";
+          document.getElementById("price").value = house.price || "";
+          document.getElementById("bedrooms").value = house.bedrooms || "";
+          document.getElementById("bathrooms").value = house.bathrooms || "";
+          document.getElementById("size").value = house.size || "";
+          document.getElementById("yearBuilt").value = house.yearBuilt || "";
+          document.getElementById("state").value = house.state || "";
+          document.getElementById("lga").value = house.lga || "";
+          document.getElementById("address").value = house.address || "";
+          document.getElementById("description").value =
+            house.description || "";
+          document.getElementById("ownershipType").value =
+            house.ownershipType || "Freehold";
+          document.getElementById("status").value = house.status || "published";
+
+          // Load features
+          const features = house.features || [];
+          if (features.length > 0) {
+            features.forEach((f) => addFeatureInput(f));
+          } else {
+            addFeatureInput();
+          }
+
+          return houseId;
+        } catch (err) {
+          console.error(err);
+          alert(err.message || "Failed to load property");
+          window.location.href = "myhomes.html";
+          return null;
+        }
+      }
+
+      // Handle form submission
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const houseId = urlParams.get("id");
+
+        if (!houseId) return;
+
+        showLoading(true);
+
+        try {
+          const token = getStoredToken();
+          if (!token) {
+            window.location.href = "login.html";
+            return;
+          }
+
+          // Collect features
+          const featureInputs = featuresContainer.querySelectorAll(
+            'input[name="features[]"]',
+          );
+          const features = Array.from(featureInputs)
+            .map((input) => input.value.trim())
+            .filter((f) => f.length > 0);
+
+          // Prepare form data
+          const formData = new FormData();
+
+          // Add text fields
+          formData.append("title", document.getElementById("title").value);
+          formData.append(
+            "propertyType",
+            document.getElementById("propertyType").value,
+          );
+          formData.append("price", document.getElementById("price").value);
+          formData.append(
+            "bedrooms",
+            document.getElementById("bedrooms").value,
+          );
+          formData.append(
+            "bathrooms",
+            document.getElementById("bathrooms").value,
+          );
+          formData.append("size", document.getElementById("size").value);
+          formData.append(
+            "yearBuilt",
+            document.getElementById("yearBuilt").value,
+          );
+          formData.append("state", document.getElementById("state").value);
+          formData.append("lga", document.getElementById("lga").value);
+          formData.append("address", document.getElementById("address").value);
+          formData.append(
+            "description",
+            document.getElementById("description").value,
+          );
+          formData.append(
+            "ownershipType",
+            document.getElementById("ownershipType").value,
+          );
+          formData.append("status", document.getElementById("status").value);
+          formData.append("listingType", "sale");
+
+          // Add features as JSON array
+          features.forEach((feature, index) => {
+            formData.append(`features[${index}]`, feature);
+          });
+
+          // Add removed image IDs
+          if (removedImageIds.length > 0) {
+            formData.append("removedImages", JSON.stringify(removedImageIds));
+          }
+
+          // Add new images
+          const newFiles = newImagesInput.files;
+          if (newFiles.length > 0) {
+            for (let i = 0; i < newFiles.length; i++) {
+              formData.append("images", newFiles[i]);
+            }
+          }
+
+          const response = await fetch(`${getBaseURL()}/houses/${houseId}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          });
+
+          if (!response.ok) {
+            const error = await response
+              .json()
+              .catch(() => ({ message: "Update failed" }));
+            throw new Error(error.message || "Update failed");
+          }
+
+          alert("✅ Property updated successfully!");
+          window.location.href = "myhomes.html";
+        } catch (err) {
+          console.error(err);
+          alert(err.message || "Failed to update property");
+        } finally {
+          showLoading(false);
+        }
+      });
+
+      // Initialize
+      (async function init() {
+        showLoading(true);
+        await loadHouseData();
+        showLoading(false);
+        lucide.createIcons();
+      })();
+    </script>
+  </body>
+</html>
