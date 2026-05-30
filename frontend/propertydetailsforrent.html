@@ -114,6 +114,23 @@
         opacity: 1;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body class="bg-surface text-[#1a1c1e] antialiased">
@@ -140,469 +157,27 @@
     </header>
 
     <main>
-      <!-- Hero Section with Breadcrumb / back link -->
-      <section
-        class="relative bg-[#001c4a] text-white py-12 lg:py-16 overflow-hidden fade-up"
-      >
-        <div class="absolute inset-0 opacity-20">
-          <img
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&h=400&fit=crop"
-            alt="Luxury interior"
-            class="w-full h-full object-cover"
-          />
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8">
-          <div class="flex items-center gap-2 text-sm text-white/70 mb-3">
-            <a
-              href="forrent.html"
-              class="hover:text-tertiary-container transition"
-              >← Back to Rent Listings</a
-            >
-          </div>
-          <h1
-            class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2"
-          >
-            Banana Island Waterfront
-          </h1>
-          <div
-            class="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80 text-sm"
-          >
-            <span class="flex items-center gap-1"
-              ><i data-lucide="map-pin" class="w-4 h-4"></i> Banana Island,
-              Lagos</span
-            >
-            <span class="flex items-center gap-1"
-              ><i
-                data-lucide="badge-check"
-                class="w-4 h-4 text-tertiary-container"
-              ></i>
-              Premium Rental</span
-            >
-          </div>
-        </div>
-      </section>
-
-      <!-- Property Details Main Content (RENT specific) -->
-      <div class="max-w-7xl mx-auto px-5 md:px-8 -mt-8 mb-16 fade-up">
-        <div class="grid lg:grid-cols-3 gap-8">
-          <!-- Left column: Gallery + details -->
-          <div class="lg:col-span-2">
-            <!-- Main Image Carousel / Gallery -->
-            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
-              <div class="relative">
-                <img
-                  id="mainGalleryImg"
-                  src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=500&fit=crop"
-                  alt="Main property view"
-                  class="w-full h-[360px] lg:h-[420px] object-cover"
-                />
-              </div>
-              <!-- Thumbnails row (rent gallery) -->
-              <div class="flex gap-2 p-3 border-t border-[#eeeef0]">
-                <img
-                  data-gallery="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=500&fit=crop"
-                  src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=120&h=80&fit=crop"
-                  class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all"
-                  alt="thumb1"
-                />
-                <img
-                  data-gallery="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&h=500&fit=crop"
-                  src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=120&h=80&fit=crop"
-                  class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all"
-                  alt="thumb2"
-                />
-                <img
-                  data-gallery="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=500&fit=crop"
-                  src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=120&h=80&fit=crop"
-                  class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all"
-                  alt="thumb3"
-                />
-                <img
-                  data-gallery="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=500&fit=crop"
-                  src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=120&h=80&fit=crop"
-                  class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all"
-                  alt="thumb4"
-                />
-              </div>
-            </div>
-
-            <!-- Description & Features -->
-            <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
-              <h2
-                class="font-headline text-2xl font-extrabold text-primary mb-3"
-              >
-                About this residence
-              </h2>
-              <p class="text-[#3a3e4a] text-sm leading-relaxed mb-5">
-                Experience unrivaled waterfront luxury at Banana Island
-                Waterfront, an architectural masterpiece offering panoramic
-                ocean views, private elevator access, and state-of-the-art smart
-                home automation. This exclusive rental comes fully furnished
-                with designer interiors, concierge service, and 24/7 elite
-                security. Available for 12-month lease with option to renew.
-              </p>
-
-              <div
-                class="grid grid-cols-2 md:grid-cols-4 gap-4 py-3 border-y border-[#eeeef0]"
-              >
-                <div>
-                  <span class="block text-xs text-[#6b6f7e]">Property Type</span
-                  ><span class="font-semibold text-primary text-sm"
-                    >Luxury Apartment</span
-                  >
-                </div>
-                <div>
-                  <span class="block text-xs text-[#6b6f7e]">Year Built</span
-                  ><span class="font-semibold text-primary text-sm">2022</span>
-                </div>
-                <div>
-                  <span class="block text-xs text-[#6b6f7e]">Furnishing</span
-                  ><span class="font-semibold text-primary text-sm"
-                    >Fully Furnished</span
-                  >
-                </div>
-                <div>
-                  <span class="block text-xs text-[#6b6f7e]">Lease Term</span
-                  ><span class="font-semibold text-primary text-sm"
-                    >1 year min.</span
-                  >
-                </div>
-              </div>
-
-              <div class="mt-6">
-                <h3 class="font-bold text-primary text-lg mb-3">
-                  Key Features
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  <span class="flex items-center gap-2 text-sm"
-                    ><i data-lucide="wifi" class="w-4 h-4 text-tertiary"></i>
-                    Fiber Internet</span
-                  >
-                  <span class="flex items-center gap-2 text-sm"
-                    ><i data-lucide="waves" class="w-4 h-4 text-tertiary"></i>
-                    Infinity Pool</span
-                  >
-                  <span class="flex items-center gap-2 text-sm"
-                    ><i
-                      data-lucide="dumbbell"
-                      class="w-4 h-4 text-tertiary"
-                    ></i>
-                    Gym / Spa</span
-                  >
-                  <span class="flex items-center gap-2 text-sm"
-                    ><i data-lucide="car" class="w-4 h-4 text-tertiary"></i> 3
-                    Car Parks</span
-                  >
-                  <span class="flex items-center gap-2 text-sm"
-                    ><i data-lucide="shield" class="w-4 h-4 text-tertiary"></i>
-                    24/7 Security</span
-                  >
-                  <span class="flex items-center gap-2 text-sm"
-                    ><i data-lucide="wind" class="w-4 h-4 text-tertiary"></i>
-                    Central AC</span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <!-- Rental Terms & Conditions -->
-            <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
-              <h3 class="font-headline font-bold text-primary text-xl mb-3">
-                Lease &amp; Terms
-              </h3>
-              <ul class="space-y-2 text-sm text-[#2f3340] list-disc pl-5">
-                <li>
-                  Annual rent:
-                  <strong class="text-primary">₦7,000,000/year</strong>
-                  (includes service charge &amp; maintenance)
-                </li>
-                <li>Security deposit: 2 months rent (refundable)</li>
-                <li>Early access: available for immediate move-in</li>
-                <li>Pet policy: negotiable with additional deposit</li>
-                <li>
-                  Utilities: metered separately (electricity, water, waste)
-                </li>
-              </ul>
-              <div
-                class="mt-5 bg-[#f6f7fb] p-4 rounded-xl flex items-start gap-3"
-              >
-                <i
-                  data-lucide="clock"
-                  class="w-5 h-5 text-tertiary shrink-0 mt-0.5"
-                ></i>
-                <p class="text-xs text-[#4e5468]">
-                  Flexible lease extensions available. 6-month lease option
-                  possible with premium adjustment. Contact our leasing team.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Rent Summary + Inquiry Form -->
-          <div class="lg:col-span-1">
-            <div
-              class="bg-white rounded-2xl shadow-lg p-6 sticky top-24 border border-[#eceef2] fade-up"
-            >
-              <div class="mb-4 pb-3 border-b border-dashed border-[#e0e2e8]">
-                <span
-                  class="text-tertiary text-xs font-bold uppercase tracking-wide"
-                  >Annual Rent</span
-                >
-                <div
-                  class="text-3xl font-headline font-extrabold text-primary mt-1"
-                >
-                  ₦7,000,000
-                  <span class="text-sm font-medium text-[#6a6f82]">/year</span>
-                </div>
-                <div
-                  class="flex items-center gap-1 mt-1 text-xs text-[#777c8f]"
-                >
-                  <i data-lucide="calendar" class="w-3 h-3"></i> + 2 months
-                  deposit
-                </div>
-              </div>
-              <div class="space-y-3 mb-5">
-                <div class="flex justify-between text-sm">
-                  <span>Bedrooms</span><span class="font-semibold">4</span>
-                </div>
-                <div class="flex justify-between text-sm">
-                  <span>Bathrooms</span><span class="font-semibold">4.5</span>
-                </div>
-                <div class="flex justify-between text-sm">
-                  <span>Living Area</span
-                  ><span class="font-semibold">350 m²</span>
-                </div>
-              </div>
-
-              <!-- Inquiry Form -->
-              <form id="inquiryForm" class="space-y-4 mb-5">
-                <div>
-                  <label class="block text-xs font-bold text-primary mb-1"
-                    >Full Name *</label
-                  >
-                  <input
-                    type="text"
-                    required
-                    class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-primary mb-1"
-                    >Email Address *</label
-                  >
-                  <input
-                    type="email"
-                    required
-                    class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
-                    placeholder="john@example.com"
-                  />
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-primary mb-1"
-                    >Phone Number *</label
-                  >
-                  <input
-                    type="tel"
-                    required
-                    class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
-                    placeholder="+234 812 345 6789"
-                  />
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-primary mb-1"
-                    >Preferred Viewing Date</label
-                  >
-                  <input
-                    type="date"
-                    class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
-                  />
-                </div>
-                <div>
-                  <label class="block text-xs font-bold text-primary mb-1"
-                    >Message (Optional)</label
-                  >
-                  <textarea
-                    rows="2"
-                    class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
-                    placeholder="I'm interested in this property..."
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  class="w-full bg-[#001c4a] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
-                >
-                  Send Inquiry <i data-lucide="send" class="w-4 h-4"></i>
-                </button>
-              </form>
-
-              <!-- Ready to Rent Text -->
-              <div class="text-center mb-3">
-                <p class="text-sm font-bold text-[#c5aa23]">
-                  Ready to Rent this House?
-                </p>
-              </div>
-
-              <button
-                id="proceedToPaymentBtn"
-                class="w-full bg-gradient-to-r from-[#c5aa23] to-[#e6c844] text-primary py-3 rounded-xl font-bold text-sm hover:from-[#b89a1f] hover:to-[#d4b83a] transition flex items-center justify-center gap-2 shadow-md"
-              >
-                Proceed to Payment
-                <i data-lucide="credit-card" class="w-4 h-4"></i>
-              </button>
-
-              <div class="mt-6 pt-4 border-t border-[#edf0f5]">
-                <div class="flex items-center gap-2 mb-2">
-                  <i data-lucide="user-check" class="w-5 h-5 text-tertiary"></i>
-                  <span class="text-sm font-bold text-primary"
-                    >Leasing Agent</span
-                  >
-                </div>
-                <p class="text-xs text-[#4a4f62]">
-                  Chioma Adeleke: Senior Leasing Consultant
-                </p>
-                <p class="text-xs text-[#4a4f62] mt-1">
-                  ✉️ chioma.rent@rezidenthomes.com | 📞 +234 812 345 6789
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Similar Rental Properties (contextual) -->
-        <div class="mt-16 fade-up">
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="font-headline text-2xl font-extrabold text-primary">
-              Similar Luxury Rentals
-            </h2>
-            <a
-              href="forrent.html"
-              class="text-sm text-tertiary font-bold flex items-center gap-1"
-              >View all <i data-lucide="arrow-right" class="w-3 h-3"></i
-            ></a>
-          </div>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Similar 1: VI Oceanview -->
-            <div
-              class="bg-white rounded-xl overflow-hidden shadow hover-lift transition"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=220&fit=crop"
-                class="h-48 w-full object-cover"
-                alt="VI penthouse"
-              />
-              <div class="p-4">
-                <div class="text-xs text-[#7b7f8d] flex items-center gap-1">
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> Victoria Island,
-                  Lagos
-                </div>
-                <h3 class="font-bold text-primary text-sm mt-1">
-                  VI Oceanview Penthouse
-                </h3>
-                <div class="flex justify-between items-center mt-2">
-                  <span class="font-bold text-primary text-base"
-                    >₦6,500,000<span class="text-xs font-normal"
-                      >/year</span
-                    ></span
-                  ><button
-                    class="similar-rent-btn text-xs bg-tertiary-container/20 text-primary px-3 py-1 rounded-full font-bold"
-                  >
-                    Inquire
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Similar 2: Katampe Imperial -->
-            <div
-              class="bg-white rounded-xl overflow-hidden shadow hover-lift transition"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=400&h=220&fit=crop"
-                class="h-48 w-full object-cover"
-                alt="Katampe Villa"
-              />
-              <div class="p-4">
-                <div class="text-xs text-[#7b7f8d] flex items-center gap-1">
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> Katampe, Abuja
-                </div>
-                <h3 class="font-bold text-primary text-sm mt-1">
-                  Katampe Imperial Villa
-                </h3>
-                <div class="flex justify-between items-center mt-2">
-                  <span class="font-bold text-primary text-base"
-                    >₦5,200,000<span class="text-xs font-normal"
-                      >/year</span
-                    ></span
-                  ><button
-                    class="similar-rent-btn text-xs bg-tertiary-container/20 text-primary px-3 py-1 rounded-full font-bold"
-                  >
-                    Inquire
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Similar 3: New GRA Garden Villa -->
-            <div
-              class="bg-white rounded-xl overflow-hidden shadow hover-lift transition"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&h=220&fit=crop"
-                class="h-48 w-full object-cover"
-                alt="New GRA PH"
-              />
-              <div class="p-4">
-                <div class="text-xs text-[#7b7f8d] flex items-center gap-1">
-                  <i data-lucide="map-pin" class="w-3 h-3"></i> New GRA, Port
-                  Harcourt
-                </div>
-                <h3 class="font-bold text-primary text-sm mt-1">
-                  New GRA Garden Villa
-                </h3>
-                <div class="flex justify-between items-center mt-2">
-                  <span class="font-bold text-primary text-base"
-                    >₦2,950,000<span class="text-xs font-normal"
-                      >/year</span
-                    ></span
-                  ><button
-                    class="similar-rent-btn text-xs bg-tertiary-container/20 text-primary px-3 py-1 rounded-full font-bold"
-                  >
-                    Inquire
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Loading State -->
+      <div id="loadingState" class="py-40 text-center">
+        <div class="loader"></div>
+        <p class="text-slate-500 mt-5 text-sm">Loading property details...</p>
       </div>
 
-      <!-- CTA Consultation -->
-      <section
-        class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
-      >
-        <div class="max-w-4xl mx-auto text-center">
-          <i
-            data-lucide="phone-call"
-            class="w-10 h-10 text-tertiary-container mx-auto mb-4"
-          ></i>
-          <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">
-            Need a custom rental solution?
-          </h2>
-          <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">
-            Our team finds off-market rental homes matching your budget and
-            lifestyle, from short-term executive stays to long-term leases.
-          </p>
-          <button
-            id="consultRentExpert"
-            class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm"
-          >
-            Talk to a Rental Expert
-          </button>
-        </div>
-      </section>
+      <!-- Error State -->
+      <div
+        id="errorState"
+        class="hidden max-w-3xl mx-auto mt-20 bg-red-50/70 text-red-800 p-10 rounded-3xl text-center shadow-sm border border-red-100/60"
+      ></div>
+
+      <!-- Property Content (injected dynamically) -->
+      <div id="propertyContent" class="hidden"></div>
     </main>
 
     <!-- Footer (identical to brand) -->
-    <footer class="bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8">
+    <footer
+      id="footerSection"
+      class="hidden bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8"
+    >
       <div
         class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
       >
@@ -693,100 +268,530 @@
       </div>
     </footer>
 
-    <script>
-      lucide.createIcons();
+    <script type="module">
+      import { getHouseById } from "./slices/houseService.js";
+      import { getHouses } from "./slices/houseService.js";
 
-      // fade-up intersection observer
-      const fadeElements = document.querySelectorAll(".fade-up");
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("revealed");
-              obs.unobserve(entry.target);
+      // ---------- HELPERS ----------
+      function formatNaira(amount) {
+        if (!amount && amount !== 0) return "₦0";
+        return new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          minimumFractionDigits: 0,
+        }).format(amount);
+      }
+
+      function escapeHtml(str) {
+        if (!str) return "";
+        const div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      // ---------- DOM REFS ----------
+      const loadingState = document.getElementById("loadingState");
+      const errorState = document.getElementById("errorState");
+      const propertyContent = document.getElementById("propertyContent");
+      const footerSection = document.getElementById("footerSection");
+
+      // ---------- GET PROPERTY ID FROM URL ----------
+      const urlParams = new URLSearchParams(window.location.search);
+      const propertyId = urlParams.get("id");
+
+      if (!propertyId) {
+        loadingState.classList.add("hidden");
+        errorState.innerHTML = `
+          <div class="flex items-center justify-center gap-2 text-sm">
+            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+            <span>No property ID provided.</span>
+          </div>`;
+        errorState.classList.remove("hidden");
+        lucide.createIcons();
+        throw new Error("No property ID in URL");
+      }
+
+      // ---------- FETCH & RENDER ----------
+      async function renderProperty() {
+        try {
+          const house = await getHouseById(propertyId);
+          if (!house) throw new Error("Property not found");
+
+          const isRent = house.listingType === "rent";
+          const mainImage = house.images?.[0]?.url || "images/hero.avif";
+          const galleryImages = house.images || [];
+          const features = house.features || [];
+          const seller = house.user || {};
+
+          document.title = `${house.title || "Property"} | Rezident Homes`;
+
+          // Fetch similar properties (same listingType, same state, exclude current)
+          let similarHtml = "";
+          try {
+            const similarData = await getHouses({
+              listingType: "rent",
+              state: house.state || "",
+              status: "published",
+              limit: 4,
+            });
+            const similarHouses = (similarData.houses || [])
+              .filter((h) => h._id !== house._id)
+              .slice(0, 3);
+
+            if (similarHouses.length) {
+              similarHtml = `
+                <div class="mt-16 fade-up">
+                  <div class="flex items-center justify-between mb-6">
+                    <h2 class="font-headline text-2xl font-extrabold text-primary">
+                      Similar Luxury Rentals
+                    </h2>
+                    <a
+                      href="forrent.html"
+                      class="text-sm text-tertiary font-bold flex items-center gap-1"
+                      >View all <i data-lucide="arrow-right" class="w-3 h-3"></i
+                    ></a>
+                  </div>
+                  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    ${similarHouses
+                      .map(
+                        (sh) => `
+                      <div
+                        class="bg-white rounded-xl overflow-hidden shadow hover-lift transition cursor-pointer"
+                        onclick="window.location.href='propertydetailsforrent.html?id=${sh._id}'"
+                      >
+                        <img
+                          src="${sh.images?.[0]?.url || "images/hero.avif"}"
+                          class="h-48 w-full object-cover"
+                          alt="${escapeHtml(sh.title || "")}"
+                        />
+                        <div class="p-4">
+                          <div class="text-xs text-[#7b7f8d] flex items-center gap-1">
+                            <i data-lucide="map-pin" class="w-3 h-3"></i> ${escapeHtml(sh.lga || "")}, ${escapeHtml(sh.state || "")}
+                          </div>
+                          <h3 class="font-bold text-primary text-sm mt-1">
+                            ${escapeHtml(sh.title || "Property")}
+                          </h3>
+                          <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-primary text-base"
+                              >${formatNaira(sh.price)}<span class="text-xs font-normal">/year</span></span
+                            ><button
+                              class="similar-rent-btn text-xs bg-tertiary-container/20 text-primary px-3 py-1 rounded-full font-bold"
+                              onclick="event.stopPropagation(); window.location.href='propertydetailsforrent.html?id=${sh._id}'"
+                            >
+                              Inquire
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    `,
+                      )
+                      .join("")}
+                  </div>
+                </div>`;
             }
+          } catch (e) {
+            console.warn("Could not fetch similar properties:", e);
+          }
+
+          // Build the full HTML (UI structure 100% preserved)
+          const html = `
+            <!-- Hero Section -->
+            <section
+              class="relative bg-[#001c4a] text-white py-12 lg:py-16 overflow-hidden fade-up"
+            >
+              <div class="absolute inset-0 opacity-20">
+                <img
+                  src="${mainImage}"
+                  alt="Luxury interior"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8">
+                <div class="flex items-center gap-2 text-sm text-white/70 mb-3">
+                  <a
+                    href="forrent.html"
+                    class="hover:text-tertiary-container transition"
+                    >← Back to Rent Listings</a
+                  >
+                </div>
+                <h1
+                  class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2"
+                >
+                  ${escapeHtml(house.title || "Luxury Rental")}
+                </h1>
+                <div
+                  class="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80 text-sm"
+                >
+                  <span class="flex items-center gap-1"
+                    ><i data-lucide="map-pin" class="w-4 h-4"></i> ${escapeHtml(house.lga || "")}, ${escapeHtml(house.state || "")}</span
+                  >
+                  <span class="flex items-center gap-1"
+                    ><i
+                      data-lucide="badge-check"
+                      class="w-4 h-4 text-tertiary-container"
+                    ></i>
+                    Premium Rental</span
+                  >
+                </div>
+              </div>
+            </section>
+
+            <!-- Property Details Main Content -->
+            <div class="max-w-7xl mx-auto px-5 md:px-8 -mt-8 mb-16 fade-up">
+              <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Left column: Gallery + details -->
+                <div class="lg:col-span-2">
+                  <!-- Main Image Carousel / Gallery -->
+                  <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+                    <div class="relative">
+                      <img
+                        id="mainGalleryImg"
+                        src="${mainImage}"
+                        alt="Main property view"
+                        class="w-full h-[360px] lg:h-[420px] object-cover"
+                      />
+                    </div>
+                    ${
+                      galleryImages.length > 1
+                        ? `
+                    <div class="flex gap-2 p-3 border-t border-[#eeeef0]">
+                      ${galleryImages
+                        .map(
+                          (img, idx) => `
+                        <img
+                          data-gallery="${img.url}"
+                          src="${img.url}?w=120&h=80&fit=crop"
+                          class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all ${idx === 0 ? "thumb-active border-tertiary" : ""}"
+                          alt="thumb${idx + 1}"
+                        />
+                      `,
+                        )
+                        .join("")}
+                    </div>`
+                        : ""
+                    }
+                  </div>
+
+                  <!-- Description & Features -->
+                  <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
+                    <h2 class="font-headline text-2xl font-extrabold text-primary mb-3">
+                      About this residence
+                    </h2>
+                    <p class="text-[#3a3e4a] text-sm leading-relaxed mb-5">
+                      ${escapeHtml(house.description || "No description provided.")}
+                    </p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-3 border-y border-[#eeeef0]">
+                      <div>
+                        <span class="block text-xs text-[#6b6f7e]">Property Type</span
+                        ><span class="font-semibold text-primary text-sm">${escapeHtml(house.propertyType || "N/A")}</span>
+                      </div>
+                      <div>
+                        <span class="block text-xs text-[#6b6f7e]">Year Built</span
+                        ><span class="font-semibold text-primary text-sm">${house.yearBuilt || "N/A"}</span>
+                      </div>
+                      <div>
+                        <span class="block text-xs text-[#6b6f7e]">Furnishing</span
+                        ><span class="font-semibold text-primary text-sm">${escapeHtml(house.furnishing || "N/A")}</span>
+                      </div>
+                      <div>
+                        <span class="block text-xs text-[#6b6f7e]">Lease Term</span
+                        ><span class="font-semibold text-primary text-sm">${escapeHtml(house.leaseTerm || "N/A")}</span>
+                      </div>
+                    </div>
+
+                    ${
+                      features.length
+                        ? `
+                    <div class="mt-6">
+                      <h3 class="font-bold text-primary text-lg mb-3">
+                        Key Features
+                      </h3>
+                      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        ${features
+                          .map(
+                            (f) => `
+                          <span class="flex items-center gap-2 text-sm"
+                            ><i data-lucide="check-circle" class="w-4 h-4 text-tertiary"></i>
+                            ${escapeHtml(f)}</span
+                          >
+                        `,
+                          )
+                          .join("")}
+                      </div>
+                    </div>`
+                        : ""
+                    }
+                  </div>
+
+                  <!-- Rental Terms & Conditions -->
+                  <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
+                    <h3 class="font-headline font-bold text-primary text-xl mb-3">
+                      Lease &amp; Terms
+                    </h3>
+                    <ul class="space-y-2 text-sm text-[#2f3340] list-disc pl-5">
+                      <li>
+                        Annual rent:
+                        <strong class="text-primary">${formatNaira(house.price)}/year</strong>
+                        ${house.serviceCharge ? `(includes ${escapeHtml(house.serviceCharge)})` : "(includes service charge &amp; maintenance)"}
+                      </li>
+                      <li>Security deposit: ${escapeHtml(house.securityDeposit || "2 months rent (refundable)")}</li>
+                      <li>Early access: ${escapeHtml(house.availability || "available for immediate move-in")}</li>
+                      <li>Pet policy: ${escapeHtml(house.petPolicy || "negotiable with additional deposit")}</li>
+                      <li>
+                        Utilities: ${escapeHtml(house.utilityTerms || "metered separately (electricity, water, waste)")}
+                      </li>
+                    </ul>
+                    <div class="mt-5 bg-[#f6f7fb] p-4 rounded-xl flex items-start gap-3">
+                      <i data-lucide="clock" class="w-5 h-5 text-tertiary shrink-0 mt-0.5"></i>
+                      <p class="text-xs text-[#4e5468]">
+                        Flexible lease extensions available. 6-month lease option
+                        possible with premium adjustment. Contact our leasing team.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Column: Rent Summary + Inquiry Form -->
+                <div class="lg:col-span-1">
+                  <div
+                    class="bg-white rounded-2xl shadow-lg p-6 sticky top-24 border border-[#eceef2] fade-up"
+                  >
+                    <div class="mb-4 pb-3 border-b border-dashed border-[#e0e2e8]">
+                      <span
+                        class="text-tertiary text-xs font-bold uppercase tracking-wide"
+                        >Annual Rent</span
+                      >
+                      <div
+                        class="text-3xl font-headline font-extrabold text-primary mt-1"
+                      >
+                        ${formatNaira(house.price)}
+                        <span class="text-sm font-medium text-[#6a6f82]">/year</span>
+                      </div>
+                      <div class="flex items-center gap-1 mt-1 text-xs text-[#777c8f]">
+                        <i data-lucide="calendar" class="w-3 h-3"></i> + ${escapeHtml(house.securityDeposit || "2 months")} deposit
+                      </div>
+                    </div>
+                    <div class="space-y-3 mb-5">
+                      <div class="flex justify-between text-sm">
+                        <span>Bedrooms</span><span class="font-semibold">${house.bedrooms || "?"}</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span>Bathrooms</span><span class="font-semibold">${house.bathrooms || "?"}</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span>Living Area</span
+                        ><span class="font-semibold">${house.size || "?"} m²</span>
+                      </div>
+                    </div>
+
+                    <!-- Inquiry Form -->
+                    <form id="inquiryForm" class="space-y-4 mb-5">
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1"
+                          >Full Name *</label
+                        >
+                        <input
+                          type="text"
+                          required
+                          class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1"
+                          >Email Address *</label
+                        >
+                        <input
+                          type="email"
+                          required
+                          class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                          placeholder="john@example.com"
+                        />
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1"
+                          >Phone Number *</label
+                        >
+                        <input
+                          type="tel"
+                          required
+                          class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                          placeholder="+234 812 345 6789"
+                        />
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1"
+                          >Preferred Viewing Date</label
+                        >
+                        <input
+                          type="date"
+                          class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                        />
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1"
+                          >Message (Optional)</label
+                        >
+                        <textarea
+                          rows="2"
+                          class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary"
+                          placeholder="I'm interested in this property..."
+                        ></textarea>
+                      </div>
+                      <button
+                        type="submit"
+                        class="w-full bg-[#001c4a] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                      >
+                        Send Inquiry <i data-lucide="send" class="w-4 h-4"></i>
+                      </button>
+                    </form>
+
+                    <!-- Ready to Rent Text -->
+                    <div class="text-center mb-3">
+                      <p class="text-sm font-bold text-[#c5aa23]">
+                        Ready to Rent this House?
+                      </p>
+                    </div>
+
+                    <button
+                      id="proceedToPaymentBtn"
+                      class="w-full bg-gradient-to-r from-[#c5aa23] to-[#e6c844] text-primary py-3 rounded-xl font-bold text-sm hover:from-[#b89a1f] hover:to-[#d4b83a] transition flex items-center justify-center gap-2 shadow-md"
+                    >
+                      Proceed to Payment
+                      <i data-lucide="credit-card" class="w-4 h-4"></i>
+                    </button>
+
+                    <div class="mt-6 pt-4 border-t border-[#edf0f5]">
+                      <div class="flex items-center gap-2 mb-2">
+                        <i data-lucide="user-check" class="w-5 h-5 text-tertiary"></i>
+                        <span class="text-sm font-bold text-primary"
+                          >Leasing Agent</span
+                        >
+                      </div>
+                      <p class="text-xs text-[#4a4f62]">
+                        ${escapeHtml(seller.name || "Agent")}: Senior Leasing Consultant
+                      </p>
+                      <p class="text-xs text-[#4a4f62] mt-1">
+                        ✉️ ${escapeHtml(seller.email || "contact@rezidenthomes.com")} | 📞 ${escapeHtml(seller.phone || "+234 800 000 0000")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              ${similarHtml}
+            </div>
+
+            <!-- CTA Consultation -->
+            <section
+              class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
+            >
+              <div class="max-w-4xl mx-auto text-center">
+                <i
+                  data-lucide="phone-call"
+                  class="w-10 h-10 text-tertiary-container mx-auto mb-4"
+                ></i>
+                <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">
+                  Need a custom rental solution?
+                </h2>
+                <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">
+                  Our team finds off-market rental homes matching your budget and
+                  lifestyle, from short-term executive stays to long-term leases.
+                </p>
+                <button
+                  id="consultRentExpert"
+                  class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm"
+                >
+                  Talk to a Rental Expert
+                </button>
+              </div>
+            </section>
+          `;
+
+          propertyContent.innerHTML = html;
+          loadingState.classList.add("hidden");
+          propertyContent.classList.remove("hidden");
+          footerSection.classList.remove("hidden");
+          lucide.createIcons();
+
+          // ---------- EVENT LISTENERS (after DOM injection) ----------
+
+          // Gallery thumbnail switching
+          const mainImg = document.getElementById("mainGalleryImg");
+          const thumbs = document.querySelectorAll("[data-gallery]");
+          thumbs.forEach((thumb) => {
+            thumb.addEventListener("click", function () {
+              const fullSrc = this.getAttribute("data-gallery");
+              if (fullSrc && mainImg) mainImg.src = fullSrc;
+              thumbs.forEach((t) =>
+                t.classList.remove("thumb-active", "border-tertiary"),
+              );
+              this.classList.add("thumb-active", "border-tertiary");
+              this.style.borderWidth = "2px";
+            });
           });
-        },
-        { threshold: 0.1 },
-      );
-      fadeElements.forEach((el) => obs.observe(el));
 
-      // Gallery thumbnail switching
-      const mainImg = document.getElementById("mainGalleryImg");
-      const thumbs = document.querySelectorAll("[data-gallery]");
-      thumbs.forEach((thumb) => {
-        thumb.addEventListener("click", function () {
-          const fullSrc = this.getAttribute("data-gallery");
-          if (fullSrc) mainImg.src = fullSrc;
-          thumbs.forEach((t) =>
-            t.classList.remove("thumb-active", "border-tertiary"),
+          // Inquiry form
+          const inquiryForm = document.getElementById("inquiryForm");
+          if (inquiryForm) {
+            inquiryForm.addEventListener("submit", (e) => {
+              e.preventDefault();
+              alert(
+                `✨ Thank you! A Rezident Homes leasing specialist will contact you about ${escapeHtml(house.title || "this property")} rental details.`,
+              );
+              inquiryForm.reset();
+            });
+          }
+
+          // Proceed to Payment - redirect to same page (or payment page)
+          const paymentBtn = document.getElementById("proceedToPaymentBtn");
+          if (paymentBtn) {
+            paymentBtn.addEventListener("click", () => {
+              window.location.href = `propertydetailsforrent.html?id=${house._id}`;
+            });
+          }
+
+          // Consult expert
+          const consultExpert = document.getElementById("consultRentExpert");
+          if (consultExpert) {
+            consultExpert.addEventListener("click", () =>
+              alert(
+                "Connect with our luxury leasing concierge: +234 (0) 800 000 0000 or rentals@rezidenthomes.com",
+              ),
+            );
+          }
+
+          // Fade-up observer
+          const fadeElements = document.querySelectorAll(".fade-up");
+          const obs = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("revealed");
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.1 },
           );
-          this.classList.add("thumb-active", "border-tertiary");
-          this.style.borderWidth = "2px";
-        });
-        // set first active
-        if (thumb === thumbs[0])
-          thumb.classList.add("thumb-active", "border-tertiary");
-      });
+          fadeElements.forEach((el) => obs.observe(el));
+        } catch (err) {
+          console.error(err);
+          loadingState.classList.add("hidden");
+          errorState.innerHTML = `
+            <div class="flex flex-col items-center gap-3">
+              <i data-lucide="alert-circle" class="w-8 h-8 text-red-500"></i>
+              <p class="font-bold text-sm">${err.message || "Failed to load property details."}</p>
+              <button onclick="window.location.href='forrent.html'" class="text-sm text-red-600 underline font-bold">Back to Rent Listings</button>
+            </div>`;
+          errorState.classList.remove("hidden");
+          lucide.createIcons();
+        }
+      }
 
-      // --- Rental action buttons (consistent with rental listing page)---
-      const requestRentBtn = document.getElementById("requestRentalBtn");
-      if (requestRentBtn) {
-        requestRentBtn.addEventListener("click", () =>
-          alert(
-            "✨ Thank you! A Rezident Homes leasing specialist will contact you about Banana Island Waterfront rental details.",
-          ),
-        );
-      }
-      const scheduleVisit = document.getElementById("scheduleVisitBtn");
-      if (scheduleVisit) {
-        scheduleVisit.addEventListener("click", () =>
-          alert(
-            "📅 Schedule a private tour of this waterfront rental. Our agent will confirm within 2 hours.",
-          ),
-        );
-      }
-      const scheduleTourHeader = document.getElementById("scheduleTourBtn");
-      if (scheduleTourHeader) {
-        scheduleTourHeader.addEventListener("click", () =>
-          alert(
-            "Schedule a private tour of our premium rental portfolio. One of our leasing agents will reach out shortly.",
-          ),
-        );
-      }
-      const consultExpert = document.getElementById("consultRentExpert");
-      if (consultExpert) {
-        consultExpert.addEventListener("click", () =>
-          alert(
-            "Connect with our luxury leasing concierge: +234 (0) 123 456 7890 or rentals@rezidenthomes.com",
-          ),
-        );
-      }
-      // similar rental buttons
-      document.querySelectorAll(".similar-rent-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          const card = btn.closest(".bg-white");
-          const title = card?.querySelector("h3")?.innerText || "this property";
-          alert(
-            `✨ A Rezident Homes specialist will contact you about "${title}" rental details.`,
-          );
-        });
-      });
-
-      // "Request Details" fallback for any missing dynamic
-      const anyRentDetailBtns = document.querySelectorAll(
-        ".rent-detail-btn, [data-rent-inquire]",
-      );
-      anyRentDetailBtns.forEach((btn) =>
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          alert("Rental inquiry received. We'll respond promptly.");
-        }),
-      );
-
-      // Simulate back navigation (breadcrumb link works as regular)
-      // ensure images lazy?
-      setTimeout(() => lucide.createIcons(), 100);
+      // ---------- START ----------
+      renderProperty();
     </script>
   </body>
 </html>
