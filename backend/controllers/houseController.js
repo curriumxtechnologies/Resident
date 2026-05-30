@@ -244,96 +244,103 @@ const getHouses = asyncHandler(async (req, res) => {
       throw new Error("Not authorized to update this listing");
     }
 
-    // Handle removed images
-    if (req.body.removedImages) {
-      try {
-        const removedIds = JSON.parse(req.body.removedImages);
-        
-        // Delete images from Cloudinary
-        for (const publicId of removedIds) {
-          try {
-            // Using cloudinary v2
-            const cloudinary = (await import("cloudinary")).v2;
-            await cloudinary.uploader.destroy(publicId);
-          } catch (err) {
-            console.warn("Failed to delete image from Cloudinary:", publicId, err.message);
-          }
-        }
-        
-        // Remove from house.images array
-        house.images = house.images.filter(img => {
-          const imgId = img.public_id || img._id?.toString();
-          return !removedIds.includes(imgId);
-        });
-      } catch (err) {
-        console.error("Error processing removedImages:", err);
-      }
-    }
+    // Build update object
+    const updateData = {};
 
-    // Handle new images upload
-    if (req.files?.images && req.files.images.length > 0) {
-      const newImages = req.files.images.map((file) => ({
-        url: file.path,
-        public_id: file.filename,
-      }));
-      
-      house.images = [...house.images, ...newImages];
-    }
-
-    // Handle features - they come as features[0], features[1], etc. from FormData
-    if (req.body.features || Object.keys(req.body).some(key => key.startsWith("features["))) {
-      let features = [];
-      
-      // Extract features from FormData format
-      Object.keys(req.body).forEach(key => {
-        if (key.startsWith("features[")) {
-          const value = req.body[key];
-          if (value && value.trim() !== "") {
-            features.push(value.trim());
-          }
-        }
-      });
-      
-      // If features is a string (JSON), parse it
-      if (req.body.features && typeof req.body.features === "string") {
-        try {
-          features = JSON.parse(req.body.features);
-        } catch (e) {
-          // If not valid JSON, use the FormData extracted features
-          if (features.length === 0) {
-            features = [req.body.features];
-          }
+    // Handle numeric fields - ONLY update if explicitly provided and not empty
+    const numericFields = ["price", "bedrooms", "bathrooms", "size", "yearBuilt"];
+    numericFields.forEach((field) => {
+      if (req.body[field] !== undefined && req.body[field] !== null && req.body[field] !== "") {
+        const numValue = Number(req.body[field]);
+        if (!isNaN(numValue)) {
+          updateData[field] = numValue;
         }
       }
-      
-      if (features.length > 0) {
-        house.features = features;
-      }
-    }
+      // If field is NOT in the request body at all, don't touch it
+    });
 
-    // Whitelist allowed updates
-    const allowedFields = [
-      "title", "description", "propertyType", "price",
-      "bedrooms", "bathrooms", "size", "yearBuilt",
+    // Handle text fields
+    const textFields = [
+      "title", "description", "propertyType",
       "furnishing", "leaseTerm", "securityDeposit", "serviceCharge",
       "availability", "utilityTerms", "petPolicy",
       "ownershipType", "state", "lga", "address",
       "status", "listingType",
       "contactName", "contactEmail", "contactPhone", "contactAlternatePhone",
     ];
-
-    allowedFields.forEach((field) => {
+    
+    textFields.forEach((field) => {
       if (req.body[field] !== undefined && req.body[field] !== "") {
-        // Convert numeric fields
-        if (["price", "bedrooms", "bathrooms", "size", "yearBuilt"].includes(field)) {
-          house[field] = Number(req.body[field]);
-        } else {
-          house[field] = req.body[field];
-        }
+        updateData[field] = req.body[field];
       }
     });
 
-    const updatedHouse = await house.save();
+    // Handle features
+    if (req.body.features) {
+      try {
+        const parsedFeatures = JSON.parse(req.body.features);
+        if (Array.isArray(parsedFeatures)) {
+          updateData.features = parsedFeatures.filter(f => f && f.trim() !== "");
+        }
+      } catch (e) {
+        const features = [];
+        Object.keys(req.body).forEach(key => {
+          if (key.startsWith("features[") && key.endsWith("]")) {
+            const value = req.body[key];
+            if (value && value.trim() !== "") {
+              features.push(value.trim());
+            }
+          }
+        });
+        if (features.length > 0) {
+          updateData.features = features;
+        }
+      }
+    }
+
+    // Handle removed images
+    if (req.body.removedImages) {
+      try {
+        const removedIds = JSON.parse(req.body.removedImages);
+        
+        for (const publicId of removedIds) {
+          try {
+            const cloudinary = (await import("cloudinary")).v2;
+            await cloudinary.uploader.destroy(publicId);
+          } catch (err) {
+            console.warn("Failed to delete image from Cloudinary:", publicId);
+          }
+        }
+        
+        // Filter out removed images
+        const remainingImages = house.images.filter(img => {
+          const imgId = img.public_id || img._id?.toString();
+          return !removedIds.includes(imgId);
+        });
+        updateData.images = remainingImages;
+      } catch (err) {
+        console.error("Error processing removedImages:", err);
+      }
+    }
+
+    // Handle new images
+    if (req.files?.images && req.files.images.length > 0) {
+      const newImages = req.files.images.map((file) => ({
+        url: file.path,
+        public_id: file.filename,
+      }));
+      
+      // Combine with existing images (or the filtered ones)
+      const existingImages = updateData.images || house.images;
+      updateData.images = [...existingImages, ...newImages];
+    }
+
+    // Use findByIdAndUpdate to ensure atomic update
+    const updatedHouse = await House.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true, runValidators: true }
+    );
 
     res.json({
       success: true,

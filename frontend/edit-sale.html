@@ -178,7 +178,7 @@
           </p>
         </div>
 
-        <form id="editSaleForm" class="space-y-8">
+        <form id="editSaleForm" class="space-y-8" novalidate>
           <!-- Images Section -->
           <div
             class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
@@ -190,20 +190,14 @@
               Add or remove images. The first image will be the main display
               image.
             </p>
-
-            <!-- Existing Images -->
             <div
               id="existingImages"
               class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4"
-            >
-              <!-- Existing images will be loaded here -->
-            </div>
-
-            <!-- Upload New Images -->
+            ></div>
             <div class="mt-4">
-              <label class="block text-sm font-bold text-primary mb-2">
-                Add New Images
-              </label>
+              <label class="block text-sm font-bold text-primary mb-2"
+                >Add New Images</label
+              >
               <input
                 type="file"
                 id="newImages"
@@ -269,11 +263,12 @@
                   >Price (₦) *</label
                 >
                 <input
-                  type="number"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
                   id="price"
                   name="price"
                   required
-                  min="0"
                   class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
                   placeholder="e.g., 50000000"
                 />
@@ -283,11 +278,12 @@
                   >Bedrooms *</label
                 >
                 <input
-                  type="number"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
                   id="bedrooms"
                   name="bedrooms"
                   required
-                  min="0"
                   class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
                   placeholder="e.g., 4"
                 />
@@ -297,11 +293,12 @@
                   >Bathrooms *</label
                 >
                 <input
-                  type="number"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
                   id="bathrooms"
                   name="bathrooms"
                   required
-                  min="0"
                   class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
                   placeholder="e.g., 3"
                 />
@@ -311,10 +308,11 @@
                   >Living Area (m²)</label
                 >
                 <input
-                  type="number"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
                   id="size"
                   name="size"
-                  min="0"
                   class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
                   placeholder="e.g., 250"
                 />
@@ -324,11 +322,11 @@
                   >Year Built</label
                 >
                 <input
-                  type="number"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
                   id="yearBuilt"
                   name="yearBuilt"
-                  min="1900"
-                  max="2026"
                   class="w-full px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
                   placeholder="e.g., 2020"
                 />
@@ -392,9 +390,7 @@
             <h2 class="font-headline text-xl font-extrabold text-primary mb-6">
               Features
             </h2>
-            <div class="grid md:grid-cols-2 gap-4" id="featuresContainer">
-              <!-- Dynamic feature inputs -->
-            </div>
+            <div class="grid md:grid-cols-2 gap-4" id="featuresContainer"></div>
             <button
               type="button"
               id="addFeatureBtn"
@@ -514,39 +510,19 @@
       // Render existing images
       function renderExistingImages(images) {
         existingImagesContainer.innerHTML = "";
-
         if (images.length === 0) {
-          existingImagesContainer.innerHTML = `
-            <div class="col-span-full text-center py-8 text-sm text-on-surface-variant">
-              No images uploaded yet. Add images below.
-            </div>
-          `;
+          existingImagesContainer.innerHTML = `<div class="col-span-full text-center py-8 text-sm text-on-surface-variant">No images uploaded yet. Add images below.</div>`;
           return;
         }
-
         images.forEach((image, index) => {
           const wrapper = document.createElement("div");
           wrapper.className = "image-preview-wrapper";
           wrapper.innerHTML = `
-            <img
-              src="${image.url}"
-              alt="Property image ${index + 1}"
-              class="w-full h-32 object-cover rounded-lg"
-            />
-            <button
-              type="button"
-              class="remove-image-btn"
-              data-image-id="${image._id || image.public_id}"
-              title="Remove image"
-            >
-              ×
-            </button>
+            <img src="${image.url}" alt="Property image ${index + 1}" class="w-full h-32 object-cover rounded-lg" />
+            <button type="button" class="remove-image-btn" data-image-id="${image._id || image.public_id}" title="Remove image">×</button>
             ${index === 0 ? '<span class="absolute bottom-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded-full">Main</span>' : ""}
           `;
-
           existingImagesContainer.appendChild(wrapper);
-
-          // Add remove event
           wrapper
             .querySelector(".remove-image-btn")
             .addEventListener("click", () => {
@@ -569,22 +545,14 @@
         const div = document.createElement("div");
         div.className = "flex gap-2 items-start";
         div.innerHTML = `
-          <input
-            type="text"
-            name="features[]"
-            value="${escapeHtml(value)}"
+          <input type="text" name="features[]" value="${escapeHtml(value)}"
             class="flex-1 px-4 py-3 rounded-xl border border-outline/20 text-sm focus:outline-none focus:ring-2 focus:ring-primary/15"
-            placeholder="e.g., Swimming Pool, CCTV, Security Gate"
-          />
-          <button
-            type="button"
-            class="remove-feature-btn p-3 text-red-500 hover:text-red-700 transition"
-          >
+            placeholder="e.g., Swimming Pool, CCTV, Security Gate" />
+          <button type="button" class="remove-feature-btn p-3 text-red-500 hover:text-red-700 transition">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         `;
         featuresContainer.appendChild(div);
-
         div
           .querySelector(".remove-feature-btn")
           .addEventListener("click", () => {
@@ -592,7 +560,6 @@
             featureCount--;
             updateRemoveButtons();
           });
-
         updateRemoveButtons();
         lucide.createIcons();
       }
@@ -613,28 +580,21 @@
       async function loadHouseData() {
         const urlParams = new URLSearchParams(window.location.search);
         const houseId = urlParams.get("id");
-
         if (!houseId) {
           alert("No property ID provided");
           window.location.href = "myhomes.html";
           return;
         }
-
         try {
           const token = getStoredToken();
           if (!token) {
             window.location.href = "login.html";
             return;
           }
-
           const response = await fetch(`${getBaseURL()}/houses/${houseId}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-
-          if (!response.ok) {
-            throw new Error("Failed to load property");
-          }
-
+          if (!response.ok) throw new Error("Failed to load property");
           const data = await response.json();
           const house = data.house || data;
 
@@ -646,11 +606,11 @@
           document.getElementById("title").value = house.title || "";
           document.getElementById("propertyType").value =
             house.propertyType || "";
-          document.getElementById("price").value = house.price || "";
-          document.getElementById("bedrooms").value = house.bedrooms || "";
-          document.getElementById("bathrooms").value = house.bathrooms || "";
-          document.getElementById("size").value = house.size || "";
-          document.getElementById("yearBuilt").value = house.yearBuilt || "";
+          document.getElementById("price").value = house.price ?? "";
+          document.getElementById("bedrooms").value = house.bedrooms ?? "";
+          document.getElementById("bathrooms").value = house.bathrooms ?? "";
+          document.getElementById("size").value = house.size ?? "";
+          document.getElementById("yearBuilt").value = house.yearBuilt ?? "";
           document.getElementById("state").value = house.state || "";
           document.getElementById("lga").value = house.lga || "";
           document.getElementById("address").value = house.address || "";
@@ -660,7 +620,8 @@
             house.ownershipType || "Freehold";
           document.getElementById("status").value = house.status || "published";
 
-          // Load features
+          // Clear and load features
+          featuresContainer.innerHTML = "";
           const features = house.features || [];
           if (features.length > 0) {
             features.forEach((f) => addFeatureInput(f));
@@ -680,14 +641,10 @@
       // Handle form submission
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-
         const urlParams = new URLSearchParams(window.location.search);
         const houseId = urlParams.get("id");
-
         if (!houseId) return;
-
         showLoading(true);
-
         try {
           const token = getStoredToken();
           if (!token) {
@@ -703,81 +660,93 @@
             .map((input) => input.value.trim())
             .filter((f) => f.length > 0);
 
-          // Prepare form data
-          const formData = new FormData();
+          // Build update object
+          const updateData = {};
 
-          // Add text fields
-          formData.append("title", document.getElementById("title").value);
-          formData.append(
-            "propertyType",
-            document.getElementById("propertyType").value,
+          // Numeric fields
+          ["price", "bedrooms", "bathrooms", "size", "yearBuilt"].forEach(
+            (field) => {
+              const el = document.getElementById(field);
+              if (el && el.value !== "" && el.value !== null) {
+                const num = Number(el.value);
+                if (!isNaN(num)) updateData[field] = num;
+              }
+            },
           );
-          formData.append("price", document.getElementById("price").value);
-          formData.append(
-            "bedrooms",
-            document.getElementById("bedrooms").value,
-          );
-          formData.append(
-            "bathrooms",
-            document.getElementById("bathrooms").value,
-          );
-          formData.append("size", document.getElementById("size").value);
-          formData.append(
-            "yearBuilt",
-            document.getElementById("yearBuilt").value,
-          );
-          formData.append("state", document.getElementById("state").value);
-          formData.append("lga", document.getElementById("lga").value);
-          formData.append("address", document.getElementById("address").value);
-          formData.append(
-            "description",
-            document.getElementById("description").value,
-          );
-          formData.append(
-            "ownershipType",
-            document.getElementById("ownershipType").value,
-          );
-          formData.append("status", document.getElementById("status").value);
-          formData.append("listingType", "sale");
 
-          // Add features as JSON array
-          features.forEach((feature, index) => {
-            formData.append(`features[${index}]`, feature);
+          // Text fields
+          [
+            ["title", "title"],
+            ["propertyType", "propertyType"],
+            ["state", "state"],
+            ["lga", "lga"],
+            ["address", "address"],
+            ["description", "description"],
+            ["ownershipType", "ownershipType"],
+            ["status", "status"],
+          ].forEach(([id, key]) => {
+            const el = document.getElementById(id);
+            if (el && el.value !== undefined && el.value !== "") {
+              updateData[key] = el.value;
+            }
           });
 
-          // Add removed image IDs
+          updateData.listingType = "sale";
+
+          // Features
+          updateData.features = features;
+
+          // Removed images
           if (removedImageIds.length > 0) {
-            formData.append("removedImages", JSON.stringify(removedImageIds));
+            updateData.removedImages = JSON.stringify(removedImageIds);
           }
 
-          // Add new images
+          // New images - use FormData for file upload
           const newFiles = newImagesInput.files;
-          if (newFiles.length > 0) {
+          const hasFiles = newFiles.length > 0;
+
+          if (hasFiles || removedImageIds.length > 0) {
+            // Use FormData for file uploads
+            const formData = new FormData();
+            Object.entries(updateData).forEach(([key, value]) => {
+              formData.append(
+                key,
+                typeof value === "object" ? JSON.stringify(value) : value,
+              );
+            });
             for (let i = 0; i < newFiles.length; i++) {
               formData.append("images", newFiles[i]);
             }
-          }
-
-          const response = await fetch(`${getBaseURL()}/houses/${houseId}`, {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            body: formData,
-          });
-
-          if (!response.ok) {
-            const error = await response
+            const response = await fetch(`${getBaseURL()}/houses/${houseId}`, {
+              method: "PUT",
+              headers: { Authorization: `Bearer ${token}` },
+              body: formData,
+            });
+            const data = await response
               .json()
-              .catch(() => ({ message: "Update failed" }));
-            throw new Error(error.message || "Update failed");
+              .catch(() => ({ message: "Server error" }));
+            if (!response.ok) throw new Error(data.message || "Update failed");
+          } else {
+            // Use JSON for text-only updates
+            const response = await fetch(`${getBaseURL()}/houses/${houseId}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(updateData),
+            });
+            const data = await response
+              .json()
+              .catch(() => ({ message: "Server error" }));
+            if (!response.ok) throw new Error(data.message || "Update failed");
           }
 
           alert("✅ Property updated successfully!");
           window.location.href = "myhomes.html";
         } catch (err) {
           console.error(err);
-          alert(err.message || "Failed to update property");
+          alert(err.message || "Failed to update property. Please try again.");
         } finally {
           showLoading(false);
         }
