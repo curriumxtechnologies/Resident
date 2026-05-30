@@ -211,7 +211,7 @@
           >
             <i data-lucide="credit-card" class="w-8 h-8 text-tertiary"></i>
           </div>
-          <h3 class="text-xl font-headline font-bold text-primary">
+          <h3 class="text-xl font-headline font-extrabold text-primary">
             Secure Payment Portal
           </h3>
           <p class="text-sm text-gray-500 mt-1">
@@ -232,7 +232,7 @@
           </p>
           <button
             id="confirmPaymentBtn"
-            class="w-full bg-[#c5aa23] hover:bg-[#b3971a] text-[#001c4a] font-bold py-3 rounded-xl transition flex items-center justify-center gap-2"
+            class="w-full bg-[#c5aa23] hover:bg-[#b3971a] text-[#001c4a] font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm"
           >
             <i data-lucide="lock" class="w-4 h-4"></i> Pay with Card / Transfer
           </button>
@@ -503,8 +503,8 @@
 
         detailsContainer.innerHTML = `
           <div class="flex justify-between items-center border-b pb-2 mb-2">
-            <span class="font-semibold">Property:</span>
-            <span class="text-right">${property.name}</span>
+            <span class="font-semibold text-sm">Property:</span>
+            <span class="text-right text-sm">${property.name}</span>
           </div>
           <div class="flex justify-between items-center text-xs text-gray-600">
             <span>Location:</span>
@@ -557,12 +557,12 @@
         const similarHtml = `
           <div class="max-w-7xl mx-auto px-5 md:px-8 mt-16 fade-up">
             <div class="flex items-center justify-between mb-6">
-              <h2 class="font-headline text-2xl font-bold text-primary">
+              <h2 class="font-headline text-2xl font-extrabold text-primary">
                 Similar Luxury Homes
               </h2>
               <a
                 href="forsale.html"
-                class="text-sm text-tertiary font-semibold flex items-center gap-1"
+                class="text-sm text-tertiary font-bold flex items-center gap-1"
                 >View all <i data-lucide="arrow-right" class="w-3 h-3"></i
               ></a>
             </div>
@@ -580,14 +580,14 @@
                     <div class="text-xs text-[#7b7f8d] flex items-center gap-1">
                       <i data-lucide="map-pin" class="w-3 h-3"></i> ${similar.location}
                     </div>
-                    <h3 class="font-bold text-primary mt-1">
+                    <h3 class="font-bold text-primary text-sm mt-1">
                       ${similar.name}
                     </h3>
                     <div class="flex justify-between items-center mt-2">
-                      <span class="font-bold text-primary text-lg"
+                      <span class="font-bold text-primary text-base"
                         >${similar.price}</span
                       ><button
-                        class="similar-sale-btn text-xs bg-tertiary-container/20 text-primary px-3 py-1 rounded-full"
+                        class="similar-sale-btn text-xs bg-tertiary-container/20 text-primary px-3 py-1 rounded-full font-bold"
                         data-name="${similar.name}"
                       >
                         Inquire
@@ -795,7 +795,7 @@
 
                 <!-- Description & Features -->
                 <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
-                  <h2 class="font-headline text-2xl font-bold text-primary mb-3">
+                  <h2 class="font-headline text-2xl font-extrabold text-primary mb-3">
                     About this property
                   </h2>
                   <p class="text-[#3a3e4a] text-sm leading-relaxed mb-5">
@@ -807,23 +807,23 @@
                   >
                     <div>
                       <span class="block text-xs text-[#6b6f7e]">Property Type</span
-                      ><span class="font-semibold text-primary"
+                      ><span class="font-semibold text-primary text-sm"
                         >Luxury Villa</span
                       >
                     </div>
                     <div>
                       <span class="block text-xs text-[#6b6f7e]">Year Built</span
-                      ><span class="font-semibold text-primary">2023</span>
+                      ><span class="font-semibold text-primary text-sm">2023</span>
                     </div>
                     <div>
                       <span class="block text-xs text-[#6b6f7e]">Ownership</span
-                      ><span class="font-semibold text-primary"
+                      ><span class="font-semibold text-primary text-sm"
                         >Freehold</span
                       >
                     </div>
                     <div>
                       <span class="block text-xs text-[#6b6f7e]">Status</span
-                      ><span class="font-semibold text-primary">Available</span>
+                      ><span class="font-semibold text-primary text-sm">Available</span>
                     </div>
                   </div>
 
@@ -882,11 +882,11 @@
                 >
                   <div class="mb-4 pb-3 border-b border-dashed border-[#e0e2e8]">
                     <span
-                      class="text-tertiary text-xs font-semibold uppercase tracking-wide"
+                      class="text-tertiary text-xs font-bold uppercase tracking-wide"
                       >Sale Price</span
                     >
                     <div
-                      class="text-3xl font-headline font-black text-primary mt-1"
+                      class="text-3xl font-headline font-extrabold text-primary mt-1"
                     >
                       ${property.price}
                     </div>
@@ -907,7 +907,7 @@
                   <!-- Inquiry Form -->
                   <form id="inquiryForm" class="space-y-4 mb-5">
                     <div>
-                      <label class="block text-xs font-semibold text-primary mb-1"
+                      <label class="block text-xs font-bold text-primary mb-1"
                         >Full Name *</label
                       >
                       <input
@@ -918,7 +918,7 @@
                       />
                     </div>
                     <div>
-                      <label class="block text-xs font-semibold text-primary mb-1"
+                      <label class="block text-xs font-bold text-primary mb-1"
                         >Email Address *</label
                       >
                       <input
@@ -929,7 +929,7 @@
                       />
                     </div>
                     <div>
-                      <label class="block text-xs font-semibold text-primary mb-1"
+                      <label class="block text-xs font-bold text-primary mb-1"
                         >Phone Number *</label
                       >
                       <input
@@ -940,7 +940,7 @@
                       />
                     </div>
                     <div>
-                      <label class="block text-xs font-semibold text-primary mb-1"
+                      <label class="block text-xs font-bold text-primary mb-1"
                         >Message (Optional)</label
                       >
                       <textarea
@@ -951,7 +951,7 @@
                     </div>
                     <button
                       type="submit"
-                      class="w-full bg-[#001c4a] text-white py-3 rounded-xl font-bold hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
+                      class="w-full bg-[#001c4a] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#0d316d] transition flex items-center justify-center gap-2"
                     >
                       Send Inquiry <i data-lucide="send" class="w-4 h-4"></i>
                     </button>
@@ -959,14 +959,14 @@
 
                   <!-- Ready to Buy Text -->
                   <div class="text-center mb-3">
-                    <p class="text-sm font-semibold text-[#c5aa23]">
+                    <p class="text-sm font-bold text-[#c5aa23]">
                       Ready to own this home?
                     </p>
                   </div>
 
                   <button
                     id="proceedToPaymentBtn"
-                    class="w-full bg-gradient-to-r from-[#c5aa23] to-[#e6c844] text-primary py-3 rounded-xl font-bold hover:from-[#b89a1f] hover:to-[#d4b83a] transition flex items-center justify-center gap-2 shadow-md"
+                    class="w-full bg-gradient-to-r from-[#c5aa23] to-[#e6c844] text-primary py-3 rounded-xl font-bold text-sm hover:from-[#b89a1f] hover:to-[#d4b83a] transition flex items-center justify-center gap-2 shadow-md"
                   >
                     Proceed to Payment
                     <i data-lucide="credit-card" class="w-4 h-4"></i>

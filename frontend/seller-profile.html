@@ -179,7 +179,7 @@
     >
       <div class="bg-white rounded-2xl max-w-md w-full p-6">
         <div class="flex items-center justify-between mb-5">
-          <h2 class="font-headline text-2xl font-extrabold text-primary">
+          <h2 class="font-headline text-xl font-extrabold text-primary">
             Report Seller
           </h2>
           <button
@@ -240,7 +240,7 @@
       class="hidden fixed inset-0 z-[999] bg-black/60 px-5 flex items-center justify-center"
     >
       <div class="bg-white rounded-2xl max-w-md w-full p-6">
-        <h2 class="font-headline text-2xl font-extrabold text-primary mb-4">
+        <h2 class="font-headline text-xl font-extrabold text-primary mb-4">
           Write a Review
         </h2>
         <form id="reviewForm" class="space-y-4">
@@ -291,14 +291,14 @@
           <div class="flex gap-3">
             <button
               type="submit"
-              class="flex-1 bg-tertiary-container text-primary py-3 rounded-xl font-bold"
+              class="flex-1 bg-tertiary-container text-primary py-3 rounded-xl font-bold text-sm"
             >
               Submit Review
             </button>
             <button
               type="button"
               id="closeReviewModal"
-              class="flex-1 border border-outline/20 text-primary py-3 rounded-xl font-bold"
+              class="flex-1 border border-outline/20 text-primary py-3 rounded-xl font-bold text-sm"
             >
               Cancel
             </button>
@@ -448,9 +448,9 @@
         let officeDisplay = "";
         if (application) {
           if (isLandlord)
-            addressDisplay = `<p class="font-bold text-primary mt-1">${escapeHtml(application.address || "Not provided")}</p>`;
+            addressDisplay = `<p class="font-bold text-primary mt-1 text-sm">${escapeHtml(application.address || "Not provided")}</p>`;
           else
-            officeDisplay = `<p class="font-bold text-primary mt-1">${escapeHtml(application.officeAddress || "Not provided")}</p>`;
+            officeDisplay = `<p class="font-bold text-primary mt-1 text-sm">${escapeHtml(application.officeAddress || "Not provided")}</p>`;
         }
 
         const joinedDate = formatDate(seller.createdAt);
@@ -465,7 +465,7 @@
             (r) => `
           <div class="border-t border-outline/10 pt-4">
             <div class="flex items-center justify-between">
-              <div><h3 class="font-bold text-primary">${escapeHtml(r.reviewer?.name || "Anonymous")}</h3><p class="text-xs text-on-surface-variant">${new Date(r.createdAt).toLocaleDateString()}</p></div>
+              <div><h3 class="font-bold text-primary text-sm">${escapeHtml(r.reviewer?.name || "Anonymous")}</h3><p class="text-xs text-on-surface-variant">${new Date(r.createdAt).toLocaleDateString()}</p></div>
               <div class="flex gap-0.5 text-xs">${renderStars(r.rating)}</div>
             </div>
             <p class="text-sm text-on-surface-variant mt-2">${escapeHtml(r.comment || "No comment provided.")}</p>
@@ -476,7 +476,7 @@
 
         const reviewSection =
           reviewsData.count === 0
-            ? '<p class="text-center text-on-surface-variant py-6">No reviews yet.</p>'
+            ? '<p class="text-center text-on-surface-variant py-6 text-sm">No reviews yet.</p>'
             : `<div class="space-y-4">${reviewListHtml}</div>`;
 
         // Listings preview (first 3)
@@ -495,7 +495,7 @@
             <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-8 text-center">
               <i data-lucide="alert-triangle" class="w-12 h-12 text-yellow-600 mx-auto mb-3"></i>
               <h2 class="font-headline text-2xl font-extrabold text-primary">Seller Account Suspended</h2>
-              <p class="text-on-surface-variant mt-2">This seller's account has been suspended due to policy violations.</p>
+              <p class="text-on-surface-variant mt-2 text-sm">This seller's account has been suspended due to policy violations.</p>
               <p class="text-sm text-on-surface-variant mt-1">Reason: ${escapeHtml(seller.suspensionReason || "Violation of platform policies")}</p>
             </div>
           `;
@@ -513,7 +513,7 @@
                     ${verificationBadge ? '<span class="bg-tertiary-container text-primary px-3 py-1 rounded-full text-xs font-extrabold">✓ Verified Seller</span>' : ""}
                     <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-bold">${isLandlord ? "Private Landlord" : "Real Estate Agency"}</span>
                   </div>
-                  <h1 class="font-headline text-3xl md:text-5xl font-extrabold">${escapeHtml(sellerName)}</h1>
+                  <h1 class="font-headline text-3xl md:text-4xl font-extrabold">${escapeHtml(sellerName)}</h1>
                   <p class="text-white/75 text-sm mt-2 max-w-xl">${escapeHtml(application?.businessName || "Professional real estate services")}</p>
                   <div class="flex flex-wrap items-center gap-4 mt-4 text-sm text-white/80">
                     <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> ${escapeHtml(isLandlord ? application?.address || "Nigeria" : application?.officeAddress || "Nigeria")}</span>
@@ -537,12 +537,12 @@
                   <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Active</span>
                 </div>
                 <div class="grid sm:grid-cols-2 gap-5">
-                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Name</p><p class="font-bold text-primary mt-1">${escapeHtml(sellerName)}</p></div>
-                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Type</p><p class="font-bold text-primary mt-1">${isLandlord ? "Landlord" : "Real Estate Agency"}</p></div>
-                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Email</p><p class="font-bold text-primary mt-1">${escapeHtml(seller.email || application?.email || "Not provided")}</p></div>
-                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Phone</p><p class="font-bold text-primary mt-1">${escapeHtml(seller.phone || application?.phone || "Not provided")}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Name</p><p class="font-bold text-primary mt-1 text-sm">${escapeHtml(sellerName)}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Type</p><p class="font-bold text-primary mt-1 text-sm">${isLandlord ? "Landlord" : "Real Estate Agency"}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Email</p><p class="font-bold text-primary mt-1 text-sm">${escapeHtml(seller.email || application?.email || "Not provided")}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Phone</p><p class="font-bold text-primary mt-1 text-sm">${escapeHtml(seller.phone || application?.phone || "Not provided")}</p></div>
                   ${isLandlord ? `<div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Residential Address</p>${addressDisplay}</div>` : `<div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Office Address</p>${officeDisplay}</div>`}
-                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Verification</p><p class="font-bold text-primary mt-1">${verificationBadge ? "CAC and address verified" : "Not verified yet"}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Verification</p><p class="font-bold text-primary mt-1 text-sm">${verificationBadge ? "CAC and address verified" : "Not verified yet"}</p></div>
                 </div>
               </div>
 
@@ -565,15 +565,15 @@
               <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
                 <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Seller Performance</h2>
                 <div class="space-y-4">
-                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Total Listings</span><span class="font-extrabold text-primary">${totalListings}</span></div>
-                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Houses Sold</span><span class="font-extrabold text-primary">${sold}</span></div>
-                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Houses Rented</span><span class="font-extrabold text-primary">${rented}</span></div>
+                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Total Listings</span><span class="font-extrabold text-primary text-sm">${totalListings}</span></div>
+                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Houses Sold</span><span class="font-extrabold text-primary text-sm">${sold}</span></div>
+                  <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Houses Rented</span><span class="font-extrabold text-primary text-sm">${rented}</span></div>
                 </div>
               </div>
 
               <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
                 <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Latest Listings</h2>
-                ${listingsHtml || '<p class="text-center text-on-surface-variant">No listings yet.</p>'}
+                ${listingsHtml || '<p class="text-center text-on-surface-variant text-sm">No listings yet.</p>'}
                 ${viewAllLink}
               </div>
 
