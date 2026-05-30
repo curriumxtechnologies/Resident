@@ -172,11 +172,23 @@
           transform: translateX(40px);
         }
       }
+      .dropdown-enter {
+        animation: dropdownIn 0.2s ease-out forwards;
+      }
+      @keyframes dropdownIn {
+        0% {
+          opacity: 0;
+          transform: translateY(-10px) scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
-    <!-- Loading overlay -->
     <div
       id="loadingOverlay"
       class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center"
@@ -221,6 +233,72 @@
       </div>
     </div>
 
+    <!-- Add Listing Dropdown -->
+    <div
+      id="addListingDropdown"
+      class="hidden fixed inset-0 z-[998] flex items-start justify-center pt-20"
+    >
+      <div class="absolute inset-0" id="dropdownOverlay"></div>
+      <div
+        class="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full mx-5 p-6 dropdown-enter z-10"
+      >
+        <h3 class="font-headline text-lg font-extrabold text-primary mb-1">
+          Add New Listing
+        </h3>
+        <p class="text-sm text-on-surface-variant mb-5">
+          What type of listing would you like to create?
+        </p>
+        <div class="space-y-3">
+          <a
+            href="upload-sale.html"
+            class="flex items-center gap-4 p-4 rounded-xl border border-outline/20 hover:border-primary hover:bg-primary/5 transition group"
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition"
+            >
+              <i data-lucide="home" class="w-6 h-6 text-primary"></i>
+            </div>
+            <div>
+              <p class="font-bold text-primary text-sm">House for Sale</p>
+              <p class="text-xs text-on-surface-variant">
+                List a property you want to sell
+              </p>
+            </div>
+            <i
+              data-lucide="chevron-right"
+              class="w-5 h-5 text-outline ml-auto"
+            ></i>
+          </a>
+          <a
+            href="upload-rent.html"
+            class="flex items-center gap-4 p-4 rounded-xl border border-outline/20 hover:border-tertiary hover:bg-tertiary/5 transition group"
+          >
+            <div
+              class="w-12 h-12 rounded-xl bg-tertiary-container/20 flex items-center justify-center group-hover:bg-tertiary-container/40 transition"
+            >
+              <i data-lucide="building-2" class="w-6 h-6 text-tertiary"></i>
+            </div>
+            <div>
+              <p class="font-bold text-primary text-sm">House for Rent</p>
+              <p class="text-xs text-on-surface-variant">
+                List a property available for rent
+              </p>
+            </div>
+            <i
+              data-lucide="chevron-right"
+              class="w-5 h-5 text-outline ml-auto"
+            ></i>
+          </a>
+        </div>
+        <button
+          id="closeDropdownBtn"
+          class="mt-4 w-full text-sm text-on-surface-variant hover:text-primary transition py-2"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+
     <!-- Toast Container -->
     <div id="toastRoot" class="toast-container"></div>
 
@@ -261,13 +339,18 @@
               Manage all your property listings in one place.
             </p>
           </div>
-          <div class="flex gap-3">
-            <a
-              href="upload-sale.html"
+          <div class="relative">
+            <button
+              id="addListingBtn"
               class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center gap-2"
             >
               <i data-lucide="plus" class="w-4 h-4"></i> Add New Listing
-            </a>
+              <i
+                data-lucide="chevron-down"
+                class="w-4 h-4 transition-transform"
+                id="dropdownArrow"
+              ></i>
+            </button>
           </div>
         </div>
 
@@ -292,16 +375,12 @@
             house for sale or rent.
           </p>
           <div class="flex gap-3 justify-center">
-            <a
-              href="upload-sale.html"
+            <button
+              onclick="openAddListingDropdown()"
               class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-bold text-sm hover:bg-tertiary-fixed transition"
-              >Upload House for Sale</a
             >
-            <a
-              href="upload-rent.html"
-              class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition"
-              >Upload House for Rent</a
-            >
+              Upload Your First Listing
+            </button>
           </div>
         </div>
 
@@ -329,8 +408,50 @@
       const emptyState = document.getElementById("emptyState");
       const propertiesGrid = document.getElementById("propertiesGrid");
       const toastRoot = document.getElementById("toastRoot");
+      const addListingBtn = document.getElementById("addListingBtn");
+      const addListingDropdown = document.getElementById("addListingDropdown");
+      const dropdownOverlay = document.getElementById("dropdownOverlay");
+      const closeDropdownBtn = document.getElementById("closeDropdownBtn");
+      const dropdownArrow = document.getElementById("dropdownArrow");
 
       let currentDeleteId = null;
+
+      // Add Listing Dropdown
+      function openAddListingDropdown() {
+        addListingDropdown.classList.remove("hidden");
+        dropdownArrow.style.transform = "rotate(180deg)";
+        lucide.createIcons();
+      }
+
+      function closeAddListingDropdown() {
+        addListingDropdown.classList.add("hidden");
+        dropdownArrow.style.transform = "rotate(0deg)";
+      }
+
+      addListingBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (addListingDropdown.classList.contains("hidden")) {
+          openAddListingDropdown();
+        } else {
+          closeAddListingDropdown();
+        }
+      });
+
+      dropdownOverlay.addEventListener("click", closeAddListingDropdown);
+      closeDropdownBtn.addEventListener("click", closeAddListingDropdown);
+
+      // Close dropdown on Escape key
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          !addListingDropdown.classList.contains("hidden")
+        ) {
+          closeAddListingDropdown();
+        }
+      });
+
+      // Expose for empty state button
+      window.openAddListingDropdown = openAddListingDropdown;
 
       function showToast(message, type = "success", duration = 3500) {
         const toast = document.createElement("div");
@@ -490,7 +611,6 @@
       }
 
       async function deleteHouse(houseId) {
-        // Show deleting state
         deleteBtnText.textContent = "Deleting...";
         confirmDeleteBtn.disabled = true;
         showToast("Deleting property...", "info", 2000);
@@ -510,7 +630,6 @@
             throw new Error(errorData.message || "Failed to delete property");
           }
 
-          // Remove the card from the DOM with animation
           const card = document.querySelector(`[data-house-id="${houseId}"]`);
           if (card) {
             card.style.transition = "opacity 0.3s, transform 0.3s";
@@ -522,7 +641,6 @@
           closeDeleteModal();
           showToast("✅ House deleted successfully!", "success", 4000);
 
-          // Check if grid is now empty
           setTimeout(() => {
             if (propertiesGrid.children.length === 0) {
               emptyState.classList.remove("hidden");
