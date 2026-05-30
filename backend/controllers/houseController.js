@@ -339,7 +339,7 @@ const getHouses = asyncHandler(async (req, res) => {
     const updatedHouse = await House.findByIdAndUpdate(
       req.params.id,
       updateData,
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
 
     res.json({
