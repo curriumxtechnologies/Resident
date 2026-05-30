@@ -736,6 +736,57 @@ const getHouses = asyncHandler(async (req, res) => {
     });
   });
 
+  // -------------------------------------------------------------------
+  //  INQUIRY – POST /api/houses/:id/inquiry
+  // -------------------------------------------------------------------
+  const sendInquiry = asyncHandler(async (req, res) => {
+    const { name, email, phone, message } = req.body;
+    const houseId = req.params.id;
+
+    if (!name || !email || !phone) {
+      res.status(400);
+      throw new Error("Name, email, and phone are required");
+    }
+
+    const house = await House.findById(houseId).populate("user", "name email phone");
+
+    if (!house) {
+      res.status(404);
+      throw new Error("House not found");
+    }
+
+    const seller = house.user;
+
+    if (!seller || !seller.email) {
+      res.status(500);
+      throw new Error("Seller email not found");
+    }
+
+    const inquiryData = {
+      buyerName: name,
+      buyerEmail: email,
+      buyerPhone: phone,
+      message: message || "No message provided",
+      propertyTitle: house.title,
+      propertyPrice: house.price,
+      propertyLocation: `${house.lga}, ${house.state}`,
+    };
+
+    // Use different email templates for sale vs rent
+    if (house.listingType === "rent") {
+      const { sendRentInquiryEmail } = await import("../services/emailService.js");
+      await sendRentInquiryEmail(seller.email, inquiryData);
+    } else {
+      const { sendSaleInquiryEmail } = await import("../services/emailService.js");
+      await sendSaleInquiryEmail(seller.email, inquiryData);
+    }
+
+    res.json({
+      success: true,
+      message: "Inquiry sent successfully! The seller will contact you shortly.",
+    });
+  });
+
   export {
     createHouseListing,
     getHouses,
@@ -749,5 +800,6 @@ const getHouses = asyncHandler(async (req, res) => {
     getLocations,
     searchHouses,
     getFeaturedHouses,
-    getSellerListings,  // Add this
+    getSellerListings,
+    sendInquiry,  // ADD THIS
   };

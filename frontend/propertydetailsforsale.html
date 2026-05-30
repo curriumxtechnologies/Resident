@@ -274,6 +274,7 @@
     </div>
 
     <script type="module">
+      import { getBaseURL } from "./js/apiConfig.js";
       import { getHouseById } from "./slices/houseService.js";
       import { getHouses } from "./slices/houseService.js";
 
@@ -838,12 +839,55 @@
           // Inquiry form
           const inquiryForm = document.getElementById("inquiryForm");
           if (inquiryForm) {
-            inquiryForm.addEventListener("submit", (e) => {
+            inquiryForm.addEventListener("submit", async (e) => {
               e.preventDefault();
-              alert(
-                `Thank you! Your inquiry for ${escapeHtml(house.title || "this property")} has been sent. A sales agent will contact you shortly.`,
+
+              const formData = new FormData(inquiryForm);
+              const name =
+                formData.get("name") ||
+                inquiryForm.querySelector('input[type="text"]').value;
+              const email = inquiryForm.querySelector(
+                'input[type="email"]',
+              ).value;
+              const phone =
+                inquiryForm.querySelector('input[type="tel"]').value;
+              const message =
+                inquiryForm.querySelector("textarea")?.value || "";
+
+              // Disable button and show loading
+              const submitBtn = inquiryForm.querySelector(
+                'button[type="submit"]',
               );
-              inquiryForm.reset();
+              const originalText = submitBtn.innerHTML;
+              submitBtn.disabled = true;
+              submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
+
+              try {
+                const response = await fetch(
+                  `${getBaseURL()}/houses/${house._id}/inquiry`,
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, phone, message }),
+                  },
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                  throw new Error(data.message || "Failed to send inquiry");
+                }
+
+                alert(`✅ ${data.message}`);
+                inquiryForm.reset();
+              } catch (err) {
+                alert(
+                  `❌ ${err.message || "Failed to send inquiry. Please try again."}`,
+                );
+              } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+              }
             });
           }
 
