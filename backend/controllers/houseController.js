@@ -365,10 +365,35 @@ const getHouses = asyncHandler(async (req, res) => {
       throw new Error("Not authorized to delete this listing");
     }
 
-    // Optional: also delete Cloudinary images here using public_id
-    // For brevity we skip actual Cloudinary deletion; you can add later.
+    // Delete images from Cloudinary
+    if (house.images && house.images.length > 0) {
+      const cloudinary = (await import("cloudinary")).v2;
+      for (const image of house.images) {
+        if (image.public_id) {
+          try {
+            await cloudinary.uploader.destroy(image.public_id);
+          } catch (err) {
+            console.warn("Failed to delete image from Cloudinary:", image.public_id);
+          }
+        }
+      }
+    }
 
-    await house.remove();
+    // Delete documents from Cloudinary
+    const docFields = ["proofOfOwnership", "titleDocument", "surveyPlan"];
+    for (const field of docFields) {
+      if (house[field] && house[field].public_id) {
+        try {
+          const cloudinary = (await import("cloudinary")).v2;
+          await cloudinary.uploader.destroy(house[field].public_id);
+        } catch (err) {
+          console.warn(`Failed to delete ${field} from Cloudinary`);
+        }
+      }
+    }
+
+    // Use deleteOne instead of remove() - remove() is deprecated
+    await House.deleteOne({ _id: house._id });
 
     res.json({ success: true, message: "House deleted" });
   });
