@@ -591,6 +591,52 @@ const getHouses = asyncHandler(async (req, res) => {
       });
   });
 
+  // -------------------------------------------------------------------
+  //  READ – GET /api/houses/seller/:sellerId (public, get all listings by a seller)
+  // -------------------------------------------------------------------
+  const getSellerListings = asyncHandler(async (req, res) => {
+    const { sellerId } = req.params;
+    const { status, listingType, page = 1, limit = 12 } = req.query;
+
+    // Build filter
+    const filter = { user: sellerId };
+    
+    // Optional filters
+    if (status) filter.status = status;
+    if (listingType) filter.listingType = listingType;
+
+    // Pagination
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Fetch houses with seller details
+    const houses = await House.find(filter)
+      .populate("user", "name email phone profile verificationBadge sellerType sellerVerified isSuspended")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(Number(limit));
+
+    const total = await House.countDocuments(filter);
+
+    // Get stats for the seller
+    const stats = {
+      totalListings: total,
+      activeListings: await House.countDocuments({ user: sellerId, status: "published" }),
+      soldListings: await House.countDocuments({ user: sellerId, status: { $in: ["sold", "rented"] } }),
+      rentListings: await House.countDocuments({ user: sellerId, listingType: "rent" }),
+      saleListings: await House.countDocuments({ user: sellerId, listingType: "sale" }),
+    };
+
+    res.json({
+      success: true,
+      count: houses.length,
+      total,
+      page: Number(page),
+      pages: Math.ceil(total / Number(limit)),
+      stats,
+      houses,
+    });
+  });
+
   export {
     createHouseListing,
     getHouses,
@@ -601,7 +647,8 @@ const getHouses = asyncHandler(async (req, res) => {
     toggleStatus,
     initiatePayment,
     verifyPayment,
-    getLocations,        // Add this
-    searchHouses,        // Add this
-    getFeaturedHouses,   // Add this
+    getLocations,
+    searchHouses,
+    getFeaturedHouses,
+    getSellerListings,  // Add this
   };

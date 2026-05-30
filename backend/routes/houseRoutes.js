@@ -12,26 +12,28 @@ import {
   toggleStatus,
   initiatePayment,
   verifyPayment,
-  getLocations,        // Add this
-  searchHouses,        // Add this
-  getFeaturedHouses,   // Add this
+  getLocations,
+  searchHouses,
+  getFeaturedHouses,
+  getSellerListings,  // Add this import
 } from "../controllers/houseController.js";
 
 const router = Router();
 
 // Public routes
-router.get("/", getHouses);                   // filtered listings
-router.get("/locations", getLocations);       // NEW: Get states/LGAs
-router.get("/search", searchHouses);          // NEW: Search endpoint
-router.get("/featured", getFeaturedHouses);   // NEW: Featured listings
-router.get("/verify-payment", verifyPayment); // Paystack callback
+router.get("/", getHouses);
+router.get("/locations", getLocations);
+router.get("/search", searchHouses);
+router.get("/featured", getFeaturedHouses);
+router.get("/verify-payment", verifyPayment);
+router.get("/seller/:sellerId", getSellerListings);  // ADD THIS LINE - must be before /:id
 
 // Protected routes
 router.use(protect);
 
-router.post("/", uploadHouseFiles, createHouseListing); // seller upload
-router.get("/my-listings", getMyListings);              // own listings
-router.post("/initiate-payment", initiatePayment);      // Paystack init
+router.post("/", uploadHouseFiles, createHouseListing);
+router.get("/my-listings", getMyListings);
+router.post("/initiate-payment", initiatePayment);
 
 // Routes with :id
 router.get("/:id", getHouseById);
