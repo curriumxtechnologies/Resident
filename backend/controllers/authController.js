@@ -242,11 +242,6 @@ const sendSigninOTP = asyncHandler(async (req, res) => {
     throw new Error("No verified account found with this email");
   }
 
-  if (user.authMethod !== "local") {
-    res.status(400);
-    throw new Error(`Please sign in with ${user.authMethod}`);
-  }
-
   const otp = generateOTP();
   user.otp = otp;
   user.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
