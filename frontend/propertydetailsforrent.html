@@ -173,101 +173,6 @@
       <div id="propertyContent" class="hidden"></div>
     </main>
 
-    <!-- Footer (identical to brand) -->
-    <footer
-      id="footerSection"
-      class="hidden bg-white border-t border-[#eeeef0] pt-12 pb-6 px-5 md:px-8"
-    >
-      <div
-        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
-      >
-        <div class="fade-up">
-          <img
-            src="images/logo.png"
-            alt="Rezident Homes Logo"
-            class="h-8 mb-3"
-            onerror="
-              this.style.display = 'none';
-              this.parentElement.innerHTML +=
-                '<span class=\'text-xl font-black text-primary\'>REZIDENT HOMES</span>';
-            "
-          />
-          <p class="text-xs text-[#444650] max-w-xs">
-            Redefining luxury real estate through precision, trust and
-            uncompromising standard.
-          </p>
-        </div>
-        <div class="fade-up">
-          <h4 class="font-bold text-primary mb-4 text-sm">Discover</h4>
-          <ul class="space-y-2 text-xs">
-            <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Rent Properties</a
-              >
-            </li>
-            <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Buy Properties</a
-              >
-            </li>
-            <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Short-term Leases</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="fade-up">
-          <h4 class="font-bold text-primary mb-4 text-sm">Company</h4>
-          <ul class="space-y-2 text-xs">
-            <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >About Rezident Homes</a
-              >
-            </li>
-            <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Concierge Team</a
-              >
-            </li>
-            <li>
-              <a href="#" class="text-[#444650] hover:text-primary transition"
-                >Careers</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="fade-up">
-          <h4 class="font-bold text-primary mb-4 text-sm">Insights</h4>
-          <p class="text-xs text-[#444650] mb-2">
-            Get early access to new rental listings
-          </p>
-          <div class="flex">
-            <input
-              type="email"
-              placeholder="Email address"
-              class="bg-[#f3f3f6] border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-tertiary"
-            /><button
-              class="bg-[#001c4a] text-white px-4 rounded-r-lg text-xs font-semibold"
-            >
-              Join
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
-        class="max-w-7xl mx-auto pt-8 mt-6 border-t border-[#eeeef0] flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-[#444650]"
-      >
-        <p>© 2025 Rezident Homes, All rights reserved.</p>
-        <div class="flex gap-5">
-          <a href="#" class="hover:text-primary transition">Privacy Policy</a
-          ><a href="#" class="hover:text-primary transition"
-            >Terms of Service</a
-          >
-        </div>
-      </div>
-    </footer>
-
     <script type="module">
       import { getHouseById } from "./slices/houseService.js";
       import { getHouses } from "./slices/houseService.js";
@@ -293,7 +198,6 @@
       const loadingState = document.getElementById("loadingState");
       const errorState = document.getElementById("errorState");
       const propertyContent = document.getElementById("propertyContent");
-      const footerSection = document.getElementById("footerSection");
 
       // ---------- GET PROPERTY ID FROM URL ----------
       const urlParams = new URLSearchParams(window.location.search);
@@ -750,7 +654,6 @@
           propertyContent.innerHTML = html;
           loadingState.classList.add("hidden");
           propertyContent.classList.remove("hidden");
-          footerSection.classList.remove("hidden");
           lucide.createIcons();
 
           // ---------- EVENT LISTENERS (after DOM injection) ----------
