@@ -377,6 +377,16 @@
         return html;
       }
 
+      // Get the correct property details page URL based on listing type
+      function getPropertyDetailsUrl(house) {
+        if (house.listingType === "rent") {
+          return `propertydetailsforrent.html?id=${house._id}`;
+        } else if (house.listingType === "sale") {
+          return `propertydetailsforsale.html?id=${house._id}`;
+        }
+        return `property-details.html?id=${house._id}`;
+      }
+
       // ---------- Fetch seller houses ----------
       async function fetchSellerHouses(sellerId) {
         try {
@@ -397,8 +407,9 @@
       // Render property listing card (small for "latest houses" section)
       function renderSmallHouseCard(house) {
         const image = house.images?.[0]?.url || "images/hero.avif";
+        const detailUrl = getPropertyDetailsUrl(house);
         return `
-          <a href="property-details.html?id=${house._id}" class="property-card block bg-white rounded-xl overflow-hidden shadow-sm border border-outline/10 hover:shadow-md transition">
+          <a href="${detailUrl}" class="property-card block bg-white rounded-xl overflow-hidden shadow-sm border border-outline/10 hover:shadow-md transition">
             <img src="${image}" class="w-full h-40 object-cover" />
             <div class="p-3">
               <h3 class="font-bold text-primary text-sm truncate">${escapeHtml(house.title || "Property")}</h3>

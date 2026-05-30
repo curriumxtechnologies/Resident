@@ -226,6 +226,7 @@
           const galleryImages = house.images || [];
           const features = house.features || [];
           const seller = house.user || {};
+          const sellerId = seller._id || "";
 
           document.title = `${house.title || "Property"} | Rezident Homes`;
 
@@ -604,12 +605,13 @@
                       <i data-lucide="credit-card" class="w-4 h-4"></i>
                     </button>
 
-                    <div class="mt-6 pt-4 border-t border-[#edf0f5]">
+                    <a href="seller-profile.html?id=${sellerId}" class="block mt-6 pt-4 border-t border-[#edf0f5] hover:bg-gray-50 rounded-b-xl transition -mx-2 px-2 -mb-2 pb-2">
                       <div class="flex items-center gap-2 mb-2">
                         <i data-lucide="user-check" class="w-5 h-5 text-tertiary"></i>
                         <span class="text-sm font-bold text-primary"
                           >Leasing Agent</span
                         >
+                        <i data-lucide="external-link" class="w-3 h-3 text-gray-400 ml-auto"></i>
                       </div>
                       <p class="text-xs text-[#4a4f62]">
                         ${escapeHtml(seller.name || "Agent")}: Senior Leasing Consultant
@@ -617,7 +619,8 @@
                       <p class="text-xs text-[#4a4f62] mt-1">
                         ✉️ ${escapeHtml(seller.email || "contact@rezidenthomes.com")} | 📞 ${escapeHtml(seller.phone || "+234 800 000 0000")}
                       </p>
-                    </div>
+                      <p class="text-xs text-tertiary mt-1 font-medium">View full profile →</p>
+                    </a>
                   </div>
                 </div>
               </div>
