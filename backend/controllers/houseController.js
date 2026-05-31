@@ -451,15 +451,16 @@ const initiatePayment = asyncHandler(async (req, res) => {
     throw new Error("House not found");
   }
 
-  // Frontend URL
+  const amountInKobo = Math.round(Number(amount) * 100);
+  
   const frontendUrl = process.env.FRONTEND_URL || "http://127.0.0.1:5501/frontend";
   const callbackUrl = `${frontendUrl}/payment-callback.html`;
 
-  const params = JSON.stringify({
+  const payload = {
     email,
-    amount: Math.round(Number(amount) * 100),
+    amount: amountInKobo,
     metadata: {
-      houseId,
+      houseId: houseId.toString(),
       buyerUserId: req.user ? req.user._id.toString() : null,
       buyerEmail: email,
       paymentPlan: metadata?.paymentPlan || "100%",
@@ -467,7 +468,11 @@ const initiatePayment = asyncHandler(async (req, res) => {
       propertyTitle: metadata?.propertyTitle || house.title,
     },
     callback_url: callbackUrl,
-  });
+  };
+
+  console.log("🔍 Sending to Paystack:", JSON.stringify(payload, null, 2));
+
+  const params = JSON.stringify(payload);
 
   const options = {
     hostname: "api.paystack.co",
@@ -484,21 +489,42 @@ const initiatePayment = asyncHandler(async (req, res) => {
     let data = "";
     paystackRes.on("data", (chunk) => (data += chunk));
     paystackRes.on("end", () => {
-      const response = JSON.parse(data);
-      if (response.status) {
-        res.json({
-          success: true,
-          authorization_url: response.data.authorization_url,
-          reference: response.data.reference,
+      console.log("🔍 Paystack Response:", data);
+      
+      try {
+        const response = JSON.parse(data);
+        
+        if (response.status) {
+          console.log("✅ Payment initialized:", response.data.reference);
+          res.json({
+            success: true,
+            authorization_url: response.data.authorization_url,
+            reference: response.data.reference,
+          });
+        } else {
+          console.error("❌ Paystack Error:", response.message);
+          res.status(400).json({ 
+            success: false, 
+            message: response.message || "Failed to initialize payment" 
+          });
+        }
+      } catch (parseErr) {
+        console.error("❌ Failed to parse Paystack response:", parseErr);
+        console.error("Raw response:", data);
+        res.status(500).json({ 
+          success: false, 
+          message: "Invalid response from payment provider" 
         });
-      } else {
-        res.status(400).json({ success: false, message: response.message });
       }
     });
   });
 
   paystackReq.on("error", (error) => {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("❌ Paystack Request Error:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to connect to payment provider" 
+    });
   });
 
   paystackReq.write(params);
