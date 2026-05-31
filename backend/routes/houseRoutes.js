@@ -17,6 +17,8 @@ import {
   getFeaturedHouses,
   getSellerListings,
   sendInquiry,
+  getMyHouses,        
+  getTransactionById, 
 } from "../controllers/houseController.js";
 
 const router = Router();
@@ -35,9 +37,11 @@ router.use(protect);
 
 router.post("/", uploadHouseFiles, createHouseListing);
 router.get("/my-listings", getMyListings);
+router.get("/my-houses", getMyHouses);           // ← MOVED HERE (before :id routes)
 router.post("/initiate-payment", initiatePayment);
 
-// Routes with :id (must be after specific routes)
+// Routes with :id (must be AFTER specific routes)
+router.get("/transaction/:id", getTransactionById); // ← MOVED HERE
 router.get("/:id", getHouseById);
 router.put("/:id", uploadHouseFiles, updateHouse);
 router.patch("/:id/status", toggleStatus);

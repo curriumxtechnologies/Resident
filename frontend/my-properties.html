@@ -112,6 +112,24 @@
           rgba(0, 0, 0, 0.08) 100%
         );
       }
+
+      .loading-spinner {
+        border: 3px solid rgba(0, 28, 74, 0.1);
+        border-radius: 50%;
+        border-top: 3px solid #001c4a;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
 
@@ -130,16 +148,20 @@
           </a>
 
           <div class="flex items-center gap-3">
-            <span class="hidden md:inline-block text-sm font-bold text-primary">
-              Joshua Sorochi
+            <span
+              id="userNameDisplay"
+              class="hidden md:inline-block text-sm font-bold text-primary"
+            >
+              Loading...
             </span>
 
             <a
               href="profile.html"
+              id="userInitials"
               class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
               aria-label="Profile"
             >
-              JS
+              U
             </a>
           </div>
         </div>
@@ -148,6 +170,7 @@
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
+        <!-- Hero Section -->
         <section
           class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8"
         >
@@ -181,18 +204,29 @@
 
             <div class="grid grid-cols-2 gap-3 text-center">
               <div class="bg-white/10 rounded-2xl px-5 py-4">
-                <p class="text-2xl font-extrabold text-tertiary-fixed">2</p>
+                <p
+                  id="boughtCount"
+                  class="text-2xl font-extrabold text-tertiary-fixed"
+                >
+                  0
+                </p>
                 <p class="text-xs text-white/75 mt-1">Bought</p>
               </div>
 
               <div class="bg-white/10 rounded-2xl px-5 py-4">
-                <p class="text-2xl font-extrabold text-tertiary-fixed">2</p>
+                <p
+                  id="rentedCount"
+                  class="text-2xl font-extrabold text-tertiary-fixed"
+                >
+                  0
+                </p>
                 <p class="text-xs text-white/75 mt-1">Rented</p>
               </div>
             </div>
           </div>
         </section>
 
+        <!-- Filters -->
         <section
           class="bg-white rounded-2xl shadow-sm border border-outline/10 p-4 md:p-5 mb-8"
         >
@@ -208,13 +242,13 @@
               </button>
               <button
                 class="filter-btn bg-surface-container-low text-primary px-4 py-2 rounded-full text-sm font-bold"
-                data-filter="sold"
+                data-filter="purchase"
               >
                 Bought
               </button>
               <button
                 class="filter-btn bg-surface-container-low text-primary px-4 py-2 rounded-full text-sm font-bold"
-                data-filter="rented"
+                data-filter="rental"
               >
                 Rented
               </button>
@@ -235,269 +269,25 @@
           </div>
         </section>
 
+        <!-- Loading State -->
+        <div id="loadingState" class="flex justify-center items-center py-20">
+          <div class="text-center">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-sm text-on-surface-variant">
+              Loading your properties...
+            </p>
+          </div>
+        </div>
+
+        <!-- Property Grid -->
         <section
-          class="grid md:grid-cols-2 lg:grid-cols-3 gap-7"
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 hidden"
           id="propertyGrid"
         >
-          <article
-            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
-            data-status="sold"
-            data-title="The Obsidian Villa"
-          >
-            <img
-              src="images/forsale.avif"
-              alt="The Obsidian Villa"
-              class="w-full h-[390px] object-cover"
-            />
-
-            <div class="absolute top-4 left-4 z-10 flex gap-2">
-              <span
-                class="bg-tertiary-container text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
-              >
-                Sold
-              </span>
-            </div>
-
-            <div class="absolute top-4 right-4 z-10">
-              <span
-                class="bg-white/90 text-primary text-[11px] font-bold px-3 py-1 rounded-full"
-              >
-                Bought
-              </span>
-            </div>
-
-            <div
-              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-            >
-              <h3 class="font-headline text-lg font-bold">
-                The Obsidian Villa
-              </h3>
-              <p class="text-xs text-white/80 mt-1">Lekki Phase 1, Lagos</p>
-
-              <div class="mt-2">
-                <span class="text-white font-bold text-xl">₦245,000,000</span>
-              </div>
-
-              <div class="flex gap-4 mt-3 text-xs text-white/80">
-                <span class="flex items-center gap-1">
-                  <i data-lucide="bed" class="w-4 h-4"></i> 5
-                </span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="bath" class="w-4 h-4"></i> 6
-                </span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="square" class="w-4 h-4"></i> 450m²
-                </span>
-              </div>
-
-              <div class="mt-4 flex items-center justify-between gap-3">
-                <p class="text-[11px] text-white/70">Bought on Apr 12, 2026</p>
-
-                <a
-                  href="propertydetailsforsale.html"
-                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
-                >
-                  View Details
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
-            data-status="rented"
-            data-title="Banana Island Waterfront"
-          >
-            <img
-              src="images/forrent.avif"
-              alt="Banana Island Waterfront"
-              class="w-full h-[390px] object-cover"
-            />
-
-            <div class="absolute top-4 left-4 z-10 flex gap-2">
-              <span
-                class="bg-white/90 text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
-              >
-                Rented
-              </span>
-            </div>
-
-            <div class="absolute top-4 right-4 z-10">
-              <span
-                class="bg-tertiary-container text-primary text-[11px] font-bold px-3 py-1 rounded-full"
-              >
-                Active Lease
-              </span>
-            </div>
-
-            <div
-              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-            >
-              <h3 class="font-headline text-lg font-bold">
-                Banana Island Waterfront
-              </h3>
-              <p class="text-xs text-white/80 mt-1">Banana Island, Lagos</p>
-
-              <div class="mt-2">
-                <span class="text-white font-bold text-xl">
-                  ₦7,000,000/year
-                </span>
-              </div>
-
-              <div class="flex gap-4 mt-3 text-xs text-white/80">
-                <span class="flex items-center gap-1">
-                  <i data-lucide="bed" class="w-4 h-4"></i> 4
-                </span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="bath" class="w-4 h-4"></i> 4.5
-                </span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="square" class="w-4 h-4"></i> 350m²
-                </span>
-              </div>
-
-              <div class="mt-4 flex items-center justify-between gap-3">
-                <p class="text-[11px] text-white/70">Rented on Mar 20, 2026</p>
-
-                <a
-                  href="propertydetailsforrent.html"
-                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
-                >
-                  View Details
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
-            data-status="sold"
-            data-title="Skyline Penthouse"
-          >
-            <img
-              src="images/hero.avif"
-              alt="Skyline Penthouse"
-              class="w-full h-[390px] object-cover"
-            />
-
-            <div class="absolute top-4 left-4 z-10 flex gap-2">
-              <span
-                class="bg-tertiary-container text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
-              >
-                Sold
-              </span>
-            </div>
-
-            <div class="absolute top-4 right-4 z-10">
-              <span
-                class="bg-white/90 text-primary text-[11px] font-bold px-3 py-1 rounded-full"
-              >
-                Bought
-              </span>
-            </div>
-
-            <div
-              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-            >
-              <h3 class="font-headline text-lg font-bold">Skyline Penthouse</h3>
-              <p class="text-xs text-white/80 mt-1">Maitama, Abuja</p>
-
-              <div class="mt-2">
-                <span class="text-white font-bold text-xl">₦180,000,000</span>
-              </div>
-
-              <div class="flex gap-4 mt-3 text-xs text-white/80">
-                <span class="flex items-center gap-1">
-                  <i data-lucide="bed" class="w-4 h-4"></i> 3
-                </span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="bath" class="w-4 h-4"></i> 4
-                </span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="square" class="w-4 h-4"></i> 320m²
-                </span>
-              </div>
-
-              <div class="mt-4 flex items-center justify-between gap-3">
-                <p class="text-[11px] text-white/70">Bought on Jan 08, 2026</p>
-
-                <a
-                  href="propertydetailsforsale.html"
-                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
-                >
-                  View Details
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
-            data-status="rented"
-            data-title="Palm Grove Apartment"
-          >
-            <img
-              src="images/forrent.avif"
-              alt="Palm Grove Apartment"
-              class="w-full h-[390px] object-cover"
-            />
-
-            <div class="absolute top-4 left-4 z-10 flex gap-2">
-              <span
-                class="bg-white/90 text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
-              >
-                Rented
-              </span>
-            </div>
-
-            <div class="absolute top-4 right-4 z-10">
-              <span
-                class="bg-tertiary-container text-primary text-[11px] font-bold px-3 py-1 rounded-full"
-              >
-                Active Lease
-              </span>
-            </div>
-
-            <div
-              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
-            >
-              <h3 class="font-headline text-lg font-bold">
-                Palm Grove Apartment
-              </h3>
-              <p class="text-xs text-white/80 mt-1">Ikoyi, Lagos</p>
-
-              <div class="mt-2">
-                <span class="text-white font-bold text-xl">
-                  ₦8,000,000/year
-                </span>
-              </div>
-
-              <div class="flex gap-4 mt-3 text-xs text-white/80">
-                <span class="flex items-center gap-1">
-                  <i data-lucide="bed" class="w-4 h-4"></i> 3
-                </span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="bath" class="w-4 h-4"></i> 3
-                </span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="square" class="w-4 h-4"></i> 250m²
-                </span>
-              </div>
-
-              <div class="mt-4 flex items-center justify-between gap-3">
-                <p class="text-[11px] text-white/70">Rented on Feb 18, 2026</p>
-
-                <a
-                  href="propertydetailsforrent.html"
-                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
-                >
-                  View Details
-                </a>
-              </div>
-            </div>
-          </article>
+          <!-- Properties will be dynamically inserted here -->
         </section>
 
+        <!-- Empty State -->
         <section
           id="emptyState"
           class="hidden bg-white rounded-2xl shadow-sm border border-outline/10 p-10 text-center mt-8"
@@ -516,52 +306,280 @@
             Try another search or change the selected filter.
           </p>
         </section>
+
+        <!-- Error State -->
+        <section
+          id="errorState"
+          class="hidden bg-red-50 rounded-2xl shadow-sm border border-red-200 p-10 text-center mt-8"
+        >
+          <div
+            class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <i data-lucide="alert-circle" class="w-7 h-7"></i>
+          </div>
+
+          <h2 class="font-headline text-2xl font-extrabold text-red-700">
+            Something went wrong
+          </h2>
+
+          <p id="errorMessage" class="text-sm text-red-600 mt-2">
+            Failed to load your properties. Please try again.
+          </p>
+
+          <button
+            onclick="fetchUserHouses()"
+            class="mt-4 bg-red-600 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-red-700 transition"
+          >
+            Try Again
+          </button>
+        </section>
       </div>
     </main>
 
-    <script>
-      lucide.createIcons();
+    <script type="module">
+      import { getStoredUser, getStoredToken } from "./js/tokenStorage.js";
+      import { getBaseURL } from "./js/apiConfig.js";
 
-      const filterButtons = document.querySelectorAll(".filter-btn");
-      const items = document.querySelectorAll(".property-item");
-      const searchInput = document.getElementById("searchInput");
-      const emptyState = document.getElementById("emptyState");
-
+      let allTransactions = [];
       let currentFilter = "all";
 
-      function updateCards() {
-        const searchValue = searchInput.value.trim().toLowerCase();
-        let visibleCount = 0;
+      // Format price
+      function formatPrice(price) {
+        return new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(price);
+      }
 
-        items.forEach((item) => {
-          const status = item.dataset.status;
-          const title = item.dataset.title.toLowerCase();
+      // Format date
+      function formatDate(dateString) {
+        const options = { year: "numeric", month: "short", day: "numeric" };
+        return new Date(dateString).toLocaleDateString("en-US", options);
+      }
 
-          const matchesFilter =
-            currentFilter === "all" || status === currentFilter;
+      // Fetch user's houses
+      async function fetchUserHouses() {
+        const token = getStoredToken();
 
-          const matchesSearch = title.includes(searchValue);
+        if (!token) {
+          // Redirect to login if not authenticated
+          window.location.href = "login.html";
+          return;
+        }
 
-          if (matchesFilter && matchesSearch) {
-            item.classList.remove("hidden");
-            visibleCount++;
-          } else {
-            item.classList.add("hidden");
+        document.getElementById("loadingState").classList.remove("hidden");
+        document.getElementById("propertyGrid").classList.add("hidden");
+        document.getElementById("emptyState").classList.add("hidden");
+        document.getElementById("errorState").classList.add("hidden");
+
+        try {
+          const response = await fetch(`${getBaseURL()}/houses/my-houses`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!response.ok) {
+            if (response.status === 401) {
+              // Token expired or invalid
+              localStorage.removeItem("auth_token");
+              localStorage.removeItem("user");
+              window.location.href = "login.html";
+              return;
+            }
+            throw new Error("Failed to fetch houses");
           }
-        });
 
-        if (visibleCount === 0) {
-          emptyState.classList.remove("hidden");
-        } else {
-          emptyState.classList.add("hidden");
+          const data = await response.json();
+
+          if (data.success) {
+            allTransactions = data.transactions || [];
+
+            // Update summary counts
+            document.getElementById("boughtCount").textContent =
+              data.summary.bought || 0;
+            document.getElementById("rentedCount").textContent =
+              data.summary.rented || 0;
+
+            renderProperties();
+          }
+        } catch (error) {
+          console.error("Error fetching houses:", error);
+          document.getElementById("errorMessage").textContent = error.message;
+          document.getElementById("errorState").classList.remove("hidden");
+        } finally {
+          document.getElementById("loadingState").classList.add("hidden");
         }
       }
 
-      filterButtons.forEach((button) => {
+      // Update user display
+      function updateUserDisplay() {
+        const user = getStoredUser();
+        if (user && user.name) {
+          document.getElementById("userNameDisplay").textContent = user.name;
+          const initials = user.name
+            .split(" ")
+            .map((n) => n[0])
+            .join("")
+            .toUpperCase()
+            .substring(0, 2);
+          document.getElementById("userInitials").textContent = initials;
+        } else {
+          document.getElementById("userNameDisplay").textContent = "Guest";
+          document.getElementById("userInitials").textContent = "U";
+        }
+      }
+
+      // Create property card HTML
+      function createPropertyCard(transaction) {
+        const house = transaction.house;
+        if (!house) return "";
+
+        const isPurchase = transaction.type === "purchase";
+        const imageUrl =
+          house.images && house.images.length > 0
+            ? house.images[0].url
+            : "images/hero.avif";
+
+        const statusBadge = isPurchase ? "Sold" : "Rented";
+        const statusLabel = isPurchase ? "Bought" : "Active Lease";
+        const dateLabel = isPurchase ? "Bought on" : "Rented on";
+        const detailLink = isPurchase
+          ? "propertydetailsforsale.html"
+          : "propertydetailsforrent.html";
+        const priceLabel = isPurchase
+          ? formatPrice(house.price)
+          : `${formatPrice(house.price)}/year`;
+
+        return `
+          <article
+            class="property-card property-item relative overflow-hidden shadow-lg bg-white"
+            data-status="${transaction.type}"
+            data-title="${house.title.toLowerCase()}"
+          >
+            <img
+              src="${imageUrl}"
+              alt="${house.title}"
+              class="w-full h-[390px] object-cover"
+              onerror="this.src='images/hero.avif'"
+            />
+
+            <div class="absolute top-4 left-4 z-10 flex gap-2">
+              <span
+                class="${isPurchase ? "bg-tertiary-container" : "bg-white/90"} text-primary text-[11px] font-extrabold px-3 py-1 rounded-full shadow-sm"
+              >
+                ${statusBadge}
+              </span>
+            </div>
+
+            <div class="absolute top-4 right-4 z-10">
+              <span
+                class="${isPurchase ? "bg-white/90" : "bg-tertiary-container"} text-primary text-[11px] font-bold px-3 py-1 rounded-full"
+              >
+                ${statusLabel}
+              </span>
+            </div>
+
+            <div
+              class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay"
+            >
+              <h3 class="font-headline text-lg font-bold">
+                ${house.title}
+              </h3>
+              <p class="text-xs text-white/80 mt-1">${house.address || `${house.lga}, ${house.state}`}</p>
+
+              <div class="mt-2">
+                <span class="text-white font-bold text-xl">${priceLabel}</span>
+              </div>
+
+              <div class="flex gap-4 mt-3 text-xs text-white/80">
+                ${
+                  house.bedrooms
+                    ? `
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bed" class="w-4 h-4"></i> ${house.bedrooms}
+                </span>`
+                    : ""
+                }
+                ${
+                  house.bathrooms
+                    ? `
+                <span class="flex items-center gap-1">
+                  <i data-lucide="bath" class="w-4 h-4"></i> ${house.bathrooms}
+                </span>`
+                    : ""
+                }
+                ${
+                  house.size
+                    ? `
+                <span class="flex items-center gap-1">
+                  <i data-lucide="square" class="w-4 h-4"></i> ${house.size}m²
+                </span>`
+                    : ""
+                }
+              </div>
+
+              <div class="mt-4 flex items-center justify-between gap-3">
+                <p class="text-[11px] text-white/70">${dateLabel} ${formatDate(transaction.paymentDate || transaction.createdAt)}</p>
+
+                <a
+                  href="${detailLink}?id=${house._id}"
+                  class="bg-white/15 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-white hover:text-primary transition"
+                >
+                  View Details
+                </a>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      // Render properties with filters
+      function renderProperties() {
+        const grid = document.getElementById("propertyGrid");
+        const emptyState = document.getElementById("emptyState");
+        const searchValue = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+
+        let filteredTransactions = allTransactions;
+
+        // Apply type filter
+        if (currentFilter !== "all") {
+          filteredTransactions = filteredTransactions.filter(
+            (t) => t.type === currentFilter,
+          );
+        }
+
+        // Apply search filter
+        if (searchValue) {
+          filteredTransactions = filteredTransactions.filter(
+            (t) => t.house && t.house.title.toLowerCase().includes(searchValue),
+          );
+        }
+
+        if (filteredTransactions.length === 0) {
+          grid.classList.add("hidden");
+          emptyState.classList.remove("hidden");
+        } else {
+          emptyState.classList.add("hidden");
+          grid.classList.remove("hidden");
+          grid.innerHTML = filteredTransactions
+            .map((t) => createPropertyCard(t))
+            .join("");
+          lucide.createIcons();
+        }
+      }
+
+      // Filter button handlers
+      document.querySelectorAll(".filter-btn").forEach((button) => {
         button.addEventListener("click", () => {
           currentFilter = button.dataset.filter;
 
-          filterButtons.forEach((btn) => {
+          document.querySelectorAll(".filter-btn").forEach((btn) => {
             btn.classList.remove("bg-primary", "text-white");
             btn.classList.add("bg-surface-container-low", "text-primary");
           });
@@ -569,11 +587,21 @@
           button.classList.add("bg-primary", "text-white");
           button.classList.remove("bg-surface-container-low", "text-primary");
 
-          updateCards();
+          renderProperties();
         });
       });
 
-      searchInput.addEventListener("input", updateCards);
+      // Search handler
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", renderProperties);
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+        updateUserDisplay();
+        fetchUserHouses();
+      });
     </script>
   </body>
 </html>

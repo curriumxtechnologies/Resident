@@ -1,7 +1,8 @@
   import asyncHandler from "express-async-handler";
   import House from "../models/houseModel.js";
   import https from "https";
-import User from "../models/userModel.js";
+  import User from "../models/userModel.js";
+  import Transaction from "../models/transactionModel.js";
 
   // -------------------------------------------------------------------
   //  CREATE – POST /api/houses
@@ -669,19 +670,40 @@ const getHouses = asyncHandler(async (req, res) => {
       .get(options, (paystackRes) => {
         let data = "";
         paystackRes.on("data", (chunk) => (data += chunk));
-        paystackRes.on("end", () => {
+        paystackRes.on("end", async () => {
           const response = JSON.parse(data);
           if (response.status && response.data.status === "success") {
-            // Payment successful – you can update House status or create an order record here
+            try {
+              const metadata = response.data.metadata;
+              const house = await House.findById(metadata.houseId);
+              
+              if (house && req.user) {
+                // Create transaction record
+                const transaction = await Transaction.create({
+                  user: req.user._id,
+                  house: house._id,
+                  type: house.listingType === "sale" ? "purchase" : "rental",
+                  amount: response.data.amount / 100,
+                  reference: reference,
+                  status: "completed",
+                  paymentDate: new Date(),
+                });
+
+                // Update house status
+                house.status = house.listingType === "sale" ? "sold" : "rented";
+                await house.save();
+              }
+            } catch (error) {
+              console.error("Transaction creation error:", error);
+            }
+            
             res.json({ success: true, data: response.data });
           } else {
-            res
-              .status(400)
-              .json({
-                success: false,
-                message: "Payment verification failed",
-                data: response.data,
-              });
+            res.status(400).json({
+              success: false,
+              message: "Payment verification failed",
+              data: response.data,
+            });
           }
         });
       })
@@ -787,6 +809,99 @@ const getHouses = asyncHandler(async (req, res) => {
     });
   });
 
+  // -------------------------------------------------------------------
+  //  GET USER'S HOUSES (bought/rented) – GET /api/houses/my-houses
+  // -------------------------------------------------------------------
+  const getMyHouses = asyncHandler(async (req, res) => {
+    const { type, page = 1, limit = 10 } = req.query;
+
+    const filter = { 
+      user: req.user._id,
+      status: "completed"
+    };
+
+    if (type && ["purchase", "rental"].includes(type)) {
+      filter.type = type;
+    }
+
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const transactions = await Transaction.find(filter)
+      .populate({
+        path: "house",
+        populate: {
+          path: "user",
+          select: "name email phone profile verificationBadge"
+        }
+      })
+      .sort("-createdAt")
+      .skip(skip)
+      .limit(Number(limit));
+
+    const total = await Transaction.countDocuments(filter);
+
+    // Get counts for summary
+    const totalBought = await Transaction.countDocuments({
+      user: req.user._id,
+      type: "purchase",
+      status: "completed"
+    });
+
+    const totalRented = await Transaction.countDocuments({
+      user: req.user._id,
+      type: "rental",
+      status: "completed"
+    });
+
+    res.json({
+      success: true,
+      count: transactions.length,
+      total,
+      page: Number(page),
+      pages: Math.ceil(total / Number(limit)),
+      summary: {
+        bought: totalBought,
+        rented: totalRented,
+        total: totalBought + totalRented
+      },
+      transactions,
+    });
+  });
+
+  // -------------------------------------------------------------------
+  //  GET SINGLE TRANSACTION – GET /api/houses/transaction/:id
+  // -------------------------------------------------------------------
+  const getTransactionById = asyncHandler(async (req, res) => {
+    const transaction = await Transaction.findById(req.params.id)
+      .populate({
+        path: "house",
+        populate: {
+          path: "user",
+          select: "name email phone profile verificationBadge"
+        }
+      });
+
+    if (!transaction) {
+      res.status(404);
+      throw new Error("Transaction not found");
+    }
+
+    // Only the buyer or admin can view
+    if (
+      transaction.user.toString() !== req.user._id.toString() &&
+      req.user.role !== "admin"
+    ) {
+      res.status(403);
+      throw new Error("Not authorized");
+    }
+
+    res.json({
+      success: true,
+      transaction,
+    });
+  });
+
+  // Update the export list to include new functions
   export {
     createHouseListing,
     getHouses,
@@ -801,5 +916,7 @@ const getHouses = asyncHandler(async (req, res) => {
     searchHouses,
     getFeaturedHouses,
     getSellerListings,
-    sendInquiry,  // ADD THIS
+    sendInquiry,
+    getMyHouses,        // ADD THIS
+    getTransactionById, // ADD THIS
   };
