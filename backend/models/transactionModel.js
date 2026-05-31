@@ -21,6 +21,17 @@ const transactionSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    paymentPlan: {
+      type: String,
+      enum: ["30%", "50%", "100%"],
+    },
+    remainingBalance: {
+      type: Number,
+      default: 0,
+    },
+    fullPrice: {
+      type: Number,
+    },
     reference: {
       type: String,
       required: true,

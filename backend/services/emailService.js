@@ -4,8 +4,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Send an OTP email
- * @param {string} to - recipient email
- * @param {string} otp - 6-digit code
  */
 export const sendOTPEmail = async (to, otp) => {
   const html = `
@@ -126,6 +124,83 @@ export const sendRentInquiryEmail = async (sellerEmail, inquiryData) => {
     if (error) {
       console.error("Resend error:", error);
       throw new Error("Failed to send inquiry email");
+    }
+
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Send payment receipt email to buyer
+ */
+export const sendReceiptEmail = async (email, receiptData) => {
+  const {
+    receiptNumber,
+    buyerName,
+    propertyTitle,
+    propertyLocation,
+    amountPaid,
+    paymentPlan,
+    remainingBalance,
+    fullPrice,
+    date,
+  } = receiptData;
+
+  const remainingText = remainingBalance > 0 
+    ? `<p style="color: #e53e3e; font-weight: bold;">Remaining Balance: ₦${remainingBalance.toLocaleString()} (${Math.round((remainingBalance / fullPrice) * 100)}% remaining)</p>`
+    : `<p style="color: #38a169; font-weight: bold;">FULL PAYMENT MADE</p>`;
+
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 40px auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06);">
+      <div style="background: #001c4a; padding: 24px 28px; text-align: center;">
+        <h1 style="color: #fff; font-size: 20px; margin: 0;">REZIDENT HOMES</h1>
+        <p style="color: #c5aa23; font-size: 12px; margin: 4px 0 0;">Payment Receipt</p>
+      </div>
+      <div style="padding: 28px;">
+        <div style="background: #f9f9fc; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+          <p style="margin: 0 0 4px;"><strong>Receipt No:</strong> ${receiptNumber}</p>
+          <p style="margin: 0;"><strong>Date:</strong> ${new Date(date).toLocaleDateString("en-NG", { year: "numeric", month: "long", day: "numeric" })}</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <h3 style="color: #001c4a; font-size: 14px; margin: 0 0 8px;">Buyer Information</h3>
+          <p style="margin: 0;"><strong>Name:</strong> ${buyerName}</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <h3 style="color: #001c4a; font-size: 14px; margin: 0 0 8px;">Property Details</h3>
+          <p style="margin: 0 0 4px;"><strong>Property:</strong> ${propertyTitle}</p>
+          <p style="margin: 0;"><strong>Location:</strong> ${propertyLocation}</p>
+        </div>
+        
+        <div style="background: #f9f9fc; padding: 16px; border-radius: 8px;">
+          <h3 style="color: #001c4a; font-size: 14px; margin: 0 0 8px;">Payment Summary</h3>
+          <p style="margin: 0 0 4px;"><strong>Payment Plan:</strong> ${paymentPlan}</p>
+          <p style="margin: 0 0 4px;"><strong>Full Price:</strong> ₦${fullPrice.toLocaleString()}</p>
+          <p style="margin: 0 0 4px;"><strong>Amount Paid:</strong> ₦${amountPaid.toLocaleString()}</p>
+          ${remainingText}
+        </div>
+      </div>
+      <div style="background: #f9f9fc; padding: 16px 28px; text-align: center; border-top: 1px solid #eee;">
+        <p style="color: #999; font-size: 11px; margin: 0;">This is a computer-generated receipt.</p>
+        <p style="color: #999; font-size: 11px; margin: 4px 0 0;">For inquiries: support@rezidenthomes.com | +234 800 000 0000</p>
+      </div>
+    </div>
+  `;
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "RezidentHomes <receipts@rezidenthomes.com>",
+      to: email,
+      subject: `Payment Receipt - ${propertyTitle} - ${receiptNumber}`,
+      html,
+    });
+
+    if (error) {
+      console.error("Resend error:", error);
+      throw new Error("Failed to send receipt email");
     }
 
     return data;

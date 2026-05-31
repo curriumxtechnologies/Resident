@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Status | Rezident Homes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              tertiary: "#c5aa23",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+    <div id="loadingState" class="text-center">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-tertiary mx-auto mb-4"
+      ></div>
+      <p class="text-gray-600">Verifying your payment...</p>
+    </div>
+
+    <div
+      id="successState"
+      class="hidden bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center"
+    >
+      <div
+        class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
+      >
+        <svg
+          class="w-8 h-8 text-green-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          ></path>
+        </svg>
+      </div>
+      <h2 class="text-2xl font-bold text-primary mb-2">Payment Successful!</h2>
+      <p class="text-gray-600 mb-4" id="paymentMessage"></p>
+
+      <div
+        id="receiptInfo"
+        class="bg-gray-50 rounded-lg p-4 mb-6 text-left text-sm"
+      >
+        <p><strong>Receipt No:</strong> <span id="receiptNumber">-</span></p>
+        <p><strong>Amount Paid:</strong> <span id="amountPaid">-</span></p>
+        <p><strong>Payment Plan:</strong> <span id="paymentPlan">-</span></p>
+        <p>
+          <strong>Remaining:</strong>
+          <span id="remainingBalance" class="font-bold">-</span>
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <a
+          id="downloadReceiptBtn"
+          href="#"
+          class="block w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-opacity-90 transition"
+        >
+          Download Receipt
+        </a>
+        <a
+          href="my-properties.html"
+          class="block w-full bg-tertiary text-primary py-3 rounded-xl font-bold hover:bg-yellow-400 transition"
+        >
+          View My Properties
+        </a>
+      </div>
+    </div>
+
+    <div
+      id="errorState"
+      class="hidden bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center"
+    >
+      <div
+        class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"
+      >
+        <svg
+          class="w-8 h-8 text-red-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </div>
+      <h2 class="text-2xl font-bold text-red-700 mb-2">Payment Failed</h2>
+      <p class="text-gray-600 mb-6">
+        Something went wrong with your payment. Please try again.
+      </p>
+      <button
+        onclick="window.history.back()"
+        class="w-full bg-primary text-white py-3 rounded-xl font-bold"
+      >
+        Go Back
+      </button>
+    </div>
+
+    <script>
+      import { getBaseURL } from "./js/apiConfig.js";
+      import { getStoredToken } from "./js/tokenStorage.js";
+
+      const API_BASE_URL = getBaseURL();
+      const urlParams = new URLSearchParams(window.location.search);
+      const reference = urlParams.get("reference") || urlParams.get("trxref");
+
+      async function verifyPayment() {
+        if (!reference) {
+          showError();
+          return;
+        }
+
+        const token = getStoredToken();
+
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/houses/verify-payment?reference=${reference}`,
+            {
+              headers: token ? { Authorization: `Bearer ${token}` } : {},
+            },
+          );
+
+          const data = await response.json();
+
+          if (data.success) {
+            showSuccess(data.data);
+          } else {
+            showError();
+          }
+        } catch (err) {
+          console.error("Verification error:", err);
+          showError();
+        }
+      }
+
+      function showSuccess(data) {
+        document.getElementById("loadingState").classList.add("hidden");
+        document.getElementById("successState").classList.remove("hidden");
+
+        const receipt = data.receipt;
+        if (receipt) {
+          document.getElementById("receiptNumber").textContent =
+            receipt.receiptNumber;
+          document.getElementById("amountPaid").textContent =
+            `₦${receipt.amount.toLocaleString()}`;
+          document.getElementById("paymentPlan").textContent =
+            receipt.paymentPlan;
+
+          if (receipt.remainingBalance > 0) {
+            document.getElementById("remainingBalance").textContent =
+              `₦${receipt.remainingBalance.toLocaleString()} (${Math.round((receipt.remainingBalance / receipt.fullPrice) * 100)}% remaining)`;
+            document.getElementById("remainingBalance").style.color = "#e53e3e";
+            document.getElementById("paymentMessage").textContent =
+              `You've paid ${receipt.paymentPlan} of the total price.`;
+          } else {
+            document.getElementById("remainingBalance").textContent =
+              "FULL PAYMENT MADE ✓";
+            document.getElementById("remainingBalance").style.color = "#38a169";
+            document.getElementById("paymentMessage").textContent =
+              "Full payment received! Property ownership transfer will be processed.";
+          }
+
+          document.getElementById("downloadReceiptBtn").href =
+            `${API_BASE_URL}/houses/receipt/${receipt._id}/download?token=${localStorage.getItem("auth_token") || ""}`;
+        }
+      }
+
+      function showError() {
+        document.getElementById("loadingState").classList.add("hidden");
+        document.getElementById("errorState").classList.remove("hidden");
+      }
+
+      verifyPayment();
+    </script>
+  </body>
+</html>

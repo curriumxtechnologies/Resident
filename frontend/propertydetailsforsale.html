@@ -215,24 +215,25 @@
       />
     </div>
 
-    <!-- Simple Payment Confirmation Modal -->
+    <!-- Replace the Payment Modal section with this -->
     <div
       id="paymentModal"
       class="modal"
       style="background-color: rgba(0, 0, 0, 0.8); z-index: 1100"
     >
       <div
-        class="bg-white rounded-2xl max-w-md w-full p-6 relative mx-4"
+        class="bg-white rounded-2xl max-w-md w-full p-6 relative mx-4 max-h-[90vh] overflow-y-auto"
         style="animation: fadeIn 0.2s ease"
         onclick="event.stopPropagation()"
       >
         <button
           onclick="closePaymentModal()"
-          class="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-2xl"
+          class="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-2xl leading-none"
         >
           &times;
         </button>
-        <div class="text-center mb-4">
+
+        <div class="text-center mb-4 mt-2">
           <div
             class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3"
           >
@@ -242,30 +243,97 @@
             Secure Payment Portal
           </h3>
           <p class="text-sm text-gray-500 mt-1">
-            You're about to reserve this property
+            Choose your preferred payment plan
           </p>
         </div>
+
         <div
           id="paymentPropertyDetails"
           class="bg-gray-50 p-3 rounded-lg text-sm mb-4"
         ></div>
+
+        <!-- Payment Plan Selection -->
+        <div class="space-y-3 mb-4">
+          <label class="block text-xs font-bold text-primary mb-2"
+            >Select Payment Plan</label
+          >
+
+          <label
+            class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition payment-plan-option"
+          >
+            <input
+              type="radio"
+              name="paymentPlan"
+              value="30"
+              class="accent-tertiary w-4 h-4"
+            />
+            <div class="flex-1">
+              <span class="font-semibold text-sm text-primary"
+                >30% Initial Payment</span
+              >
+              <p class="text-xs text-gray-500" id="plan30Amount">₦0</p>
+            </div>
+          </label>
+
+          <label
+            class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition payment-plan-option"
+          >
+            <input
+              type="radio"
+              name="paymentPlan"
+              value="50"
+              class="accent-tertiary w-4 h-4"
+            />
+            <div class="flex-1">
+              <span class="font-semibold text-sm text-primary"
+                >50% Initial Payment</span
+              >
+              <p class="text-xs text-gray-500" id="plan50Amount">₦0</p>
+            </div>
+          </label>
+
+          <label
+            class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition payment-plan-option"
+          >
+            <input
+              type="radio"
+              name="paymentPlan"
+              value="100"
+              class="accent-tertiary w-4 h-4"
+              checked
+            />
+            <div class="flex-1">
+              <span class="font-semibold text-sm text-primary"
+                >Full Payment</span
+              >
+              <p class="text-xs text-gray-500" id="plan100Amount">₦0</p>
+            </div>
+          </label>
+        </div>
+
         <div class="space-y-3">
-          <div class="flex justify-between text-sm font-medium">
-            <span>Total Amount (Reservation fee)</span>
+          <div
+            class="flex justify-between text-sm font-medium bg-gray-50 p-3 rounded-lg"
+          >
+            <span>Amount to Pay Now</span>
             <span class="font-bold text-primary" id="paymentAmount">₦0</span>
           </div>
+
           <p class="text-[11px] text-gray-400 text-center">
-            *Refundable holding deposit to secure viewing & due diligence
+            *Secure payment powered by Paystack. Your payment information is
+            encrypted.
           </p>
+
           <button
             id="confirmPaymentBtn"
-            class="w-full bg-[#c5aa23] hover:bg-[#b3971a] text-[#001c4a] font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm"
+            class="w-full bg-[#c5aa23] hover:bg-[#b3971a] text-[#001c4a] font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <i data-lucide="lock" class="w-4 h-4"></i> Pay with Card / Transfer
           </button>
+
           <button
             onclick="closePaymentModal()"
-            class="w-full text-gray-500 text-sm py-2"
+            class="w-full text-gray-500 text-sm py-2 hover:text-gray-700"
           >
             Cancel
           </button>
@@ -331,63 +399,219 @@
         if (modal) modal.classList.remove("active");
       }
 
+      // In your script section, replace the payment modal functions:
+
       // ---------- PAYMENT MODAL ----------
+      let currentHouseForPayment = null;
+
       function openPaymentModal(house) {
+        currentHouseForPayment = house;
         const modal = document.getElementById("paymentModal");
         const detailsContainer = document.getElementById(
           "paymentPropertyDetails",
         );
         const amountSpan = document.getElementById("paymentAmount");
+
         if (!modal || !detailsContainer) return;
 
-        const reservationFee = Math.round((house.price || 0) * 0.02);
-        const formattedFee = formatNaira(reservationFee);
-        amountSpan.innerText = formattedFee;
+        const fullPrice = house.price || 0;
+        const plan30 = Math.round(fullPrice * 0.3);
+        const plan50 = Math.round(fullPrice * 0.5);
+        const plan100 = fullPrice;
 
+        // Update plan amounts
+        document.getElementById("plan30Amount").textContent =
+          formatNaira(plan30);
+        document.getElementById("plan50Amount").textContent =
+          formatNaira(plan50);
+        document.getElementById("plan100Amount").textContent =
+          formatNaira(plan100);
+
+        // Set full payment as default
+        amountSpan.textContent = formatNaira(plan100);
+        document.querySelector('input[value="100"]').checked = true;
+
+        // Property details
         detailsContainer.innerHTML = `
-          <div class="flex justify-between items-center border-b pb-2 mb-2">
-            <span class="font-semibold text-sm">Property:</span>
-            <span class="text-right text-sm">${escapeHtml(house.title || "Property")}</span>
-          </div>
-          <div class="flex justify-between items-center text-xs text-gray-600">
-            <span>Location:</span>
-            <span>${escapeHtml(house.lga || "")}, ${escapeHtml(house.state || "")}</span>
-          </div>
-          <div class="flex justify-between items-center text-xs text-gray-600 mt-1">
-            <span>Full price:</span>
-            <span>${formatNaira(house.price)}</span>
-          </div>
-          <div class="flex justify-between items-center text-xs font-medium text-tertiary mt-2 pt-1 border-t">
-            <span>Reservation deposit (2%):</span>
-            <span>${formattedFee}</span>
-          </div>
-        `;
+    <div class="flex justify-between items-center border-b pb-2 mb-2">
+      <span class="font-semibold text-sm">Property:</span>
+      <span class="text-right text-sm">${escapeHtml(house.title || "Property")}</span>
+    </div>
+    <div class="flex justify-between items-center text-xs text-gray-600">
+      <span>Location:</span>
+      <span>${escapeHtml(house.lga || "")}, ${escapeHtml(house.state || "")}</span>
+    </div>
+    <div class="flex justify-between items-center text-xs text-gray-600 mt-1">
+      <span>Full price:</span>
+      <span>${formatNaira(fullPrice)}</span>
+    </div>
+  `;
 
+        // Show modal
         modal.classList.add("active");
+
+        // Update icons
         setTimeout(() => {
           if (window.lucide) lucide.createIcons();
         }, 50);
+
+        // Add event listeners to plan options
+        document
+          .querySelectorAll('input[name="paymentPlan"]')
+          .forEach((radio) => {
+            radio.addEventListener("change", updatePaymentAmount);
+          });
+
+        // Highlight selected plan
+        document.querySelectorAll(".payment-plan-option").forEach((label) => {
+          label.addEventListener("click", function () {
+            document.querySelectorAll(".payment-plan-option").forEach((l) => {
+              l.style.borderColor = "#e5e7eb";
+              l.style.backgroundColor = "white";
+            });
+            this.style.borderColor = "#c5aa23";
+            this.style.backgroundColor = "#fefce8";
+          });
+        });
+
+        // Highlight default selection
+        const defaultPlan = document
+          .querySelector('input[value="100"]')
+          .closest(".payment-plan-option");
+        if (defaultPlan) {
+          defaultPlan.style.borderColor = "#c5aa23";
+          defaultPlan.style.backgroundColor = "#fefce8";
+        }
+      }
+
+      function updatePaymentAmount() {
+        const selectedPlan = document.querySelector(
+          'input[name="paymentPlan"]:checked',
+        );
+        if (!selectedPlan || !currentHouseForPayment) return;
+
+        const percentage = parseInt(selectedPlan.value);
+        const amount = Math.round(
+          (currentHouseForPayment.price || 0) * (percentage / 100),
+        );
+        document.getElementById("paymentAmount").textContent =
+          formatNaira(amount);
       }
 
       function closePaymentModal() {
         const modal = document.getElementById("paymentModal");
-        if (modal) modal.classList.remove("active");
+        if (modal) {
+          modal.classList.remove("active");
+          currentHouseForPayment = null;
+        }
       }
 
       function setupPaymentListener(house) {
         const confirmBtn = document.getElementById("confirmPaymentBtn");
-        if (confirmBtn) {
-          const newBtn = confirmBtn.cloneNode(true);
-          confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
-          newBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            alert(
-              `✅ Payment initiated for ${escapeHtml(house.title || "this property")} (Reservation deposit). A secure payment link has been sent to your email. Our concierge will finalize the transaction.`,
+        if (!confirmBtn) return;
+
+        const newBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+
+        newBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+
+          if (!house || !house._id) {
+            alert("❌ Property information is missing. Please try again.");
+            return;
+          }
+
+          const selectedPlan = document.querySelector(
+            'input[name="paymentPlan"]:checked',
+          );
+          if (!selectedPlan) {
+            alert("❌ Please select a payment plan.");
+            return;
+          }
+
+          const percentage = parseInt(selectedPlan.value);
+          const amount = Math.round((house.price || 0) * (percentage / 100));
+
+          // Disable button and show loading
+          newBtn.disabled = true;
+          newBtn.innerHTML = '<div class="loader-sm"></div> Processing...';
+
+          try {
+            // Get user email from localStorage or use a default
+            const user = localStorage.getItem("user");
+            let email = "customer@rezidenthomes.com";
+            if (user) {
+              try {
+                const userData = JSON.parse(user);
+                email = userData.email || email;
+              } catch (e) {}
+            }
+
+            // Call backend to initialize Paystack payment
+            const response = await fetch(
+              `${getBaseURL()}/houses/initiate-payment`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("auth_token") || ""}`,
+                },
+                body: JSON.stringify({
+                  houseId: house._id,
+                  amount: amount,
+                  email: email,
+                  metadata: {
+                    paymentPlan: `${percentage}%`,
+                    fullPrice: house.price,
+                    propertyTitle: house.title,
+                  },
+                }),
+              },
             );
-            closePaymentModal();
-          });
-        }
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              throw new Error(data.message || "Failed to initialize payment");
+            }
+
+            if (data.success && data.authorization_url) {
+              // Close modal and redirect to Paystack
+              closePaymentModal();
+              window.location.href = data.authorization_url;
+            } else {
+              throw new Error("Payment initialization failed");
+            }
+          } catch (err) {
+            console.error("Payment error:", err);
+            alert(`❌ ${err.message || "Payment failed. Please try again."}`);
+          } finally {
+            // Reset button
+            newBtn.disabled = false;
+            newBtn.innerHTML =
+              '<i data-lucide="lock" class="w-4 h-4"></i> Pay with Card / Transfer';
+            lucide.createIcons();
+          }
+        });
       }
+
+      // Add CSS for small loader
+      const style = document.createElement("style");
+      style.textContent = `
+  .loader-sm {
+    border: 2px solid rgba(0, 28, 74, 0.2);
+    border-top: 2px solid #001c4a;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+  }
+`;
+      document.head.appendChild(style);
+
+      // Make closePaymentModal globally accessible
+      window.closePaymentModal = closePaymentModal;
 
       // ---------- FETCH & RENDER ----------
       async function renderProperty() {
