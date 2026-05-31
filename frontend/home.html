@@ -456,7 +456,6 @@
       const searchBtn = document.getElementById("searchBtn");
       const buyToggleBtn = document.getElementById("buyToggleBtn");
       const rentToggleBtn = document.getElementById("rentToggleBtn");
-      const heroSection = document.getElementById("heroSection");
 
       // ---------- Toggle styling: active = white bg + dark blue text; inactive = white text ----------
       function setActiveToggle(active) {
@@ -579,31 +578,6 @@
         }
       }
 
-      // ---------- Fetch latest house image for hero ----------
-      async function fetchLatestHouseImage() {
-        try {
-          const url = `${getBaseURL()}/houses?limit=1&status=published&sort=-createdAt`;
-          const res = await fetch(url);
-          if (!res.ok) return null;
-          const data = await res.json();
-          const latest = data.houses?.[0];
-          if (latest && latest.images && latest.images[0]) {
-            return latest.images[0].url;
-          }
-        } catch (err) {
-          console.warn("Could not fetch latest house image:", err);
-        }
-        return null;
-      }
-
-      // ---------- Update hero background ----------
-      async function updateHeroBackground() {
-        const imgUrl = await fetchLatestHouseImage();
-        if (imgUrl) {
-          heroSection.style.backgroundImage = `url('${imgUrl}')`;
-        }
-      }
-
       // ---------- Load sale and rent sections ----------
       async function loadSections(state = "", lga = "") {
         saleContainer.innerHTML =
@@ -703,7 +677,6 @@
       // ---------- Initial load ----------
       populateStates();
       updateLgas();
-      await updateHeroBackground();
       await loadSections();
       lucide.createIcons();
     </script>
