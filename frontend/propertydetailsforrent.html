@@ -6,113 +6,68 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>
-      Rezident Homes | Rent Premium Estates - Nigeria's Finest Real Estate
-    </title>
+    <title>Property Details | Rezident Homes - Luxury Rentals</title>
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="images/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="images/favicon-32x32.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="images/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="images/android-chrome-512x512.png"
-    />
-    <link rel="manifest" href="images/site.webmanifest" />
-    <meta name="theme-color" content="#0D316D" />
-    <!-- Lucide + Tailwind -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-dark": "#000d1f",
+              tertiary: "#c5aa23",
+              "tertiary-dark": "#a08a1c",
+              "surface": "#f9f9fc",
+              "surface-card": "#ffffff",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    
     <style>
       * {
         -webkit-tap-highlight-color: transparent;
       }
+      
       body {
         font-family: "Inter", system-ui, sans-serif;
+        background: #f9f9fc;
       }
-      .font-headline {
-        font-family: "Manrope", system-ui, sans-serif;
+      
+      .property-card {
+        transition: transform 0.25s ease, box-shadow 0.3s ease;
       }
-      .hover-lift {
-        transition:
-          transform 0.25s ease,
-          box-shadow 0.3s ease;
-      }
-      .hover-lift:hover {
+      
+      .property-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
       }
-      .lucide {
-        width: 1.25rem;
-        height: 1.25rem;
-        stroke-width: 1.75;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      .fade-up {
-        opacity: 0;
-        transform: translateY(30px);
-        transition:
-          opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1),
-          transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      }
-      .fade-up.revealed {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .bg-surface {
-        background-color: #f9f9fc;
-      }
-      .text-primary {
-        color: #001c4a;
-      }
-      .border-tertiary {
-        border-color: #c5aa23;
-      }
-      .bg-tertiary-container {
-        background-color: #c5aa23;
-      }
-      .hover\:bg-tertiary-fixed:hover {
-        background-color: #ffe260;
-      }
-      .text-tertiary {
-        color: #6e5d00;
-      }
-      .thumb-active {
-        border-color: #c5aa23;
-        opacity: 1;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
+      
       .loader {
         border: 3px solid #f3f3f3;
         border-top: 3px solid #c5aa23;
@@ -122,55 +77,286 @@
         animation: spin 0.8s linear infinite;
         margin: 20px auto;
       }
+      
+      .loader-sm {
+        border: 2px solid rgba(0, 28, 74, 0.2);
+        border-top: 2px solid #001c4a;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        animation: spin 0.6s linear infinite;
+        display: inline-block;
+      }
+      
       @keyframes spin {
-        0% {
-          transform: rotate(0deg);
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        cursor: pointer;
+      }
+      
+      .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .modal-img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+      }
+      
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      
+      .close-modal:hover {
+        color: #c5aa23;
+      }
+      
+      .thumb-active {
+        border-color: #c5aa23 !important;
+        opacity: 1;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                    transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      }
+      
+      .fade-up.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .btn-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .btn-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Toast Notification */
+      .toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1100;
+        animation: slideInRight 0.3s ease-out;
+      }
+      
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
         }
-        100% {
-          transform: rotate(360deg);
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* Auth Modal */
+      .auth-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1200;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .auth-modal.active {
+        display: flex;
+      }
+      
+      .auth-modal-content {
+        background: white;
+        border-radius: 24px;
+        max-width: 400px;
+        width: 90%;
+        padding: 32px;
+        text-align: center;
+        animation: slideUp 0.3s ease-out;
+      }
+      
+      @keyframes slideUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
         }
       }
     </style>
   </head>
-  <body class="bg-surface text-[#1a1c1e] antialiased">
-    <header
-      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
-    >
+  
+  <body class="bg-surface font-body antialiased">
+    <!-- Navigation -->
+    <header class="sticky top-0 w-full z-50 bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-100">
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
           <a href="home.html" class="flex-shrink-0">
-            <img
-              src="images/logo.png"
-              alt="Rezident Homes Logo"
-              class="h-9 lg:h-11 w-auto object-contain"
-              onerror="
-                this.style.display = 'none';
-                this.parentElement.innerHTML =
-                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>REZIDENT HOMES</span>';
-              "
-            />
+            <img src="images/logo.png" alt="Rezident Homes Logo" class="h-9 lg:h-11 w-auto object-contain" />
           </a>
+          
+          <div class="flex items-center gap-4">
+            <a href="forrent.html" class="text-sm font-medium text-primary hover:text-tertiary transition flex items-center gap-2">
+              <i class="fas fa-arrow-left text-xs"></i> Back to Rent Listings
+            </a>
+          </div>
         </div>
       </div>
     </header>
 
     <main>
+      <!-- Loading State -->
       <div id="loadingState" class="py-40 text-center">
         <div class="loader"></div>
         <p class="text-slate-500 mt-5 text-sm">Loading property details...</p>
       </div>
-      <div
-        id="errorState"
-        class="hidden max-w-3xl mx-auto mt-20 bg-red-50/70 text-red-800 p-10 rounded-3xl text-center shadow-sm border border-red-100/60"
-      ></div>
+
+      <!-- Error State -->
+      <div id="errorState" class="hidden max-w-3xl mx-auto mt-20 bg-red-50/70 text-red-800 p-10 rounded-3xl text-center shadow-sm border border-red-100/60"></div>
+
+      <!-- Property Content -->
       <div id="propertyContent" class="hidden"></div>
     </main>
 
+    <!-- Fullscreen Gallery Modal -->
+    <div id="imageModal" class="modal">
+      <span class="close-modal">&times;</span>
+      <img class="modal-img" id="modalImage" src="" alt="Full size property image" />
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal" style="background-color: rgba(0, 0, 0, 0.8); z-index: 1100">
+      <div class="bg-white rounded-2xl max-w-md w-full p-6 relative mx-4 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+        <button onclick="closePaymentModal()" class="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-2xl leading-none">
+          &times;
+        </button>
+
+        <div class="text-center mb-4 mt-2">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-credit-card text-2xl text-tertiary"></i>
+          </div>
+          <h3 class="text-xl font-headline font-extrabold text-primary">Secure Payment Portal</h3>
+          <p class="text-sm text-gray-500 mt-1">Choose your preferred payment plan</p>
+        </div>
+
+        <div id="paymentPropertyDetails" class="bg-gray-50 p-3 rounded-lg text-sm mb-4"></div>
+
+        <!-- Payment Plan Selection -->
+        <div class="space-y-3 mb-4">
+          <label class="block text-xs font-bold text-primary mb-2">Select Payment Plan</label>
+
+          <label class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition">
+            <input type="radio" name="paymentPlan" value="30" class="accent-tertiary w-4 h-4" />
+            <div class="flex-1">
+              <span class="font-semibold text-sm text-primary">30% Initial Payment</span>
+              <p class="text-xs text-gray-500" id="plan30Amount">₦0</p>
+            </div>
+          </label>
+
+          <label class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition">
+            <input type="radio" name="paymentPlan" value="50" class="accent-tertiary w-4 h-4" />
+            <div class="flex-1">
+              <span class="font-semibold text-sm text-primary">50% Initial Payment</span>
+              <p class="text-xs text-gray-500" id="plan50Amount">₦0</p>
+            </div>
+          </label>
+
+          <label class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition">
+            <input type="radio" name="paymentPlan" value="100" class="accent-tertiary w-4 h-4" checked />
+            <div class="flex-1">
+              <span class="font-semibold text-sm text-primary">Full Payment</span>
+              <p class="text-xs text-gray-500" id="plan100Amount">₦0</p>
+            </div>
+          </label>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex justify-between text-sm font-medium bg-gray-50 p-3 rounded-lg">
+            <span>Amount to Pay Now</span>
+            <span class="font-bold text-primary text-lg" id="paymentAmount">₦0</span>
+          </div>
+
+          <p class="text-[11px] text-gray-400 text-center">
+            <i class="fas fa-lock mr-1"></i> Secure payment powered by Paystack
+          </p>
+
+          <button id="confirmPaymentBtn" class="w-full bg-tertiary hover:bg-tertiary-dark text-primary font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+            <i class="fas fa-lock"></i> Pay with Card / Transfer
+          </button>
+
+          <button onclick="closePaymentModal()" class="w-full text-gray-500 text-sm py-2 hover:text-gray-700">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth Required Modal (Popup) -->
+    <div id="authModal" class="auth-modal">
+      <div class="auth-modal-content">
+        <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
+        </div>
+        <h3 class="text-xl font-bold text-primary mb-2">Authentication Required</h3>
+        <p class="text-gray-600 text-sm mb-6">You need to be logged in to rent this property. Please login or create an account to continue.</p>
+        <div class="space-y-3">
+          <button id="authModalLoginBtn" class="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-dark transition flex items-center justify-center gap-2">
+            <i class="fas fa-sign-in-alt"></i> Login Now
+          </button>
+          <button id="authModalCancelBtn" class="w-full border border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:bg-gray-50 transition">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script type="module">
+      // Import services
       import { getBaseURL } from "./js/apiConfig.js";
       import { getHouseById } from "./slices/houseService.js";
       import { getHouses } from "./slices/houseService.js";
+      import { getUserProfile } from "./slices/userService.js";
+      import { getStoredToken, clearAuthData, storeUser } from "./js/tokenStorage.js";
+      import { authService } from "./js/authService.js";
 
+      // Global user object
+      let currentUser = null;
+
+      // ---------- HELPER FUNCTIONS ----------
       function formatNaira(amount) {
         if (!amount && amount !== 0) return "₦0";
         return new Intl.NumberFormat("en-NG", {
@@ -187,21 +373,290 @@
         return div.innerHTML;
       }
 
+      function showToast(message, type = "success") {
+        const existingToast = document.querySelector(".toast");
+        if (existingToast) existingToast.remove();
+        
+        const toast = document.createElement("div");
+        toast.className = `toast ${type === "success" ? "bg-green-500" : "bg-red-500"} text-white px-6 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-2`;
+        toast.innerHTML = `<i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i> ${message}`;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => toast.remove(), 5000);
+      }
+
+      // Auth Modal Functions
+      function showAuthModal() {
+        const modal = document.getElementById("authModal");
+        if (modal) {
+          modal.classList.add("active");
+        }
+      }
+
+      function closeAuthModal() {
+        const modal = document.getElementById("authModal");
+        if (modal) {
+          modal.classList.remove("active");
+        }
+      }
+
+      function redirectToLogin() {
+        sessionStorage.setItem("redirectAfterLogin", window.location.href);
+        window.location.href = "login.html";
+      }
+
+      // ---------- DOM REFS ----------
       const loadingState = document.getElementById("loadingState");
       const errorState = document.getElementById("errorState");
       const propertyContent = document.getElementById("propertyContent");
 
+      // ---------- GET PROPERTY ID FROM URL ----------
       const urlParams = new URLSearchParams(window.location.search);
       const propertyId = urlParams.get("id");
 
       if (!propertyId) {
         loadingState.classList.add("hidden");
-        errorState.innerHTML = `<div class="flex items-center justify-center gap-2 text-sm"><i data-lucide="alert-triangle" class="w-5 h-5"></i><span>No property ID provided.</span></div>`;
+        errorState.innerHTML = `
+          <div class="flex items-center justify-center gap-2 text-sm">
+            <i class="fas fa-exclamation-triangle text-2xl"></i>
+            <span>No property ID provided.</span>
+          </div>`;
         errorState.classList.remove("hidden");
-        lucide.createIcons();
         throw new Error("No property ID in URL");
       }
 
+      // ---------- GALLERY MODAL ----------
+      window.openModal = function (imgSrc) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        if (modal && modalImg) {
+          modalImg.src = imgSrc;
+          modal.classList.add("active");
+        }
+      };
+
+      function closeModal() {
+        const modal = document.getElementById("imageModal");
+        if (modal) modal.classList.remove("active");
+      }
+
+      // ---------- PAYMENT MODAL ----------
+      let currentHouseForPayment = null;
+
+      function openPaymentModal(house) {
+        // Check if user is logged in using the currentUser object
+        if (!currentUser || !getStoredToken()) {
+          showAuthModal();
+          return;
+        }
+        
+        currentHouseForPayment = house;
+        const modal = document.getElementById("paymentModal");
+        const detailsContainer = document.getElementById("paymentPropertyDetails");
+        const amountSpan = document.getElementById("paymentAmount");
+
+        if (!modal || !detailsContainer) return;
+
+        const fullPrice = house.price || 0;
+        const plan30 = Math.round(fullPrice * 0.3);
+        const plan50 = Math.round(fullPrice * 0.5);
+        const plan100 = fullPrice;
+
+        document.getElementById("plan30Amount").textContent = formatNaira(plan30);
+        document.getElementById("plan50Amount").textContent = formatNaira(plan50);
+        document.getElementById("plan100Amount").textContent = formatNaira(plan100);
+
+        amountSpan.textContent = formatNaira(plan100);
+        document.querySelector('input[value="100"]').checked = true;
+
+        detailsContainer.innerHTML = `
+          <div class="flex justify-between items-center border-b pb-2 mb-2">
+            <span class="font-semibold text-sm">Property:</span>
+            <span class="text-right text-sm">${escapeHtml(house.title || "Property")}</span>
+          </div>
+          <div class="flex justify-between items-center text-xs text-gray-600">
+            <span>Location:</span>
+            <span>${escapeHtml(house.lga || "")}, ${escapeHtml(house.state || "")}</span>
+          </div>
+          <div class="flex justify-between items-center text-xs text-gray-600 mt-1">
+            <span>Full price:</span>
+            <span>${formatNaira(fullPrice)}/year</span>
+          </div>
+        `;
+
+        modal.classList.add("active");
+
+        document.querySelectorAll('input[name="paymentPlan"]').forEach((radio) => {
+          radio.removeEventListener("change", updatePaymentAmount);
+          radio.addEventListener("change", updatePaymentAmount);
+        });
+
+        document.querySelectorAll(".payment-plan-option").forEach((label) => {
+          label.addEventListener("click", function () {
+            document.querySelectorAll(".payment-plan-option").forEach((l) => {
+              l.style.borderColor = "#e5e7eb";
+              l.style.backgroundColor = "white";
+            });
+            this.style.borderColor = "#c5aa23";
+            this.style.backgroundColor = "#fefce8";
+          });
+        });
+
+        const defaultPlan = document.querySelector('input[value="100"]').closest(".payment-plan-option");
+        if (defaultPlan) {
+          defaultPlan.style.borderColor = "#c5aa23";
+          defaultPlan.style.backgroundColor = "#fefce8";
+        }
+      }
+
+      function updatePaymentAmount() {
+        const selectedPlan = document.querySelector('input[name="paymentPlan"]:checked');
+        if (!selectedPlan || !currentHouseForPayment) return;
+
+        const percentage = parseInt(selectedPlan.value);
+        const amount = Math.round((currentHouseForPayment.price || 0) * (percentage / 100));
+        document.getElementById("paymentAmount").textContent = formatNaira(amount);
+      }
+
+      function closePaymentModal() {
+        const modal = document.getElementById("paymentModal");
+        if (modal) {
+          modal.classList.remove("active");
+          currentHouseForPayment = null;
+        }
+      }
+
+      window.closePaymentModal = closePaymentModal;
+
+      function setupPaymentListener(house) {
+        const confirmBtn = document.getElementById("confirmPaymentBtn");
+        if (!confirmBtn) return;
+
+        const newBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+
+        newBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+
+          if (!house || !house._id) {
+            showToast("Property information is missing", "error");
+            return;
+          }
+
+          const selectedPlan = document.querySelector('input[name="paymentPlan"]:checked');
+          if (!selectedPlan) {
+            showToast("Please select a payment plan", "error");
+            return;
+          }
+
+          const percentage = parseInt(selectedPlan.value);
+          const amount = Math.round((house.price || 0) * (percentage / 100));
+          
+          // Get auth data from currentUser
+          const token = getStoredToken();
+
+          // Double check login status
+          if (!token || !currentUser) {
+            showAuthModal();
+            return;
+          }
+
+          // Safely get user details from currentUser
+          const userEmail = currentUser.email;
+          const userName = currentUser.name || currentUser.username || "Guest Buyer";
+          
+          if (!userEmail) {
+            showToast("User email not found. Please re-login.", "error");
+            clearAuthData();
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 1500);
+            return;
+          }
+
+          // Disable button
+          newBtn.disabled = true;
+          newBtn.innerHTML = '<div class="loader-sm"></div> Processing...';
+
+          try {
+            const requestBody = {
+              houseId: house._id,
+              amount: amount,
+              email: userEmail,
+              metadata: {
+                paymentPlan: `${percentage}%`,
+                fullPrice: house.price,
+                propertyTitle: house.title,
+                buyerName: userName,
+                buyerEmail: userEmail,
+                listingType: "rent",
+              },
+            };
+
+            console.log("Payment request:", requestBody);
+            console.log("Current user:", currentUser);
+
+            const response = await fetch(`${getBaseURL()}/houses/initiate-payment`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(requestBody),
+            });
+
+            const data = await response.json();
+
+            console.log("Payment response:", data);
+
+            if (!response.ok) {
+              throw new Error(data.message || "Failed to initialize payment");
+            }
+
+            if (data.success && data.authorization_url) {
+              sessionStorage.setItem("pendingPayment", JSON.stringify({
+                houseId: house._id,
+                amount: amount,
+                percentage: percentage,
+                reference: data.reference,
+              }));
+              closePaymentModal();
+              window.location.href = data.authorization_url;
+            } else {
+              throw new Error(data.message || "Payment initialization failed");
+            }
+          } catch (err) {
+            console.error("Payment error:", err);
+            showToast(err.message || "Payment failed. Please try again.", "error");
+          } finally {
+            newBtn.disabled = false;
+            newBtn.innerHTML = '<i class="fas fa-lock"></i> Pay with Card / Transfer';
+          }
+        });
+      }
+
+      // ---------- SIMILAR PROPERTIES ----------
+      async function fetchSimilarProperties(currentHouseId) {
+        try {
+          const similarData = await getHouses({
+            listingType: "rent",
+            status: "published",
+            limit: 4,
+            sort: "-createdAt",
+          });
+          
+          const similarHouses = (similarData.houses || [])
+            .filter((h) => h._id !== currentHouseId)
+            .slice(0, 3);
+          
+          return similarHouses;
+        } catch (e) {
+          console.warn("Could not fetch similar properties:", e);
+          return [];
+        }
+      }
+
+      // ---------- RENDER PROPERTY ----------
       async function renderProperty() {
         try {
           const house = await getHouseById(propertyId);
@@ -213,74 +668,65 @@
           const seller = house.user || {};
           const sellerId = seller._id || "";
 
-          document.title = `${house.title || "Property"} | Rezident Homes`;
+          document.title = `${house.title || "Property"} | Rezident Homes - Luxury Rentals`;
 
+          const similarHouses = await fetchSimilarProperties(house._id);
+          
           let similarHtml = "";
-          try {
-            const similarData = await getHouses({
-              listingType: "rent",
-              status: "published",
-              limit: 4,
-              sort: "-createdAt",
-            });
-            const similarHouses = (similarData.houses || [])
-              .filter((h) => h._id !== house._id)
-              .slice(0, 3);
-            if (similarHouses.length > 0) {
-              similarHtml = `
-                <div class="mt-16 fade-up">
-                  <div class="flex items-center justify-between mb-6">
-                    <h2 class="font-headline text-2xl font-extrabold text-primary">Similar Luxury Rentals</h2>
-                    <a href="forrent.html" class="text-sm text-tertiary font-bold flex items-center gap-1">View all <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
-                  </div>
-                  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    ${similarHouses
-                      .map(
-                        (sh) => `
-                      <div class="bg-white rounded-xl overflow-hidden shadow hover-lift transition cursor-pointer" onclick="window.location.href='propertydetailsforrent.html?id=${sh._id}'">
-                        <img src="${sh.images?.[0]?.url || "images/hero.avif"}" class="h-48 w-full object-cover" alt="${escapeHtml(sh.title || "")}" onerror="this.src='images/hero.avif'" />
-                        <div class="p-4">
-                          <div class="text-xs text-[#7b7f8d] flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${escapeHtml(sh.lga || "")}, ${escapeHtml(sh.state || "")}</div>
-                          <h3 class="font-bold text-primary text-sm mt-1">${escapeHtml(sh.title || "Property")}</h3>
-                          <div class="flex justify-between items-center mt-2">
-                            <span class="font-bold text-primary text-base">${formatNaira(sh.price)}<span class="text-xs font-normal">/year</span></span>
-                            <button class="similar-rent-btn text-xs bg-tertiary-container/20 text-primary px-3 py-1 rounded-full font-bold" onclick="event.stopPropagation(); window.location.href='propertydetailsforrent.html?id=${sh._id}'">Inquire</button>
-                          </div>
+          if (similarHouses.length > 0) {
+            similarHtml = `
+              <div class="mt-16 fade-up">
+                <div class="flex items-center justify-between mb-6">
+                  <h2 class="font-headline text-2xl font-extrabold text-primary">Similar Luxury Rentals</h2>
+                  <a href="forrent.html" class="text-sm text-tertiary font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                    View all <i class="fas fa-arrow-right text-xs"></i>
+                  </a>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  ${similarHouses.map((sh) => `
+                    <div class="property-card bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="window.location.href='propertydetailsforrent.html?id=${sh._id}'">
+                      <img src="${sh.images?.[0]?.url || "images/hero.avif"}" class="h-52 w-full object-cover" alt="${escapeHtml(sh.title || "")}" onerror="this.src='images/hero.avif'" />
+                      <div class="p-4">
+                        <div class="text-xs text-gray-500 flex items-center gap-1">
+                          <i class="fas fa-map-marker-alt text-xs"></i> ${escapeHtml(sh.lga || "")}, ${escapeHtml(sh.state || "")}
+                        </div>
+                        <h3 class="font-bold text-primary text-base mt-1 line-clamp-1">${escapeHtml(sh.title || "Property")}</h3>
+                        <div class="flex justify-between items-center mt-3">
+                          <span class="font-bold text-primary text-lg">${formatNaira(sh.price)}<span class="text-xs font-normal">/year</span></span>
+                          <button class="text-xs bg-tertiary/20 text-primary px-3 py-1.5 rounded-full font-bold hover:bg-tertiary transition" onclick="event.stopPropagation(); window.location.href='propertydetailsforrent.html?id=${sh._id}'">
+                            View Details
+                          </button>
                         </div>
                       </div>
-                    `,
-                      )
-                      .join("")}
-                  </div>
-                </div>`;
-            } else {
-              similarHtml = `
-                <div class="mt-16 fade-up">
-                  <div class="flex items-center justify-between mb-6">
-                    <h2 class="font-headline text-2xl font-extrabold text-primary">Similar Luxury Rentals</h2>
-                    <a href="forrent.html" class="text-sm text-tertiary font-bold flex items-center gap-1">View all <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
-                  </div>
-                  <div class="bg-white rounded-2xl shadow-sm border border-[#eeeef0] p-10 text-center">
-                    <i data-lucide="home" class="w-12 h-12 text-gray-300 mx-auto mb-3"></i>
-                    <p class="text-sm text-on-surface-variant">No similar listings available at the moment.</p>
-                    <a href="forrent.html" class="inline-block mt-3 text-sm font-bold text-tertiary hover:text-primary transition">Browse all rental properties →</a>
-                  </div>
-                </div>`;
-            }
-          } catch (e) {
-            console.warn("Could not fetch similar properties:", e);
-            similarHtml = `<div class="mt-16 fade-up"><div class="flex items-center justify-between mb-6"><h2 class="font-headline text-2xl font-extrabold text-primary">Similar Luxury Rentals</h2><a href="forrent.html" class="text-sm text-tertiary font-bold flex items-center gap-1">View all <i data-lucide="arrow-right" class="w-3 h-3"></i></a></div><div class="bg-white rounded-2xl shadow-sm border border-[#eeeef0] p-10 text-center"><i data-lucide="home" class="w-12 h-12 text-gray-300 mx-auto mb-3"></i><p class="text-sm text-on-surface-variant">No similar listings available at the moment.</p><a href="forrent.html" class="inline-block mt-3 text-sm font-bold text-tertiary hover:text-primary transition">Browse all rental properties →</a></div></div>`;
+                    </div>
+                  `).join("")}
+                </div>
+              </div>`;
+          } else {
+            similarHtml = `
+              <div class="mt-16 fade-up">
+                <div class="flex items-center justify-between mb-6">
+                  <h2 class="font-headline text-2xl font-extrabold text-primary">Similar Luxury Rentals</h2>
+                  <a href="forrent.html" class="text-sm text-tertiary font-bold flex items-center gap-1">View all <i class="fas fa-arrow-right text-xs"></i></a>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-10 text-center">
+                  <i class="fas fa-home text-5xl text-gray-300 mx-auto mb-3"></i>
+                  <p class="text-sm text-gray-500">No similar listings available at the moment.</p>
+                  <a href="forrent.html" class="inline-block mt-3 text-sm font-bold text-tertiary hover:text-primary transition">Browse all rental properties →</a>
+                </div>
+              </div>`;
           }
 
           const html = `
-            <section class="relative bg-[#001c4a] text-white py-12 lg:py-16 overflow-hidden fade-up">
-              <div class="absolute inset-0 opacity-20"><img src="${mainImage}" alt="Luxury interior" class="w-full h-full object-cover" /></div>
+            <section class="relative bg-primary text-white py-12 lg:py-16 overflow-hidden fade-up">
+              <div class="absolute inset-0 opacity-20">
+                <img src="${mainImage}" alt="Property hero" class="w-full h-full object-cover" />
+              </div>
               <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8">
-                <div class="flex items-center gap-2 text-sm text-white/70 mb-3"><a href="forrent.html" class="hover:text-tertiary-container transition">← Back to Rent Listings</a></div>
                 <h1 class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2">${escapeHtml(house.title || "Luxury Rental")}</h1>
                 <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80 text-sm">
-                  <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> ${escapeHtml(house.lga || "")}, ${escapeHtml(house.state || "")}</span>
-                  <span class="flex items-center gap-1"><i data-lucide="badge-check" class="w-4 h-4 text-tertiary-container"></i> Premium Rental</span>
+                  <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(house.lga || "")}, ${escapeHtml(house.state || "")}</span>
+                  <span class="flex items-center gap-1"><i class="fas fa-tag"></i> ${formatNaira(house.price)}<span class="text-xs">/year</span></span>
                 </div>
               </div>
             </section>
@@ -289,40 +735,63 @@
               <div class="grid lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2">
                   <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
-                    <div class="relative"><img id="mainGalleryImg" src="${mainImage}" alt="Main property view" class="w-full h-[360px] lg:h-[420px] object-cover" /></div>
-                    ${galleryImages.length > 1 ? `<div class="flex gap-2 p-3 border-t border-[#eeeef0]">${galleryImages.map((img, idx) => `<img data-gallery="${img.url}" src="${img.url}?w=120&h=80&fit=crop" class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all ${idx === 0 ? "thumb-active border-tertiary" : ""}" alt="thumb${idx + 1}" />`).join("")}</div>` : ""}
+                    <div class="relative">
+                      <img id="mainGalleryImg" src="${mainImage}" alt="Main property view" class="w-full h-[360px] lg:h-[420px] object-cover cursor-pointer" onclick="openModal('${mainImage}')" />
+                    </div>
+                    ${galleryImages.length > 1 ? `
+                      <div class="flex gap-2 p-3 border-t border-gray-100">
+                        ${galleryImages.map((img, idx) => `
+                          <img data-gallery="${img.url}" src="${img.url}?w=120&h=80&fit=crop" class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all ${idx === 0 ? "thumb-active border-tertiary" : ""}" alt="thumb${idx + 1}" />
+                        `).join("")}
+                      </div>
+                    ` : ""}
                   </div>
+
                   <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
                     <h2 class="font-headline text-2xl font-extrabold text-primary mb-3">About this residence</h2>
-                    <p class="text-[#3a3e4a] text-sm leading-relaxed mb-5">${escapeHtml(house.description || "No description provided.")}</p>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-3 border-y border-[#eeeef0]">
-                      <div><span class="block text-xs text-[#6b6f7e]">Property Type</span><span class="font-semibold text-primary text-sm">${escapeHtml(house.propertyType || "N/A")}</span></div>
-                      <div><span class="block text-xs text-[#6b6f7e]">Year Built</span><span class="font-semibold text-primary text-sm">${house.yearBuilt || "N/A"}</span></div>
-                      <div><span class="block text-xs text-[#6b6f7e]">Furnishing</span><span class="font-semibold text-primary text-sm">${escapeHtml(house.furnishing || "N/A")}</span></div>
-                      <div><span class="block text-xs text-[#6b6f7e]">Lease Term</span><span class="font-semibold text-primary text-sm">${escapeHtml(house.leaseTerm || "N/A")}</span></div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-5">${escapeHtml(house.description || "No description provided.")}</p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-3 border-y border-gray-100">
+                      <div><span class="block text-xs text-gray-500">Property Type</span><span class="font-semibold text-primary text-sm">${escapeHtml(house.propertyType || "N/A")}</span></div>
+                      <div><span class="block text-xs text-gray-500">Year Built</span><span class="font-semibold text-primary text-sm">${house.yearBuilt || "N/A"}</span></div>
+                      <div><span class="block text-xs text-gray-500">Furnishing</span><span class="font-semibold text-primary text-sm">${escapeHtml(house.furnishing || "N/A")}</span></div>
+                      <div><span class="block text-xs text-gray-500">Lease Term</span><span class="font-semibold text-primary text-sm">${escapeHtml(house.leaseTerm || "1 Year")}</span></div>
                     </div>
-                    ${features.length ? `<div class="mt-6"><h3 class="font-bold text-primary text-lg mb-3">Key Features</h3><div class="grid grid-cols-2 md:grid-cols-3 gap-3">${features.map((f) => `<span class="flex items-center gap-2 text-sm"><i data-lucide="check-circle" class="w-4 h-4 text-tertiary"></i>${escapeHtml(f)}</span>`).join("")}</div></div>` : ""}
+
+                    ${features.length ? `
+                      <div class="mt-6">
+                        <h3 class="font-bold text-primary text-lg mb-3">Key Features</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                          ${features.map(f => `<span class="flex items-center gap-2 text-sm"><i class="fas fa-check-circle text-tertiary text-xs"></i> ${escapeHtml(f)}</span>`).join("")}
+                        </div>
+                      </div>
+                    ` : ""}
                   </div>
+
                   <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
                     <h3 class="font-headline font-bold text-primary text-xl mb-3">Lease &amp; Terms</h3>
-                    <ul class="space-y-2 text-sm text-[#2f3340] list-disc pl-5">
+                    <ul class="space-y-2 text-sm text-gray-600 list-disc pl-5">
                       <li>Annual rent: <strong class="text-primary">${formatNaira(house.price)}/year</strong> ${house.serviceCharge ? `(includes ${escapeHtml(house.serviceCharge)})` : "(includes service charge &amp; maintenance)"}</li>
                       <li>Security deposit: ${escapeHtml(house.securityDeposit || "2 months rent (refundable)")}</li>
                       <li>Early access: ${escapeHtml(house.availability || "available for immediate move-in")}</li>
                       <li>Pet policy: ${escapeHtml(house.petPolicy || "negotiable with additional deposit")}</li>
                       <li>Utilities: ${escapeHtml(house.utilityTerms || "metered separately (electricity, water, waste)")}</li>
                     </ul>
-                    <div class="mt-5 bg-[#f6f7fb] p-4 rounded-xl flex items-start gap-3"><i data-lucide="clock" class="w-5 h-5 text-tertiary shrink-0 mt-0.5"></i><p class="text-xs text-[#4e5468]">Flexible lease extensions available. 6-month lease option possible with premium adjustment. Contact our leasing team.</p></div>
+                    <div class="mt-5 bg-blue-50 p-4 rounded-xl flex items-start gap-3">
+                      <i class="fas fa-clock text-tertiary mt-0.5"></i>
+                      <p class="text-xs text-gray-600">Flexible lease extensions available. 6-month lease option possible with premium adjustment. Contact our leasing team.</p>
+                    </div>
                   </div>
                 </div>
 
                 <div class="lg:col-span-1">
-                  <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24 border border-[#eceef2] fade-up">
-                    <div class="mb-4 pb-3 border-b border-dashed border-[#e0e2e8]">
+                  <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24 border border-gray-100 fade-up">
+                    <div class="mb-4 pb-3 border-b border-dashed border-gray-200">
                       <span class="text-tertiary text-xs font-bold uppercase tracking-wide">Annual Rent</span>
-                      <div class="text-3xl font-headline font-extrabold text-primary mt-1">${formatNaira(house.price)}<span class="text-sm font-medium text-[#6a6f82]">/year</span></div>
-                      <div class="flex items-center gap-1 mt-1 text-xs text-[#777c8f]"><i data-lucide="calendar" class="w-3 h-3"></i> + ${escapeHtml(house.securityDeposit || "2 months")} deposit</div>
+                      <div class="text-3xl font-headline font-extrabold text-primary mt-1">${formatNaira(house.price)}<span class="text-sm font-medium text-gray-500">/year</span></div>
+                      <div class="flex items-center gap-1 mt-1 text-xs text-gray-500"><i class="fas fa-calendar-alt text-xs"></i> + ${escapeHtml(house.securityDeposit || "2 months")} deposit</div>
                     </div>
+                    
                     <div class="space-y-3 mb-5">
                       <div class="flex justify-between text-sm"><span>Bedrooms</span><span class="font-semibold">${house.bedrooms || "?"}</span></div>
                       <div class="flex justify-between text-sm"><span>Bathrooms</span><span class="font-semibold">${house.bathrooms || "?"}</span></div>
@@ -330,35 +799,64 @@
                     </div>
 
                     <form id="inquiryForm" class="space-y-4 mb-5">
-                      <div><label class="block text-xs font-bold text-primary mb-1">Full Name *</label><input type="text" required class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="John Doe" /></div>
-                      <div><label class="block text-xs font-bold text-primary mb-1">Email Address *</label><input type="email" required class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="john@example.com" /></div>
-                      <div><label class="block text-xs font-bold text-primary mb-1">Phone Number *</label><input type="tel" required class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="+234 812 345 6789" /></div>
-                      <div><label class="block text-xs font-bold text-primary mb-1">Preferred Viewing Date</label><input type="date" class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" /></div>
-                      <div><label class="block text-xs font-bold text-primary mb-1">Message (Optional)</label><textarea rows="2" class="w-full px-3 py-2 border border-[#e0e2e8] rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="I'm interested in this property..."></textarea></div>
-                      <button type="submit" class="w-full bg-[#001c4a] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#0d316d] transition flex items-center justify-center gap-2">Send Inquiry <i data-lucide="send" class="w-4 h-4"></i></button>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1">Full Name *</label>
+                        <input type="text" required class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="John Doe" />
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1">Email Address *</label>
+                        <input type="email" required class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="john@example.com" />
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1">Phone Number *</label>
+                        <input type="tel" required class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="+234 812 345 6789" />
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1">Preferred Viewing Date</label>
+                        <input type="date" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" />
+                      </div>
+                      <div>
+                        <label class="block text-xs font-bold text-primary mb-1">Message (Optional)</label>
+                        <textarea rows="2" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary" placeholder="I'm interested in this property..."></textarea>
+                      </div>
+                      <button type="submit" class="w-full bg-primary text-white py-3 rounded-xl font-bold text-sm hover:bg-primary-dark transition flex items-center justify-center gap-2">
+                        Send Inquiry <i class="fas fa-paper-plane text-xs"></i>
+                      </button>
                     </form>
 
-                    <div class="text-center mb-3"><p class="text-sm font-bold text-[#c5aa23]">Ready to Rent this House?</p></div>
-                    <button id="proceedToPaymentBtn" class="w-full bg-gradient-to-r from-[#c5aa23] to-[#e6c844] text-primary py-3 rounded-xl font-bold text-sm hover:from-[#b89a1f] hover:to-[#d4b83a] transition flex items-center justify-center gap-2 shadow-md">Proceed to Payment <i data-lucide="credit-card" class="w-4 h-4"></i></button>
+                    <div class="text-center mb-3">
+                      <p class="text-sm font-bold text-tertiary">Ready to Rent this House?</p>
+                    </div>
 
-                    <a href="seller-profile.html?id=${sellerId}" class="block mt-6 pt-4 border-t border-[#edf0f5] hover:bg-gray-50 rounded-b-xl transition -mx-2 px-2 -mb-2 pb-2">
-                      <div class="flex items-center gap-2 mb-2"><i data-lucide="user-check" class="w-5 h-5 text-tertiary"></i><span class="text-sm font-bold text-primary">Leasing Agent</span><i data-lucide="external-link" class="w-3 h-3 text-gray-400 ml-auto"></i></div>
-                      <p class="text-xs text-[#4a4f62]">${escapeHtml(seller.name || "Agent")}: Senior Leasing Consultant</p>
-                      <p class="text-xs text-[#4a4f62] mt-1">✉️ ${escapeHtml(seller.email || "contact@rezidenthomes.com")} | 📞 ${escapeHtml(seller.phone || "+234 800 000 0000")}</p>
+                    <button id="proceedToPaymentBtn" class="btn-hover w-full bg-tertiary hover:bg-tertiary-dark text-primary py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md">
+                      <i class="fas fa-credit-card"></i> Proceed to Payment
+                    </button>
+
+                    <a href="seller-profile.html?id=${sellerId}" class="block mt-6 pt-4 border-t border-gray-100 hover:bg-gray-50 rounded-b-xl transition -mx-2 px-2 -mb-2 pb-2">
+                      <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-user-check text-tertiary"></i>
+                        <span class="text-sm font-bold text-primary">Leasing Agent</span>
+                        <i class="fas fa-external-link-alt text-xs text-gray-400 ml-auto"></i>
+                      </div>
+                      <p class="text-xs text-gray-600">${escapeHtml(seller.name || "Agent")}: Senior Leasing Consultant</p>
+                      <p class="text-xs text-gray-600 mt-1">✉️ ${escapeHtml(seller.email || "contact@rezidenthomes.com")} | 📞 ${escapeHtml(seller.phone || "+234 800 000 0000")}</p>
                       <p class="text-xs text-tertiary mt-1 font-medium">View full profile →</p>
                     </a>
                   </div>
                 </div>
               </div>
+
               ${similarHtml}
             </div>
 
-            <section class="py-16 lg:py-20 px-5 md:px-8 bg-[#001c4a] text-white fade-up">
+            <section class="py-16 lg:py-20 px-5 md:px-8 bg-primary text-white fade-up">
               <div class="max-w-4xl mx-auto text-center">
-                <i data-lucide="phone-call" class="w-10 h-10 text-tertiary-container mx-auto mb-4"></i>
+                <i class="fas fa-phone-alt text-4xl text-tertiary mx-auto mb-4"></i>
                 <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">Need a custom rental solution?</h2>
                 <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">Our team finds off-market rental homes matching your budget and lifestyle, from short-term executive stays to long-term leases.</p>
-                <button id="consultRentExpert" class="bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover:bg-[#ffe260] transition shadow-md text-sm">Talk to a Rental Expert</button>
+                <button id="consultRentExpert" class="bg-tertiary text-primary px-6 py-3 rounded-full font-bold hover:bg-tertiary-dark transition shadow-md text-sm">
+                  Talk to a Rental Expert
+                </button>
               </div>
             </section>
           `;
@@ -366,7 +864,6 @@
           propertyContent.innerHTML = html;
           loadingState.classList.add("hidden");
           propertyContent.classList.remove("hidden");
-          lucide.createIcons();
 
           // Gallery thumbnail switching
           const mainImg = document.getElementById("mainGalleryImg");
@@ -375,54 +872,46 @@
             thumb.addEventListener("click", function () {
               const fullSrc = this.getAttribute("data-gallery");
               if (fullSrc && mainImg) mainImg.src = fullSrc;
-              thumbs.forEach((t) =>
-                t.classList.remove("thumb-active", "border-tertiary"),
-              );
-              this.classList.add("thumb-active", "border-tertiary");
-              this.style.borderWidth = "2px";
+              thumbs.forEach((t) => t.classList.remove("thumb-active"));
+              this.classList.add("thumb-active");
             });
           });
 
-          // Inquiry form - sends email to seller
+          // Modal close
+          const imageModal = document.getElementById("imageModal");
+          const closeBtn = document.querySelector(".close-modal");
+          if (closeBtn) closeBtn.onclick = closeModal;
+          if (imageModal) imageModal.onclick = (e) => { if (e.target === imageModal) closeModal(); };
+
+          const paymentModal = document.getElementById("paymentModal");
+          if (paymentModal) paymentModal.onclick = (e) => { if (e.target === paymentModal) closePaymentModal(); };
+
+          // Inquiry form
           const inquiryForm = document.getElementById("inquiryForm");
           if (inquiryForm) {
             inquiryForm.addEventListener("submit", async (e) => {
               e.preventDefault();
-              const name =
-                inquiryForm.querySelector('input[type="text"]').value;
-              const email = inquiryForm.querySelector(
-                'input[type="email"]',
-              ).value;
-              const phone =
-                inquiryForm.querySelector('input[type="tel"]').value;
-              const message =
-                inquiryForm.querySelector("textarea")?.value || "";
-
-              const submitBtn = inquiryForm.querySelector(
-                'button[type="submit"]',
-              );
+              const name = inquiryForm.querySelector('input[type="text"]').value;
+              const email = inquiryForm.querySelector('input[type="email"]').value;
+              const phone = inquiryForm.querySelector('input[type="tel"]').value;
+              const message = inquiryForm.querySelector("textarea")?.value || "";
+              const submitBtn = inquiryForm.querySelector('button[type="submit"]');
               const originalText = submitBtn.innerHTML;
               submitBtn.disabled = true;
-              submitBtn.innerHTML = "Sending...";
+              submitBtn.innerHTML = '<div class="loader-sm"></div> Sending...';
 
               try {
-                const response = await fetch(
-                  `${getBaseURL()}/houses/${house._id}/inquiry`,
-                  {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, email, phone, message }),
-                  },
-                );
+                const response = await fetch(`${getBaseURL()}/houses/${house._id}/inquiry`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ name, email, phone, message }),
+                });
                 const data = await response.json();
-                if (!response.ok)
-                  throw new Error(data.message || "Failed to send inquiry");
-                alert(`✅ ${data.message}`);
+                if (!response.ok) throw new Error(data.message || "Failed to send inquiry");
+                showToast(data.message || "Inquiry sent successfully!", "success");
                 inquiryForm.reset();
               } catch (err) {
-                alert(
-                  `❌ ${err.message || "Failed to send inquiry. Please try again."}`,
-                );
+                showToast(err.message || "Failed to send inquiry", "error");
               } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
@@ -430,48 +919,101 @@
             });
           }
 
-          // Proceed to Payment
           const paymentBtn = document.getElementById("proceedToPaymentBtn");
           if (paymentBtn) {
-            paymentBtn.addEventListener("click", () => {
-              window.location.href = `propertydetailsforrent.html?id=${house._id}`;
+            paymentBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              openPaymentModal(house);
+              setupPaymentListener(house);
             });
           }
 
-          // Consult expert
           const consultExpert = document.getElementById("consultRentExpert");
           if (consultExpert) {
-            consultExpert.addEventListener("click", () =>
-              alert(
-                "Connect with our luxury leasing concierge: +234 (0) 800 000 0000 or rentals@rezidenthomes.com",
-              ),
-            );
+            consultExpert.addEventListener("click", () => {
+              showToast("Connect with our luxury leasing concierge: +234 (0) 800 000 0000 or rentals@rezidenthomes.com", "success");
+            });
           }
 
-          // Fade-up observer
+          // Check for redirect after login
+          const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+          if (redirectUrl && redirectUrl === window.location.href) {
+            sessionStorage.removeItem("redirectAfterLogin");
+            if (currentUser && getStoredToken()) {
+              showToast("Login successful! You can now make payment.", "success");
+              setTimeout(() => {
+                openPaymentModal(house);
+                setupPaymentListener(house);
+              }, 1000);
+            }
+          }
+
           const fadeElements = document.querySelectorAll(".fade-up");
-          const obs = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("revealed");
-                  obs.unobserve(entry.target);
-                }
-              });
-            },
-            { threshold: 0.1 },
-          );
-          fadeElements.forEach((el) => obs.observe(el));
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add("revealed"); });
+          }, { threshold: 0.1 });
+          fadeElements.forEach((el) => observer.observe(el));
+          
         } catch (err) {
           console.error(err);
           loadingState.classList.add("hidden");
-          errorState.innerHTML = `<div class="flex flex-col items-center gap-3"><i data-lucide="alert-circle" class="w-8 h-8 text-red-500"></i><p class="font-bold text-sm">${err.message || "Failed to load property details."}</p><button onclick="window.location.href='forrent.html'" class="text-sm text-red-600 underline font-bold">Back to Rent Listings</button></div>`;
+          errorState.innerHTML = `
+            <div class="flex flex-col items-center gap-3">
+              <i class="fas fa-exclamation-circle text-4xl text-red-500"></i>
+              <p class="font-bold text-sm">${err.message || "Failed to load property details."}</p>
+              <button onclick="window.location.href='forrent.html'" class="text-sm text-red-600 underline font-bold">Back to Rent Listings</button>
+            </div>`;
           errorState.classList.remove("hidden");
-          lucide.createIcons();
         }
       }
 
-      renderProperty();
+      // ---------- CHECK AUTHENTICATION FIRST (like profile page) ----------
+      async function checkAuth() {
+        const token = getStoredToken();
+        if (!token) {
+          // No token, but we still show property details - just can't rent/purchase
+          console.log("User not logged in");
+          return false;
+        }
+        
+        try {
+          // Verify token is valid by fetching user profile
+          const user = await getUserProfile();
+          if (user) {
+            currentUser = user;
+            storeUser(user);
+            console.log("User authenticated:", user.name);
+            return true;
+          }
+        } catch (err) {
+          console.warn("Auth check failed:", err.message);
+          clearAuthData();
+          return false;
+        }
+        return false;
+      }
+
+      // ---------- INITIALIZE PAGE ----------
+      async function init() {
+        // First check authentication (like profile page)
+        await checkAuth();
+        
+        // Then load property details (always loads, regardless of auth)
+        await renderProperty();
+        
+        // Setup auth modal buttons
+        const loginBtn = document.getElementById("authModalLoginBtn");
+        const cancelBtn = document.getElementById("authModalCancelBtn");
+        
+        if (loginBtn) {
+          loginBtn.addEventListener("click", redirectToLogin);
+        }
+        if (cancelBtn) {
+          cancelBtn.addEventListener("click", closeAuthModal);
+        }
+      }
+
+      init();
     </script>
   </body>
 </html>
