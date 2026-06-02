@@ -869,7 +869,8 @@
                   id="stateSelect"
                   class="w-full bg-transparent border-none focus:ring-0 text-[#0D316D] font-medium text-sm outline-none"
                 >
-                  <option value="">Loading states...</option>
+                  <option value="">Select State</option>
+                  <option value="Rivers">Rivers</option>
                 </select>
               </div>
               <div class="hidden md:block w-px h-6 bg-white/30"></div>
@@ -879,10 +880,10 @@
                 <i data-lucide="map" class="text-tertiary-fixed w-5 h-5"></i>
                 <select
                   id="lgaSelect"
-                  class="w-full bg-transparent border-none focus:ring-0 text-[#0D316D] font-medium text-sm outline-none"
+                  class="w-full bg-transparent border-none focus:ring-0 text-[#0D316D] font-medium text-sm outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled
                 >
-                  <option value="">Select LGA</option>
+                  <option value="">Select a state first</option>
                 </select>
               </div>
               <button
@@ -1419,7 +1420,19 @@
       // CONFIGURATION
       // ============================================
       let currentListingType = "sale"; // 'sale' or 'rent'
-      let locationsData = null;
+      let locationsData = {
+        states: ["Rivers"],
+        lgAs: {
+          Rivers: [
+            "Port Harcourt",
+            "Obio/Akpor",
+            "Eleme",
+            "GRA PH",
+            "Oyigbo",
+            "Ikwerre",
+          ],
+        },
+      };
 
       // Get API base URL from your config
       const API_BASE_URL = getBaseURL();
@@ -1491,7 +1504,7 @@
           if (state) {
             setTimeout(() => {
               const stateSelect = document.getElementById("stateSelect");
-              if (stateSelect && locationsData) {
+              if (stateSelect) {
                 stateSelect.value = state;
                 populateLGADropdown(state);
 
@@ -1583,7 +1596,6 @@
           window.location.href = page;
         } else {
           // Store the intended destination as relative path
-          // This will be the current path + the target page
           const currentPath = window.location.pathname.substring(
             0,
             window.location.pathname.lastIndexOf("/") + 1,
@@ -1606,8 +1618,6 @@
           }
         } else {
           // Not logged in - always go to login first
-          // The login page will check the role AFTER authentication
-          // and redirect to profile.html if they're a seller
           const currentPath = window.location.pathname.substring(
             0,
             window.location.pathname.lastIndexOf("/") + 1,
@@ -1619,8 +1629,6 @@
 
       // Make it available globally
       window.navigateToSellerRegister = navigateToSellerRegister;
-
-      // Make it available globally
       window.navigateToProtectedPage = navigateToProtectedPage;
 
       // Update navigation based on authentication state
@@ -1735,23 +1743,17 @@
       // Handle logout
       async function handleLogout() {
         try {
-          // Import and use authService logout
           const { authService } = await import("./js/authService.js");
           await authService.logout();
         } catch (error) {
           console.error("Logout error:", error);
-          // Fallback: clear auth data directly
           const { clearAuthData } = await import("./js/tokenStorage.js");
           clearAuthData();
         }
 
-        // Update navigation
         updateNavigation();
-
-        // Show notification
         showNotification("Logged out successfully", "success");
 
-        // Reload featured properties if they were loaded
         if (typeof loadFeaturedProperties === "function") {
           loadFeaturedProperties();
         }
@@ -1767,85 +1769,6 @@
       // CORE FILTER FUNCTIONS
       // ============================================
 
-      // Fetch available locations filtered by listing type
-      async function fetchLocationsByType(listingType) {
-        try {
-          const stateSelect = document.getElementById("stateSelect");
-          if (stateSelect) {
-            stateSelect.innerHTML = '<option value="">Loading...</option>';
-            stateSelect.disabled = true;
-          }
-
-          // Fetch a small batch of properties to know which states have listings
-          const result = await apiRequest(
-            `/houses?listingType=${listingType}&status=published&limit=100&fields=state,lga`,
-          );
-
-          if (result.success && result.houses) {
-            // Build filtered locations data
-            const states = new Set();
-            const lgAs = {};
-
-            result.houses.forEach((house) => {
-              if (house.state) {
-                states.add(house.state);
-                if (!lgAs[house.state]) {
-                  lgAs[house.state] = new Set();
-                }
-                if (house.lga) {
-                  lgAs[house.state].add(house.lga);
-                }
-              }
-            });
-
-            // Convert Sets to arrays
-            const statesArray = Array.from(states).sort();
-            const lgAsObj = {};
-            Object.keys(lgAs).forEach((state) => {
-              lgAsObj[state] = Array.from(lgAs[state]).sort();
-            });
-
-            locationsData = {
-              states: statesArray,
-              lgAs: lgAsObj,
-            };
-
-            populateStateDropdown(statesArray);
-            return true;
-          } else {
-            showErrorForFilters(
-              `No ${listingType === "sale" ? "sale" : "rental"} properties found`,
-            );
-            return false;
-          }
-        } catch (error) {
-          console.error("Error fetching available locations:", error);
-          showErrorForFilters("Failed to load locations");
-          return false;
-        }
-      }
-
-      // Populate state dropdown with fetched states
-      function populateStateDropdown(states) {
-        const stateSelect = document.getElementById("stateSelect");
-        if (!stateSelect) return;
-
-        if (!states || states.length === 0) {
-          stateSelect.innerHTML =
-            '<option value="">No states available</option>';
-          stateSelect.disabled = true;
-          return;
-        }
-
-        let html = '<option value="">Select State</option>';
-        states.forEach((state) => {
-          html += `<option value="${state}">${state}</option>`;
-        });
-
-        stateSelect.innerHTML = html;
-        stateSelect.disabled = false;
-      }
-
       // Populate LGA dropdown based on selected state
       function populateLGADropdown(selectedState) {
         const lgaSelect = document.getElementById("lgaSelect");
@@ -1856,7 +1779,8 @@
           !locationsData ||
           !locationsData.lgAs[selectedState]
         ) {
-          lgaSelect.innerHTML = '<option value="">Select LGA</option>';
+          lgaSelect.innerHTML =
+            '<option value="">Select a state first</option>';
           lgaSelect.disabled = true;
           return;
         }
@@ -1921,38 +1845,7 @@
         window.location.href = redirectUrl;
       }
 
-      // Load featured properties for homepage
-      async function loadFeaturedProperties() {
-        const gridContainer = document.getElementById("propertiesGrid");
-        if (!gridContainer) return;
-
-        gridContainer.innerHTML = `
-      <div class="col-span-full text-center py-12">
-        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-        <p class="mt-4 text-on-surface-variant">Loading properties...</p>
-      </div>
-    `;
-
-        try {
-          console.log("Loading featured properties...");
-
-          // Use your apiRequest function for featured properties
-          const result = await apiRequest(
-            `/houses/featured?listingType=${currentListingType}&limit=6`,
-          );
-
-          if (result.success && result.data) {
-            updatePropertiesGrid(result.data);
-          } else {
-            updatePropertiesGrid([]);
-          }
-        } catch (error) {
-          console.error("Error loading featured properties:", error);
-          updatePropertiesGrid([]);
-        }
-      }
-
-      // Load featured/recent properties from database
+      // Load recent properties from database
       async function loadRecentProperties() {
         const gridContainer = document.getElementById("featuredPropertiesGrid");
         if (!gridContainer) return;
@@ -1965,7 +1858,6 @@
   `;
 
         try {
-          // Fetch the 3 most recent published properties
           const result = await apiRequest(
             `/houses?status=published&limit=3&sort=createdAt:desc`,
           );
@@ -2051,12 +1943,10 @@
           })
           .join("");
 
-        // Reinitialize Lucide icons
         if (typeof lucide !== "undefined") {
           lucide.createIcons();
         }
 
-        // Reinitialize fade animations
         const newFadeElements = container.querySelectorAll(
           ".fade-up:not(.revealed)",
         );
@@ -2095,92 +1985,6 @@
 
       // Make it available globally
       window.navigateToProtectedProperty = navigateToProtectedProperty;
-
-      // Update properties grid with data
-      function updatePropertiesGrid(properties) {
-        const gridContainer = document.getElementById("propertiesGrid");
-        if (!gridContainer) return;
-
-        if (!properties || properties.length === 0) {
-          gridContainer.innerHTML = `
-        <div class="col-span-full text-center py-12">
-          <i data-lucide="home" class="w-12 h-12 mx-auto text-gray-400 mb-4"></i>
-          <p class="text-on-surface-variant mb-4">No properties found matching your criteria.</p>
-          <button onclick="window.loadFeaturedProperties()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition">
-            View Featured Properties
-          </button>
-        </div>
-      `;
-          if (typeof lucide !== "undefined") lucide.createIcons();
-          return;
-        }
-
-        gridContainer.innerHTML = properties
-          .map(
-            (property) => `
-      <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up">
-        <img 
-          class="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700" 
-          src="${property.images?.[0]?.url || "/images/placeholder.jpg"}" 
-          alt="${escapeHtml(property.title || "Property")}"
-          onerror="this.src='/images/placeholder.jpg'"
-        />
-        <div class="absolute top-4 left-4 flex gap-2 z-10">
-          <span class="badge-new text-[11px] px-3 py-1 rounded-full shadow-sm">
-            ${property.listingType === "sale" ? "FOR SALE" : "FOR RENT"}
-          </span>
-        </div>
-        <div class="absolute bottom-0 left-0 right-0 p-5 text-white gradient-overlay">
-          <h3 class="font-headline text-lg font-bold mb-1">${escapeHtml(property.title || "Luxury Property")}</h3>
-          <p class="text-xs text-white/80 mb-2">
-            <i data-lucide="map-pin" class="w-3 h-3 inline"></i> ${escapeHtml(property.lga)}, ${escapeHtml(property.state)}
-          </p>
-          <div class="mt-2 mb-2">
-            <span class="text-white font-bold text-xl">₦${(property.price || 0).toLocaleString()}</span>
-            ${property.listingType === "rent" ? '<span class="text-xs text-white/70">/year</span>' : ""}
-          </div>
-          <div class="flex gap-4 mt-2 text-xs text-white/80">
-            <span class="flex items-center gap-1">
-              <i data-lucide="bed" class="w-4 h-4"></i> ${property.bedrooms || 0} ${property.bedrooms === 1 ? "Bed" : "Beds"}
-            </span>
-            <span class="flex items-center gap-1">
-              <i data-lucide="bathtub" class="w-4 h-4"></i> ${property.bathrooms || 0} ${property.bathrooms === 1 ? "Bath" : "Baths"}
-            </span>
-            <span class="flex items-center gap-1">
-              <i data-lucide="square" class="w-4 h-4"></i> ${property.size || "N/A"}
-            </span>
-          </div>
-          <a href="/${property.listingType === "rent" ? "propertydetailsforrent.html" : "propertydetailsforsale.html"}?id=${property._id}" class="inline-block mt-3 text-xs font-semibold text-tertiary-fixed hover:text-white transition">
-            View Details →
-          </a>
-        </div>
-      </div>
-    `,
-          )
-          .join("");
-
-        // Reinitialize Lucide icons
-        if (typeof lucide !== "undefined") {
-          lucide.createIcons();
-        }
-
-        // Reinitialize fade animations for new elements
-        const newFadeElements = document.querySelectorAll(
-          ".fade-up:not(.revealed)",
-        );
-        const fadeObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("revealed");
-                fadeObserver.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.15 },
-        );
-        newFadeElements.forEach((el) => fadeObserver.observe(el));
-      }
 
       // Helper function to escape HTML
       function escapeHtml(text) {
@@ -2239,14 +2043,6 @@
         }, 3000);
       }
 
-      function showErrorForFilters(message) {
-        const stateSelect = document.getElementById("stateSelect");
-        if (stateSelect) {
-          stateSelect.innerHTML = `<option value="">${message}</option>`;
-          stateSelect.disabled = true;
-        }
-      }
-
       // ============================================
       // BUY/RENT MODE TOGGLE
       // ============================================
@@ -2277,28 +2073,12 @@
           }
         }
 
-        // Reset filters
-        const stateSelect = document.getElementById("stateSelect");
-        const lgaSelect = document.getElementById("lgaSelect");
-
-        // Fetch available locations for this listing type
-        await fetchLocationsByType(currentListingType);
-
         // Reset LGA dropdown
+        const lgaSelect = document.getElementById("lgaSelect");
         if (lgaSelect) {
-          lgaSelect.innerHTML = '<option value="">Select LGA</option>';
+          lgaSelect.innerHTML =
+            '<option value="">Select a state first</option>';
           lgaSelect.disabled = true;
-        }
-
-        // Reload properties with new type
-        loadFeaturedProperties();
-
-        // Update search button text if needed
-        const searchBtn = document.querySelector(".glass-card button");
-        if (searchBtn && typeof lucide !== "undefined") {
-          searchBtn.innerHTML =
-            'Search <i data-lucide="arrow-right" class="w-4 h-4"></i>';
-          lucide.createIcons();
         }
       };
 
@@ -2327,7 +2107,6 @@
       };
 
       // Make functions available globally
-      window.loadFeaturedProperties = loadFeaturedProperties;
       window.searchWithFilters = searchWithFilters;
 
       // ============================================
@@ -2342,7 +2121,7 @@
         // Update navigation based on auth state (MUST be first)
         updateNavigation();
 
-        // Initialize buy/rent mode - this will fetch locations for 'sale' type
+        // Initialize buy/rent mode
         await window.setMode("buy");
 
         // Check if user returned from login with search params
@@ -2407,7 +2186,6 @@
 
           // Handle all mobile menu links including dynamic auth links
           mobileMenu.addEventListener("click", (e) => {
-            // Close menu if a link or button is clicked
             if (e.target.closest("a") || e.target.closest("button")) {
               setTimeout(() => {
                 mobileMenu.classList.add("hidden");
@@ -2431,7 +2209,6 @@
         if (typeof lucide !== "undefined") {
           lucide.createIcons();
           setTimeout(() => lucide.createIcons(), 100);
-          // Additional call to ensure dynamic icons are rendered
           setTimeout(() => lucide.createIcons(), 300);
         }
 
@@ -2530,7 +2307,6 @@
 
         // Handle browser back/forward buttons for auth state
         window.addEventListener("pageshow", function (event) {
-          // Update navigation when page is shown from cache
           updateNavigation();
         });
 
