@@ -463,8 +463,9 @@ const initiatePayment = asyncHandler(async (req, res) => {
       houseId: houseId.toString(),
       buyerUserId: req.user ? req.user._id.toString() : null,
       buyerEmail: email,
+      buyerName: metadata?.buyerName || req.user?.name || "Guest Buyer",  // ✅ Get buyer name
       paymentPlan: metadata?.paymentPlan || "100%",
-      fullPrice: metadata?.fullPrice || amount,
+      fullPrice: metadata?.fullPrice || house.price,
       propertyTitle: metadata?.propertyTitle || house.title,
     },
     callback_url: callbackUrl,
@@ -693,70 +694,88 @@ const verifyPayment = asyncHandler(async (req, res) => {
             const metadata = response.data.metadata;
             const house = await House.findById(metadata.houseId);
             
-            if (house && req.user) {
+            if (house) {
+              // 🔥 FIX: Try to find user from metadata email
+              let user = req.user;
+              
+              if (!user && metadata.buyerEmail) {
+                // Find user by email from metadata
+                user = await User.findOne({ email: metadata.buyerEmail });
+              }
+              
               const paymentPlan = metadata.paymentPlan || "100%";
               const fullPrice = metadata.fullPrice || house.price;
               const amountPaid = response.data.amount / 100;
-              const percentagePaid = parseInt(paymentPlan);
               const remainingBalance = fullPrice - amountPaid;
 
-              // Create transaction record
-              const transaction = await Transaction.create({
-                user: req.user._id,
-                house: house._id,
-                type: house.listingType === "sale" ? "purchase" : "rental",
-                amount: amountPaid,
-                paymentPlan: paymentPlan,
-                remainingBalance: remainingBalance > 0 ? remainingBalance : 0,
-                fullPrice: fullPrice,
-                reference: reference,
-                status: "completed",
-                paymentDate: new Date(),
-              });
+              // Check if transaction already exists
+              let existingTransaction = await Transaction.findOne({ reference: reference });
+              
+              let transaction = existingTransaction;
+              let receipt = null;
+              
+              if (!existingTransaction && user) {
+                // Create transaction record
+                transaction = await Transaction.create({
+                  user: user._id,
+                  house: house._id,
+                  type: house.listingType === "sale" ? "purchase" : "rental",
+                  amount: amountPaid,
+                  paymentPlan: paymentPlan,
+                  remainingBalance: remainingBalance > 0 ? remainingBalance : 0,
+                  fullPrice: fullPrice,
+                  reference: reference,
+                  status: "completed",
+                  paymentDate: new Date(),
+                });
 
-              // Generate receipt number
-              const receiptNumber = `RZ-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+                // Generate receipt number
+                const receiptNumber = `RZ-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 
-              // Create receipt record
-              const receipt = await Receipt.create({
-                user: req.user._id,
-                transaction: transaction._id,
-                house: house._id,
-                receiptNumber,
-                amount: amountPaid,
-                paymentPlan,
-                remainingBalance: remainingBalance > 0 ? remainingBalance : 0,
-                fullPrice,
-                paymentStatus: "completed",
-                paymentReference: reference,
-                paystackReference: response.data.reference,
-                propertyTitle: house.title,
-                propertyLocation: `${house.lga}, ${house.state}`,
-                buyerName: req.user.name,
-                buyerEmail: req.user.email,
-              });
-
-              // Update house status if full payment
-              if (paymentPlan === "100%") {
-                house.status = house.listingType === "sale" ? "sold" : "rented";
-                await house.save();
-              }
-
-              // Send receipt email
-              try {
-                await sendReceiptEmail(req.user.email, {
+                // Create receipt record
+                receipt = await Receipt.create({
+                  user: user._id,
+                  transaction: transaction._id,
+                  house: house._id,
                   receiptNumber,
-                  buyerName: req.user.name,
+                  amount: amountPaid,
+                  paymentPlan,
+                  remainingBalance: remainingBalance > 0 ? remainingBalance : 0,
+                  fullPrice,
+                  paymentStatus: "completed",
+                  paymentReference: reference,
+                  paystackReference: response.data.reference,
                   propertyTitle: house.title,
                   propertyLocation: `${house.lga}, ${house.state}`,
-                  amountPaid,
-                  paymentPlan,
-                  remainingBalance,
-                  fullPrice,
-                  date: new Date(),
+                  buyerName: user.name,
+                  buyerEmail: user.email,
                 });
-              } catch (emailErr) {
-                console.error("Failed to send receipt email:", emailErr);
+
+                // Send receipt email
+                try {
+                  await sendReceiptEmail(user.email, {
+                    receiptNumber,
+                    buyerName: user.name,
+                    propertyTitle: house.title,
+                    propertyLocation: `${house.lga}, ${house.state}`,
+                    amountPaid,
+                    paymentPlan,
+                    remainingBalance,
+                    fullPrice,
+                    date: new Date(),
+                  });
+                } catch (emailErr) {
+                  console.error("Failed to send receipt email:", emailErr);
+                }
+
+                // Update house status if full payment
+                if (paymentPlan === "100%") {
+                  house.status = house.listingType === "sale" ? "sold" : "rented";
+                  await house.save();
+                }
+              } else if (existingTransaction) {
+                // Get existing receipt
+                receipt = await Receipt.findOne({ transaction: existingTransaction._id });
               }
 
               res.json({
@@ -770,7 +789,10 @@ const verifyPayment = asyncHandler(async (req, res) => {
                 },
               });
             } else {
-              res.json({ success: true, data: response.data });
+              res.status(404).json({
+                success: false,
+                message: "Property not found",
+              });
             }
           } else {
             res.status(400).json({
@@ -786,6 +808,7 @@ const verifyPayment = asyncHandler(async (req, res) => {
       });
     })
     .on("error", (error) => {
+      console.error("Paystack verification error:", error);
       res.status(500).json({ success: false, message: error.message });
     });
 });

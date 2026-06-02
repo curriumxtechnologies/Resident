@@ -59,14 +59,18 @@ export const authService = {
       method: "POST",
       body: JSON.stringify({ userId, otp }),
     });
+    
+    // Handle nested user data (API may return { token, user: { ... } } or flat { token, _id, ... })
+    const userData = data.user || data;
+    
     setAuthData(data.token, {
-      _id: data._id,
-      name: data.name,
-      email: data.email,
-      username: data.username,
-      role: data.role,
-      profile: data.profile,
-      authMethod: data.authMethod,
+      _id: userData._id,
+      name: userData.name,
+      email: userData.email,
+      username: userData.username,
+      role: userData.role || userData.userRole || userData.accountType || "user",
+      profile: userData.profile,
+      authMethod: userData.authMethod,
     });
     return data;
   },
@@ -86,16 +90,17 @@ export const authService = {
       body: JSON.stringify({ userId, otp }),
     });
     
-    console.log("API response:", data); // Check what the API actually returns
+    // Handle nested user data
+    const userData = data.user || data;
     
     setAuthData(data.token, {
-      _id: data._id,
-      name: data.name,
-      email: data.email,
-      username: data.username,
-      role: data.role || data.userRole || data.accountType || "user", // Try multiple possible field names
-      profile: data.profile,
-      authMethod: data.authMethod,
+      _id: userData._id,
+      name: userData.name,
+      email: userData.email,
+      username: userData.username,
+      role: userData.role || userData.userRole || userData.accountType || "user",
+      profile: userData.profile,
+      authMethod: userData.authMethod,
     });
     return data;
   },
@@ -106,15 +111,19 @@ export const authService = {
       method: "POST",
       body: JSON.stringify({ token }),
     });
-  setAuthData(data.token, {
-    _id: data._id,
-    name: data.name,
-    email: data.email,
-    username: data.username,
-    role: data.role || "user",      // ← ADD THIS
-    profile: data.profile,
-    authMethod: data.authMethod,
-  });
+    
+    // Handle nested user data
+    const userData = data.user || data;
+    
+    setAuthData(data.token, {
+      _id: userData._id,
+      name: userData.name,
+      email: userData.email,
+      username: userData.username,
+      role: userData.role || userData.userRole || userData.accountType || "user",
+      profile: userData.profile,
+      authMethod: userData.authMethod,
+    });
     return data;
   },
 

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment Status | Rezident Homes</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -17,113 +20,359 @@
         },
       };
     </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+      
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+      
+      .spinner {
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        border-top: 3px solid #c5aa23;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 0.8s linear infinite;
+        margin: 20px auto;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .glass-card {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-radius: 32px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+      
+      .success-checkmark {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        position: relative;
+      }
+      
+      .success-checkmark .check-icon {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        border-radius: 50%;
+        box-sizing: content-box;
+        border: 4px solid #4caf50;
+        animation: scale-check 0.3s ease-in-out;
+      }
+      
+      .success-checkmark .check-icon::before {
+        top: 3px;
+        left: -2px;
+        width: 30px;
+        transform-origin: 100% 50%;
+        border-radius: 100px 0 0 100px;
+      }
+      
+      .success-checkmark .check-icon::after {
+        top: 0;
+        left: 30px;
+        width: 60px;
+        transform-origin: 0 50%;
+        border-radius: 0 100px 100px 0;
+        animation: rotate-circle 4.25s ease-in;
+      }
+      
+      .success-checkmark .check-icon::before,
+      .success-checkmark .check-icon::after {
+        content: '';
+        height: 100px;
+        position: absolute;
+        background: transparent;
+        transform: rotate(-45deg);
+      }
+      
+      .success-checkmark .icon-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      
+      .success-checkmark .icon-content .line {
+        height: 5px;
+        background-color: #4caf50;
+        display: block;
+        border-radius: 2px;
+        position: absolute;
+        z-index: 10;
+      }
+      
+      .success-checkmark .icon-content .line.long {
+        width: 25px;
+        top: 38px;
+        left: 17px;
+        transform: rotate(45deg);
+        animation: draw-line 0.5s ease-in-out 0.2s forwards;
+        opacity: 0;
+      }
+      
+      .success-checkmark .icon-content .line.short {
+        width: 12px;
+        top: 46px;
+        left: 42px;
+        transform: rotate(-45deg);
+        animation: draw-line 0.5s ease-in-out 0.4s forwards;
+        opacity: 0;
+      }
+      
+      @keyframes draw-line {
+        0% { opacity: 0; width: 0; }
+        100% { opacity: 1; width: 100%; }
+      }
+      
+      @keyframes scale-check {
+        0% { transform: scale(0); opacity: 0; }
+        80% { transform: scale(1.1); }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      
+      .btn-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .btn-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      
+      .receipt-item {
+        transition: all 0.2s ease;
+      }
+      
+      .receipt-item:hover {
+        background-color: #f9fafb;
+        transform: translateX(4px);
+      }
+      
+      /* Receipt print styles */
+      #receiptForDownload {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #receiptForDownload, #receiptForDownload * {
+          visibility: visible;
+        }
+        #receiptForDownload {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          margin: 0;
+          padding: 20px;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+    </style>
   </head>
-  <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
-    <div id="loadingState" class="text-center">
-      <div
-        class="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-tertiary mx-auto mb-4"
-      ></div>
-      <p class="text-gray-600">Verifying your payment...</p>
+  <body class="min-h-screen flex items-center justify-center p-4">
+    <!-- Loading State -->
+    <div id="loadingState" class="glass-card max-w-md w-full p-12 text-center">
+      <div class="spinner"></div>
+      <div class="mt-6 space-y-2">
+        <p class="text-gray-700 font-semibold text-lg">Verifying your payment...</p>
+        <p class="text-gray-400 text-sm">Please wait while we confirm your transaction</p>
+      </div>
+      <div class="mt-6 flex justify-center space-x-2">
+        <div class="w-2 h-2 bg-tertiary rounded-full animate-pulse"></div>
+        <div class="w-2 h-2 bg-tertiary rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+        <div class="w-2 h-2 bg-tertiary rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+      </div>
     </div>
 
-    <div
-      id="successState"
-      class="hidden bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center"
-    >
-      <div
-        class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
-      >
-        <svg
-          class="w-8 h-8 text-green-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M5 13l4 4L19 7"
-          ></path>
-        </svg>
+    <!-- Success State -->
+    <div id="successState" class="hidden glass-card max-w-md w-full p-8">
+      <!-- Success Animation -->
+      <div class="success-checkmark mb-6">
+        <div class="check-icon">
+          <div class="icon-content">
+            <span class="line long"></span>
+            <span class="line short"></span>
+          </div>
+        </div>
       </div>
-      <h2 class="text-2xl font-bold text-primary mb-2">Payment Successful!</h2>
-      <p class="text-gray-600 mb-4" id="paymentMessage"></p>
+      
+      <h2 class="text-3xl font-bold text-center text-primary mb-2">Payment Successful!</h2>
+      <p class="text-center text-gray-500 text-sm mb-6" id="paymentMessage"></p>
 
-      <div
-        id="receiptInfo"
-        class="bg-gray-50 rounded-lg p-4 mb-6 text-left text-sm"
-      >
-        <p><strong>Receipt No:</strong> <span id="receiptNumber">-</span></p>
-        <p><strong>Amount Paid:</strong> <span id="amountPaid">-</span></p>
-        <p><strong>Payment Plan:</strong> <span id="paymentPlan">-</span></p>
-        <p>
-          <strong>Remaining:</strong>
-          <span id="remainingBalance" class="font-bold">-</span>
+      <!-- Hidden Receipt for Download -->
+      <div id="receiptForDownload" style="display: none;">
+        <!-- Receipt content will be cloned here -->
+      </div>
+
+      <!-- Receipt Card -->
+      <div id="receiptCard" class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 mb-6 border border-gray-100 shadow-sm">
+        <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+          <div class="flex items-center gap-3">
+            <img src="/images/logo.png" alt="Rezident Homes" class="h-10 w-auto" onerror="this.style.display='none'; this.parentElement.innerHTML='<h3 class=\'font-bold text-primary\'><i class=\'fas fa-home mr-2 text-tertiary\'></i>Rezident Homes</h3>'">
+            <h3 class="font-bold text-primary hidden md:block">Rezident Homes</h3>
+          </div>
+          <i class="fas fa-lock text-gray-300 text-xs"></i>
+        </div>
+        
+        <div class="space-y-3">
+          <div class="receipt-item flex justify-between items-center py-2">
+            <span class="text-gray-500 text-sm">Receipt Number</span>
+            <span class="font-mono text-xs font-semibold text-primary bg-gray-100 px-2 py-1 rounded" id="receiptNumber">-</span>
+          </div>
+          
+          <div class="receipt-item flex justify-between items-center py-2">
+            <span class="text-gray-500 text-sm">Amount Paid</span>
+            <span class="font-bold text-xl text-tertiary" id="amountPaid">-</span>
+          </div>
+          
+          <div class="receipt-item flex justify-between items-center py-2">
+            <span class="text-gray-500 text-sm">Payment Plan</span>
+            <span class="font-semibold text-primary bg-blue-50 px-3 py-1 rounded-full text-xs" id="paymentPlan">-</span>
+          </div>
+          
+          <div class="receipt-item flex justify-between items-center py-2 border-t border-gray-100 pt-3">
+            <span class="text-gray-600 font-semibold text-sm">Remaining Balance</span>
+            <span class="font-bold text-primary" id="remainingBalance">-</span>
+          </div>
+          
+          <div id="propertyInfo" class="hidden receipt-item flex justify-between items-center py-2">
+            <span class="text-gray-500 text-sm">Property</span>
+            <span class="text-xs text-gray-600 text-right max-w-[200px]" id="propertyName">-</span>
+          </div>
+
+          <div class="receipt-item flex justify-between items-center py-2">
+            <span class="text-gray-500 text-sm">Transaction Date</span>
+            <span class="text-xs text-gray-600" id="transactionDate">-</span>
+          </div>
+
+          <div class="receipt-item flex justify-between items-center py-2">
+            <span class="text-gray-500 text-sm">Reference</span>
+            <span class="font-mono text-xs text-gray-500 break-all text-right max-w-[180px]" id="transactionRef">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download Buttons -->
+      <div class="space-y-3 mb-6">
+        <div class="grid grid-cols-2 gap-3">
+          <button id="downloadPDFBtn" class="btn-hover bg-red-600 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2">
+            <i class="fas fa-file-pdf text-sm"></i>
+            PDF Receipt
+          </button>
+          <button id="downloadJPGBtn" class="btn-hover bg-blue-600 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2">
+            <i class="fas fa-image text-sm"></i>
+            JPG Receipt
+          </button>
+        </div>
+        <a id="downloadReceiptBtn" href="#" class="btn-hover block w-full bg-primary text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 text-center">
+          <i class="fas fa-download text-sm"></i>
+          Download Official Receipt
+        </a>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="grid grid-cols-2 gap-3">
+        <a id="viewPropertiesBtn" href="my-properties.html" class="btn-hover bg-tertiary text-primary py-3 rounded-xl font-semibold flex items-center justify-center gap-2 text-center">
+          <i class="fas fa-home text-sm"></i>
+          My Properties
+        </a>
+        <a id="continueShoppingBtn" href="forsale.html" class="btn-hover border-2 border-gray-200 text-gray-700 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 text-center hover:bg-gray-50">
+          <i class="fas fa-shopping-cart text-sm"></i>
+          Continue
+        </a>
+      </div>
+      
+      <!-- Secure Footer -->
+      <div class="mt-6 pt-4 border-t border-gray-100 text-center">
+        <p class="text-xs text-gray-400">
+          <i class="fas fa-shield-alt mr-1"></i> 
+          Secured by Paystack
         </p>
       </div>
-
-      <div class="space-y-3">
-        <a
-          id="downloadReceiptBtn"
-          href="#"
-          class="block w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-opacity-90 transition"
-        >
-          Download Receipt
-        </a>
-        <a
-          href="my-properties.html"
-          class="block w-full bg-tertiary text-primary py-3 rounded-xl font-bold hover:bg-yellow-400 transition"
-        >
-          View My Properties
-        </a>
-      </div>
     </div>
 
-    <div
-      id="errorState"
-      class="hidden bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center"
-    >
-      <div
-        class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"
-      >
-        <svg
-          class="w-8 h-8 text-red-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          ></path>
-        </svg>
+    <!-- Error State -->
+    <div id="errorState" class="hidden glass-card max-w-md w-full p-8 text-center">
+      <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="fas fa-times text-red-600 text-4xl"></i>
       </div>
-      <h2 class="text-2xl font-bold text-red-700 mb-2">Payment Failed</h2>
-      <p class="text-gray-600 mb-6">
+      <h2 class="text-2xl font-bold text-red-600 mb-2">Payment Failed</h2>
+      <p class="text-gray-600 mb-6 text-sm" id="errorMessage">
         Something went wrong with your payment. Please try again.
       </p>
-      <button
-        onclick="window.history.back()"
-        class="w-full bg-primary text-white py-3 rounded-xl font-bold"
-      >
+      <button onclick="window.history.back()" class="btn-hover w-full bg-primary text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2">
+        <i class="fas fa-arrow-left text-sm"></i>
         Go Back
       </button>
     </div>
 
-    <script>
-      import { getBaseURL } from "./js/apiConfig.js";
-      import { getStoredToken } from "./js/tokenStorage.js";
+    <script type="module">
+      // Configuration
+      const API_BASE_URL = (() => {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          return 'http://localhost:3000/api';
+        }
+        return 'https://api.rezidenthomes.com/api';
+      })();
 
-      const API_BASE_URL = getBaseURL();
+      // Helper functions
+      function formatNaira(amount) {
+        if (!amount && amount !== 0) return '₦0';
+        return new Intl.NumberFormat('en-NG', {
+          style: 'currency',
+          currency: 'NGN',
+          minimumFractionDigits: 0,
+        }).format(amount);
+      }
+
+      function formatDate() {
+        return new Date().toLocaleDateString('en-NG', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
+
+      function getStoredToken() {
+        return localStorage.getItem('auth_token') || localStorage.getItem('token');
+      }
+
+      // Get reference from URL
       const urlParams = new URLSearchParams(window.location.search);
-      const reference = urlParams.get("reference") || urlParams.get("trxref");
+      const reference = urlParams.get('reference') || urlParams.get('trxref');
+
+      // DOM elements
+      const loadingState = document.getElementById('loadingState');
+      const successState = document.getElementById('successState');
+      const errorState = document.getElementById('errorState');
+      const errorMessage = document.getElementById('errorMessage');
+
+      // Store receipt data globally
+      let currentReceiptData = null;
 
       async function verifyPayment() {
         if (!reference) {
-          showError();
+          showError('No payment reference found. Please contact support.');
           return;
         }
 
@@ -133,60 +382,216 @@
           const response = await fetch(
             `${API_BASE_URL}/houses/verify-payment?reference=${reference}`,
             {
-              headers: token ? { Authorization: `Bearer ${token}` } : {},
-            },
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                ...(token && { Authorization: `Bearer ${token}` }),
+              },
+            }
           );
 
-          const data = await response.json();
+          const result = await response.json();
 
-          if (data.success) {
-            showSuccess(data.data);
-          } else {
-            showError();
+          if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Payment verification failed');
           }
+
+          const data = result.data || result;
+          showSuccess(data);
         } catch (err) {
-          console.error("Verification error:", err);
-          showError();
+          console.error('Verification error:', err);
+          showError(err.message || 'Failed to verify payment. Please contact support.');
         }
       }
 
       function showSuccess(data) {
-        document.getElementById("loadingState").classList.add("hidden");
-        document.getElementById("successState").classList.remove("hidden");
+        loadingState.classList.add('hidden');
+        successState.classList.remove('hidden');
 
-        const receipt = data.receipt;
-        if (receipt) {
-          document.getElementById("receiptNumber").textContent =
-            receipt.receiptNumber;
-          document.getElementById("amountPaid").textContent =
-            `₦${receipt.amount.toLocaleString()}`;
-          document.getElementById("paymentPlan").textContent =
-            receipt.paymentPlan;
+        const receipt = data.receipt || data;
+        const isLoggedIn = !!getStoredToken();
 
-          if (receipt.remainingBalance > 0) {
-            document.getElementById("remainingBalance").textContent =
-              `₦${receipt.remainingBalance.toLocaleString()} (${Math.round((receipt.remainingBalance / receipt.fullPrice) * 100)}% remaining)`;
-            document.getElementById("remainingBalance").style.color = "#e53e3e";
-            document.getElementById("paymentMessage").textContent =
-              `You've paid ${receipt.paymentPlan} of the total price.`;
-          } else {
-            document.getElementById("remainingBalance").textContent =
-              "FULL PAYMENT MADE ✓";
-            document.getElementById("remainingBalance").style.color = "#38a169";
-            document.getElementById("paymentMessage").textContent =
-              "Full payment received! Property ownership transfer will be processed.";
+        const receiptNumber = receipt.receiptNumber || 
+                             `TXN-${reference?.substring(0, 8).toUpperCase()}` ||
+                             `PAY-${Date.now().toString(36).toUpperCase()}`;
+        
+        const amountPaid = receipt.amount || data.amountPaid || 0;
+        const paymentPlan = receipt.paymentPlan || data.paymentPlan || '100%';
+        const remainingBalance = receipt.remainingBalance || data.remainingBalance || 0;
+        const fullPrice = receipt.fullPrice || data.fullPrice || amountPaid;
+        const propertyTitle = receipt.propertyTitle || data.propertyTitle || 'Property';
+
+        // Store for download
+        currentReceiptData = {
+          receiptNumber,
+          amountPaid,
+          paymentPlan,
+          remainingBalance,
+          fullPrice,
+          propertyTitle,
+          reference,
+          date: formatDate()
+        };
+
+        document.getElementById('receiptNumber').textContent = receiptNumber;
+        document.getElementById('amountPaid').textContent = formatNaira(amountPaid);
+        document.getElementById('paymentPlan').textContent = paymentPlan;
+        document.getElementById('transactionRef').textContent = reference;
+        document.getElementById('transactionDate').textContent = formatDate();
+
+        const propertyInfoEl = document.getElementById('propertyInfo');
+        const propertyNameEl = document.getElementById('propertyName');
+        if (propertyTitle) {
+          propertyNameEl.textContent = propertyTitle;
+          propertyInfoEl.classList.remove('hidden');
+        }
+
+        if (remainingBalance > 0) {
+          const remainingPercent = Math.round((remainingBalance / fullPrice) * 100);
+          document.getElementById('remainingBalance').innerHTML = 
+            `${formatNaira(remainingBalance)} <span class="text-xs text-gray-500">(${remainingPercent}% remaining)</span>`;
+          document.getElementById('remainingBalance').style.color = '#e53e3e';
+          document.getElementById('paymentMessage').textContent = 
+            `You've paid ${paymentPlan} of the total price`;
+        } else {
+          document.getElementById('remainingBalance').innerHTML = 'FULL PAYMENT MADE ✓';
+          document.getElementById('remainingBalance').style.color = '#38a169';
+          document.getElementById('paymentMessage').textContent = 
+            'Full payment received! Property transfer will be processed.';
+        }
+
+        // Setup download buttons
+        setupDownloadButtons();
+
+        const downloadBtn = document.getElementById('downloadReceiptBtn');
+        if (receipt._id && isLoggedIn) {
+          downloadBtn.href = `${API_BASE_URL}/houses/receipt/${receipt._id}/download?token=${getStoredToken()}`;
+          downloadBtn.style.display = 'flex';
+        } else {
+          downloadBtn.style.display = 'none';
+          
+          if (!isLoggedIn) {
+            const note = document.createElement('p');
+            note.className = 'text-xs text-gray-500 mt-2 text-center';
+            note.innerHTML = '💡 <a href="signup.html" class="text-tertiary underline">Create an account</a> to view and download your receipts.';
+            document.querySelector('#successState .space-y-3').appendChild(note);
           }
+        }
 
-          document.getElementById("downloadReceiptBtn").href =
-            `${API_BASE_URL}/houses/receipt/${receipt._id}/download?token=${localStorage.getItem("auth_token") || ""}`;
+        const viewPropertiesBtn = document.getElementById('viewPropertiesBtn');
+        if (!isLoggedIn) {
+          viewPropertiesBtn.href = 'signup.html';
+          viewPropertiesBtn.innerHTML = '<i class="fas fa-user-plus text-sm"></i> Create Account';
         }
       }
 
-      function showError() {
-        document.getElementById("loadingState").classList.add("hidden");
-        document.getElementById("errorState").classList.remove("hidden");
+      function setupDownloadButtons() {
+        const downloadPDFBtn = document.getElementById('downloadPDFBtn');
+        const downloadJPGBtn = document.getElementById('downloadJPGBtn');
+
+        downloadPDFBtn.addEventListener('click', () => downloadReceipt('pdf'));
+        downloadJPGBtn.addEventListener('click', () => downloadReceipt('jpg'));
       }
 
+      async function downloadReceipt(format) {
+        try {
+          // Create a clone of the receipt card for download
+          const originalCard = document.getElementById('receiptCard');
+          const cloneCard = originalCard.cloneNode(true);
+          
+          // Create a wrapper with proper styling
+          const wrapper = document.createElement('div');
+          wrapper.style.cssText = `
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            width: 500px;
+            font-family: 'Inter', system-ui, sans-serif;
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+          `;
+          
+          // Add logo to clone if not present
+          const headerDiv = cloneCard.querySelector('.flex.items-center.justify-between');
+          if (headerDiv && !headerDiv.querySelector('img')) {
+            const logoHtml = `
+              <div class="flex items-center gap-3">
+                <img src="/images/logo.png" alt="Rezident Homes" style="height: 40px; width: auto;" onerror="this.style.display='none'">
+                <h3 style="font-weight: bold; color: #001c4a;">Rezident Homes</h3>
+              </div>
+            `;
+            headerDiv.insertAdjacentHTML('afterbegin', logoHtml);
+          }
+          
+          // Add footer to clone
+          const footerHtml = `
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center;">
+              <p style="font-size: 10px; color: #9ca3af;">
+                <i class="fas fa-shield-alt"></i> This is an official receipt from Rezident Homes
+              </p>
+              <p style="font-size: 10px; color: #9ca3af; margin-top: 5px;">
+                ${new Date().toLocaleString()}
+              </p>
+            </div>
+          `;
+          cloneCard.insertAdjacentHTML('beforeend', footerHtml);
+          
+          wrapper.appendChild(cloneCard);
+          document.body.appendChild(wrapper);
+          
+          if (format === 'pdf') {
+            const { jsPDF } = window.jspdf;
+            const canvas = await html2canvas(wrapper, {
+              scale: 3,
+              backgroundColor: '#ffffff',
+              logging: false,
+              useCORS: true
+            });
+            
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF({
+              orientation: 'portrait',
+              unit: 'mm',
+              format: 'a4'
+            });
+            
+            const imgWidth = 210;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            pdf.save(`receipt-${currentReceiptData.receiptNumber}.pdf`);
+          } 
+          else if (format === 'jpg') {
+            const canvas = await html2canvas(wrapper, {
+              scale: 3,
+              backgroundColor: '#ffffff',
+              logging: false,
+              useCORS: true
+            });
+            
+            const link = document.createElement('a');
+            link.download = `receipt-${currentReceiptData.receiptNumber}.jpg`;
+            link.href = canvas.toDataURL('image/jpeg', 1.0);
+            link.click();
+          }
+          
+          document.body.removeChild(wrapper);
+        } catch (error) {
+          console.error('Download error:', error);
+          alert('Failed to generate receipt. Please try again or use the official download button.');
+        }
+      }
+
+      function showError(message) {
+        loadingState.classList.add('hidden');
+        errorState.classList.remove('hidden');
+        if (message) {
+          errorMessage.textContent = message;
+        }
+      }
+
+      // Start verification
       verifyPayment();
     </script>
   </body>
