@@ -303,7 +303,8 @@
                 id="stateFilter"
                 class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate"
               >
-                <option value="all">State</option>
+                <option value="all">All States</option>
+                <option value="Rivers">Rivers</option>
               </select>
             </div>
             <div
@@ -315,9 +316,10 @@
               ></i>
               <select
                 id="lgaFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate"
+                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
               >
-                <option value="all">LGA</option>
+                <option value="all">Select a state first</option>
               </select>
             </div>
             <div
@@ -332,13 +334,12 @@
                 class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate"
               >
                 <option value="all" class="md:hidden">Type</option>
-                <option value="all" class="hidden md:block">
-                  Property Type
-                </option>
-                <option value="bungalow">Bungalow</option>
-                <option value="duplex">Duplex</option>
-                <option value="terrace">Terrace</option>
-                <option value="flat">Flat</option>
+                <option value="one-room">One Room</option>
+                <option value="self-contain">Self Contain</option>
+                <option value="1-bed">1 Bed</option>
+                <option value="2-bed">2 Bed</option>
+                <option value="3-bed">3 Bed</option>
+                <option value="4-bed-plus">4 Bed+</option>
               </select>
             </div>
             <button
@@ -361,6 +362,7 @@
                 >Signature Collection</span
               >
             </div>
+            <div id="resultCount" class="text-sm text-[#444650]"></div>
           </div>
 
           <div id="propertiesContainer" class="properties-grid">
@@ -420,6 +422,21 @@
     <script type="module">
       import { getBaseURL } from "./js/apiConfig.js";
       import { getStoredUser } from "./js/tokenStorage.js";
+
+      // Hardcoded location data - only Rivers state
+      const locationsData = {
+        states: ["Rivers"],
+        lgAs: {
+          Rivers: [
+            "Port Harcourt",
+            "Obio/Akpor",
+            "Eleme",
+            "GRA PH",
+            "Oyigbo",
+            "Ikwerre",
+          ],
+        },
+      };
 
       // Function to load user profile and update avatar
       async function loadUserProfile() {
@@ -523,43 +540,37 @@
         return data.houses || [];
       }
 
-      function buildFilterOptions(houses) {
-        const states = new Set();
-        const lgaMap = new Map();
-        houses.forEach((house) => {
-          if (house.state) {
-            states.add(house.state);
-            if (!lgaMap.has(house.state)) lgaMap.set(house.state, new Set());
-            if (house.lga) lgaMap.get(house.state).add(house.lga);
-          }
-        });
-        return { states: Array.from(states).sort(), lgaMap };
-      }
-
-      function populateStates(states) {
-        const stateSelect = document.getElementById("stateFilter");
-        stateSelect.innerHTML = '<option value="all">State</option>';
-        states.forEach((state) => {
-          const opt = document.createElement("option");
-          opt.value = state;
-          opt.textContent = state;
-          stateSelect.appendChild(opt);
-        });
-      }
-
-      function populateLgas(lgaMap, selectedState) {
+      // Populate LGA dropdown based on selected state
+      function populateLgas(selectedState) {
         const lgaSelect = document.getElementById("lgaFilter");
-        lgaSelect.innerHTML = '<option value="all">LGA</option>';
-        if (selectedState !== "all" && lgaMap.has(selectedState)) {
-          Array.from(lgaMap.get(selectedState))
-            .sort()
-            .forEach((lga) => {
-              const opt = document.createElement("option");
-              opt.value = lga;
-              opt.textContent = lga;
-              lgaSelect.appendChild(opt);
-            });
+
+        if (
+          !selectedState ||
+          selectedState === "all" ||
+          !locationsData.lgAs[selectedState]
+        ) {
+          lgaSelect.innerHTML =
+            '<option value="all">Select a state first</option>';
+          lgaSelect.disabled = true;
+          return;
         }
+
+        const lgas = locationsData.lgAs[selectedState];
+
+        if (!lgas || lgas.length === 0) {
+          lgaSelect.innerHTML =
+            '<option value="all">No LGAs available</option>';
+          lgaSelect.disabled = true;
+          return;
+        }
+
+        let html = '<option value="all">All LGAs</option>';
+        lgas.forEach((lga) => {
+          html += `<option value="${lga}">${lga}</option>`;
+        });
+
+        lgaSelect.innerHTML = html;
+        lgaSelect.disabled = false;
       }
 
       function getSearchParamsFromUrl() {
@@ -627,6 +638,21 @@
 
         container.innerHTML = houses.map(renderGridCard).join("");
         lucide.createIcons();
+
+        // Re-observe fade-up elements
+        const fadeElements = container.querySelectorAll(".fade-up");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+        fadeElements.forEach((el) => observer.observe(el));
       }
 
       (async function () {
@@ -639,7 +665,6 @@
 
         let allHouses = [];
         let currentFilters = { state: "all", lga: "all", type: "all" };
-        let lgaMap = new Map();
 
         container.innerHTML =
           '<div class="col-span-full text-center py-16"><div class="loading-spinner"></div></div>';
@@ -650,19 +675,18 @@
             document.getElementById("emptyState").classList.remove("hidden");
             return;
           }
-          const { states, lgaMap: lgaMapData } = buildFilterOptions(allHouses);
-          lgaMap = lgaMapData;
-          populateStates(states);
-          populateLgas(lgaMap, "all");
 
+          // Check URL params first
           const urlParams = getSearchParamsFromUrl();
           if (urlParams.state) {
             stateSelect.value = urlParams.state;
             currentFilters.state = urlParams.state;
-            populateLgas(lgaMap, urlParams.state);
+            populateLgas(urlParams.state);
             if (urlParams.lga) {
               currentFilters.lga = urlParams.lga;
-              lgaSelect.value = urlParams.lga;
+              setTimeout(() => {
+                lgaSelect.value = urlParams.lga;
+              }, 100);
             }
             applyFilters();
           } else {
@@ -701,7 +725,7 @@
 
         stateSelect.addEventListener("change", () => {
           currentFilters.state = stateSelect.value;
-          populateLgas(lgaMap, currentFilters.state);
+          populateLgas(currentFilters.state);
           currentFilters.lga = "all";
           lgaSelect.value = "all";
           applyFilters();
@@ -720,7 +744,7 @@
             currentFilters = { state: "all", lga: "all", type: "all" };
             stateSelect.value = "all";
             typeSelect.value = "all";
-            populateLgas(lgaMap, "all");
+            populateLgas("all");
             lgaSelect.value = "all";
             applyFilters();
           });
