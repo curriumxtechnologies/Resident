@@ -299,6 +299,7 @@
                     class="w-full bg-transparent border-none focus:ring-0 text-gray-800 font-medium text-sm outline-none"
                   >
                     <option value="">All States</option>
+                    <option value="Rivers">Rivers</option>
                   </select>
                 </div>
                 <!-- LGA Select -->
@@ -308,9 +309,10 @@
                   <i data-lucide="map" class="text-primary w-5 h-5"></i>
                   <select
                     id="lgaSelect"
-                    class="w-full bg-transparent border-none focus:ring-0 text-gray-800 font-medium text-sm outline-none"
+                    disabled
+                    class="w-full bg-transparent border-none focus:ring-0 text-gray-800 font-medium text-sm outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <option value="">All LGAs</option>
+                    <option value="">Select a state first</option>
                   </select>
                 </div>
                 <!-- Search Button -->
@@ -457,9 +459,18 @@
       const buyToggleBtn = document.getElementById("buyToggleBtn");
       const rentToggleBtn = document.getElementById("rentToggleBtn");
 
+      // ---------- Track active listing type ----------
+      let activeListingType = "sale"; // "sale" or "rent"
+
+      // ---------- LGA data mapped by state ----------
+      const lgaMap = {
+        Rivers: ["Port Harcourt"],
+      };
+
       // ---------- Toggle styling: active = white bg + dark blue text; inactive = white text ----------
       function setActiveToggle(active) {
-        if (active === "buy") {
+        activeListingType = active;
+        if (active === "sale") {
           buyToggleBtn.classList.add("bg-white", "text-primary");
           buyToggleBtn.classList.remove("text-white");
           rentToggleBtn.classList.remove("bg-white", "text-primary");
@@ -471,10 +482,52 @@
           buyToggleBtn.classList.add("text-white");
         }
       }
-      setActiveToggle("buy");
+      setActiveToggle("sale");
 
-      buyToggleBtn.addEventListener("click", () => setActiveToggle("buy"));
+      buyToggleBtn.addEventListener("click", () => setActiveToggle("sale"));
       rentToggleBtn.addEventListener("click", () => setActiveToggle("rent"));
+
+      // ---------- Update LGA dropdown based on selected state ----------
+      function updateLgas() {
+        const selectedState = stateSelect.value;
+
+        // Reset LGA dropdown
+        lgaSelect.innerHTML = "";
+
+        if (selectedState && lgaMap[selectedState]) {
+          // Enable dropdown and populate with LGAs
+          lgaSelect.disabled = false;
+          lgaSelect.classList.remove(
+            "disabled:opacity-50",
+            "disabled:cursor-not-allowed",
+          );
+
+          const defaultOption = document.createElement("option");
+          defaultOption.value = "";
+          defaultOption.textContent = "All LGAs";
+          lgaSelect.appendChild(defaultOption);
+
+          lgaMap[selectedState].forEach((lga) => {
+            const opt = document.createElement("option");
+            opt.value = lga;
+            opt.textContent = lga;
+            lgaSelect.appendChild(opt);
+          });
+        } else {
+          // No state selected - disable dropdown
+          lgaSelect.disabled = true;
+          lgaSelect.classList.add(
+            "disabled:opacity-50",
+            "disabled:cursor-not-allowed",
+          );
+
+          const defaultOption = document.createElement("option");
+          defaultOption.value = "";
+          defaultOption.textContent = "Select a state first";
+          lgaSelect.appendChild(defaultOption);
+        }
+      }
+      stateSelect.addEventListener("change", updateLgas);
 
       // ---------- Helper: format currency ----------
       function formatNaira(amount) {
@@ -499,7 +552,6 @@
           house.images && house.images[0]
             ? house.images[0].url
             : "images/hero.avif";
-        const seller = house.user || {};
         const listingLabel = house.listingType === "sale" ? "SALE" : "RENT";
         const priceLabel = house.listingType === "rent" ? "/yr" : "";
         const detailPage =
@@ -601,43 +653,28 @@
         lucide.createIcons();
       }
 
-      // ---------- Populate state & LGA filters ----------
-      const states = ["Lagos", "Abuja", "Rivers", "Kano", "Oyo"];
-      const lgaMap = {
-        Lagos: ["Ikeja", "Lekki", "Surulere", "Victoria Island"],
-        Abuja: ["Maitama", "Gwarinpa", "Wuse", "Garki"],
-        Rivers: ["Port Harcourt", "Obio/Akpor", "Eleme", "GRA PH"],
-        Kano: ["Nassarawa", "Fagge", "Ungogo"],
-        Oyo: ["Ibadan North", "Ibadan South East", "Akinyele"],
-      };
-      function populateStates() {
-        stateSelect.innerHTML = '<option value="">All States</option>';
-        states.forEach((s) => {
-          const opt = document.createElement("option");
-          opt.value = s;
-          opt.textContent = s;
-          stateSelect.appendChild(opt);
-        });
-      }
-      function updateLgas() {
-        const selectedState = stateSelect.value;
-        lgaSelect.innerHTML = '<option value="">All LGAs</option>';
-        if (selectedState && lgaMap[selectedState]) {
-          lgaMap[selectedState].forEach((lga) => {
-            const opt = document.createElement("option");
-            opt.value = lga;
-            opt.textContent = lga;
-            lgaSelect.appendChild(opt);
-          });
-        }
-      }
-      stateSelect.addEventListener("change", updateLgas);
-
-      // ---------- Search handler ----------
-      async function handleSearch() {
+      // ---------- Search handler: redirects to listing page with filters ----------
+      function handleSearch() {
         const state = stateSelect.value;
         const lga = lgaSelect.value;
-        await loadSections(state, lga);
+
+        // Build query parameters
+        const params = new URLSearchParams();
+        if (state) params.append("state", state);
+        if (lga) params.append("lga", lga);
+
+        const queryString = params.toString();
+
+        // Redirect based on active toggle
+        if (activeListingType === "sale") {
+          window.location.href = queryString
+            ? `forsale.html?${queryString}`
+            : "forsale.html";
+        } else {
+          window.location.href = queryString
+            ? `forrent.html?${queryString}`
+            : "forrent.html";
+        }
       }
       searchBtn.addEventListener("click", handleSearch);
 
@@ -675,8 +712,6 @@
       initUserHeader();
 
       // ---------- Initial load ----------
-      populateStates();
-      updateLgas();
       await loadSections();
       lucide.createIcons();
     </script>
