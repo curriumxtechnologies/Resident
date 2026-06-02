@@ -170,21 +170,223 @@
         backdrop-filter: blur(4px);
       }
 
-      .loading-spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #c5aa23;
-        border-radius: 50%;
-        width: 48px;
-        height: 48px;
-        animation: spin 0.8s linear infinite;
-        margin: 24px auto;
-      }
-      @keyframes spin {
+      /* Wireframe skeleton animation */
+      @keyframes shimmer {
         0% {
-          transform: rotate(0deg);
+          background-position: -400px 0;
         }
         100% {
-          transform: rotate(360deg);
+          background-position: 400px 0;
+        }
+      }
+
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          #e0e0e0 25%,
+          #f0f0f0 50%,
+          #e0e0e0 75%
+        );
+        background-size: 800px 100%;
+        animation: shimmer 1.5s infinite linear;
+        border-radius: 8px;
+      }
+
+      /* Header skeleton */
+      .skeleton-header {
+        background: white;
+        border-bottom: 1px solid #eeeef0;
+      }
+
+      .skeleton-logo {
+        width: 120px;
+        height: 36px;
+        border-radius: 4px;
+      }
+
+      .skeleton-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .skeleton-nav-btn {
+        width: 80px;
+        height: 36px;
+        border-radius: 999px;
+      }
+
+      /* Hero skeleton */
+      .skeleton-hero {
+        background: #001c4a;
+        padding: 64px 0;
+      }
+
+      .skeleton-hero-title {
+        height: 48px;
+        width: 60%;
+        margin: 0 auto 16px;
+        border-radius: 8px;
+      }
+
+      .skeleton-hero-text {
+        height: 20px;
+        width: 40%;
+        margin: 0 auto;
+        border-radius: 6px;
+      }
+
+      /* Filter bar skeleton */
+      .skeleton-filter-bar {
+        background: white;
+        border-bottom: 1px solid #e2e2e5;
+        padding: 20px 0;
+      }
+
+      .skeleton-filter-input {
+        height: 48px;
+        border-radius: 12px;
+        flex: 1;
+      }
+
+      .skeleton-filter-btn {
+        height: 48px;
+        width: 100px;
+        border-radius: 12px;
+      }
+
+      /* Property card skeletons */
+      .skeleton-card {
+        background: white;
+        border-radius: 1.25rem;
+        overflow: hidden;
+        border: 1px solid rgba(0, 28, 74, 0.06);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .skeleton-image {
+        width: 100%;
+        height: 280px;
+        background: linear-gradient(
+          90deg,
+          #e0e0e0 25%,
+          #f0f0f0 50%,
+          #e0e0e0 75%
+        );
+        background-size: 800px 100%;
+        animation: shimmer 1.5s infinite linear;
+      }
+
+      .skeleton-badge {
+        width: 70px;
+        height: 24px;
+        border-radius: 999px;
+      }
+
+      .skeleton-price {
+        width: 110px;
+        height: 32px;
+        border-radius: 8px;
+      }
+
+      .skeleton-title {
+        height: 20px;
+        margin-bottom: 8px;
+        width: 85%;
+      }
+
+      .skeleton-text {
+        height: 14px;
+        width: 55%;
+        margin-bottom: 16px;
+      }
+
+      .skeleton-feature {
+        height: 16px;
+        width: 55px;
+        border-radius: 4px;
+      }
+
+      .skeleton-button {
+        height: 28px;
+        width: 65px;
+        border-radius: 6px;
+      }
+
+      /* Result count skeleton */
+      .skeleton-result-count {
+        height: 20px;
+        width: 150px;
+        border-radius: 4px;
+      }
+
+      /* CTA section skeleton */
+      .skeleton-cta {
+        background: #001c4a;
+        padding: 64px 0;
+      }
+
+      .skeleton-cta-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin: 0 auto 16px;
+      }
+
+      .skeleton-cta-title {
+        height: 36px;
+        width: 50%;
+        margin: 0 auto 12px;
+        border-radius: 8px;
+      }
+
+      .skeleton-cta-text {
+        height: 16px;
+        width: 35%;
+        margin: 0 auto 32px;
+        border-radius: 6px;
+      }
+
+      .skeleton-cta-btn {
+        height: 48px;
+        width: 280px;
+        margin: 0 auto;
+        border-radius: 999px;
+      }
+
+      @media (min-width: 768px) {
+        .skeleton-image {
+          height: 320px;
+        }
+
+        .skeleton-logo {
+          width: 140px;
+          height: 44px;
+        }
+
+        .skeleton-hero-title {
+          height: 56px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .skeleton-hero-title {
+          width: 80%;
+          height: 36px;
+        }
+
+        .skeleton-hero-text {
+          width: 60%;
+          height: 16px;
+        }
+
+        .skeleton-cta-title {
+          width: 70%;
+        }
+
+        .skeleton-cta-text {
+          width: 55%;
         }
       }
 
@@ -198,226 +400,416 @@
     </style>
   </head>
   <body class="antialiased">
-    <header
-      class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
-    >
-      <div class="max-w-7xl mx-auto px-5 md:px-8">
-        <div class="flex items-center justify-between h-16 lg:h-18">
-          <a href="index.html" class="flex-shrink-0">
-            <img
-              src="images/logo.png"
-              alt="Rezident Homes Logo"
-              class="h-9 lg:h-11 w-auto object-contain"
-              onerror="
-                this.style.display = 'none';
-                this.parentElement.innerHTML =
-                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>REZIDENT HOMES</span>';
-              "
-            />
-          </a>
-          <div class="flex gap-3 items-center">
-            <a
-              href="forrent.html"
-              class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
-              >For Rent</a
-            >
-
-            <!-- User Avatar -->
-            <a
-              href="profile.html"
-              id="userAvatarLink"
-              class="flex items-center gap-2 hover:opacity-80 transition-opacity"
-            >
+    <!-- Full Page Skeleton Loader -->
+    <div id="skeletonLoader">
+      <!-- Header Skeleton -->
+      <header class="skeleton-header sticky top-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-5 md:px-8">
+          <div class="flex items-center justify-between h-16 lg:h-18">
+            <div class="skeleton skeleton-logo"></div>
+            <div class="flex gap-3 items-center">
+              <div class="skeleton skeleton-nav-btn"></div>
+              <div class="skeleton skeleton-avatar"></div>
               <div
-                id="userAvatar"
-                class="w-10 h-10 rounded-full overflow-hidden border-2 border-[#c5aa23] shadow-sm"
-              >
-                <div
-                  id="avatarPlaceholder"
-                  class="w-full h-full bg-[#001c4a] flex items-center justify-center text-white font-bold text-sm"
-                >
-                  <span id="avatarInitials">U</span>
-                </div>
-                <img
-                  id="avatarImage"
-                  src=""
-                  alt="User avatar"
-                  class="w-full h-full object-cover hidden"
-                  onerror="
-                    this.style.display = 'none';
-                    document.getElementById('avatarPlaceholder').style.display =
-                      'flex';
-                  "
-                />
-              </div>
-              <span
-                id="userName"
-                class="hidden md:inline text-sm font-medium text-primary"
-                >User</span
-              >
-            </a>
+                class="skeleton hidden md:block"
+                style="width: 60px; height: 16px"
+              ></div>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <main>
-      <section
-        class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden fade-up"
-      >
-        <div class="absolute inset-0 opacity-15">
-          <img
-            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&h=400&fit=crop"
-            alt="Luxury homes for sale"
-            class="w-full h-full object-cover"
-          />
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
-          <h1
-            class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4"
-          >
-            Homes for Sale
-          </h1>
-          <p class="text-white/80 text-base max-w-2xl mx-auto leading-relaxed">
-            Own your dream home today. From affordable townhouses to luxury
-            mansions. Zero hidden fees, transparent buying process.
-          </p>
-        </div>
-      </section>
+      <main>
+        <!-- Hero Section Skeleton -->
+        <section class="skeleton-hero">
+          <div class="max-w-7xl mx-auto px-5 md:px-8 text-center">
+            <div class="skeleton skeleton-hero-title"></div>
+            <div class="skeleton skeleton-hero-text"></div>
+          </div>
+        </section>
 
-      <div
-        class="sticky top-16 lg:top-18 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
+        <!-- Filter Bar Skeleton -->
+        <div class="skeleton-filter-bar sticky top-16 lg:top-18 z-40">
+          <div class="max-w-7xl mx-auto px-5 md:px-8">
+            <div
+              class="grid grid-cols-4 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-4"
+            >
+              <div class="skeleton skeleton-filter-input"></div>
+              <div class="skeleton skeleton-filter-input"></div>
+              <div class="skeleton skeleton-filter-input"></div>
+              <div class="skeleton skeleton-filter-btn"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Properties Section Skeleton -->
+        <section class="py-14 lg:py-20 px-5 md:px-8">
+          <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-10">
+              <div>
+                <div
+                  class="skeleton"
+                  style="width: 160px; height: 12px; margin-bottom: 8px"
+                ></div>
+              </div>
+              <div class="skeleton skeleton-result-count"></div>
+            </div>
+
+            <div class="properties-grid" id="skeletonGrid">
+              <!-- 6 skeleton cards -->
+              <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="p-5 md:p-6 flex flex-col flex-1">
+                  <div class="flex justify-between items-start mb-3">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-price"></div>
+                  </div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="mt-auto flex items-center justify-between pt-2">
+                    <div class="flex items-center gap-4">
+                      <div class="skeleton skeleton-feature"></div>
+                      <div class="skeleton skeleton-feature"></div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="p-5 md:p-6 flex flex-col flex-1">
+                  <div class="flex justify-between items-start mb-3">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-price"></div>
+                  </div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="mt-auto flex items-center justify-between pt-2">
+                    <div class="flex items-center gap-4">
+                      <div class="skeleton skeleton-feature"></div>
+                      <div class="skeleton skeleton-feature"></div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skeleton-card hidden md:flex">
+                <div class="skeleton-image"></div>
+                <div class="p-5 md:p-6 flex flex-col flex-1">
+                  <div class="flex justify-between items-start mb-3">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-price"></div>
+                  </div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="mt-auto flex items-center justify-between pt-2">
+                    <div class="flex items-center gap-4">
+                      <div class="skeleton skeleton-feature"></div>
+                      <div class="skeleton skeleton-feature"></div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skeleton-card hidden lg:flex">
+                <div class="skeleton-image"></div>
+                <div class="p-5 md:p-6 flex flex-col flex-1">
+                  <div class="flex justify-between items-start mb-3">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-price"></div>
+                  </div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="mt-auto flex items-center justify-between pt-2">
+                    <div class="flex items-center gap-4">
+                      <div class="skeleton skeleton-feature"></div>
+                      <div class="skeleton skeleton-feature"></div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skeleton-card hidden lg:flex">
+                <div class="skeleton-image"></div>
+                <div class="p-5 md:p-6 flex flex-col flex-1">
+                  <div class="flex justify-between items-start mb-3">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-price"></div>
+                  </div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="mt-auto flex items-center justify-between pt-2">
+                    <div class="flex items-center gap-4">
+                      <div class="skeleton skeleton-feature"></div>
+                      <div class="skeleton skeleton-feature"></div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skeleton-card hidden lg:flex">
+                <div class="skeleton-image"></div>
+                <div class="p-5 md:p-6 flex flex-col flex-1">
+                  <div class="flex justify-between items-start mb-3">
+                    <div class="skeleton skeleton-badge"></div>
+                    <div class="skeleton skeleton-price"></div>
+                  </div>
+                  <div class="skeleton skeleton-title"></div>
+                  <div class="skeleton skeleton-text"></div>
+                  <div class="mt-auto flex items-center justify-between pt-2">
+                    <div class="flex items-center gap-4">
+                      <div class="skeleton skeleton-feature"></div>
+                      <div class="skeleton skeleton-feature"></div>
+                    </div>
+                    <div class="skeleton skeleton-button"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA Section Skeleton -->
+        <section class="skeleton-cta">
+          <div class="max-w-3xl mx-auto text-center">
+            <div class="skeleton skeleton-cta-icon"></div>
+            <div class="skeleton skeleton-cta-title"></div>
+            <div class="skeleton skeleton-cta-text"></div>
+            <div class="skeleton skeleton-cta-btn"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Actual Content (Hidden Initially) -->
+    <div id="actualContent" style="display: none">
+      <header
+        class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-[#eeeef0]"
       >
         <div class="max-w-7xl mx-auto px-5 md:px-8">
-          <div
-            class="grid grid-cols-4 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-4"
-          >
-            <div
-              class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
-            >
-              <i
-                data-lucide="map-pin"
-                class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
-              ></i>
-              <select
-                id="stateFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate"
+          <div class="flex items-center justify-between h-16 lg:h-18">
+            <a href="index.html" class="flex-shrink-0">
+              <img
+                src="images/logo.png"
+                alt="Rezident Homes Logo"
+                class="h-9 lg:h-11 w-auto object-contain"
+                onerror="
+                  this.style.display = 'none';
+                  this.parentElement.innerHTML =
+                    '<span class=\'text-xl font-black tracking-tighter text-primary\'>REZIDENT HOMES</span>';
+                "
+              />
+            </a>
+            <div class="flex gap-3 items-center">
+              <a
+                href="forrent.html"
+                class="inline-flex bg-[#001c4a] text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0d316d] transition-all duration-300"
+                >For Rent</a
               >
-                <option value="all">All States</option>
-                <option value="Rivers">Rivers</option>
-              </select>
-            </div>
-            <div
-              class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
-            >
-              <i
-                data-lucide="map"
-                class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
-              ></i>
-              <select
-                id="lgaFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled
+
+              <!-- User Avatar -->
+              <a
+                href="profile.html"
+                id="userAvatarLink"
+                class="flex items-center gap-2 hover:opacity-80 transition-opacity"
               >
-                <option value="all">Select a state first</option>
-              </select>
+                <div
+                  id="userAvatar"
+                  class="w-10 h-10 rounded-full overflow-hidden border-2 border-[#c5aa23] shadow-sm"
+                >
+                  <div
+                    id="avatarPlaceholder"
+                    class="w-full h-full bg-[#001c4a] flex items-center justify-center text-white font-bold text-sm"
+                  >
+                    <span id="avatarInitials">U</span>
+                  </div>
+                  <img
+                    id="avatarImage"
+                    src=""
+                    alt="User avatar"
+                    class="w-full h-full object-cover hidden"
+                    onerror="
+                      this.style.display = 'none';
+                      document.getElementById(
+                        'avatarPlaceholder',
+                      ).style.display = 'flex';
+                    "
+                  />
+                </div>
+                <span
+                  id="userName"
+                  class="hidden md:inline text-sm font-medium text-primary"
+                  >User</span
+                >
+              </a>
             </div>
-            <div
-              class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section
+          class="relative bg-[#001c4a] text-white py-16 lg:py-24 overflow-hidden fade-up"
+        >
+          <div class="absolute inset-0 opacity-15">
+            <img
+              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&h=400&fit=crop"
+              alt="Luxury homes for sale"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
+            <h1
+              class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4"
             >
+              Homes for Sale
+            </h1>
+            <p
+              class="text-white/80 text-base max-w-2xl mx-auto leading-relaxed"
+            >
+              Own your dream home today. From affordable townhouses to luxury
+              mansions. Zero hidden fees, transparent buying process.
+            </p>
+          </div>
+        </section>
+
+        <div
+          class="sticky top-16 lg:top-18 z-40 bg-white/80 backdrop-blur-md border-b border-[#e2e2e5] py-5 shadow-sm fade-up"
+        >
+          <div class="max-w-7xl mx-auto px-5 md:px-8">
+            <div
+              class="grid grid-cols-4 md:flex md:flex-row items-stretch md:items-center gap-2 md:gap-4"
+            >
+              <div
+                class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+              >
+                <i
+                  data-lucide="map-pin"
+                  class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
+                ></i>
+                <select
+                  id="stateFilter"
+                  class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate"
+                >
+                  <option value="all">All States</option>
+                  <option value="Rivers">Rivers</option>
+                </select>
+              </div>
+              <div
+                class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+              >
+                <i
+                  data-lucide="map"
+                  class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
+                ></i>
+                <select
+                  id="lgaFilter"
+                  class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled
+                >
+                  <option value="all">Select a state first</option>
+                </select>
+              </div>
+              <div
+                class="flex items-center gap-1.5 md:gap-3 px-2 md:px-4 py-3 bg-[#f3f3f6] rounded-xl border border-[#c4c6d1]/40 w-full"
+              >
+                <i
+                  data-lucide="home"
+                  class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
+                ></i>
+                <select
+                  id="typeFilter"
+                  class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate"
+                >
+                  <option value="all" class="md:hidden">Type</option>
+                  <option value="one-room">One Room</option>
+                  <option value="self-contain">Self Contain</option>
+                  <option value="1-bed">1 Bed</option>
+                  <option value="2-bed">2 Bed</option>
+                  <option value="3-bed">3 Bed</option>
+                  <option value="4-bed-plus">4 Bed+</option>
+                </select>
+              </div>
+              <button
+                id="searchBtn"
+                class="bg-tertiary-container text-primary px-3 md:px-5 py-3 rounded-xl font-bold hover-bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-1 md:gap-2 text-sm w-full"
+              >
+                <i data-lucide="search" class="w-4 h-4 md:w-5 md:h-5"></i>
+                <span class="hidden md:inline">Search</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <section class="py-14 lg:py-20 px-5 md:px-8">
+          <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-10 fade-up">
+              <div>
+                <span
+                  class="text-tertiary font-bold uppercase tracking-widest text-xs"
+                  >Signature Collection</span
+                >
+              </div>
+              <div id="resultCount" class="text-sm text-[#444650]"></div>
+            </div>
+
+            <div id="propertiesContainer" class="properties-grid">
+              <!-- Properties will be rendered here -->
+            </div>
+
+            <div id="emptyState" class="hidden empty-state mt-8 fade-up">
               <i
                 data-lucide="home"
-                class="text-tertiary w-4 h-4 md:w-5 md:h-5 shrink-0"
+                class="w-16 h-16 text-[#c4c6d1] mx-auto mb-4"
               ></i>
-              <select
-                id="typeFilter"
-                class="w-full bg-transparent border-none focus:ring-0 text-[#1a1c1e] font-medium text-sm outline-none cursor-pointer truncate"
+              <h3 class="text-xl font-headline font-bold text-primary">
+                No matching properties for sale
+              </h3>
+              <p class="text-[#777] text-sm mt-2">
+                Try adjusting your search or filter.
+              </p>
+              <button
+                id="resetFiltersBtn"
+                class="mt-6 bg-tertiary-container text-primary px-6 py-3 rounded-full text-sm font-bold hover-bg-tertiary-fixed transition"
               >
-                <option value="all" class="md:hidden">Type</option>
-                <option value="one-room">One Room</option>
-                <option value="self-contain">Self Contain</option>
-                <option value="1-bed">1 Bed</option>
-                <option value="2-bed">2 Bed</option>
-                <option value="3-bed">3 Bed</option>
-                <option value="4-bed-plus">4 Bed+</option>
-              </select>
-            </div>
-            <button
-              id="searchBtn"
-              class="bg-tertiary-container text-primary px-3 md:px-5 py-3 rounded-xl font-bold hover-bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-1 md:gap-2 text-sm w-full"
-            >
-              <i data-lucide="search" class="w-4 h-4 md:w-5 md:h-5"></i>
-              <span class="hidden md:inline">Search</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <section class="py-14 lg:py-20 px-5 md:px-8">
-        <div class="max-w-7xl mx-auto">
-          <div class="flex justify-between items-center mb-10 fade-up">
-            <div>
-              <span
-                class="text-tertiary font-bold uppercase tracking-widest text-xs"
-                >Signature Collection</span
-              >
-            </div>
-            <div id="resultCount" class="text-sm text-[#444650]"></div>
-          </div>
-
-          <div id="propertiesContainer" class="properties-grid">
-            <div class="col-span-full text-center py-16">
-              <div class="loading-spinner"></div>
+                Reset Filters
+              </button>
             </div>
           </div>
+        </section>
 
-          <div id="emptyState" class="hidden empty-state mt-8 fade-up">
+        <section
+          class="py-16 lg:py-22 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
+        >
+          <div class="max-w-3xl mx-auto text-center">
             <i
-              data-lucide="home"
-              class="w-16 h-16 text-[#c4c6d1] mx-auto mb-4"
+              data-lucide="handshake"
+              class="w-10 h-10 text-tertiary-container mx-auto mb-4"
             ></i>
-            <h3 class="text-xl font-headline font-bold text-primary">
-              No matching properties for sale
-            </h3>
-            <p class="text-[#777] text-sm mt-2">
-              Try adjusting your search or filter.
+            <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">
+              Ready to own? We simplify the purchase.
+            </h2>
+            <p class="text-white/70 text-sm mb-8 max-w-lg mx-auto">
+              Flexible payment plans, legal support & zero hidden fees. Talk to
+              our sales team today.
             </p>
-            <button
-              id="resetFiltersBtn"
-              class="mt-6 bg-tertiary-container text-primary px-6 py-3 rounded-full text-sm font-bold hover-bg-tertiary-fixed transition"
+            <a
+              href="https://wa.me/2349032280032"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover-bg-tertiary-fixed transition shadow-md text-sm"
             >
-              Reset Filters
-            </button>
+              Request Private Sales Consultation
+            </a>
           </div>
-        </div>
-      </section>
-
-      <section
-        class="py-16 lg:py-22 px-5 md:px-8 bg-[#001c4a] text-white fade-up"
-      >
-        <div class="max-w-3xl mx-auto text-center">
-          <i
-            data-lucide="handshake"
-            class="w-10 h-10 text-tertiary-container mx-auto mb-4"
-          ></i>
-          <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">
-            Ready to own? We simplify the purchase.
-          </h2>
-          <p class="text-white/70 text-sm mb-8 max-w-lg mx-auto">
-            Flexible payment plans, legal support & zero hidden fees. Talk to
-            our sales team today.
-          </p>
-          <a
-            href="https://wa.me/2349032280032"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-block bg-tertiary-container text-primary px-6 py-3 rounded-full font-bold hover-bg-tertiary-fixed transition shadow-md text-sm"
-          >
-            Request Private Sales Consultation
-          </a>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </div>
 
     <script type="module">
       import { getBaseURL } from "./js/apiConfig.js";
@@ -496,11 +888,6 @@
           }
         }
       }
-
-      // Call this function after DOM is loaded
-      document.addEventListener("DOMContentLoaded", () => {
-        loadUserProfile();
-      });
 
       function formatNaira(amount) {
         return new Intl.NumberFormat("en-NG", {
@@ -655,6 +1042,12 @@
         fadeElements.forEach((el) => observer.observe(el));
       }
 
+      // Show actual content and hide skeleton
+      function showActualContent() {
+        document.getElementById("skeletonLoader").style.display = "none";
+        document.getElementById("actualContent").style.display = "block";
+      }
+
       (async function () {
         const container = document.getElementById("propertiesContainer");
         const stateSelect = document.getElementById("stateFilter");
@@ -666,13 +1059,20 @@
         let allHouses = [];
         let currentFilters = { state: "all", lga: "all", type: "all" };
 
-        container.innerHTML =
-          '<div class="col-span-full text-center py-16"><div class="loading-spinner"></div></div>';
         try {
+          // Load user profile first
+          await loadUserProfile();
+
+          // Fetch houses
           allHouses = await fetchHouses();
+
+          // Show actual content and hide skeleton
+          showActualContent();
+
           if (!allHouses.length) {
             container.innerHTML = "";
             document.getElementById("emptyState").classList.remove("hidden");
+            lucide.createIcons();
             return;
           }
 
@@ -694,8 +1094,10 @@
           }
         } catch (err) {
           console.error(err);
+          showActualContent();
           container.innerHTML =
             '<div class="col-span-full text-center py-12 text-red-600 text-sm">Failed to load properties. Please try again later.</div>';
+          lucide.createIcons();
         }
 
         function getFiltered() {
@@ -750,6 +1152,7 @@
           });
         }
 
+        // Initialize fade-up animations
         const fadeElements = document.querySelectorAll(".fade-up");
         const observer = new IntersectionObserver(
           (entries) => {
