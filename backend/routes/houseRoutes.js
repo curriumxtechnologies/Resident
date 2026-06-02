@@ -25,7 +25,7 @@ import {
 
 const router = Router();
 
-// Public routes (no auth required)
+// ========== PUBLIC ROUTES (NO AUTH REQUIRED) ==========
 router.get("/", getHouses);
 router.get("/locations", getLocations);
 router.get("/search", searchHouses);
@@ -33,22 +33,27 @@ router.get("/featured", getFeaturedHouses);
 router.get("/verify-payment", verifyPayment);
 router.get("/seller/:sellerId", getSellerListings);
 router.post("/:id/inquiry", sendInquiry);
+router.get("/:id", getHouseById);  // ✅ MOVE THIS HERE - PUBLIC!
 
-// Protected routes (auth required)
+// ========== PROTECTED ROUTES (AUTH REQUIRED) ==========
 router.use(protect);
 
+// House management
 router.post("/", uploadHouseFiles, createHouseListing);
+router.put("/:id", uploadHouseFiles, updateHouse);
+router.delete("/:id", deleteHouse);
+router.patch("/:id/status", toggleStatus);
+
+// User specific
 router.get("/my-listings", getMyListings);
 router.get("/my-houses", getMyHouses);
 router.get("/my-receipts", getMyReceipts);
+
+// Payment
 router.post("/initiate-payment", initiatePayment);
 
-// Routes with :id (must be AFTER specific routes)
+// Receipts and transactions
 router.get("/receipt/:receiptId/download", downloadReceipt);
 router.get("/transaction/:id", getTransactionById);
-router.get("/:id", getHouseById);
-router.put("/:id", uploadHouseFiles, updateHouse);
-router.patch("/:id/status", toggleStatus);
-router.delete("/:id", deleteHouse);
 
 export default router;

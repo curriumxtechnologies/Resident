@@ -334,10 +334,10 @@
         <h3 class="text-xl font-bold text-primary mb-2">Authentication Required</h3>
         <p class="text-gray-600 text-sm mb-6">You need to be logged in to purchase this property. Please login or create an account to continue.</p>
         <div class="space-y-3">
-          <button onclick="redirectToLogin()" class="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-dark transition flex items-center justify-center gap-2">
+          <button id="authModalLoginBtn" class="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-dark transition flex items-center justify-center gap-2">
             <i class="fas fa-sign-in-alt"></i> Login Now
           </button>
-          <button onclick="closeAuthModal()" class="w-full border border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:bg-gray-50 transition">
+          <button id="authModalCancelBtn" class="w-full border border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:bg-gray-50 transition">
             Cancel
           </button>
         </div>
@@ -349,6 +349,12 @@
       import { getBaseURL } from "./js/apiConfig.js";
       import { getHouseById } from "./slices/houseService.js";
       import { getHouses } from "./slices/houseService.js";
+      import { getUserProfile } from "./slices/userService.js";
+      import { getStoredToken, clearAuthData, storeUser } from "./js/tokenStorage.js";
+      import { authService } from "./js/authService.js";
+
+      // Global user object
+      let currentUser = null;
 
       // ---------- HELPER FUNCTIONS ----------
       function formatNaira(amount) {
@@ -379,26 +385,6 @@
         setTimeout(() => toast.remove(), 5000);
       }
 
-      // Get stored auth data
-      function getStoredToken() {
-        return localStorage.getItem("auth_token") || localStorage.getItem("token");
-      }
-
-      function getStoredUser() {
-        try {
-          const user = localStorage.getItem("user");
-          if (!user) return null;
-          return typeof user === "string" ? JSON.parse(user) : user;
-        } catch (e) {
-          console.error("Error parsing user:", e);
-          return null;
-        }
-      }
-
-      function isLoggedIn() {
-        return !!getStoredToken();
-      }
-
       // Auth Modal Functions
       function showAuthModal() {
         const modal = document.getElementById("authModal");
@@ -418,13 +404,6 @@
         sessionStorage.setItem("redirectAfterLogin", window.location.href);
         window.location.href = "login.html";
       }
-
-      // Close modal when clicking outside
-      document.getElementById("authModal")?.addEventListener("click", function(e) {
-        if (e.target === this) {
-          closeAuthModal();
-        }
-      });
 
       // ---------- DOM REFS ----------
       const loadingState = document.getElementById("loadingState");
@@ -465,8 +444,8 @@
       let currentHouseForPayment = null;
 
       function openPaymentModal(house) {
-        // Check if user is logged in - SHOW POPUP INSTEAD OF REDIRECT
-        if (!isLoggedIn()) {
+        // Check if user is logged in using the currentUser object
+        if (!currentUser || !getStoredToken()) {
           showAuthModal();
           return;
         }
@@ -547,6 +526,8 @@
         }
       }
 
+      window.closePaymentModal = closePaymentModal;
+
       function setupPaymentListener(house) {
         const confirmBtn = document.getElementById("confirmPaymentBtn");
         if (!confirmBtn) return;
@@ -571,26 +552,24 @@
           const percentage = parseInt(selectedPlan.value);
           const amount = Math.round((house.price || 0) * (percentage / 100));
           
-          // Get auth data
+          // Get auth data from currentUser
           const token = getStoredToken();
-          let user = getStoredUser();
 
           // Double check login status
-          if (!token || !user) {
+          if (!token || !currentUser) {
             showAuthModal();
             return;
           }
 
-          // Safely get user details
-          const userEmail = user.email;
-          const userName = user.name || user.username || "Guest Buyer";
+          // Safely get user details from currentUser
+          const userEmail = currentUser.email;
+          const userName = currentUser.name || currentUser.username || "Guest Buyer";
           
           if (!userEmail) {
             showToast("User email not found. Please re-login.", "error");
-            localStorage.removeItem("auth_token");
-            localStorage.removeItem("user");
+            clearAuthData();
             setTimeout(() => {
-              location.reload();
+              window.location.href = "login.html";
             }, 1500);
             return;
           }
@@ -614,7 +593,7 @@
             };
 
             console.log("Payment request:", requestBody);
-            console.log("Token being sent:", token);
+            console.log("Current user:", currentUser);
 
             const response = await fetch(`${getBaseURL()}/houses/initiate-payment`, {
               method: "POST",
@@ -654,8 +633,6 @@
           }
         });
       }
-
-      window.closePaymentModal = closePaymentModal;
 
       // ---------- SIMILAR PROPERTIES ----------
       async function fetchSimilarProperties(currentHouseId, currentListingType) {
@@ -952,6 +929,19 @@
             });
           }
 
+          // Check for redirect after login
+          const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+          if (redirectUrl && redirectUrl === window.location.href) {
+            sessionStorage.removeItem("redirectAfterLogin");
+            if (currentUser && getStoredToken()) {
+              showToast("Login successful! You can now make payment.", "success");
+              setTimeout(() => {
+                openPaymentModal(house);
+                setupPaymentListener(house);
+              }, 1000);
+            }
+          }
+
           const fadeElements = document.querySelectorAll(".fade-up");
           const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add("revealed"); });
@@ -971,7 +961,53 @@
         }
       }
 
-      renderProperty();
+      // ---------- CHECK AUTHENTICATION FIRST (like profile page) ----------
+      async function checkAuth() {
+        const token = getStoredToken();
+        if (!token) {
+          // No token, but we still show property details - just can't purchase
+          console.log("User not logged in");
+          return false;
+        }
+        
+        try {
+          // Verify token is valid by fetching user profile
+          const user = await getUserProfile();
+          if (user) {
+            currentUser = user;
+            storeUser(user);
+            console.log("User authenticated:", user.name);
+            return true;
+          }
+        } catch (err) {
+          console.warn("Auth check failed:", err.message);
+          clearAuthData();
+          return false;
+        }
+        return false;
+      }
+
+      // ---------- INITIALIZE PAGE ----------
+      async function init() {
+        // First check authentication (like profile page)
+        await checkAuth();
+        
+        // Then load property details (always loads, regardless of auth)
+        await renderProperty();
+        
+        // Setup auth modal buttons
+        const loginBtn = document.getElementById("authModalLoginBtn");
+        const cancelBtn = document.getElementById("authModalCancelBtn");
+        
+        if (loginBtn) {
+          loginBtn.addEventListener("click", redirectToLogin);
+        }
+        if (cancelBtn) {
+          cancelBtn.addEventListener("click", closeAuthModal);
+        }
+      }
+
+      init();
     </script>
   </body>
 </html>
