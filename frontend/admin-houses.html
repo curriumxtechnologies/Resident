@@ -114,35 +114,72 @@
         border-color: #001c4a;
         box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
       }
-      .status-badge {
-        display: inline-flex;
+      .search-icon-btn {
+        display: none;
+        padding: 0.65rem;
+        border-radius: 0.75rem;
+        background: white;
+        border: 1px solid rgba(116, 119, 129, 0.25);
+        cursor: pointer;
         align-items: center;
-        gap: 0.25rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: bold;
-        text-transform: capitalize;
+        justify-content: center;
+        flex-shrink: 0;
       }
-      .status-published {
-        background: #d1fae5;
-        color: #065f46;
+      .search-icon-btn:hover {
+        background: #f3f4f6;
       }
-      .status-draft {
-        background: #fef3c7;
-        color: #92400e;
+      .search-wrapper {
+        position: relative;
       }
-      .status-inactive {
-        background: #fee2e2;
-        color: #991b1b;
+      .search-overlay {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        left: 0;
+        width: calc(100vw - 2.5rem);
+        max-width: 400px;
+        background: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(116, 119, 129, 0.2);
+        padding: 0.75rem;
+        z-index: 50;
+        display: none;
       }
-      .status-sold {
-        background: #e0e7ff;
-        color: #3730a3;
+      .search-overlay.show {
+        display: block;
       }
-      .status-rented {
-        background: #fce7f3;
-        color: #9d174d;
+      .search-overlay-inner {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .search-overlay input {
+        flex: 1;
+        min-width: 0;
+      }
+      .search-overlay-close {
+        padding: 0.5rem;
+        border-radius: 0.75rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: #747781;
+      }
+      .search-overlay-close:hover {
+        background: #f3f4f6;
+        color: #1a1c1e;
+      }
+      @media (max-width: 767px) {
+        .search-icon-btn {
+          display: inline-flex;
+        }
+        .search-input-desktop {
+          display: none;
+        }
       }
     </style>
   </head>
@@ -162,14 +199,38 @@
               View, update status, or delete any property listing.
             </p>
           </div>
-          <div class="flex gap-3">
+          <div class="flex gap-3 w-full md:w-auto items-center">
+            <!-- Search wrapper for mobile -->
+            <div class="search-wrapper">
+              <button id="searchIconBtn" class="search-icon-btn" title="Search">
+                <i data-lucide="search" class="lucide"></i>
+              </button>
+              <div id="searchOverlay" class="search-overlay">
+                <div class="search-overlay-inner">
+                  <i
+                    data-lucide="search"
+                    class="lucide text-on-surface-variant flex-shrink-0"
+                  ></i>
+                  <input
+                    type="text"
+                    id="searchInputMobile"
+                    placeholder="Search by title, address, seller..."
+                    class="input-field"
+                  />
+                  <button id="searchCloseBtn" class="search-overlay-close">
+                    <i data-lucide="x" class="lucide"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Search input (desktop) -->
             <input
               type="text"
-              id="searchInput"
+              id="searchInputDesktop"
               placeholder="Search by title, address, seller..."
-              class="input-field w-64"
+              class="input-field w-64 search-input-desktop"
             />
-            <select id="statusFilter" class="input-field w-40">
+            <select id="statusFilter" class="input-field w-40 flex-shrink-0">
               <option value="">All Status</option>
               <option value="published">Published</option>
               <option value="draft">Draft</option>
@@ -177,7 +238,7 @@
               <option value="sold">Sold</option>
               <option value="rented">Rented</option>
             </select>
-            <select id="typeFilter" class="input-field w-40">
+            <select id="typeFilter" class="input-field w-40 flex-shrink-0">
               <option value="">All Types</option>
               <option value="rent">Rent</option>
               <option value="sale">Sale</option>
@@ -320,9 +381,37 @@
       const pageStartSpan = document.getElementById("pageStart");
       const pageEndSpan = document.getElementById("pageEnd");
       const totalCountSpan = document.getElementById("totalCount");
-      const searchInput = document.getElementById("searchInput");
+      const searchInputDesktop = document.getElementById("searchInputDesktop");
+      const searchInputMobile = document.getElementById("searchInputMobile");
+      const searchIconBtn = document.getElementById("searchIconBtn");
+      const searchOverlay = document.getElementById("searchOverlay");
+      const searchCloseBtn = document.getElementById("searchCloseBtn");
       const statusFilterSelect = document.getElementById("statusFilter");
       const typeFilterSelect = document.getElementById("typeFilter");
+
+      // Search overlay functionality
+      searchIconBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        searchOverlay.classList.toggle("show");
+        if (searchOverlay.classList.contains("show")) {
+          searchInputMobile.focus();
+        }
+      });
+
+      searchCloseBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        searchOverlay.classList.remove("show");
+      });
+
+      // Close overlay when clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          !searchOverlay.contains(e.target) &&
+          !searchIconBtn.contains(e.target)
+        ) {
+          searchOverlay.classList.remove("show");
+        }
+      });
 
       function showLoading(show) {
         loadingOverlay.classList.toggle("hidden", !show);
@@ -479,28 +568,38 @@
         totalCountSpan.textContent = total;
       }
 
-      // Event listeners
-      searchInput.addEventListener("input", (e) => {
+      // Event listeners for search
+      searchInputDesktop.addEventListener("input", (e) => {
         search = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
+
+      searchInputMobile.addEventListener("input", (e) => {
+        search = e.target.value;
+        currentPage = 1;
+        fetchHouses();
+      });
+
       statusFilterSelect.addEventListener("change", (e) => {
         statusFilter = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
+
       typeFilterSelect.addEventListener("change", (e) => {
         typeFilter = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
+
       prevBtn.addEventListener("click", () => {
         if (currentPage > 1) {
           currentPage--;
           fetchHouses();
         }
       });
+
       nextBtn.addEventListener("click", () => {
         currentPage++;
         fetchHouses();
@@ -508,6 +607,9 @@
 
       // Initial fetch
       fetchHouses();
+
+      // Re-initialize lucide icons for the search button and close button
+      lucide.createIcons();
     </script>
   </body>
 </html>
