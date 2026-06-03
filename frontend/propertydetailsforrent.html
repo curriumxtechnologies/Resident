@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <title>Property Details | Rezident Homes - Luxury Rentals</title>
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
@@ -15,19 +15,50 @@
       href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    
+
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-    
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <script>
       tailwind.config = {
         theme: {
@@ -37,7 +68,7 @@
               "primary-dark": "#000d1f",
               tertiary: "#c5aa23",
               "tertiary-dark": "#a08a1c",
-              "surface": "#f9f9fc",
+              surface: "#f9f9fc",
               "surface-card": "#ffffff",
             },
             fontFamily: {
@@ -48,26 +79,28 @@
         },
       };
     </script>
-    
+
     <style>
       * {
         -webkit-tap-highlight-color: transparent;
       }
-      
+
       body {
         font-family: "Inter", system-ui, sans-serif;
         background: #f9f9fc;
       }
-      
+
       .property-card {
-        transition: transform 0.25s ease, box-shadow 0.3s ease;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
       }
-      
+
       .property-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
       }
-      
+
       .loader {
         border: 3px solid #f3f3f3;
         border-top: 3px solid #c5aa23;
@@ -77,7 +110,7 @@
         animation: spin 0.8s linear infinite;
         margin: 20px auto;
       }
-      
+
       .loader-sm {
         border: 2px solid rgba(0, 28, 74, 0.2);
         border-top: 2px solid #001c4a;
@@ -87,12 +120,16 @@
         animation: spin 0.6s linear infinite;
         display: inline-block;
       }
-      
+
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
-      
+
       .modal {
         display: none;
         position: fixed;
@@ -104,19 +141,19 @@
         z-index: 1000;
         cursor: pointer;
       }
-      
+
       .modal.active {
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      
+
       .modal-img {
         max-width: 90%;
         max-height: 90%;
         object-fit: contain;
       }
-      
+
       .close-modal {
         position: absolute;
         top: 20px;
@@ -127,38 +164,39 @@
         cursor: pointer;
         transition: color 0.2s;
       }
-      
+
       .close-modal:hover {
         color: #c5aa23;
       }
-      
+
       .thumb-active {
         border-color: #c5aa23 !important;
         opacity: 1;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
-      
+
       .fade-up {
         opacity: 0;
         transform: translateY(30px);
-        transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1),
-                    transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        transition:
+          opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+          transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       }
-      
+
       .fade-up.revealed {
         opacity: 1;
         transform: translateY(0);
       }
-      
+
       .btn-hover {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      
+
       .btn-hover:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       }
-      
+
       /* Toast Notification */
       .toast {
         position: fixed;
@@ -167,7 +205,7 @@
         z-index: 1100;
         animation: slideInRight 0.3s ease-out;
       }
-      
+
       @keyframes slideInRight {
         from {
           transform: translateX(100%);
@@ -192,11 +230,11 @@
         align-items: center;
         justify-content: center;
       }
-      
+
       .auth-modal.active {
         display: flex;
       }
-      
+
       .auth-modal-content {
         background: white;
         border-radius: 24px;
@@ -206,7 +244,7 @@
         text-align: center;
         animation: slideUp 0.3s ease-out;
       }
-      
+
       @keyframes slideUp {
         from {
           transform: translateY(50px);
@@ -219,18 +257,27 @@
       }
     </style>
   </head>
-  
+
   <body class="bg-surface font-body antialiased">
     <!-- Navigation -->
-    <header class="sticky top-0 w-full z-50 bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-100">
+    <header
+      class="sticky top-0 w-full z-50 bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-100"
+    >
       <div class="max-w-7xl mx-auto px-5 md:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
           <a href="home.html" class="flex-shrink-0">
-            <img src="images/logo.png" alt="Rezident Homes Logo" class="h-9 lg:h-11 w-auto object-contain" />
+            <img
+              src="images/logo.png"
+              alt="Rezident Homes Logo"
+              class="h-9 lg:h-11 w-auto object-contain"
+            />
           </a>
-          
+
           <div class="flex items-center gap-4">
-            <a href="forrent.html" class="text-sm font-medium text-primary hover:text-tertiary transition flex items-center gap-2">
+            <a
+              href="forrent.html"
+              class="text-sm font-medium text-primary hover:text-tertiary transition flex items-center gap-2"
+            >
               <i class="fas fa-arrow-left text-xs"></i> Back to Rent Listings
             </a>
           </div>
@@ -246,7 +293,10 @@
       </div>
 
       <!-- Error State -->
-      <div id="errorState" class="hidden max-w-3xl mx-auto mt-20 bg-red-50/70 text-red-800 p-10 rounded-3xl text-center shadow-sm border border-red-100/60"></div>
+      <div
+        id="errorState"
+        class="hidden max-w-3xl mx-auto mt-20 bg-red-50/70 text-red-800 p-10 rounded-3xl text-center shadow-sm border border-red-100/60"
+      ></div>
 
       <!-- Property Content -->
       <div id="propertyContent" class="hidden"></div>
@@ -255,70 +305,134 @@
     <!-- Fullscreen Gallery Modal -->
     <div id="imageModal" class="modal">
       <span class="close-modal">&times;</span>
-      <img class="modal-img" id="modalImage" src="" alt="Full size property image" />
+      <img
+        class="modal-img"
+        id="modalImage"
+        src=""
+        alt="Full size property image"
+      />
     </div>
 
     <!-- Payment Modal -->
-    <div id="paymentModal" class="modal" style="background-color: rgba(0, 0, 0, 0.8); z-index: 1100">
-      <div class="bg-white rounded-2xl max-w-md w-full p-6 relative mx-4 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-        <button onclick="closePaymentModal()" class="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-2xl leading-none">
+    <div
+      id="paymentModal"
+      class="modal"
+      style="background-color: rgba(0, 0, 0, 0.8); z-index: 1100"
+    >
+      <div
+        class="bg-white rounded-2xl max-w-md w-full p-6 relative mx-4 max-h-[90vh] overflow-y-auto"
+        onclick="event.stopPropagation()"
+      >
+        <button
+          onclick="closePaymentModal()"
+          class="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-2xl leading-none"
+        >
           &times;
         </button>
 
         <div class="text-center mb-4 mt-2">
-          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <div
+            class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3"
+          >
             <i class="fas fa-credit-card text-2xl text-tertiary"></i>
           </div>
-          <h3 class="text-xl font-headline font-extrabold text-primary">Secure Payment Portal</h3>
-          <p class="text-sm text-gray-500 mt-1">Choose your preferred payment plan</p>
+          <h3 class="text-xl font-headline font-extrabold text-primary">
+            Secure Payment Portal
+          </h3>
+          <p class="text-sm text-gray-500 mt-1">
+            Choose your preferred payment plan
+          </p>
         </div>
 
-        <div id="paymentPropertyDetails" class="bg-gray-50 p-3 rounded-lg text-sm mb-4"></div>
+        <div
+          id="paymentPropertyDetails"
+          class="bg-gray-50 p-3 rounded-lg text-sm mb-4"
+        ></div>
 
         <!-- Payment Plan Selection -->
         <div class="space-y-3 mb-4">
-          <label class="block text-xs font-bold text-primary mb-2">Select Payment Plan</label>
+          <label class="block text-xs font-bold text-primary mb-2"
+            >Select Payment Plan</label
+          >
 
-          <label class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition">
-            <input type="radio" name="paymentPlan" value="30" class="accent-tertiary w-4 h-4" />
+          <label
+            class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition"
+          >
+            <input
+              type="radio"
+              name="paymentPlan"
+              value="30"
+              class="accent-tertiary w-4 h-4"
+            />
             <div class="flex-1">
-              <span class="font-semibold text-sm text-primary">30% Initial Payment</span>
+              <span class="font-semibold text-sm text-primary"
+                >30% Initial Payment</span
+              >
               <p class="text-xs text-gray-500" id="plan30Amount">₦0</p>
             </div>
           </label>
 
-          <label class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition">
-            <input type="radio" name="paymentPlan" value="50" class="accent-tertiary w-4 h-4" />
+          <label
+            class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition"
+          >
+            <input
+              type="radio"
+              name="paymentPlan"
+              value="50"
+              class="accent-tertiary w-4 h-4"
+            />
             <div class="flex-1">
-              <span class="font-semibold text-sm text-primary">50% Initial Payment</span>
+              <span class="font-semibold text-sm text-primary"
+                >50% Initial Payment</span
+              >
               <p class="text-xs text-gray-500" id="plan50Amount">₦0</p>
             </div>
           </label>
 
-          <label class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition">
-            <input type="radio" name="paymentPlan" value="100" class="accent-tertiary w-4 h-4" checked />
+          <label
+            class="payment-plan-option flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-tertiary transition"
+          >
+            <input
+              type="radio"
+              name="paymentPlan"
+              value="100"
+              class="accent-tertiary w-4 h-4"
+              checked
+            />
             <div class="flex-1">
-              <span class="font-semibold text-sm text-primary">Full Payment</span>
+              <span class="font-semibold text-sm text-primary"
+                >Full Payment</span
+              >
               <p class="text-xs text-gray-500" id="plan100Amount">₦0</p>
             </div>
           </label>
         </div>
 
         <div class="space-y-3">
-          <div class="flex justify-between text-sm font-medium bg-gray-50 p-3 rounded-lg">
+          <div
+            class="flex justify-between text-sm font-medium bg-gray-50 p-3 rounded-lg"
+          >
             <span>Amount to Pay Now</span>
-            <span class="font-bold text-primary text-lg" id="paymentAmount">₦0</span>
+            <span class="font-bold text-primary text-lg" id="paymentAmount"
+              >₦0</span
+            >
           </div>
 
           <p class="text-[11px] text-gray-400 text-center">
             <i class="fas fa-lock mr-1"></i> Secure payment powered by Paystack
           </p>
 
-          <button id="confirmPaymentBtn" class="w-full bg-tertiary hover:bg-tertiary-dark text-primary font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+          <button
+            id="confirmPaymentBtn"
+            class="w-full bg-tertiary hover:bg-tertiary-dark text-primary font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             <i class="fas fa-lock"></i> Pay with Card / Transfer
           </button>
 
-          <button onclick="closePaymentModal()" class="w-full text-gray-500 text-sm py-2 hover:text-gray-700">
+          <button
+            onclick="closePaymentModal()"
+            class="w-full text-gray-500 text-sm py-2 hover:text-gray-700"
+          >
             Cancel
           </button>
         </div>
@@ -328,16 +442,29 @@
     <!-- Auth Required Modal (Popup) -->
     <div id="authModal" class="auth-modal">
       <div class="auth-modal-content">
-        <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div
+          class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
           <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
         </div>
-        <h3 class="text-xl font-bold text-primary mb-2">Authentication Required</h3>
-        <p class="text-gray-600 text-sm mb-6">You need to be logged in to rent this property. Please login or create an account to continue.</p>
+        <h3 class="text-xl font-bold text-primary mb-2">
+          Authentication Required
+        </h3>
+        <p class="text-gray-600 text-sm mb-6">
+          You need to be logged in to rent this property. Please login or create
+          an account to continue.
+        </p>
         <div class="space-y-3">
-          <button id="authModalLoginBtn" class="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-dark transition flex items-center justify-center gap-2">
+          <button
+            id="authModalLoginBtn"
+            class="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-dark transition flex items-center justify-center gap-2"
+          >
             <i class="fas fa-sign-in-alt"></i> Login Now
           </button>
-          <button id="authModalCancelBtn" class="w-full border border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:bg-gray-50 transition">
+          <button
+            id="authModalCancelBtn"
+            class="w-full border border-gray-300 text-gray-600 py-3 rounded-xl font-semibold hover:bg-gray-50 transition"
+          >
             Cancel
           </button>
         </div>
@@ -350,7 +477,11 @@
       import { getHouseById } from "./slices/houseService.js";
       import { getHouses } from "./slices/houseService.js";
       import { getUserProfile } from "./slices/userService.js";
-      import { getStoredToken, clearAuthData, storeUser } from "./js/tokenStorage.js";
+      import {
+        getStoredToken,
+        clearAuthData,
+        storeUser,
+      } from "./js/tokenStorage.js";
       import { authService } from "./js/authService.js";
 
       // Global user object
@@ -376,12 +507,12 @@
       function showToast(message, type = "success") {
         const existingToast = document.querySelector(".toast");
         if (existingToast) existingToast.remove();
-        
+
         const toast = document.createElement("div");
         toast.className = `toast ${type === "success" ? "bg-green-500" : "bg-red-500"} text-white px-6 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-2`;
         toast.innerHTML = `<i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i> ${message}`;
         document.body.appendChild(toast);
-        
+
         setTimeout(() => toast.remove(), 5000);
       }
 
@@ -449,10 +580,12 @@
           showAuthModal();
           return;
         }
-        
+
         currentHouseForPayment = house;
         const modal = document.getElementById("paymentModal");
-        const detailsContainer = document.getElementById("paymentPropertyDetails");
+        const detailsContainer = document.getElementById(
+          "paymentPropertyDetails",
+        );
         const amountSpan = document.getElementById("paymentAmount");
 
         if (!modal || !detailsContainer) return;
@@ -462,9 +595,12 @@
         const plan50 = Math.round(fullPrice * 0.5);
         const plan100 = fullPrice;
 
-        document.getElementById("plan30Amount").textContent = formatNaira(plan30);
-        document.getElementById("plan50Amount").textContent = formatNaira(plan50);
-        document.getElementById("plan100Amount").textContent = formatNaira(plan100);
+        document.getElementById("plan30Amount").textContent =
+          formatNaira(plan30);
+        document.getElementById("plan50Amount").textContent =
+          formatNaira(plan50);
+        document.getElementById("plan100Amount").textContent =
+          formatNaira(plan100);
 
         amountSpan.textContent = formatNaira(plan100);
         document.querySelector('input[value="100"]').checked = true;
@@ -486,10 +622,12 @@
 
         modal.classList.add("active");
 
-        document.querySelectorAll('input[name="paymentPlan"]').forEach((radio) => {
-          radio.removeEventListener("change", updatePaymentAmount);
-          radio.addEventListener("change", updatePaymentAmount);
-        });
+        document
+          .querySelectorAll('input[name="paymentPlan"]')
+          .forEach((radio) => {
+            radio.removeEventListener("change", updatePaymentAmount);
+            radio.addEventListener("change", updatePaymentAmount);
+          });
 
         document.querySelectorAll(".payment-plan-option").forEach((label) => {
           label.addEventListener("click", function () {
@@ -502,7 +640,9 @@
           });
         });
 
-        const defaultPlan = document.querySelector('input[value="100"]').closest(".payment-plan-option");
+        const defaultPlan = document
+          .querySelector('input[value="100"]')
+          .closest(".payment-plan-option");
         if (defaultPlan) {
           defaultPlan.style.borderColor = "#c5aa23";
           defaultPlan.style.backgroundColor = "#fefce8";
@@ -510,12 +650,17 @@
       }
 
       function updatePaymentAmount() {
-        const selectedPlan = document.querySelector('input[name="paymentPlan"]:checked');
+        const selectedPlan = document.querySelector(
+          'input[name="paymentPlan"]:checked',
+        );
         if (!selectedPlan || !currentHouseForPayment) return;
 
         const percentage = parseInt(selectedPlan.value);
-        const amount = Math.round((currentHouseForPayment.price || 0) * (percentage / 100));
-        document.getElementById("paymentAmount").textContent = formatNaira(amount);
+        const amount = Math.round(
+          (currentHouseForPayment.price || 0) * (percentage / 100),
+        );
+        document.getElementById("paymentAmount").textContent =
+          formatNaira(amount);
       }
 
       function closePaymentModal() {
@@ -543,7 +688,9 @@
             return;
           }
 
-          const selectedPlan = document.querySelector('input[name="paymentPlan"]:checked');
+          const selectedPlan = document.querySelector(
+            'input[name="paymentPlan"]:checked',
+          );
           if (!selectedPlan) {
             showToast("Please select a payment plan", "error");
             return;
@@ -551,7 +698,7 @@
 
           const percentage = parseInt(selectedPlan.value);
           const amount = Math.round((house.price || 0) * (percentage / 100));
-          
+
           // Get auth data from currentUser
           const token = getStoredToken();
 
@@ -563,8 +710,9 @@
 
           // Safely get user details from currentUser
           const userEmail = currentUser.email;
-          const userName = currentUser.name || currentUser.username || "Guest Buyer";
-          
+          const userName =
+            currentUser.name || currentUser.username || "Guest Buyer";
+
           if (!userEmail) {
             showToast("User email not found. Please re-login.", "error");
             clearAuthData();
@@ -596,14 +744,17 @@
             console.log("Payment request:", requestBody);
             console.log("Current user:", currentUser);
 
-            const response = await fetch(`${getBaseURL()}/houses/initiate-payment`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+            const response = await fetch(
+              `${getBaseURL()}/houses/initiate-payment`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(requestBody),
               },
-              body: JSON.stringify(requestBody),
-            });
+            );
 
             const data = await response.json();
 
@@ -614,12 +765,15 @@
             }
 
             if (data.success && data.authorization_url) {
-              sessionStorage.setItem("pendingPayment", JSON.stringify({
-                houseId: house._id,
-                amount: amount,
-                percentage: percentage,
-                reference: data.reference,
-              }));
+              sessionStorage.setItem(
+                "pendingPayment",
+                JSON.stringify({
+                  houseId: house._id,
+                  amount: amount,
+                  percentage: percentage,
+                  reference: data.reference,
+                }),
+              );
               closePaymentModal();
               window.location.href = data.authorization_url;
             } else {
@@ -627,10 +781,14 @@
             }
           } catch (err) {
             console.error("Payment error:", err);
-            showToast(err.message || "Payment failed. Please try again.", "error");
+            showToast(
+              err.message || "Payment failed. Please try again.",
+              "error",
+            );
           } finally {
             newBtn.disabled = false;
-            newBtn.innerHTML = '<i class="fas fa-lock"></i> Pay with Card / Transfer';
+            newBtn.innerHTML =
+              '<i class="fas fa-lock"></i> Pay with Card / Transfer';
           }
         });
       }
@@ -644,11 +802,11 @@
             limit: 4,
             sort: "-createdAt",
           });
-          
+
           const similarHouses = (similarData.houses || [])
             .filter((h) => h._id !== currentHouseId)
             .slice(0, 3);
-          
+
           return similarHouses;
         } catch (e) {
           console.warn("Could not fetch similar properties:", e);
@@ -671,7 +829,7 @@
           document.title = `${house.title || "Property"} | Rezident Homes - Luxury Rentals`;
 
           const similarHouses = await fetchSimilarProperties(house._id);
-          
+
           let similarHtml = "";
           if (similarHouses.length > 0) {
             similarHtml = `
@@ -683,7 +841,9 @@
                   </a>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  ${similarHouses.map((sh) => `
+                  ${similarHouses
+                    .map(
+                      (sh) => `
                     <div class="property-card bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="window.location.href='propertydetailsforrent.html?id=${sh._id}'">
                       <img src="${sh.images?.[0]?.url || "images/hero.avif"}" class="h-52 w-full object-cover" alt="${escapeHtml(sh.title || "")}" onerror="this.src='images/hero.avif'" />
                       <div class="p-4">
@@ -699,7 +859,9 @@
                         </div>
                       </div>
                     </div>
-                  `).join("")}
+                  `,
+                    )
+                    .join("")}
                 </div>
               </div>`;
           } else {
@@ -738,13 +900,21 @@
                     <div class="relative">
                       <img id="mainGalleryImg" src="${mainImage}" alt="Main property view" class="w-full h-[360px] lg:h-[420px] object-cover cursor-pointer" onclick="openModal('${mainImage}')" />
                     </div>
-                    ${galleryImages.length > 1 ? `
+                    ${
+                      galleryImages.length > 1
+                        ? `
                       <div class="flex gap-2 p-3 border-t border-gray-100">
-                        ${galleryImages.map((img, idx) => `
+                        ${galleryImages
+                          .map(
+                            (img, idx) => `
                           <img data-gallery="${img.url}" src="${img.url}?w=120&h=80&fit=crop" class="w-20 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-tertiary transition-all ${idx === 0 ? "thumb-active border-tertiary" : ""}" alt="thumb${idx + 1}" />
-                        `).join("")}
+                        `,
+                          )
+                          .join("")}
                       </div>
-                    ` : ""}
+                    `
+                        : ""
+                    }
                   </div>
 
                   <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
@@ -758,14 +928,18 @@
                       <div><span class="block text-xs text-gray-500">Lease Term</span><span class="font-semibold text-primary text-sm">${escapeHtml(house.leaseTerm || "1 Year")}</span></div>
                     </div>
 
-                    ${features.length ? `
+                    ${
+                      features.length
+                        ? `
                       <div class="mt-6">
                         <h3 class="font-bold text-primary text-lg mb-3">Key Features</h3>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                          ${features.map(f => `<span class="flex items-center gap-2 text-sm"><i class="fas fa-check-circle text-tertiary text-xs"></i> ${escapeHtml(f)}</span>`).join("")}
+                          ${features.map((f) => `<span class="flex items-center gap-2 text-sm"><i class="fas fa-check-circle text-tertiary text-xs"></i> ${escapeHtml(f)}</span>`).join("")}
                         </div>
                       </div>
-                    ` : ""}
+                    `
+                        : ""
+                    }
                   </div>
 
                   <div class="bg-white rounded-2xl p-6 mt-6 shadow-sm">
@@ -854,9 +1028,11 @@
                 <i class="fas fa-phone-alt text-4xl text-tertiary mx-auto mb-4"></i>
                 <h2 class="text-2xl md:text-3xl font-headline font-bold mb-3">Need a custom rental solution?</h2>
                 <p class="text-white/70 text-sm mb-6 max-w-lg mx-auto">Our team finds off-market rental homes matching your budget and lifestyle, from short-term executive stays to long-term leases.</p>
-                <button id="consultRentExpert" class="bg-tertiary text-primary px-6 py-3 rounded-full font-bold hover:bg-tertiary-dark transition shadow-md text-sm">
-                  Talk to a Rental Expert
-                </button>
+                <a href="https://wa.me/2349032280032" target="_blank" rel="noopener noreferrer">
+                  <button id="consultRentExpert" class="bg-tertiary text-primary px-6 py-3 rounded-full font-bold hover:bg-tertiary-dark transition shadow-md text-sm">
+                    Talk to a Rental Expert
+                  </button>
+                </a>
               </div>
             </section>
           `;
@@ -881,34 +1057,54 @@
           const imageModal = document.getElementById("imageModal");
           const closeBtn = document.querySelector(".close-modal");
           if (closeBtn) closeBtn.onclick = closeModal;
-          if (imageModal) imageModal.onclick = (e) => { if (e.target === imageModal) closeModal(); };
+          if (imageModal)
+            imageModal.onclick = (e) => {
+              if (e.target === imageModal) closeModal();
+            };
 
           const paymentModal = document.getElementById("paymentModal");
-          if (paymentModal) paymentModal.onclick = (e) => { if (e.target === paymentModal) closePaymentModal(); };
+          if (paymentModal)
+            paymentModal.onclick = (e) => {
+              if (e.target === paymentModal) closePaymentModal();
+            };
 
           // Inquiry form
           const inquiryForm = document.getElementById("inquiryForm");
           if (inquiryForm) {
             inquiryForm.addEventListener("submit", async (e) => {
               e.preventDefault();
-              const name = inquiryForm.querySelector('input[type="text"]').value;
-              const email = inquiryForm.querySelector('input[type="email"]').value;
-              const phone = inquiryForm.querySelector('input[type="tel"]').value;
-              const message = inquiryForm.querySelector("textarea")?.value || "";
-              const submitBtn = inquiryForm.querySelector('button[type="submit"]');
+              const name =
+                inquiryForm.querySelector('input[type="text"]').value;
+              const email = inquiryForm.querySelector(
+                'input[type="email"]',
+              ).value;
+              const phone =
+                inquiryForm.querySelector('input[type="tel"]').value;
+              const message =
+                inquiryForm.querySelector("textarea")?.value || "";
+              const submitBtn = inquiryForm.querySelector(
+                'button[type="submit"]',
+              );
               const originalText = submitBtn.innerHTML;
               submitBtn.disabled = true;
               submitBtn.innerHTML = '<div class="loader-sm"></div> Sending...';
 
               try {
-                const response = await fetch(`${getBaseURL()}/houses/${house._id}/inquiry`, {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ name, email, phone, message }),
-                });
+                const response = await fetch(
+                  `${getBaseURL()}/houses/${house._id}/inquiry`,
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, phone, message }),
+                  },
+                );
                 const data = await response.json();
-                if (!response.ok) throw new Error(data.message || "Failed to send inquiry");
-                showToast(data.message || "Inquiry sent successfully!", "success");
+                if (!response.ok)
+                  throw new Error(data.message || "Failed to send inquiry");
+                showToast(
+                  data.message || "Inquiry sent successfully!",
+                  "success",
+                );
                 inquiryForm.reset();
               } catch (err) {
                 showToast(err.message || "Failed to send inquiry", "error");
@@ -928,19 +1124,15 @@
             });
           }
 
-          const consultExpert = document.getElementById("consultRentExpert");
-          if (consultExpert) {
-            consultExpert.addEventListener("click", () => {
-              showToast("Connect with our luxury leasing concierge: +234 (0) 800 000 0000 or rentals@rezidenthomes.com", "success");
-            });
-          }
-
           // Check for redirect after login
           const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
           if (redirectUrl && redirectUrl === window.location.href) {
             sessionStorage.removeItem("redirectAfterLogin");
             if (currentUser && getStoredToken()) {
-              showToast("Login successful! You can now make payment.", "success");
+              showToast(
+                "Login successful! You can now make payment.",
+                "success",
+              );
               setTimeout(() => {
                 openPaymentModal(house);
                 setupPaymentListener(house);
@@ -949,11 +1141,16 @@
           }
 
           const fadeElements = document.querySelectorAll(".fade-up");
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add("revealed"); });
-          }, { threshold: 0.1 });
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting)
+                  entry.target.classList.add("revealed");
+              });
+            },
+            { threshold: 0.1 },
+          );
           fadeElements.forEach((el) => observer.observe(el));
-          
         } catch (err) {
           console.error(err);
           loadingState.classList.add("hidden");
@@ -975,7 +1172,7 @@
           console.log("User not logged in");
           return false;
         }
-        
+
         try {
           // Verify token is valid by fetching user profile
           const user = await getUserProfile();
@@ -997,14 +1194,14 @@
       async function init() {
         // First check authentication (like profile page)
         await checkAuth();
-        
+
         // Then load property details (always loads, regardless of auth)
         await renderProperty();
-        
+
         // Setup auth modal buttons
         const loginBtn = document.getElementById("authModalLoginBtn");
         const cancelBtn = document.getElementById("authModalCancelBtn");
-        
+
         if (loginBtn) {
           loginBtn.addEventListener("click", redirectToLogin);
         }
