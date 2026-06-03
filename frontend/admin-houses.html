@@ -124,6 +124,7 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        width: 100%;
       }
       .search-icon-btn:hover {
         background: #f3f4f6;
@@ -228,9 +229,7 @@
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
-        <div
-          class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8"
-        >
+        <div class="flex flex-col gap-4 mb-8">
           <div>
             <h1 class="font-headline text-3xl font-extrabold text-primary">
               Manage House Listings
@@ -239,10 +238,8 @@
               Click any row to view details and manage listing.
             </p>
           </div>
-          <div
-            class="flex gap-2 w-full md:w-auto items-center flex-wrap md:flex-nowrap"
-          >
-            <div class="search-wrapper">
+          <div class="flex gap-2 items-center">
+            <div class="search-wrapper flex-1 md:flex-initial">
               <button id="searchIconBtn" class="search-icon-btn" title="Search">
                 <i data-lucide="search" class="lucide"></i>
               </button>
@@ -267,14 +264,14 @@
             <input
               type="text"
               id="searchInputDesktop"
-              placeholder="Search..."
-              class="input-field w-40 md:w-48 search-input-desktop text-sm"
+              placeholder="Search by title, address..."
+              class="input-field flex-1 md:flex-initial md:w-64 search-input-desktop"
             />
             <select
               id="statusFilter"
-              class="input-field w-28 md:w-32 flex-shrink-0 text-sm px-3"
+              class="input-field flex-1 md:flex-initial md:w-40 flex-shrink-0"
             >
-              <option value="">Status</option>
+              <option value="">All Status</option>
               <option value="published">Published</option>
               <option value="draft">Draft</option>
               <option value="inactive">Inactive</option>
@@ -283,9 +280,9 @@
             </select>
             <select
               id="typeFilter"
-              class="input-field w-24 md:w-28 flex-shrink-0 text-sm px-3"
+              class="input-field flex-1 md:flex-initial md:w-40 flex-shrink-0"
             >
-              <option value="">Type</option>
+              <option value="">All Types</option>
               <option value="rent">Rent</option>
               <option value="sale">Sale</option>
             </select>
