@@ -124,7 +124,7 @@
 
       .loading-logo {
         width: 120px;
-        height: auto; /* Changed from 120px to auto */
+        height: auto;
         animation: float 3s ease-in-out infinite;
       }
 
@@ -159,6 +159,71 @@
           opacity: 1;
         }
       }
+
+      .input-field {
+        padding: 0.65rem 1rem;
+        border-radius: 0.75rem;
+        background: white;
+        border: 1px solid rgba(116, 119, 129, 0.25);
+        outline: none;
+        font-size: 0.875rem;
+      }
+      .input-field:focus {
+        border-color: #001c4a;
+        box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
+      }
+
+      /* Table row clickable */
+      .table-row-clickable {
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
+      .table-row-clickable:hover {
+        background: rgba(0, 28, 74, 0.04);
+      }
+
+      /* Detail panel styles */
+      .slide-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: 1.5rem 1.5rem 0 0;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 100;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 1.5rem;
+        will-change: transform;
+      }
+      .slide-panel.open {
+        transform: translateY(0);
+      }
+      .panel-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 99;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .panel-backdrop.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Prevent horizontal scroll on table */
+      .table-container {
+        overflow-x: visible;
+      }
+      table {
+        table-layout: fixed;
+        width: 100%;
+      }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
@@ -177,25 +242,26 @@
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
       <div class="max-w-7xl mx-auto">
-        <div
-          class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8"
-        >
+        <div class="flex flex-col gap-4 mb-8">
           <div>
             <h1 class="font-headline text-3xl font-extrabold text-primary">
               Manage Users
             </h1>
             <p class="text-on-surface-variant mt-1">
-              View, edit roles, and manage user accounts.
+              Click any row to view details and manage account.
             </p>
           </div>
-          <div class="flex gap-3 w-full md:w-auto">
+          <div class="flex gap-2 items-center">
             <input
               type="text"
               id="searchInput"
               placeholder="Search by name, email, username..."
-              class="input-field flex-1 md:w-64 min-w-0"
+              class="input-field flex-1 md:flex-initial md:w-64"
             />
-            <select id="roleFilter" class="input-field w-40 flex-shrink-0">
+            <select
+              id="roleFilter"
+              class="input-field flex-1 md:flex-initial md:w-40 flex-shrink-0"
+            >
               <option value="">All Roles</option>
               <option value="user">User</option>
               <option value="seller">Seller</option>
@@ -214,7 +280,7 @@
         <div
           class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden"
         >
-          <div class="overflow-x-auto">
+          <div class="table-container">
             <table class="w-full text-left">
               <thead
                 class="bg-surface-container-low border-b border-outline/10"
@@ -222,40 +288,22 @@
                 <tr>
                   <th
                     class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                    style="width: 50%"
                   >
                     User
                   </th>
                   <th
                     class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                    style="width: 50%"
                   >
                     Email
-                  </th>
-                  <th
-                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
-                  >
-                    Phone
-                  </th>
-                  <th
-                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
-                  >
-                    Role
-                  </th>
-                  <th
-                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
-                  >
-                    Verified
-                  </th>
-                  <th
-                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
-                  >
-                    Actions
                   </th>
                 </tr>
               </thead>
               <tbody id="usersTableBody">
                 <tr>
                   <td
-                    colspan="6"
+                    colspan="2"
                     class="text-center py-8 text-on-surface-variant"
                   >
                     Loading users...
@@ -293,25 +341,31 @@
       </div>
     </main>
 
-    <!-- Modal for editing user role (simple inline dropdown is easier, but we'll use inline edit per row) -->
+    <!-- Detail Slide Panel & Backdrop -->
+    <div id="panelBackdrop" class="panel-backdrop"></div>
+    <div id="detailPanel" class="slide-panel">
+      <div class="flex items-center justify-between mb-6">
+        <h2
+          id="panelTitle"
+          class="font-headline text-xl font-bold text-primary truncate pr-4"
+        >
+          User Details
+        </h2>
+        <button
+          id="closePanelBtn"
+          class="p-2 rounded-full hover:bg-gray-100 transition"
+        >
+          <i data-lucide="x" class="lucide"></i>
+        </button>
+      </div>
+      <div id="panelContent" class="space-y-5">
+        <!-- dynamically filled -->
+      </div>
+    </div>
+
     <script>
       lucide.createIcons();
     </script>
-
-    <style>
-      .input-field {
-        padding: 0.65rem 1rem;
-        border-radius: 0.75rem;
-        background: white;
-        border: 1px solid rgba(116, 119, 129, 0.25);
-        outline: none;
-        font-size: 0.875rem;
-      }
-      .input-field:focus {
-        border-color: #001c4a;
-        box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
-      }
-    </style>
 
     <script type="module">
       import { renderAdminNavbar } from "./js/adminNavbar.js";
@@ -360,6 +414,21 @@
       const searchInput = document.getElementById("searchInput");
       const roleFilterSelect = document.getElementById("roleFilter");
 
+      // Panel elements
+      const detailPanel = document.getElementById("detailPanel");
+      const panelBackdrop = document.getElementById("panelBackdrop");
+      const panelTitle = document.getElementById("panelTitle");
+      const panelContent = document.getElementById("panelContent");
+      const closePanelBtn = document.getElementById("closePanelBtn");
+
+      function closePanel() {
+        detailPanel.classList.remove("open");
+        panelBackdrop.classList.remove("show");
+      }
+
+      closePanelBtn.addEventListener("click", closePanel);
+      panelBackdrop.addEventListener("click", closePanel);
+
       function showError(msg) {
         errorMsgDiv.textContent = msg;
         errorMsgDiv.classList.remove("hidden");
@@ -382,106 +451,118 @@
         } catch (err) {
           console.error(err);
           showError("Failed to load users: " + err.message);
-          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-600">Error loading users</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="2" class="text-center py-8 text-red-600">Error loading users</td></tr>`;
         } finally {
-          // Hide loading overlay with a slight delay for smooth transition
           setTimeout(() => {
             loadingOverlay.classList.add("hidden");
           }, 500);
         }
       }
 
-      function renderTable() {
-        if (!users.length) {
-          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-on-surface-variant">No users found</td></tr>`;
-          return;
-        }
-        tableBody.innerHTML = users
-          .map(
-            (user) => `
-          <tr class="border-b border-outline/10 hover:bg-primary/5">
-            <td class="px-6 py-4">
-              <div class="font-bold text-primary">${escapeHtml(user.name)}</div>
-              <div class="text-xs text-on-surface-variant">@${escapeHtml(user.username)}</div>
-            </td>
-            <td class="px-6 py-4 text-sm">${escapeHtml(user.email)}</td>
-            <td class="px-6 py-4 text-sm">${user.phone || "—"}</td>
-            <td class="px-6 py-4">
-              <select class="role-select text-sm border rounded-lg px-2 py-1" data-user-id="${user._id}" data-current-role="${user.role}">
-                <option value="user" ${user.role === "user" ? "selected" : ""}>User</option>
-                <option value="seller" ${user.role === "seller" ? "selected" : ""}>Seller</option>
-                <option value="admin" ${user.role === "admin" ? "selected" : ""}>Admin</option>
-              </select>
-            </td>
-            <td class="px-6 py-4 text-sm">
-              ${user.isVerified ? '<span class="text-green-600">✓ Verified</span>' : '<span class="text-red-600">✗ Not verified</span>'}
-            </td>
-            <td class="px-6 py-4">
-              <div class="flex gap-2">
-                <button class="update-role-btn bg-tertiary-container text-primary px-3 py-1 rounded-lg text-xs font-bold" data-user-id="${user._id}">Update Role</button>
-                <button class="delete-user-btn bg-red-100 text-red-700 px-3 py-1 rounded-lg text-xs font-bold" data-user-id="${user._id}">Delete</button>
-              </div>
-            </td>
-          </tr>
-        `,
-          )
-          .join("");
-
-        // Attach event listeners to buttons
-        document.querySelectorAll(".update-role-btn").forEach((btn) => {
-          btn.addEventListener("click", async (e) => {
-            const userId = btn.dataset.userId;
-            const select = btn.closest("tr").querySelector(".role-select");
-            const newRole = select.value;
-            if (newRole === currentUser.role && userId === currentUser._id) {
-              showError(
-                "You cannot change your own role via this panel (to avoid lockout).",
-              );
-              return;
-            }
-            try {
-              await updateUser(userId, { role: newRole });
-              showError("Role updated successfully");
-              fetchUsers(); // refresh
-            } catch (err) {
-              showError(err.message);
-            }
-          });
-        });
-
-        document.querySelectorAll(".delete-user-btn").forEach((btn) => {
-          btn.addEventListener("click", async () => {
-            const userId = btn.dataset.userId;
-            if (userId === currentUser._id) {
-              showError("You cannot delete your own account.");
-              return;
-            }
-            if (
-              confirm(
-                "Are you sure you want to delete this user? This action cannot be undone.",
-              )
-            ) {
-              try {
-                await deleteUser(userId);
-                showError("User deleted");
-                fetchUsers();
-              } catch (err) {
-                showError(err.message);
-              }
-            }
-          });
-        });
+      function truncateEmail(email) {
+        if (!email) return "—";
+        if (email.length <= 25) return email;
+        return email.substring(0, 22) + "...";
       }
 
-      function updatePagination() {
-        const totalPages = Math.ceil(total / limit);
-        prevBtn.disabled = currentPage === 1;
-        nextBtn.disabled = currentPage === totalPages || total === 0;
-        const start = (currentPage - 1) * limit + 1;
-        const end = Math.min(currentPage * limit, total);
-        pageStartSpan.textContent = total === 0 ? 0 : start;
-        pageEndSpan.textContent = end;
-        totalCountSpan.textContent = total;
+      function openDetailPanel(user) {
+        panelTitle.textContent = user.name || "User Details";
+
+        const verifiedBadge = user.isVerified
+          ? '<span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-green-100 text-green-700">✓ Verified</span>'
+          : '<span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-red-100 text-red-700">✗ Not Verified</span>';
+
+        panelContent.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div><span class="text-on-surface-variant font-medium">Full Name:</span> <span class="font-semibold">${escapeHtml(user.name)}</span></div>
+            <div><span class="text-on-surface-variant font-medium">Username:</span> <span class="font-semibold">@${escapeHtml(user.username)}</span></div>
+            <div class="md:col-span-2"><span class="text-on-surface-variant font-medium">Email:</span> <span class="font-semibold">${escapeHtml(user.email)}</span></div>
+            <div><span class="text-on-surface-variant font-medium">Phone:</span> ${user.phone || "—"}</div>
+            <div><span class="text-on-surface-variant font-medium">Role:</span> <span class="capitalize font-semibold">${user.role}</span></div>
+            <div><span class="text-on-surface-variant font-medium">Verification:</span> ${verifiedBadge}</div>
+            <div><span class="text-on-surface-variant font-medium">User ID:</span> <span class="text-xs text-on-surface-variant break-all">${user._id}</span></div>
+            <div><span class="text-on-surface-variant font-medium">Joined:</span> ${formatDate(user.createdAt)}</div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-4 border-t mt-4">
+            <select id="panelRoleSelect" class="input-field flex-1 min-w-[160px]">
+              <option value="user" ${user.role === "user" ? "selected" : ""}>User</option>
+              <option value="seller" ${user.role === "seller" ? "selected" : ""}>Seller</option>
+              <option value="admin" ${user.role === "admin" ? "selected" : ""}>Admin</option>
+            </select>
+            <button id="panelUpdateBtn" class="bg-tertiary-container text-primary px-5 py-2 rounded-xl font-bold text-sm hover:brightness-95 transition">Update Role</button>
+            <button id="panelDeleteBtn" class="bg-red-100 text-red-700 px-5 py-2 rounded-xl font-bold text-sm hover:bg-red-200 transition">Delete Account</button>
+          </div>
+        `;
+
+        // Attach panel button listeners
+        document
+          .getElementById("panelUpdateBtn")
+          .addEventListener("click", async () => {
+            const newRole = document.getElementById("panelRoleSelect").value;
+            await handleRoleUpdate(user._id, newRole);
+          });
+        document
+          .getElementById("panelDeleteBtn")
+          .addEventListener("click", () => {
+            handleDelete(user._id);
+          });
+
+        detailPanel.classList.add("open");
+        panelBackdrop.classList.add("show");
+        lucide.createIcons();
+      }
+
+      async function handleRoleUpdate(userId, newRole) {
+        if (newRole === currentUser.role && userId === currentUser._id) {
+          showError(
+            "You cannot change your own role via this panel (to avoid lockout).",
+          );
+          return;
+        }
+        try {
+          loadingOverlay.classList.remove("hidden");
+          await updateUser(userId, { role: newRole });
+          showError("Role updated successfully");
+          closePanel();
+          fetchUsers();
+        } catch (err) {
+          showError(err.message);
+        } finally {
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
+        }
+      }
+
+      async function handleDelete(userId) {
+        if (userId === currentUser._id) {
+          showError("You cannot delete your own account.");
+          return;
+        }
+        if (
+          confirm(
+            "Are you sure you want to delete this user? This action cannot be undone.",
+          )
+        ) {
+          try {
+            loadingOverlay.classList.remove("hidden");
+            await deleteUser(userId);
+            showError("User deleted successfully");
+            closePanel();
+            fetchUsers();
+          } catch (err) {
+            showError(err.message);
+          } finally {
+            setTimeout(() => {
+              loadingOverlay.classList.add("hidden");
+            }, 500);
+          }
+        }
+      }
+
+      function formatDate(dateString) {
+        if (!dateString) return "N/A";
+        return new Date(dateString).toLocaleDateString();
       }
 
       function escapeHtml(str) {
@@ -494,30 +575,78 @@
         });
       }
 
+      function renderTable() {
+        if (!users.length) {
+          tableBody.innerHTML = `<tr><td colspan="2" class="text-center py-8 text-on-surface-variant">No users found</td></tr>`;
+          return;
+        }
+
+        tableBody.innerHTML = users
+          .map(
+            (user) => `
+          <tr class="border-b border-outline/10 table-row-clickable" data-user-id="${user._id}">
+            <td class="px-6 py-4">
+              <div class="font-bold text-primary truncate">${escapeHtml(user.name)}</div>
+              <div class="text-xs text-on-surface-variant truncate">@${escapeHtml(user.username)}</div>
+            </td>
+            <td class="px-6 py-4 text-sm">
+              <span class="truncate block" title="${escapeHtml(user.email)}">${escapeHtml(truncateEmail(user.email))}</span>
+            </td>
+          </tr>
+        `,
+          )
+          .join("");
+
+        // Attach click listeners to rows
+        document.querySelectorAll(".table-row-clickable").forEach((row) => {
+          row.addEventListener("click", (e) => {
+            const userId = row.dataset.userId;
+            const user = users.find((u) => u._id === userId);
+            if (user) openDetailPanel(user);
+          });
+        });
+      }
+
+      function updatePagination() {
+        const totalPages = Math.ceil(total / limit);
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages || total === 0;
+        const start = total === 0 ? 0 : (currentPage - 1) * limit + 1;
+        const end = Math.min(currentPage * limit, total);
+        pageStartSpan.textContent = start;
+        pageEndSpan.textContent = end;
+        totalCountSpan.textContent = total;
+      }
+
       // Event listeners
       searchInput.addEventListener("input", (e) => {
         search = e.target.value;
         currentPage = 1;
+        loadingOverlay.classList.remove("hidden");
         fetchUsers();
       });
       roleFilterSelect.addEventListener("change", (e) => {
         roleFilter = e.target.value;
         currentPage = 1;
+        loadingOverlay.classList.remove("hidden");
         fetchUsers();
       });
       prevBtn.addEventListener("click", () => {
         if (currentPage > 1) {
           currentPage--;
+          loadingOverlay.classList.remove("hidden");
           fetchUsers();
         }
       });
       nextBtn.addEventListener("click", () => {
         currentPage++;
+        loadingOverlay.classList.remove("hidden");
         fetchUsers();
       });
 
       // Initial fetch
       fetchUsers();
+      lucide.createIcons();
     </script>
   </body>
 </html>
