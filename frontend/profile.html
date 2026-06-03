@@ -86,35 +86,86 @@
         height: 1.2rem;
         stroke-width: 1.8;
       }
-      .loader {
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #c5aa23;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 0.8s linear infinite;
-        margin: 20px auto;
-      }
-      @keyframes spin {
+
+      /* Wireframe skeleton animation */
+      @keyframes shimmer {
         0% {
-          transform: rotate(0deg);
+          background-position: -400px 0;
         }
         100% {
-          transform: rotate(360deg);
+          background-position: 400px 0;
+        }
+      }
+
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          #e0e0e0 25%,
+          #f0f0f0 50%,
+          #e0e0e0 75%
+        );
+        background-size: 800px 100%;
+        animation: shimmer 1.5s infinite linear;
+        border-radius: 8px;
+      }
+
+      .skeleton-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(
+          90deg,
+          #e0e0e0 25%,
+          #f0f0f0 50%,
+          #e0e0e0 75%
+        );
+        background-size: 800px 100%;
+        animation: shimmer 1.5s infinite linear;
+        flex-shrink: 0;
+      }
+
+      .skeleton-name {
+        height: 36px;
+        width: 200px;
+        margin-bottom: 8px;
+      }
+
+      .skeleton-subtitle {
+        height: 16px;
+        width: 150px;
+      }
+
+      .skeleton-button {
+        height: 48px;
+        width: 200px;
+        border-radius: 12px;
+      }
+
+      .skeleton-detail-label {
+        height: 12px;
+        width: 80px;
+        margin-bottom: 8px;
+      }
+
+      .skeleton-detail-value {
+        height: 18px;
+        width: 140px;
+      }
+
+      @media (min-width: 768px) {
+        .skeleton-avatar {
+          width: 96px;
+          height: 96px;
+        }
+        .skeleton-name {
+          height: 40px;
+          width: 250px;
         }
       }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
-    <!-- Loading overlay -->
-    <div
-      id="loadingOverlay"
-      class="fixed inset-0 bg-white/80 z-50 flex items-center justify-center hidden"
-    >
-      <div class="loader"></div>
-    </div>
-
     <header
       class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
     >
@@ -151,6 +202,7 @@
       <div class="max-w-7xl mx-auto">
         <!-- Hero Banner -->
         <section
+          id="heroBanner"
           class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden"
         >
           <div class="absolute inset-0 opacity-15">
@@ -164,10 +216,12 @@
             class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
           >
             <div class="flex items-center gap-5">
-              <!-- Profile image or fallback initials -->
+              <!-- Skeleton: Avatar -->
+              <div id="heroAvatarSkeleton" class="skeleton-avatar"></div>
+              <!-- Profile image or fallback initials (hidden initially) -->
               <div
                 id="profileImageContainer"
-                class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg overflow-hidden"
+                class="hidden w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg overflow-hidden"
               >
                 <span id="profileInitials">--</span>
                 <img
@@ -177,18 +231,32 @@
                 />
               </div>
               <div>
+                <!-- Skeleton: Name -->
+                <div id="heroNameSkeleton">
+                  <div class="skeleton skeleton-name"></div>
+                  <div class="skeleton skeleton-subtitle"></div>
+                </div>
+                <!-- Actual name (hidden initially) -->
                 <h2
                   id="profileName"
-                  class="font-headline text-3xl md:text-4xl font-extrabold"
+                  class="hidden font-headline text-3xl md:text-4xl font-extrabold"
                 >
                   Loading...
                 </h2>
               </div>
             </div>
-            <!-- Dynamic buttons injected here -->
+            <!-- Skeleton: Action buttons -->
+            <div
+              id="actionButtonsSkeleton"
+              class="flex flex-col sm:flex-row gap-3"
+            >
+              <div class="skeleton skeleton-button"></div>
+              <div class="skeleton skeleton-button"></div>
+            </div>
+            <!-- Dynamic buttons injected here (hidden initially) -->
             <div
               id="actionButtons"
-              class="flex flex-col sm:flex-row gap-3"
+              class="hidden flex-col sm:flex-row gap-3"
             ></div>
           </div>
         </section>
@@ -196,10 +264,24 @@
         <!-- Profile Details & Activity -->
         <section class="grid lg:grid-cols-3 gap-8 mt-8">
           <div class="lg:col-span-2 space-y-8">
+            <!-- Profile Details Card -->
             <div
+              id="profileDetailsCard"
               class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
             >
-              <div class="flex items-center justify-between mb-6">
+              <!-- Skeleton: Header -->
+              <div
+                id="detailsHeaderSkeleton"
+                class="flex items-center justify-between mb-6"
+              >
+                <div class="skeleton" style="height: 28px; width: 180px"></div>
+                <div class="skeleton" style="height: 16px; width: 80px"></div>
+              </div>
+              <!-- Actual header (hidden initially) -->
+              <div
+                id="detailsHeader"
+                class="hidden flex items-center justify-between mb-6"
+              >
                 <h2 class="font-headline text-2xl font-extrabold text-primary">
                   Profile Details
                 </h2>
@@ -209,7 +291,35 @@
                   >Edit Profile</a
                 >
               </div>
-              <div class="grid sm:grid-cols-2 gap-5">
+              <!-- Skeleton: Detail fields -->
+              <div id="detailsSkeleton" class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <div class="skeleton skeleton-detail-label"></div>
+                  <div class="skeleton skeleton-detail-value"></div>
+                </div>
+                <div>
+                  <div class="skeleton skeleton-detail-label"></div>
+                  <div class="skeleton skeleton-detail-value"></div>
+                </div>
+                <div>
+                  <div class="skeleton skeleton-detail-label"></div>
+                  <div class="skeleton skeleton-detail-value"></div>
+                </div>
+                <div>
+                  <div class="skeleton skeleton-detail-label"></div>
+                  <div class="skeleton skeleton-detail-value"></div>
+                </div>
+                <div>
+                  <div class="skeleton skeleton-detail-label"></div>
+                  <div class="skeleton skeleton-detail-value"></div>
+                </div>
+                <div>
+                  <div class="skeleton skeleton-detail-label"></div>
+                  <div class="skeleton skeleton-detail-value"></div>
+                </div>
+              </div>
+              <!-- Actual details (hidden initially) -->
+              <div id="detailsContent" class="hidden grid sm:grid-cols-2 gap-5">
                 <div>
                   <p
                     class="text-xs font-bold text-on-surface-variant uppercase tracking-wide"
@@ -266,10 +376,26 @@
             </div>
           </div>
           <div class="space-y-8">
+            <!-- My Property Activity Card -->
             <div
               class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
             >
-              <div class="flex flex-col gap-4">
+              <!-- Skeleton: Activity card -->
+              <div id="activityCardSkeleton" class="flex flex-col gap-4">
+                <div>
+                  <div
+                    class="skeleton"
+                    style="height: 24px; width: 200px; margin-bottom: 8px"
+                  ></div>
+                  <div
+                    class="skeleton"
+                    style="height: 14px; width: 280px"
+                  ></div>
+                </div>
+                <div class="skeleton skeleton-button" style="width: 100%"></div>
+              </div>
+              <!-- Actual activity card (hidden initially) -->
+              <div id="activityCard" class="hidden flex flex-col gap-4">
                 <div>
                   <h2 class="font-headline text-xl font-extrabold text-primary">
                     My Property Activity
@@ -289,7 +415,11 @@
               </div>
             </div>
 
-            <div class="flex flex-col gap-4">
+            <!-- My Listings Button -->
+            <div id="myListingsSkeleton" class="flex flex-col gap-4">
+              <div class="skeleton skeleton-button" style="width: 100%"></div>
+            </div>
+            <div id="myListingsCard" class="hidden flex flex-col gap-4">
               <a
                 href="myhomes.html"
                 class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"
@@ -317,11 +447,44 @@
       } from "./js/tokenStorage.js";
       import { authService } from "./js/authService.js";
 
-      const loadingOverlay = document.getElementById("loadingOverlay");
-      function showLoading(show) {
-        show
-          ? loadingOverlay.classList.remove("hidden")
-          : loadingOverlay.classList.add("hidden");
+      // Hide all skeletons and show actual content
+      function hideSkeletons() {
+        // Hero section
+        document.getElementById("heroAvatarSkeleton").classList.add("hidden");
+        document.getElementById("heroNameSkeleton").classList.add("hidden");
+        document
+          .getElementById("actionButtonsSkeleton")
+          .classList.add("hidden");
+
+        // Show actual content
+        document
+          .getElementById("profileImageContainer")
+          .classList.remove("hidden");
+        document.getElementById("profileName").classList.remove("hidden");
+        document.getElementById("actionButtons").classList.remove("hidden");
+        document.getElementById("actionButtons").classList.add("flex");
+
+        // Profile details
+        document
+          .getElementById("detailsHeaderSkeleton")
+          .classList.add("hidden");
+        document.getElementById("detailsSkeleton").classList.add("hidden");
+        document.getElementById("detailsHeader").classList.remove("hidden");
+        document.getElementById("detailsHeader").classList.add("flex");
+        document.getElementById("detailsContent").classList.remove("hidden");
+        document.getElementById("detailsContent").classList.add("grid");
+
+        // Activity card
+        document.getElementById("activityCardSkeleton").classList.add("hidden");
+        document.getElementById("activityCard").classList.remove("hidden");
+        document.getElementById("activityCard").classList.add("flex");
+
+        // My Listings
+        document.getElementById("myListingsSkeleton").classList.add("hidden");
+        document.getElementById("myListingsCard").classList.remove("hidden");
+        document.getElementById("myListingsCard").classList.add("flex");
+
+        lucide.createIcons();
       }
 
       // Render action buttons based on user role and application status
@@ -353,13 +516,6 @@
             </a>
           `;
           lucide.createIcons();
-
-          // Show the "My Uploaded Houses" card for approved sellers
-          const myHomesCard = document.getElementById("myHomesCard");
-          if (myHomesCard) {
-            myHomesCard.classList.remove("hidden");
-          }
-
           return;
         }
 
@@ -459,6 +615,9 @@
         });
 
         renderActionButtons(user, sellerApplication);
+
+        // Hide skeletons and show actual content
+        hideSkeletons();
       }
 
       async function handleLogout() {
@@ -473,7 +632,6 @@
       }
 
       (async function init() {
-        showLoading(true);
         const token = getStoredToken();
         if (!token) {
           window.location.href = "login.html";
@@ -508,8 +666,6 @@
           );
           clearAuthData();
           window.location.href = "login.html";
-        } finally {
-          showLoading(false);
         }
         document
           .getElementById("logoutBtn")
