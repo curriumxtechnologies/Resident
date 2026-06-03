@@ -120,14 +120,16 @@
               View, edit roles, and manage user accounts.
             </p>
           </div>
-          <div class="flex gap-3">
+          <div
+            class="flex gap-3 overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0 pb-2 md:pb-0"
+          >
             <input
               type="text"
               id="searchInput"
               placeholder="Search by name, email, username..."
-              class="input-field w-64"
+              class="input-field w-64 flex-shrink-0"
             />
-            <select id="roleFilter" class="input-field w-40">
+            <select id="roleFilter" class="input-field w-40 flex-shrink-0">
               <option value="">All Roles</option>
               <option value="user">User</option>
               <option value="seller">Seller</option>
