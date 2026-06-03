@@ -239,7 +239,9 @@
               Click any row to view details and manage listing.
             </p>
           </div>
-          <div class="flex gap-3 w-full md:w-auto items-center">
+          <div
+            class="flex gap-2 w-full md:w-auto items-center flex-wrap md:flex-nowrap"
+          >
             <div class="search-wrapper">
               <button id="searchIconBtn" class="search-icon-btn" title="Search">
                 <i data-lucide="search" class="lucide"></i>
@@ -253,7 +255,7 @@
                   <input
                     type="text"
                     id="searchInputMobile"
-                    placeholder="Search by title, address..."
+                    placeholder="Search..."
                     class="input-field"
                   />
                   <button id="searchCloseBtn" class="search-overlay-close">
@@ -265,19 +267,25 @@
             <input
               type="text"
               id="searchInputDesktop"
-              placeholder="Search by title, address..."
-              class="input-field w-64 search-input-desktop"
+              placeholder="Search..."
+              class="input-field w-40 md:w-48 search-input-desktop text-sm"
             />
-            <select id="statusFilter" class="input-field w-40 flex-shrink-0">
-              <option value="">All Status</option>
+            <select
+              id="statusFilter"
+              class="input-field w-28 md:w-32 flex-shrink-0 text-sm px-3"
+            >
+              <option value="">Status</option>
               <option value="published">Published</option>
               <option value="draft">Draft</option>
               <option value="inactive">Inactive</option>
               <option value="sold">Sold</option>
               <option value="rented">Rented</option>
             </select>
-            <select id="typeFilter" class="input-field w-40 flex-shrink-0">
-              <option value="">All Types</option>
+            <select
+              id="typeFilter"
+              class="input-field w-24 md:w-28 flex-shrink-0 text-sm px-3"
+            >
+              <option value="">Type</option>
               <option value="rent">Rent</option>
               <option value="sale">Sale</option>
             </select>
