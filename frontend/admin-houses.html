@@ -181,6 +181,46 @@
           display: none;
         }
       }
+      /* Detail panel styles */
+      .slide-panel {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: 1.5rem 1.5rem 0 0;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 100;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 1.5rem;
+        will-change: transform;
+      }
+      .slide-panel.open {
+        transform: translateY(0);
+      }
+      .panel-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 99;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .panel-backdrop.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .table-row-clickable {
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
+      .table-row-clickable:hover {
+        background: rgba(0, 28, 74, 0.04);
+      }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
@@ -196,11 +236,10 @@
               Manage House Listings
             </h1>
             <p class="text-on-surface-variant mt-1">
-              View, update status, or delete any property listing.
+              Click any row to view details and manage listing.
             </p>
           </div>
           <div class="flex gap-3 w-full md:w-auto items-center">
-            <!-- Search wrapper for mobile -->
             <div class="search-wrapper">
               <button id="searchIconBtn" class="search-icon-btn" title="Search">
                 <i data-lucide="search" class="lucide"></i>
@@ -214,7 +253,7 @@
                   <input
                     type="text"
                     id="searchInputMobile"
-                    placeholder="Search by title, address, seller..."
+                    placeholder="Search by title, address..."
                     class="input-field"
                   />
                   <button id="searchCloseBtn" class="search-overlay-close">
@@ -223,11 +262,10 @@
                 </div>
               </div>
             </div>
-            <!-- Search input (desktop) -->
             <input
               type="text"
               id="searchInputDesktop"
-              placeholder="Search by title, address, seller..."
+              placeholder="Search by title, address..."
               class="input-field w-64 search-input-desktop"
             />
             <select id="statusFilter" class="input-field w-40 flex-shrink-0">
@@ -246,7 +284,6 @@
           </div>
         </div>
 
-        <!-- Loading & Error -->
         <div id="loadingOverlay" class="hidden py-10">
           <div class="loader"></div>
         </div>
@@ -255,7 +292,6 @@
           class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"
         ></div>
 
-        <!-- Houses Table -->
         <div
           class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden"
         >
@@ -278,11 +314,6 @@
                   <th
                     class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
                   >
-                    Seller
-                  </th>
-                  <th
-                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
-                  >
                     Status
                   </th>
                   <th
@@ -290,17 +321,12 @@
                   >
                     Date
                   </th>
-                  <th
-                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
-                  >
-                    Actions
-                  </th>
                 </tr>
               </thead>
               <tbody id="housesTableBody">
                 <tr>
                   <td
-                    colspan="6"
+                    colspan="4"
                     class="text-center py-8 text-on-surface-variant"
                   >
                     Loading houses...
@@ -309,7 +335,6 @@
               </tbody>
             </table>
           </div>
-          <!-- Pagination -->
           <div
             class="px-6 py-4 border-t border-outline/10 flex items-center justify-between flex-wrap gap-3"
           >
@@ -338,6 +363,28 @@
       </div>
     </main>
 
+    <!-- Detail Slide Panel & Backdrop -->
+    <div id="panelBackdrop" class="panel-backdrop"></div>
+    <div id="detailPanel" class="slide-panel">
+      <div class="flex items-center justify-between mb-6">
+        <h2
+          id="panelTitle"
+          class="font-headline text-xl font-bold text-primary truncate pr-4"
+        >
+          House Details
+        </h2>
+        <button
+          id="closePanelBtn"
+          class="p-2 rounded-full hover:bg-gray-100 transition"
+        >
+          <i data-lucide="x" class="lucide"></i>
+        </button>
+      </div>
+      <div id="panelContent" class="space-y-5">
+        <!-- dynamically filled -->
+      </div>
+    </div>
+
     <script>
       lucide.createIcons();
     </script>
@@ -351,7 +398,6 @@
         deleteHouse,
       } from "./slices/houseService.js";
 
-      // Admin check
       const token = getStoredToken();
       const currentUser = getStoredUser();
       if (!token || !currentUser || currentUser.role !== "admin") {
@@ -359,12 +405,10 @@
         window.location.href = "login.html";
       }
 
-      // Insert navbar
       document
         .getElementById("navbar-container")
         .appendChild(renderAdminNavbar("houses"));
 
-      // State
       let houses = [];
       let total = 0;
       let currentPage = 1;
@@ -389,21 +433,31 @@
       const statusFilterSelect = document.getElementById("statusFilter");
       const typeFilterSelect = document.getElementById("typeFilter");
 
-      // Search overlay functionality
+      // Panel elements
+      const detailPanel = document.getElementById("detailPanel");
+      const panelBackdrop = document.getElementById("panelBackdrop");
+      const panelTitle = document.getElementById("panelTitle");
+      const panelContent = document.getElementById("panelContent");
+      const closePanelBtn = document.getElementById("closePanelBtn");
+
+      function closePanel() {
+        detailPanel.classList.remove("open");
+        panelBackdrop.classList.remove("show");
+      }
+
+      closePanelBtn.addEventListener("click", closePanel);
+      panelBackdrop.addEventListener("click", closePanel);
+
+      // Search overlay
       searchIconBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         searchOverlay.classList.toggle("show");
-        if (searchOverlay.classList.contains("show")) {
-          searchInputMobile.focus();
-        }
+        if (searchOverlay.classList.contains("show")) searchInputMobile.focus();
       });
-
       searchCloseBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         searchOverlay.classList.remove("show");
       });
-
-      // Close overlay when clicking outside
       document.addEventListener("click", (e) => {
         if (
           !searchOverlay.contains(e.target) &&
@@ -416,7 +470,6 @@
       function showLoading(show) {
         loadingOverlay.classList.toggle("hidden", !show);
       }
-
       function showError(msg) {
         errorMsgDiv.textContent = msg;
         errorMsgDiv.classList.remove("hidden");
@@ -442,17 +495,71 @@
         } catch (err) {
           console.error(err);
           showError("Failed to load houses: " + err.message);
-          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-600">Error loading houses</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-red-600">Error loading houses</td></tr>`;
         } finally {
           showLoading(false);
         }
+      }
+
+      function openDetailPanel(house) {
+        panelTitle.textContent = house.title || "House Details";
+        const priceDisplay =
+          house.listingType === "rent"
+            ? `₦${Number(house.price).toLocaleString()}/mo`
+            : `₦${Number(house.price).toLocaleString()}`;
+
+        panelContent.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div><span class="text-on-surface-variant font-medium">Address:</span> <span class="font-semibold">${escapeHtml(house.address) || "—"}</span></div>
+            <div><span class="text-on-surface-variant font-medium">Price:</span> <span class="font-bold text-primary">${priceDisplay}</span></div>
+            <div><span class="text-on-surface-variant font-medium">Type:</span> <span class="capitalize font-semibold">${house.listingType || "—"}</span></div>
+            <div><span class="text-on-surface-variant font-medium">Status:</span> <span class="capitalize font-semibold">${house.status || "—"}</span></div>
+            <div><span class="text-on-surface-variant font-medium">Bedrooms:</span> ${house.bedrooms || "?"}</div>
+            <div><span class="text-on-surface-variant font-medium">Bathrooms:</span> ${house.bathrooms || "?"}</div>
+            <div><span class="text-on-surface-variant font-medium">Square Feet:</span> ${house.squareFeet ? house.squareFeet.toLocaleString() : "—"}</div>
+            <div><span class="text-on-surface-variant font-medium">Year Built:</span> ${house.yearBuilt || "—"}</div>
+            <div class="md:col-span-2"><span class="text-on-surface-variant font-medium">Description:</span> <p class="mt-1 text-on-surface">${escapeHtml(house.description) || "No description provided."}</p></div>
+            <div><span class="text-on-surface-variant font-medium">Seller:</span> ${escapeHtml(house.user?.name || "Unknown")} (${escapeHtml(house.user?.email || "")})</div>
+            <div><span class="text-on-surface-variant font-medium">Created:</span> ${formatDate(house.createdAt)}</div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-4 border-t mt-4">
+            <select id="panelStatusSelect" class="input-field flex-1 min-w-[160px]">
+              <option value="published" ${house.status === "published" ? "selected" : ""}>Published</option>
+              <option value="draft" ${house.status === "draft" ? "selected" : ""}>Draft</option>
+              <option value="inactive" ${house.status === "inactive" ? "selected" : ""}>Inactive</option>
+              <option value="sold" ${house.status === "sold" ? "selected" : ""}>Sold</option>
+              <option value="rented" ${house.status === "rented" ? "selected" : ""}>Rented</option>
+            </select>
+            <button id="panelUpdateBtn" class="bg-tertiary-container text-primary px-5 py-2 rounded-xl font-bold text-sm hover:brightness-95 transition">Update Status</button>
+            <button id="panelDeleteBtn" class="bg-red-100 text-red-700 px-5 py-2 rounded-xl font-bold text-sm hover:bg-red-200 transition">Delete Listing</button>
+          </div>
+        `;
+
+        // Attach panel button listeners
+        document
+          .getElementById("panelUpdateBtn")
+          .addEventListener("click", async () => {
+            const newStatus =
+              document.getElementById("panelStatusSelect").value;
+            await handleStatusChange(house._id, newStatus);
+          });
+        document
+          .getElementById("panelDeleteBtn")
+          .addEventListener("click", () => {
+            handleDelete(house._id);
+          });
+
+        detailPanel.classList.add("open");
+        panelBackdrop.classList.add("show");
+        lucide.createIcons();
       }
 
       async function handleStatusChange(houseId, newStatus) {
         try {
           await toggleHouseStatus(houseId, newStatus);
           showError(`Status updated to ${newStatus}`);
-          fetchHouses(); // refresh
+          closePanel();
+          fetchHouses();
         } catch (err) {
           showError(err.message);
         }
@@ -467,6 +574,7 @@
           try {
             await deleteHouse(houseId);
             showError("Listing deleted successfully");
+            closePanel();
             fetchHouses();
           } catch (err) {
             showError(err.message);
@@ -476,8 +584,7 @@
 
       function formatDate(dateString) {
         if (!dateString) return "N/A";
-        const date = new Date(dateString);
-        return date.toLocaleDateString();
+        return new Date(dateString).toLocaleDateString();
       }
 
       function escapeHtml(str) {
@@ -492,67 +599,41 @@
 
       function renderTable() {
         if (!houses.length) {
-          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-on-surface-variant">No houses found</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-on-surface-variant">No houses found</td></tr>`;
           return;
         }
 
         tableBody.innerHTML = houses
           .map((house) => {
-            const statusClass = `status-${house.status}`;
             const priceDisplay =
               house.listingType === "rent"
                 ? `₦${Number(house.price).toLocaleString()}/mo`
                 : `₦${Number(house.price).toLocaleString()}`;
             return `
-            <tr class="border-b border-outline/10 hover:bg-primary/5">
+            <tr class="border-b border-outline/10 table-row-clickable" data-house-id="${house._id}">
               <td class="px-6 py-4">
-                <div class="font-bold text-primary">${escapeHtml(house.title)}</div>
-                <div class="text-xs text-on-surface-variant">${escapeHtml(house.address)}</div>
-                <div class="text-xs text-on-surface-variant mt-1">${house.bedrooms || "?"} beds · ${house.bathrooms || "?"} baths</div>
+                <div class="font-bold text-primary truncate max-w-[220px]">${escapeHtml(house.title)}</div>
+                <div class="text-xs text-on-surface-variant truncate max-w-[220px]">${escapeHtml(house.address)}</div>
               </td>
               <td class="px-6 py-4 text-sm">
-                <span class="inline-block px-2 py-1 rounded text-xs font-bold bg-primary/10 text-primary mb-1">${house.listingType === "rent" ? "Rent" : "Sale"}</span>
+                <span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary mb-1">${house.listingType === "rent" ? "Rent" : "Sale"}</span>
                 <div class="font-bold text-primary">${priceDisplay}</div>
               </td>
-              <td class="px-6 py-4 text-sm">
-                <div>${escapeHtml(house.user?.name || "Unknown")}</div>
-                <div class="text-xs text-on-surface-variant">${escapeHtml(house.user?.email || "")}</div>
-              </td>
               <td class="px-6 py-4">
-                <select class="status-select text-sm border rounded-lg px-2 py-1" data-house-id="${house._id}" data-current-status="${house.status}">
-                  <option value="published" ${house.status === "published" ? "selected" : ""}>Published</option>
-                  <option value="draft" ${house.status === "draft" ? "selected" : ""}>Draft</option>
-                  <option value="inactive" ${house.status === "inactive" ? "selected" : ""}>Inactive</option>
-                  <option value="sold" ${house.status === "sold" ? "selected" : ""}>Sold</option>
-                  <option value="rented" ${house.status === "rented" ? "selected" : ""}>Rented</option>
-                </select>
+                <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold capitalize ${house.status === "published" ? "bg-green-100 text-green-800" : house.status === "draft" ? "bg-gray-100 text-gray-700" : "bg-yellow-100 text-yellow-800"}">${house.status}</span>
               </td>
-              <td class="px-6 py-4 text-sm">${formatDate(house.createdAt)}</td>
-              <td class="px-6 py-4">
-                <div class="flex gap-2">
-                  <button class="update-status-btn bg-tertiary-container text-primary px-3 py-1 rounded-lg text-xs font-bold" data-house-id="${house._id}">Update</button>
-                  <button class="delete-house-btn bg-red-100 text-red-700 px-3 py-1 rounded-lg text-xs font-bold" data-house-id="${house._id}">Delete</button>
-                </div>
-              </td>
+              <td class="px-6 py-4 text-sm text-on-surface-variant">${formatDate(house.createdAt)}</td>
             </tr>
           `;
           })
           .join("");
 
-        // Attach event listeners
-        document.querySelectorAll(".update-status-btn").forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            const houseId = btn.dataset.houseId;
-            const select = btn.closest("tr").querySelector(".status-select");
-            const newStatus = select.value;
-            handleStatusChange(houseId, newStatus);
-          });
-        });
-
-        document.querySelectorAll(".delete-house-btn").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const houseId = btn.dataset.houseId;
-            handleDelete(houseId);
+        // Attach click listeners to rows
+        document.querySelectorAll(".table-row-clickable").forEach((row) => {
+          row.addEventListener("click", (e) => {
+            const houseId = row.dataset.houseId;
+            const house = houses.find((h) => h._id === houseId);
+            if (house) openDetailPanel(house);
           });
         });
       }
@@ -561,54 +642,45 @@
         const totalPages = Math.ceil(total / limit);
         prevBtn.disabled = currentPage === 1;
         nextBtn.disabled = currentPage === totalPages || total === 0;
-        const start = (currentPage - 1) * limit + 1;
+        const start = total === 0 ? 0 : (currentPage - 1) * limit + 1;
         const end = Math.min(currentPage * limit, total);
-        pageStartSpan.textContent = total === 0 ? 0 : start;
+        pageStartSpan.textContent = start;
         pageEndSpan.textContent = end;
         totalCountSpan.textContent = total;
       }
 
-      // Event listeners for search
       searchInputDesktop.addEventListener("input", (e) => {
         search = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
-
       searchInputMobile.addEventListener("input", (e) => {
         search = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
-
       statusFilterSelect.addEventListener("change", (e) => {
         statusFilter = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
-
       typeFilterSelect.addEventListener("change", (e) => {
         typeFilter = e.target.value;
         currentPage = 1;
         fetchHouses();
       });
-
       prevBtn.addEventListener("click", () => {
         if (currentPage > 1) {
           currentPage--;
           fetchHouses();
         }
       });
-
       nextBtn.addEventListener("click", () => {
         currentPage++;
         fetchHouses();
       });
 
-      // Initial fetch
       fetchHouses();
-
-      // Re-initialize lucide icons for the search button and close button
       lucide.createIcons();
     </script>
   </body>
