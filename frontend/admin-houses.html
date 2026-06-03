@@ -222,6 +222,14 @@
       .table-row-clickable:hover {
         background: rgba(0, 28, 74, 0.04);
       }
+      /* Prevent horizontal scroll on table */
+      .table-container {
+        overflow-x: visible;
+      }
+      table {
+        table-layout: fixed;
+        width: 100%;
+      }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
@@ -300,7 +308,7 @@
         <div
           class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden"
         >
-          <div class="overflow-x-auto">
+          <div class="table-container">
             <table class="w-full text-left">
               <thead
                 class="bg-surface-container-low border-b border-outline/10"
@@ -308,30 +316,22 @@
                 <tr>
                   <th
                     class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                    style="width: 60%"
                   >
                     Property
                   </th>
                   <th
                     class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                    style="width: 40%"
                   >
                     Type / Price
-                  </th>
-                  <th
-                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
-                  >
-                    Status
-                  </th>
-                  <th
-                    class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider"
-                  >
-                    Date
                   </th>
                 </tr>
               </thead>
               <tbody id="housesTableBody">
                 <tr>
                   <td
-                    colspan="4"
+                    colspan="2"
                     class="text-center py-8 text-on-surface-variant"
                   >
                     Loading houses...
@@ -500,7 +500,7 @@
         } catch (err) {
           console.error(err);
           showError("Failed to load houses: " + err.message);
-          tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-red-600">Error loading houses</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="2" class="text-center py-8 text-red-600">Error loading houses</td></tr>`;
         } finally {
           showLoading(false);
         }
@@ -604,7 +604,7 @@
 
       function renderTable() {
         if (!houses.length) {
-          tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-on-surface-variant">No houses found</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="2" class="text-center py-8 text-on-surface-variant">No houses found</td></tr>`;
           return;
         }
 
@@ -617,17 +617,13 @@
             return `
             <tr class="border-b border-outline/10 table-row-clickable" data-house-id="${house._id}">
               <td class="px-6 py-4">
-                <div class="font-bold text-primary truncate max-w-[220px]">${escapeHtml(house.title)}</div>
-                <div class="text-xs text-on-surface-variant truncate max-w-[220px]">${escapeHtml(house.address)}</div>
+                <div class="font-bold text-primary truncate">${escapeHtml(house.title)}</div>
+                <div class="text-xs text-on-surface-variant truncate">${escapeHtml(house.address)}</div>
               </td>
               <td class="px-6 py-4 text-sm">
                 <span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary mb-1">${house.listingType === "rent" ? "Rent" : "Sale"}</span>
                 <div class="font-bold text-primary">${priceDisplay}</div>
               </td>
-              <td class="px-6 py-4">
-                <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold capitalize ${house.status === "published" ? "bg-green-100 text-green-800" : house.status === "draft" ? "bg-gray-100 text-gray-700" : "bg-yellow-100 text-yellow-800"}">${house.status}</span>
-              </td>
-              <td class="px-6 py-4 text-sm text-on-surface-variant">${formatDate(house.createdAt)}</td>
             </tr>
           `;
           })
