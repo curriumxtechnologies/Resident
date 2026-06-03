@@ -71,6 +71,15 @@
               headline: ["Manrope", "system-ui", "sans-serif"],
               body: ["Inter", "system-ui", "sans-serif"],
             },
+            animation: {
+              float: "float 3s ease-in-out infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "scale(1)", opacity: "0.8" },
+                "50%": { transform: "scale(1.1)", opacity: "1" },
+              },
+            },
           },
         },
       };
@@ -85,26 +94,85 @@
         height: 1.2rem;
         stroke-width: 1.8;
       }
-      .loader {
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #c5aa23;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 0.8s linear infinite;
-        margin: 20px auto;
+
+      /* Loading overlay styles */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(249, 249, 252, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition:
+          opacity 0.5s ease-out,
+          visibility 0.5s ease-out;
       }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
+
+      .loading-overlay.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loading-content {
+        text-align: center;
+      }
+
+      .loading-logo {
+        width: 120px;
+        height: auto; /* Changed from 120px to auto */
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .loading-text {
+        margin-top: 1.5rem;
+        color: #001c4a;
+        font-family: "Manrope", system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 0.875rem;
+        letter-spacing: 0.05em;
+        animation: pulse-text 1.5s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
         100% {
-          transform: rotate(360deg);
+          transform: translateY(0px) scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: translateY(-15px) scale(1.05);
+          opacity: 1;
+        }
+      }
+
+      @keyframes pulse-text {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
         }
       }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-content">
+        <img
+          src="images/logo.png"
+          alt="Rezident Homes Logo"
+          class="loading-logo"
+        />
+      </div>
+    </div>
+
     <div id="navbar-container"></div>
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
@@ -231,6 +299,9 @@
       import { getSellerApplications } from "./slices/sellerService.js";
       import { getHouses } from "./slices/houseService.js";
 
+      // Loading overlay
+      const loadingOverlay = document.getElementById("loadingOverlay");
+
       // Check admin access
       const token = getStoredToken();
       const user = getStoredUser();
@@ -243,14 +314,25 @@
       const navbarContainer = document.getElementById("navbar-container");
       navbarContainer.appendChild(renderAdminNavbar("dashboard"));
 
-      // Load stats
       async function loadStats() {
         try {
           const usersData = await getUsers({ limit: 1 });
           document.getElementById("totalUsers").textContent =
             usersData.total || 0;
 
-          const applications = await getSellerApplications();
+          const applicationsResponse = await getSellerApplications();
+          // Fix: Extract the actual array from the response
+          const applications =
+            applicationsResponse.data ||
+            applicationsResponse.applications ||
+            applicationsResponse;
+
+          // Ensure we have an array before filtering
+          if (!Array.isArray(applications)) {
+            console.error("Applications is not an array:", applications);
+            return;
+          }
+
           const pendingApps = applications.filter(
             (app) => app.status === "pending",
           ).length;
@@ -263,6 +345,10 @@
             housesData.total || 0;
         } catch (err) {
           console.error("Failed to load stats:", err);
+        } finally {
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
         }
       }
 

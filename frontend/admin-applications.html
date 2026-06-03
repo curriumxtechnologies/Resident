@@ -70,6 +70,15 @@
               headline: ["Manrope", "system-ui", "sans-serif"],
               body: ["Inter", "system-ui", "sans-serif"],
             },
+            animation: {
+              float: "float 3s ease-in-out infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "scale(1)", opacity: "0.8" },
+                "50%": { transform: "scale(1.1)", opacity: "1" },
+              },
+            },
           },
         },
       };
@@ -84,23 +93,72 @@
         height: 1.2rem;
         stroke-width: 1.8;
       }
-      .loader {
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #c5aa23;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 0.8s linear infinite;
-        margin: 20px auto;
+
+      /* Loading overlay styles */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(249, 249, 252, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition:
+          opacity 0.5s ease-out,
+          visibility 0.5s ease-out;
       }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
+
+      .loading-overlay.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loading-content {
+        text-align: center;
+      }
+
+      .loading-logo {
+        width: 120px;
+        height: auto; /* Changed from 120px to auto */
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .loading-text {
+        margin-top: 1.5rem;
+        color: #001c4a;
+        font-family: "Manrope", system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 0.875rem;
+        letter-spacing: 0.05em;
+        animation: pulse-text 1.5s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
         100% {
-          transform: rotate(360deg);
+          transform: translateY(0px) scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: translateY(-15px) scale(1.05);
+          opacity: 1;
         }
       }
+
+      @keyframes pulse-text {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
       .input-field {
         padding: 0.65rem 1rem;
         border-radius: 0.75rem;
@@ -141,6 +199,17 @@
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-content">
+        <img
+          src="images/logo.png"
+          alt="Rezident Homes Logo"
+          class="loading-logo"
+        />
+      </div>
+    </div>
+
     <div id="navbar-container"></div>
 
     <main class="px-5 md:px-8 py-10 lg:py-14">
@@ -165,9 +234,6 @@
           </select>
         </div>
 
-        <div id="loadingOverlay" class="hidden py-10">
-          <div class="loader"></div>
-        </div>
         <div
           id="errorMsg"
           class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"
@@ -339,6 +405,9 @@
         window.location.href = "login.html";
       }
 
+      // ========== Loading overlay ==========
+      const loadingOverlay = document.getElementById("loadingOverlay");
+
       // ========== Insert navbar ==========
       const navContainer = document.getElementById("navbar-container");
       if (navContainer)
@@ -346,7 +415,6 @@
 
       // ========== DOM elements ==========
       const container = document.getElementById("applicationsContainer");
-      const loadingOverlay = document.getElementById("loadingOverlay");
       const errorMsgDiv = document.getElementById("errorMsg");
       const statusFilterSelect = document.getElementById("statusFilter");
 
@@ -378,10 +446,6 @@
       let currentSellerId = null;
 
       // ========== Helpers ==========
-      function showLoading(show) {
-        loadingOverlay.classList.toggle("hidden", !show);
-      }
-
       function showError(msg) {
         errorMsgDiv.textContent = msg;
         errorMsgDiv.classList.remove("hidden");
@@ -506,7 +570,6 @@
 
       // ========== Fetch applications ==========
       async function fetchApplications() {
-        showLoading(true);
         try {
           const response = await getSellerApplications(statusFilter);
           // 🔥 CRITICAL: extract the 'applications' array from the response
@@ -517,7 +580,10 @@
           showError("Failed to load applications: " + err.message);
           container.innerHTML = `<div class="text-center py-8 text-red-600">Error loading applications</div>`;
         } finally {
-          showLoading(false);
+          // Hide loading overlay with a slight delay for smooth transition
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
         }
       }
 
@@ -527,7 +593,8 @@
         const status = modalStatus.value;
         const adminNote = modalNote.value;
         try {
-          showLoading(true);
+          // Show loading overlay for the review action
+          loadingOverlay.classList.remove("hidden");
           await reviewSellerApplication(selectedAppId, status, adminNote);
           showError(`Application ${status} successfully`);
           reviewModal.classList.add("hidden");
@@ -536,7 +603,9 @@
         } catch (err) {
           showError(err.message);
         } finally {
-          showLoading(false);
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
         }
       }
 
@@ -544,28 +613,32 @@
       async function handleGrantBadge() {
         if (!currentSellerId) return;
         try {
-          showLoading(true);
+          loadingOverlay.classList.remove("hidden");
           await grantVerificationBadge(currentSellerId, true);
           showError("Verification badge granted");
           await fetchApplications();
         } catch (err) {
           showError(err.message);
         } finally {
-          showLoading(false);
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
         }
       }
 
       async function handleRevokeBadge() {
         if (!currentSellerId) return;
         try {
-          showLoading(true);
+          loadingOverlay.classList.remove("hidden");
           await grantVerificationBadge(currentSellerId, false);
           showError("Verification badge revoked");
           await fetchApplications();
         } catch (err) {
           showError(err.message);
         } finally {
-          showLoading(false);
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
         }
       }
 
@@ -573,7 +646,7 @@
         if (!currentSellerId) return;
         const reason = prompt("Reason for suspension (optional):");
         try {
-          showLoading(true);
+          loadingOverlay.classList.remove("hidden");
           await suspendSeller(
             currentSellerId,
             true,
@@ -584,28 +657,32 @@
         } catch (err) {
           showError(err.message);
         } finally {
-          showLoading(false);
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
         }
       }
 
       async function handleUnsuspend() {
         if (!currentSellerId) return;
         try {
-          showLoading(true);
+          loadingOverlay.classList.remove("hidden");
           await suspendSeller(currentSellerId, false, "");
           showError("Seller unsuspended");
           await fetchApplications();
         } catch (err) {
           showError(err.message);
         } finally {
-          showLoading(false);
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
         }
       }
 
       async function handleViewReports() {
         if (!currentSellerId) return;
         try {
-          showLoading(true);
+          loadingOverlay.classList.remove("hidden");
           const reportsData = await getReports();
           const sellerReports = reportsData.reports
             ? reportsData.reports.filter(
@@ -634,13 +711,16 @@
         } catch (err) {
           showError(err.message);
         } finally {
-          showLoading(false);
+          setTimeout(() => {
+            loadingOverlay.classList.add("hidden");
+          }, 500);
         }
       }
 
       // ========== Event listeners ==========
       statusFilterSelect.addEventListener("change", (e) => {
         statusFilter = e.target.value;
+        loadingOverlay.classList.remove("hidden");
         fetchApplications();
       });
 
