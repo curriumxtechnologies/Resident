@@ -166,31 +166,17 @@
         }
       }
 
-      /* Replace your mobile button patches with this clean constraint */
       @media (max-width: 640px) {
         #reportSellerBtn,
         .bg-primary.rounded-3xl a {
           flex: 1;
-          min-width: 0; /* Prevents text forcing button outside bounds */
-          white-space: nowrap;
         }
 
-        .bg-primary.rounded-3xl .relative.z-10 {
+        .bg-primary.rounded-3xl .relative.z-10 > div:last-child {
           width: 100%;
-        }
-
-        .bg-primary.rounded-3xl .flex.flex-row.gap-3 {
-          width: 100%;
-          padding-right: 0.5rem; /* Fallback safe zone gap */
         }
       }
 
-      /* Make button icons larger */
-      .bg-primary.rounded-3xl .lucide {
-        width: 1.5rem;
-        height: 1.5rem;
-        stroke-width: 2;
-      }
       /* Ensure buttons have equal width on mobile */
       @media (max-width: 640px) {
         .bg-primary.rounded-3xl .flex.flex-row.gap-3 {
