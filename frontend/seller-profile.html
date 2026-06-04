@@ -166,14 +166,22 @@
         }
       }
 
+      /* Replace your mobile button patches with this clean constraint */
       @media (max-width: 640px) {
         #reportSellerBtn,
         .bg-primary.rounded-3xl a {
           flex: 1;
+          min-width: 0; /* Prevents text forcing button outside bounds */
+          white-space: nowrap;
         }
 
-        .bg-primary.rounded-3xl .relative.z-10 > div:last-child {
+        .bg-primary.rounded-3xl .relative.z-10 {
           width: 100%;
+        }
+
+        .bg-primary.rounded-3xl .flex.flex-row.gap-3 {
+          width: 100%;
+          padding-right: 0.5rem; /* Fallback safe zone gap */
         }
       }
 
@@ -630,7 +638,7 @@
                   </div>
                 </div>
               </div>
-              <div class="flex flex-row sm:flex-row lg:flex-col gap-3 self-start lg:self-end lg:w-auto">
+              <div class="flex flex-row sm:flex-row lg:flex-col gap-3 self-start lg:self-end lg:w-auto pr-4 sm:pr-0 w-full sm:w-auto">
                 <a href="seller-listings.html?id=${seller._id}" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2 whitespace-nowrap lg:w-auto">View Houses <i data-lucide="arrow-right"></i></a>
                 <button id="reportSellerBtn" class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-white hover:text-red-600 transition flex items-center justify-center gap-2 whitespace-nowrap lg:w-auto"><i data-lucide="flag"></i> Report Seller</button>
               </div>
