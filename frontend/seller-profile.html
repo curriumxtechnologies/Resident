@@ -154,6 +154,30 @@
           grid-template-columns: repeat(2, 1fr);
         }
       }
+
+      /* Fix for report button spacing */
+      .bg-primary.rounded-3xl > div:last-child {
+        padding-right: 0;
+      }
+
+      .bg-primary.rounded-3xl .flex.flex-row.gap-3 {
+        margin-right: 0;
+      }
+
+      /* Ensure buttons don't overflow on mobile */
+      @media (max-width: 640px) {
+        .bg-primary.rounded-3xl .flex.flex-row.gap-3 {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .bg-primary.rounded-3xl .flex.flex-row.gap-3 a,
+        .bg-primary.rounded-3xl .flex.flex-row.gap-3 button {
+          flex: 1;
+          text-align: center;
+          justify-content: center;
+        }
+      }
     </style>
   </head>
 
