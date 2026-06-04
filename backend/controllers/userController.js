@@ -214,7 +214,10 @@ const deleteUser = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  await user.remove();
+  // ✅ FIX: Use deleteOne() instead of remove()
+  await User.deleteOne({ _id: user._id });
+  // OR alternatively, you can use:
+  // await user.deleteOne();
 
   res.json({ success: true, message: "User deleted successfully" });
 });
