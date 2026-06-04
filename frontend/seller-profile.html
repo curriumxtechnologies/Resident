@@ -196,6 +196,18 @@
           align-items: flex-end;
         }
       }
+
+      @media (min-width: 1024px) {
+        .bg-primary.rounded-3xl > .relative.z-10 > div:last-child {
+          align-items: flex-end !important;
+          margin-right: 0 !important;
+        }
+
+        .bg-primary.rounded-3xl > .relative.z-10 > div:last-child button,
+        .bg-primary.rounded-3xl > .relative.z-10 > div:last-child a {
+          width: auto !important;
+        }
+      }
     </style>
   </head>
 
