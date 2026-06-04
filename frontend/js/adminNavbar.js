@@ -17,7 +17,6 @@ export function renderAdminNavbar(activePage = "dashboard") {
       <div class="flex items-center justify-between h-16 lg:h-20">
         <a href="admin.html" class="flex items-center gap-2">
           <img src="images/logo.png" alt="Resident" class="h-9 lg:h-11 w-auto object-contain" />
-          <span class="font-headline font-extrabold text-primary hidden sm:inline">Admin Panel</span>
         </a>
         <div class="flex items-center gap-1 md:gap-3">
           ${navItems.map(item => `
