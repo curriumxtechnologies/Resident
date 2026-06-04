@@ -178,6 +178,24 @@
           justify-content: center;
         }
       }
+
+      /* Force report button to stay within padding */
+      .bg-primary.rounded-3xl .flex.lg\:flex-col {
+        max-width: fit-content;
+        margin-right: 0;
+      }
+
+      .bg-primary.rounded-3xl .flex.lg\:flex-col button,
+      .bg-primary.rounded-3xl .flex.lg\:flex-col a {
+        white-space: nowrap;
+      }
+
+      @media (min-width: 1024px) {
+        .bg-primary.rounded-3xl .flex.lg\:flex-col {
+          margin-right: 0;
+          align-items: flex-end;
+        }
+      }
     </style>
   </head>
 
