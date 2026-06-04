@@ -155,26 +155,26 @@
         }
       }
 
-      /* Fix for report button spacing */
-      .bg-primary.rounded-3xl > div:last-child {
-        padding-right: 0;
+      /* FIX: Proper spacing for Report Seller button */
+      .bg-primary.rounded-3xl {
+        padding-right: 1.5rem !important;
       }
 
-      .bg-primary.rounded-3xl .flex.flex-row.gap-3 {
-        margin-right: 0;
+      @media (min-width: 768px) {
+        .bg-primary.rounded-3xl {
+          padding-right: 2rem !important;
+        }
       }
 
-      /* Ensure buttons don't overflow on mobile */
+      /* Ensure buttons have equal width on mobile */
       @media (max-width: 640px) {
         .bg-primary.rounded-3xl .flex.flex-row.gap-3 {
           width: 100%;
-          justify-content: space-between;
         }
 
         .bg-primary.rounded-3xl .flex.flex-row.gap-3 a,
         .bg-primary.rounded-3xl .flex.flex-row.gap-3 button {
           flex: 1;
-          text-align: center;
           justify-content: center;
         }
       }
