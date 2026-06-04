@@ -122,6 +122,38 @@
           rgba(0, 0, 0, 0.05) 100%
         );
       }
+
+      /* === Mobile & responsive refinements (no layout/JS changes) === */
+      @media (max-width: 640px) {
+        .container-padding {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        /* finer spacing for tight screens */
+        .responsive-stack {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        /* ensure images don't overflow */
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+        /* card grid adjustments */
+        .responsive-grid {
+          grid-template-columns: 1fr;
+        }
+        /* seller header adjustments */
+        .seller-header-mobile {
+          text-align: left;
+        }
+      }
+
+      @media (min-width: 641px) and (max-width: 1024px) {
+        .responsive-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
     </style>
   </head>
 
@@ -459,9 +491,9 @@
         let officeDisplay = "";
         if (application) {
           if (isLandlord)
-            addressDisplay = `<p class="font-bold text-primary mt-1 text-sm">${escapeHtml(application.address || "Not provided")}</p>`;
+            addressDisplay = `<p class="font-bold text-primary mt-1 text-sm break-words">${escapeHtml(application.address || "Not provided")}</p>`;
           else
-            officeDisplay = `<p class="font-bold text-primary mt-1 text-sm">${escapeHtml(application.officeAddress || "Not provided")}</p>`;
+            officeDisplay = `<p class="font-bold text-primary mt-1 text-sm break-words">${escapeHtml(application.officeAddress || "Not provided")}</p>`;
         }
 
         const joinedDate = formatDate(seller.createdAt);
@@ -475,11 +507,11 @@
           .map(
             (r) => `
           <div class="border-t border-outline/10 pt-4">
-            <div class="flex items-center justify-between">
+            <div class="flex flex-wrap items-center justify-between gap-2">
               <div><h3 class="font-bold text-primary text-sm">${escapeHtml(r.reviewer?.name || "Anonymous")}</h3><p class="text-xs text-on-surface-variant">${new Date(r.createdAt).toLocaleDateString()}</p></div>
               <div class="flex gap-0.5 text-xs">${renderStars(r.rating)}</div>
             </div>
-            <p class="text-sm text-on-surface-variant mt-2">${escapeHtml(r.comment || "No comment provided.")}</p>
+            <p class="text-sm text-on-surface-variant mt-2 break-words">${escapeHtml(r.comment || "No comment provided.")}</p>
           </div>
         `,
           )
@@ -516,80 +548,80 @@
         const profileHTML = `
           <section class="bg-primary rounded-3xl p-6 md:p-8 text-white relative overflow-hidden mb-8">
             <div class="absolute inset-0 opacity-15"><img src="images/hero.avif" class="w-full h-full object-cover" /></div>
-            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-              <div class="flex flex-col sm:flex-row sm:items-center gap-5">
-                <div class="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-lg overflow-hidden shrink-0"><img src="${sellerLogo}" alt="Logo" class="w-20 h-auto object-contain" /></div>
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 md:gap-8">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-5">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white flex items-center justify-center shadow-lg overflow-hidden shrink-0"><img src="${sellerLogo}" alt="Logo" class="w-16 sm:w-20 h-auto object-contain" /></div>
                 <div>
-                  <div class="flex flex-wrap items-center gap-2 mb-3">
+                  <div class="flex flex-wrap items-center gap-2 mb-2 md:mb-3">
                     ${verificationBadge ? '<span class="bg-tertiary-container text-primary px-3 py-1 rounded-full text-xs font-extrabold">✓ Verified Seller</span>' : ""}
                     <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-bold">${isLandlord ? "Private Landlord" : "Real Estate Agency"}</span>
                   </div>
-                  <h1 class="font-headline text-3xl md:text-4xl font-extrabold">${escapeHtml(sellerName)}</h1>
-                  <p class="text-white/75 text-sm mt-2 max-w-xl">${escapeHtml(application?.businessName || "Professional real estate services")}</p>
-                  <div class="flex flex-wrap items-center gap-4 mt-4 text-sm text-white/80">
-                    <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> ${escapeHtml(isLandlord ? application?.address || "Nigeria" : application?.officeAddress || "Nigeria")}</span>
+                  <h1 class="font-headline text-2xl sm:text-3xl md:text-4xl font-extrabold break-words">${escapeHtml(sellerName)}</h1>
+                  <p class="text-white/75 text-sm mt-1 sm:mt-2 max-w-xl">${escapeHtml(application?.businessName || "Professional real estate services")}</p>
+                  <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-sm text-white/80">
+                    <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4 shrink-0"></i> <span class="truncate">${escapeHtml(isLandlord ? application?.address || "Nigeria" : application?.officeAddress || "Nigeria")}</span></span>
                     <span class="flex items-center gap-1"><i data-lucide="calendar-days" class="w-4 h-4"></i> Joined ${joinedDate}</span>
                     ${verificationBadge ? '<span class="flex items-center gap-1"><i data-lucide="badge-check" class="w-4 h-4 text-tertiary-fixed"></i> Identity verified</span>' : ""}
                   </div>
                 </div>
               </div>
-              <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
-                <a href="seller-listings.html?id=${seller._id}" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2">View All Houses <i data-lucide="arrow-right"></i></a>
-                <button id="reportSellerBtn" class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-white hover:text-red-600 transition flex items-center justify-center gap-2"><i data-lucide="flag"></i> Report Seller</button>
+              <div class="flex flex-row sm:flex-row lg:flex-col gap-3 self-start lg:self-auto">
+                <a href="seller-listings.html?id=${seller._id}" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2 whitespace-nowrap">View All Houses <i data-lucide="arrow-right"></i></a>
+                <button id="reportSellerBtn" class="bg-white/10 border border-white/30 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-white hover:text-red-600 transition flex items-center justify-center gap-2 whitespace-nowrap"><i data-lucide="flag"></i> Report Seller</button>
               </div>
             </div>
           </section>
 
-          <section class="grid lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-8">
-              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                  <div><h2 class="font-headline text-2xl font-extrabold text-primary">Seller Details</h2><p class="text-sm text-on-surface-variant mt-1">Basic information visible to buyers.</p></div>
-                  <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Active</span>
+          <section class="grid lg:grid-cols-3 gap-6 md:gap-8">
+            <div class="lg:col-span-2 space-y-6 md:space-y-8">
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-5 md:p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5 md:mb-6">
+                  <div><h2 class="font-headline text-xl md:text-2xl font-extrabold text-primary">Seller Details</h2><p class="text-sm text-on-surface-variant mt-1">Basic information visible to buyers.</p></div>
+                  <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold self-start sm:self-center">Active</span>
                 </div>
-                <div class="grid sm:grid-cols-2 gap-5">
-                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Name</p><p class="font-bold text-primary mt-1 text-sm">${escapeHtml(sellerName)}</p></div>
+                <div class="grid sm:grid-cols-2 gap-4 md:gap-5">
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Name</p><p class="font-bold text-primary mt-1 text-sm break-words">${escapeHtml(sellerName)}</p></div>
                   <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Seller Type</p><p class="font-bold text-primary mt-1 text-sm">${isLandlord ? "Landlord" : "Real Estate Agency"}</p></div>
-                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Email</p><p class="font-bold text-primary mt-1 text-sm">${escapeHtml(seller.email || application?.email || "Not provided")}</p></div>
+                  <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Email</p><p class="font-bold text-primary mt-1 text-sm break-words">${escapeHtml(seller.email || application?.email || "Not provided")}</p></div>
                   <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Phone</p><p class="font-bold text-primary mt-1 text-sm">${escapeHtml(seller.phone || application?.phone || "Not provided")}</p></div>
-                  ${isLandlord ? `<div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Residential Address</p>${addressDisplay}</div>` : `<div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Office Address</p>${officeDisplay}</div>`}
+                  ${isLandlord ? `<div class="col-span-1 sm:col-span-2"><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Residential Address</p>${addressDisplay}</div>` : `<div class="col-span-1 sm:col-span-2"><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Office Address</p>${officeDisplay}</div>`}
                   <div><p class="text-xs font-bold text-on-surface-variant uppercase tracking-wide">Verification</p><p class="font-bold text-primary mt-1 text-sm">${verificationBadge ? "CAC and address verified" : "Not verified yet"}</p></div>
                 </div>
               </div>
 
-              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-                <h2 class="font-headline text-2xl font-extrabold text-primary mb-4">About Seller</h2>
-                <p class="text-sm text-on-surface-variant leading-relaxed">${escapeHtml(application?.businessName || sellerName)} provides ${isLandlord ? "private property rentals and sales" : "verified real estate listings for buyers and renters"} across Nigeria. Professional, transparent, and client-focused.</p>
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-5 md:p-6">
+                <h2 class="font-headline text-xl md:text-2xl font-extrabold text-primary mb-3 md:mb-4">About Seller</h2>
+                <p class="text-sm text-on-surface-variant leading-relaxed break-words">${escapeHtml(application?.businessName || sellerName)} provides ${isLandlord ? "private property rentals and sales" : "verified real estate listings for buyers and renters"} across Nigeria. Professional, transparent, and client-focused.</p>
               </div>
 
-              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-                <div class="flex items-center justify-between gap-4 mb-6">
-                  <div><h2 class="font-headline text-2xl font-extrabold text-primary">Ratings & Reviews</h2><p class="text-sm text-on-surface-variant mt-1">What users say about this seller.</p></div>
-                  <div class="text-right"><p class="text-3xl font-extrabold text-primary">${reviewsData.averageRating || 0}</p><div class="flex gap-0.5 text-xs">${renderStars(reviewsData.averageRating)}</div><p class="text-xs text-on-surface-variant mt-1">${reviewsData.count} reviews</p></div>
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-5 md:p-6">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-5 md:mb-6">
+                  <div><h2 class="font-headline text-xl md:text-2xl font-extrabold text-primary">Ratings & Reviews</h2><p class="text-sm text-on-surface-variant mt-1">What users say about this seller.</p></div>
+                  <div class="text-right"><p class="text-2xl md:text-3xl font-extrabold text-primary">${reviewsData.averageRating || 0}</p><div class="flex gap-0.5 text-xs justify-end">${renderStars(reviewsData.averageRating)}</div><p class="text-xs text-on-surface-variant mt-1">${reviewsData.count} reviews</p></div>
                 </div>
                 <div id="reviewsContainer">${reviewSection}</div>
                 ${getStoredUser() ? `<button id="writeReviewBtn" class="mt-6 w-full border border-tertiary-container text-primary py-2 rounded-xl font-bold text-sm hover:bg-tertiary-container/10 transition">Write a Review</button>` : `<p class="mt-4 text-center text-sm"><a href="login.html" class="text-tertiary font-bold">Login</a> to write a review.</p>`}
               </div>
             </div>
 
-            <aside class="space-y-8">
-              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-                <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Seller Performance</h2>
-                <div class="space-y-4">
+            <aside class="space-y-6 md:space-y-8">
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-5 md:p-6">
+                <h2 class="font-headline text-xl font-extrabold text-primary mb-4 md:mb-5">Seller Performance</h2>
+                <div class="space-y-3">
                   <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Total Listings</span><span class="font-extrabold text-primary text-sm">${totalListings}</span></div>
                   <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Houses Sold</span><span class="font-extrabold text-primary text-sm">${sold}</span></div>
                   <div class="flex items-center justify-between border-b pb-3"><span class="text-sm">Houses Rented</span><span class="font-extrabold text-primary text-sm">${rented}</span></div>
                 </div>
               </div>
 
-              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-                <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Latest Listings</h2>
-                ${listingsHtml || '<p class="text-center text-on-surface-variant text-sm">No listings yet.</p>'}
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-5 md:p-6">
+                <h2 class="font-headline text-xl font-extrabold text-primary mb-4 md:mb-5">Latest Listings</h2>
+                <div class="grid grid-cols-1 gap-4">${listingsHtml || '<p class="text-center text-on-surface-variant text-sm col-span-full">No listings yet.</p>'}</div>
                 ${viewAllLink}
               </div>
 
-              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6">
-                <h2 class="font-headline text-xl font-extrabold text-primary mb-5">Contact Seller</h2>
+              <div class="bg-white rounded-2xl shadow-sm border border-outline/10 p-5 md:p-6">
+                <h2 class="font-headline text-xl font-extrabold text-primary mb-4 md:mb-5">Contact Seller</h2>
                 <div class="space-y-3">
                   <a href="tel:${seller.phone || application?.phone || ""}" class="w-full bg-primary text-white px-4 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"><i data-lucide="phone"></i> Call Seller</a>
                   <a href="mailto:${seller.email || application?.email || ""}" class="w-full bg-tertiary-container text-primary px-4 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2"><i data-lucide="mail"></i> Email Seller</a>
