@@ -154,8 +154,15 @@ const getHouses = asyncHandler(async (req, res) => {
     sort = "-createdAt",
   } = req.query;
 
-  // Base filter – only published listings by default
-  const filter = { status: status || "published" };
+  // ✅ FIX: Only filter by status if explicitly provided
+  const filter = {};
+  
+  // If status is provided, use it; otherwise show ALL statuses
+  if (status) {
+    filter.status = status;
+  }
+  // When no status is specified, filter.status is undefined
+  // and MongoDB returns houses with ANY status
 
   // Apply filters
   if (listingType) filter.listingType = listingType;

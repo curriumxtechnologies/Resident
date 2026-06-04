@@ -196,6 +196,100 @@
         background: #dbeafe;
         color: #1e40af;
       }
+
+      /* Toast notification styles */
+      .toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+      }
+
+      .toast {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        background: #001c4a;
+        color: #ffffff;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 28, 74, 0.25);
+        pointer-events: auto;
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.21, 1.02, 0.73, 1),
+          opacity 0.3s ease-out;
+        max-width: 400px;
+        word-break: break-word;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .toast.hide {
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.25s ease-in,
+          opacity 0.25s ease-in;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toast-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: #ffe260;
+        stroke-width: 2;
+      }
+
+      .toast-message {
+        flex: 1;
+      }
+
+      .toast-close {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+      }
+
+      .toast-close:hover {
+        opacity: 1;
+      }
+
+      .toast-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: #ffffff;
+        stroke-width: 2;
+      }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
@@ -209,6 +303,9 @@
         />
       </div>
     </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <div id="navbar-container"></div>
 
@@ -397,12 +494,64 @@
         resolveReport,
       } from "./slices/sellerService.js";
 
+      // ========== Toast notification function ==========
+      function showToast(message, duration = 4000) {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.innerHTML = `
+          <span class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </span>
+          <span class="toast-message">${message}</span>
+          <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        // Trigger show animation
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        // Close button
+        const closeBtn = toast.querySelector(".toast-close");
+        closeBtn.addEventListener("click", () => {
+          removeToast(toast);
+        });
+
+        // Auto dismiss
+        const timer = setTimeout(() => {
+          removeToast(toast);
+        }, duration);
+
+        function removeToast(toastEl) {
+          clearTimeout(timer);
+          toastEl.classList.add("hide");
+          toastEl.addEventListener("transitionend", () => {
+            if (toastEl.parentNode) {
+              toastEl.parentNode.removeChild(toastEl);
+            }
+          });
+        }
+      }
+
       // ========== Admin check ==========
       const token = getStoredToken();
       const currentUser = getStoredUser();
       if (!token || !currentUser || currentUser.role !== "admin") {
-        alert("Admin access required");
-        window.location.href = "login.html";
+        showToast("Admin access required");
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
       }
 
       // ========== Loading overlay ==========
@@ -609,16 +758,23 @@
         }
       }
 
-      // ========== Manage seller actions ==========
       async function handleGrantBadge() {
         if (!currentSellerId) return;
+
         try {
           loadingOverlay.classList.remove("hidden");
+
           await grantVerificationBadge(currentSellerId, true);
-          showError("Verification badge granted");
+
+          // Close modal
+          manageModal.classList.add("hidden");
+          manageModal.classList.remove("flex");
+
+          showToast("Verification badge granted");
+
           await fetchApplications();
         } catch (err) {
-          showError(err.message);
+          showToast(err.message);
         } finally {
           setTimeout(() => {
             loadingOverlay.classList.add("hidden");
@@ -628,13 +784,20 @@
 
       async function handleRevokeBadge() {
         if (!currentSellerId) return;
+
         try {
           loadingOverlay.classList.remove("hidden");
+
           await grantVerificationBadge(currentSellerId, false);
-          showError("Verification badge revoked");
+
+          manageModal.classList.add("hidden");
+          manageModal.classList.remove("flex");
+
+          showToast("Verification badge revoked");
+
           await fetchApplications();
         } catch (err) {
-          showError(err.message);
+          showToast(err.message);
         } finally {
           setTimeout(() => {
             loadingOverlay.classList.add("hidden");

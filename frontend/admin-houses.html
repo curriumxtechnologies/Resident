@@ -124,7 +124,7 @@
 
       .loading-logo {
         width: 120px;
-        height: auto; /* Changed from 120px to auto */
+        height: auto;
         animation: float 3s ease-in-out infinite;
       }
 
@@ -288,6 +288,192 @@
         table-layout: fixed;
         width: 100%;
       }
+
+      /* Toast notification styles */
+      .toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+      }
+
+      .toast {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: #ffffff;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        pointer-events: auto;
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.21, 1.02, 0.73, 1),
+          opacity 0.3s ease-out;
+        max-width: 420px;
+        word-break: break-word;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .toast.hide {
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.25s ease-in,
+          opacity 0.25s ease-in;
+      }
+
+      .toast--success {
+        background: #065f46;
+      }
+
+      .toast--error {
+        background: #991b1b;
+      }
+
+      .toast--info {
+        background: #001c4a;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toast-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .toast-message {
+        flex: 1;
+      }
+
+      .toast-close {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      .toast-close:hover {
+        opacity: 1;
+      }
+
+      .toast-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      /* Delete confirmation modal */
+      .confirm-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.2s ease,
+          visibility 0.2s ease;
+      }
+
+      .confirm-modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .confirm-modal-content {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .confirm-modal-title {
+        font-family: "Manrope", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 1.125rem;
+        color: #001c4a;
+        margin-bottom: 0.5rem;
+      }
+
+      .confirm-modal-message {
+        font-size: 0.875rem;
+        color: #444650;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .confirm-modal-actions {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .confirm-modal-actions button {
+        flex: 1;
+        padding: 0.65rem 1rem;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: background 0.15s ease;
+      }
+
+      .confirm-modal-cancel {
+        background: #f3f4f6;
+        color: #444650;
+      }
+
+      .confirm-modal-cancel:hover {
+        background: #e5e7eb;
+      }
+
+      .confirm-modal-confirm {
+        background: #991b1b;
+        color: white;
+      }
+
+      .confirm-modal-confirm:hover {
+        background: #7f1d1d;
+      }
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased">
@@ -299,6 +485,28 @@
           alt="Rezident Homes Logo"
           class="loading-logo"
         />
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="confirmModal" class="confirm-modal">
+      <div class="confirm-modal-content">
+        <h3 class="confirm-modal-title">Delete Listing</h3>
+        <p class="confirm-modal-message">
+          Are you sure you want to delete this listing? This action cannot be
+          undone.
+        </p>
+        <div class="confirm-modal-actions">
+          <button id="confirmModalCancel" class="confirm-modal-cancel">
+            Cancel
+          </button>
+          <button id="confirmModalConfirm" class="confirm-modal-confirm">
+            Delete
+          </button>
+        </div>
       </div>
     </div>
 
@@ -365,11 +573,6 @@
             </select>
           </div>
         </div>
-
-        <div
-          id="errorMsg"
-          class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-6"
-        ></div>
 
         <div
           class="bg-white rounded-2xl shadow-sm border border-outline/10 overflow-hidden"
@@ -469,11 +672,97 @@
         deleteHouse,
       } from "./slices/houseService.js";
 
+      // ========== Toast notification function ==========
+      function showToast(message, type = "info", duration = 4000) {
+        const container = document.getElementById("toastContainer");
+
+        const iconPaths = {
+          success:
+            '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
+          error:
+            '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',
+          info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+        };
+
+        const toast = document.createElement("div");
+        toast.className = `toast toast--${type}`;
+        toast.innerHTML = `
+          <span class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${iconPaths[type]}
+            </svg>
+          </span>
+          <span class="toast-message">${message}</span>
+          <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        const closeBtn = toast.querySelector(".toast-close");
+        closeBtn.addEventListener("click", () => removeToast(toast));
+
+        const timer = setTimeout(() => removeToast(toast), duration);
+
+        function removeToast(toastEl) {
+          clearTimeout(timer);
+          toastEl.classList.add("hide");
+          toastEl.addEventListener("transitionend", () => {
+            if (toastEl.parentNode) {
+              toastEl.parentNode.removeChild(toastEl);
+            }
+          });
+        }
+      }
+
+      // ========== Confirmation dialog (replaces confirm()) ==========
+      function showConfirm(message, title = "Confirm") {
+        return new Promise((resolve) => {
+          const modal = document.getElementById("confirmModal");
+          const titleEl = modal.querySelector(".confirm-modal-title");
+          const messageEl = modal.querySelector(".confirm-modal-message");
+          const cancelBtn = document.getElementById("confirmModalCancel");
+          const confirmBtn = document.getElementById("confirmModalConfirm");
+
+          titleEl.textContent = title;
+          messageEl.textContent = message;
+          modal.classList.add("show");
+
+          function cleanup() {
+            modal.classList.remove("show");
+            cancelBtn.removeEventListener("click", onCancel);
+            confirmBtn.removeEventListener("click", onConfirm);
+          }
+
+          function onCancel() {
+            cleanup();
+            resolve(false);
+          }
+
+          function onConfirm() {
+            cleanup();
+            resolve(true);
+          }
+
+          cancelBtn.addEventListener("click", onCancel);
+          confirmBtn.addEventListener("click", onConfirm);
+        });
+      }
+
       const token = getStoredToken();
       const currentUser = getStoredUser();
       if (!token || !currentUser || currentUser.role !== "admin") {
-        alert("Admin access required");
-        window.location.href = "login.html";
+        showToast("Admin access required", "error");
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
       }
 
       document
@@ -492,7 +781,6 @@
       let typeFilter = "";
 
       const tableBody = document.getElementById("housesTableBody");
-      const errorMsgDiv = document.getElementById("errorMsg");
       const prevBtn = document.getElementById("prevPage");
       const nextBtn = document.getElementById("nextPage");
       const pageStartSpan = document.getElementById("pageStart");
@@ -540,12 +828,6 @@
         }
       });
 
-      function showError(msg) {
-        errorMsgDiv.textContent = msg;
-        errorMsgDiv.classList.remove("hidden");
-        setTimeout(() => errorMsgDiv.classList.add("hidden"), 5000);
-      }
-
       async function fetchHouses() {
         try {
           const params = {
@@ -563,10 +845,9 @@
           updatePagination();
         } catch (err) {
           console.error(err);
-          showError("Failed to load houses: " + err.message);
+          showToast("Failed to load houses: " + err.message, "error");
           tableBody.innerHTML = `<tr><td colspan="2" class="text-center py-8 text-red-600">Error loading houses</td></tr>`;
         } finally {
-          // Hide loading overlay with a slight delay for smooth transition
           setTimeout(() => {
             loadingOverlay.classList.add("hidden");
           }, 500);
@@ -607,7 +888,6 @@
           </div>
         `;
 
-        // Attach panel button listeners
         document
           .getElementById("panelUpdateBtn")
           .addEventListener("click", async () => {
@@ -630,11 +910,11 @@
         try {
           loadingOverlay.classList.remove("hidden");
           await toggleHouseStatus(houseId, newStatus);
-          showError(`Status updated to ${newStatus}`);
+          showToast(`Status updated to ${newStatus}`, "success");
           closePanel();
           fetchHouses();
         } catch (err) {
-          showError(err.message);
+          showToast(err.message, "error");
         } finally {
           setTimeout(() => {
             loadingOverlay.classList.add("hidden");
@@ -643,19 +923,19 @@
       }
 
       async function handleDelete(houseId) {
-        if (
-          confirm(
-            "Are you sure you want to delete this listing? This action cannot be undone.",
-          )
-        ) {
+        const confirmed = await showConfirm(
+          "Are you sure you want to delete this listing? This action cannot be undone.",
+          "Delete Listing",
+        );
+        if (confirmed) {
           try {
             loadingOverlay.classList.remove("hidden");
             await deleteHouse(houseId);
-            showError("Listing deleted successfully");
+            showToast("Listing deleted successfully", "success");
             closePanel();
             fetchHouses();
           } catch (err) {
-            showError(err.message);
+            showToast(err.message, "error");
           } finally {
             setTimeout(() => {
               loadingOverlay.classList.add("hidden");
@@ -706,7 +986,6 @@
           })
           .join("");
 
-        // Attach click listeners to rows
         document.querySelectorAll(".table-row-clickable").forEach((row) => {
           row.addEventListener("click", (e) => {
             const houseId = row.dataset.houseId;
