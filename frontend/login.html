@@ -41,21 +41,11 @@
             animation: {
               "fade-slide-up":
                 "fadeSlideUp 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards",
-              "toast-in": "toastIn 0.25s ease-out forwards",
-              "toast-out": "toastOut 0.2s ease-in forwards",
             },
             keyframes: {
               fadeSlideUp: {
                 "0%": { opacity: "0", transform: "translateY(14px)" },
                 "100%": { opacity: "1", transform: "translateY(0)" },
-              },
-              toastIn: {
-                "0%": { opacity: "0", transform: "translateX(30px)" },
-                "100%": { opacity: "1", transform: "translateX(0)" },
-              },
-              toastOut: {
-                "0%": { opacity: "1", transform: "translateX(0)" },
-                "100%": { opacity: "0", transform: "translateX(40px)" },
               },
             },
           },
@@ -119,42 +109,113 @@
         pointer-events: none;
         opacity: 0.8;
       }
+
+      /* Toast notification styles */
       .toast-container {
         position: fixed;
         bottom: 24px;
-        left: 0;
-        right: 0;
+        right: 24px;
+        z-index: 99999;
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: 12px;
-        z-index: 1000;
         pointer-events: none;
       }
-      .toast-message {
-        pointer-events: auto;
-        max-width: 90%;
-        width: 360px;
-        background: #1f2937;
-        backdrop-filter: blur(12px);
-        color: white;
-        border-radius: 60px;
-        padding: 12px 20px;
-        font-weight: 500;
-        font-size: 0.9rem;
+
+      .toast {
         display: flex;
         align-items: center;
         gap: 12px;
-        border-left: 4px solid;
+        padding: 14px 20px;
+        color: #ffffff;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        pointer-events: auto;
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.21, 1.02, 0.73, 1),
+          opacity 0.3s ease-out;
+        max-width: 420px;
+        word-break: break-word;
       }
-      .toast-success {
-        background: #0a2f1f;
-        border-left-color: #4ade80;
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
       }
-      .toast-error {
-        background: #4a1a1f;
-        border-left-color: #f87171;
+
+      .toast.hide {
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.25s ease-in,
+          opacity 0.25s ease-in;
       }
+
+      .toast--success {
+        background: #065f46;
+      }
+
+      .toast--error {
+        background: #991b1b;
+      }
+
+      .toast--info {
+        background: #001c4a;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toast-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .toast-message {
+        flex: 1;
+      }
+
+      .toast-close {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      .toast-close:hover {
+        opacity: 1;
+      }
+
+      .toast-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
       .spinner {
         display: inline-block;
         width: 18px;
@@ -173,7 +234,7 @@
         transform: translateY(-2px);
         box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.2);
       }
-      /* Google Button Styling - FIXED SIZE, NEVER CHANGES SHAPE */
+      /* Google Button Styling */
       #googleButtonWrapper {
         width: 100%;
         min-width: 100%;
@@ -201,7 +262,6 @@
         max-height: 52px !important;
       }
 
-      /* Target the Google button - FIXED DIMENSIONS */
       #googleButtonWrapper [role="button"] {
         border-radius: 12px !important;
         font-weight: 700 !important;
@@ -226,7 +286,6 @@
         box-sizing: border-box !important;
       }
 
-      /* NO hover effects - completely static */
       #googleButtonWrapper [role="button"]:hover {
         background: white !important;
         border-color: #e2e8f0 !important;
@@ -235,7 +294,6 @@
         height: 52px !important;
       }
 
-      /* Make the span text inside bold with correct color */
       #googleButtonWrapper [role="button"] span {
         font-weight: 700 !important;
         color: #001c4a !important;
@@ -245,7 +303,6 @@
         text-overflow: ellipsis !important;
       }
 
-      /* Force the container to have fixed dimensions */
       .google-signin-container,
       #googleButtonWrapper {
         width: 100%;
@@ -294,7 +351,7 @@
               </p>
             </div>
 
-            <!-- Google One-Tap Button (rendered by Google SDK) -->
+            <!-- Google One-Tap Button -->
             <div id="googleButtonWrapper" class="w-full"></div>
 
             <div class="flex items-center gap-4 my-6">
@@ -339,7 +396,7 @@
             </form>
 
             <p class="text-center text-sm text-on-surface-variant mt-7">
-              Don’t have an account?
+              Don't have an account?
               <a
                 href="register.html"
                 class="font-bold text-primary hover:text-tertiary transition"
@@ -361,7 +418,7 @@
                 Check Your Email
               </h1>
               <p class="text-sm text-on-surface-variant mt-2">
-                We’ve sent a 6‑digit code to
+                We've sent a 6‑digit code to
                 <span
                   id="otpEmailDisplay"
                   class="font-bold text-primary"
@@ -381,7 +438,7 @@
             </button>
             <div class="text-center mt-6 text-sm">
               <p class="text-on-surface-variant">
-                Didn’t receive the code?
+                Didn't receive the code?
                 <button
                   id="resendOtpBtn"
                   class="font-bold text-primary hover:text-tertiary transition disabled:opacity-50"
@@ -404,7 +461,8 @@
       </section>
     </main>
 
-    <div id="toastRoot" class="toast-container"></div>
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script type="module">
       import { authService } from "./js/authService.js";
@@ -427,6 +485,56 @@
       let currentUserId = null;
       let currentEmail = null;
 
+      // ========== Toast notification function ==========
+      function showToast(message, type = "info", duration = 4000) {
+        const container = document.getElementById("toastContainer");
+
+        const iconPaths = {
+          success:
+            '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
+          error:
+            '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',
+          info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+        };
+
+        const toast = document.createElement("div");
+        toast.className = `toast toast--${type}`;
+        toast.innerHTML = `
+          <span class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${iconPaths[type]}
+            </svg>
+          </span>
+          <span class="toast-message">${message}</span>
+          <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        const closeBtn = toast.querySelector(".toast-close");
+        closeBtn.addEventListener("click", () => removeToast(toast));
+
+        const timer = setTimeout(() => removeToast(toast), duration);
+
+        function removeToast(toastEl) {
+          clearTimeout(timer);
+          toastEl.classList.add("hide");
+          toastEl.addEventListener("transitionend", () => {
+            if (toastEl.parentNode) {
+              toastEl.parentNode.removeChild(toastEl);
+            }
+          });
+        }
+      }
+
       // ----- Helper: Get redirect URL after login -----
       async function getRedirectUrl() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -435,9 +543,7 @@
         if (returnTo) {
           const decodedUrl = decodeURIComponent(returnTo);
 
-          // If returnTo is seller-register.html, check if user is already a seller
           if (decodedUrl.includes("seller-register.html")) {
-            // Wait for user data to be stored (retry up to 20 times, 200ms apart = 4 seconds)
             let userData = null;
             for (let i = 0; i < 20; i++) {
               const userDataStr = localStorage.getItem("auth_user");
@@ -455,7 +561,6 @@
                   console.log("Parse error:", e);
                 }
               }
-              // Wait 200ms before checking again
               await new Promise((resolve) => setTimeout(resolve, 200));
             }
 
@@ -473,20 +578,6 @@
         }
 
         return "home.html";
-      }
-
-      // ----- Toast system -----
-      const toastContainer = document.getElementById("toastRoot");
-      function showToast(message, type = "info", duration = 3500) {
-        const toast = document.createElement("div");
-        toast.className = `toast-message toast-${type}`;
-        toast.innerHTML = `<span class="text-base">${type === "success" ? "✓" : type === "error" ? "⚠️" : "ℹ️"}</span><span class="flex-1">${message}</span>`;
-        toast.style.animation = "toastIn 0.25s ease-out forwards";
-        toastContainer.appendChild(toast);
-        setTimeout(() => {
-          toast.style.animation = "toastOut 0.2s ease-in forwards";
-          setTimeout(() => toast.remove(), 220);
-        }, duration);
       }
 
       // Loading states for buttons
@@ -596,7 +687,7 @@
           currentEmail = email;
           otpEmailDisplay.textContent = email;
           createOTPInputs();
-          showToast(`✨ Verification code sent to ${email}!`, "success", 4000);
+          showToast(`Verification code sent to ${email}!`, "success", 4000);
           showStep(step2);
         } catch (err) {
           showToast(err.message || "Failed to send code.", "error");
@@ -618,7 +709,6 @@
             otp,
           });
 
-          // Save debug info to localStorage so it persists after redirect
           localStorage.setItem(
             "DEBUG_LOGIN_DATA",
             JSON.stringify({
@@ -671,7 +761,7 @@
         setResendButtonLoading(true);
         try {
           await authService.resendOTP({ userId: currentUserId });
-          showToast("📬 New code sent! Check your email.", "success", 4000);
+          showToast("New code sent! Check your email.", "success", 4000);
           clearOtpFields();
         } catch (err) {
           showToast(err.message || "Resend failed. Try again.", "error");
@@ -688,7 +778,7 @@
         setEmailButtonLoading(false);
       });
 
-      // ---------- GOOGLE ONE-TAP / BUTTON (Option 2) ----------
+      // ---------- GOOGLE ONE-TAP / BUTTON ----------
       function initGoogleLogin() {
         if (!window.google || !window.google.accounts) {
           setTimeout(initGoogleLogin, 100);
@@ -697,7 +787,6 @@
 
         window.google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
-          // Google sign-in callback
           callback: async (response) => {
             const idToken = response.credential;
             if (!idToken) {
@@ -711,7 +800,6 @@
               const data = await authService.googleAuth(idToken);
               showToast("Google sign-in successful! Redirecting...", "success");
 
-              // Get the returnTo URL
               const urlParams = new URLSearchParams(window.location.search);
               const returnTo = urlParams.get("returnTo");
 
@@ -720,7 +808,6 @@
               if (returnTo) {
                 redirectUrl = decodeURIComponent(returnTo);
 
-                // Check if user is a seller and trying to go to seller-register
                 if (
                   redirectUrl.includes("seller-register.html") &&
                   data.role === "seller"
@@ -762,7 +849,6 @@
           logo_alignment: "left",
         });
 
-        // Optional: also prompt One-Tap if user is already signed into Google
         window.google.accounts.id.prompt();
       }
 

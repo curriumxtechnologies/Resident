@@ -162,10 +162,119 @@
           width: 250px;
         }
       }
+
+      /* Toast notification styles */
+      .toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+      }
+
+      .toast {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: #ffffff;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        pointer-events: auto;
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.21, 1.02, 0.73, 1),
+          opacity 0.3s ease-out;
+        max-width: 420px;
+        word-break: break-word;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .toast.hide {
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.25s ease-in,
+          opacity 0.25s ease-in;
+      }
+
+      .toast--success {
+        background: #065f46;
+      }
+
+      .toast--error {
+        background: #991b1b;
+      }
+
+      .toast--info {
+        background: #001c4a;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toast-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .toast-message {
+        flex: 1;
+      }
+
+      .toast-close {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      .toast-close:hover {
+        opacity: 1;
+      }
+
+      .toast-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
     <header
       class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
     >
@@ -216,9 +325,7 @@
             class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
           >
             <div class="flex items-center gap-5">
-              <!-- Skeleton: Avatar -->
               <div id="heroAvatarSkeleton" class="skeleton-avatar"></div>
-              <!-- Profile image or fallback initials (hidden initially) -->
               <div
                 id="profileImageContainer"
                 class="hidden w-20 h-20 md:w-24 md:h-24 rounded-full bg-tertiary-container text-primary flex items-center justify-center text-2xl md:text-3xl font-extrabold shadow-lg overflow-hidden"
@@ -231,12 +338,10 @@
                 />
               </div>
               <div>
-                <!-- Skeleton: Name -->
                 <div id="heroNameSkeleton">
                   <div class="skeleton skeleton-name"></div>
                   <div class="skeleton skeleton-subtitle"></div>
                 </div>
-                <!-- Actual name (hidden initially) -->
                 <h2
                   id="profileName"
                   class="hidden font-headline text-3xl md:text-4xl font-extrabold"
@@ -245,7 +350,6 @@
                 </h2>
               </div>
             </div>
-            <!-- Skeleton: Action buttons -->
             <div
               id="actionButtonsSkeleton"
               class="flex flex-col sm:flex-row gap-3"
@@ -253,7 +357,6 @@
               <div class="skeleton skeleton-button"></div>
               <div class="skeleton skeleton-button"></div>
             </div>
-            <!-- Dynamic buttons injected here (hidden initially) -->
             <div
               id="actionButtons"
               class="hidden flex-col sm:flex-row gap-3"
@@ -264,12 +367,10 @@
         <!-- Profile Details & Activity -->
         <section class="grid lg:grid-cols-3 gap-8 mt-8">
           <div class="lg:col-span-2 space-y-8">
-            <!-- Profile Details Card -->
             <div
               id="profileDetailsCard"
               class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
             >
-              <!-- Skeleton: Header -->
               <div
                 id="detailsHeaderSkeleton"
                 class="flex items-center justify-between mb-6"
@@ -277,7 +378,6 @@
                 <div class="skeleton" style="height: 28px; width: 180px"></div>
                 <div class="skeleton" style="height: 16px; width: 80px"></div>
               </div>
-              <!-- Actual header (hidden initially) -->
               <div
                 id="detailsHeader"
                 class="hidden flex items-center justify-between mb-6"
@@ -291,7 +391,6 @@
                   >Edit Profile</a
                 >
               </div>
-              <!-- Skeleton: Detail fields -->
               <div id="detailsSkeleton" class="grid sm:grid-cols-2 gap-5">
                 <div>
                   <div class="skeleton skeleton-detail-label"></div>
@@ -318,7 +417,6 @@
                   <div class="skeleton skeleton-detail-value"></div>
                 </div>
               </div>
-              <!-- Actual details (hidden initially) -->
               <div id="detailsContent" class="hidden grid sm:grid-cols-2 gap-5">
                 <div>
                   <p
@@ -376,11 +474,9 @@
             </div>
           </div>
           <div class="space-y-8">
-            <!-- My Property Activity Card -->
             <div
               class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
             >
-              <!-- Skeleton: Activity card -->
               <div id="activityCardSkeleton" class="flex flex-col gap-4">
                 <div>
                   <div
@@ -394,7 +490,6 @@
                 </div>
                 <div class="skeleton skeleton-button" style="width: 100%"></div>
               </div>
-              <!-- Actual activity card (hidden initially) -->
               <div id="activityCard" class="hidden flex flex-col gap-4">
                 <div>
                   <h2 class="font-headline text-xl font-extrabold text-primary">
@@ -415,7 +510,6 @@
               </div>
             </div>
 
-            <!-- My Listings Button -->
             <div id="myListingsSkeleton" class="flex flex-col gap-4">
               <div class="skeleton skeleton-button" style="width: 100%"></div>
             </div>
@@ -447,16 +541,63 @@
       } from "./js/tokenStorage.js";
       import { authService } from "./js/authService.js";
 
-      // Hide all skeletons and show actual content
+      // ========== Toast notification function ==========
+      function showToast(message, type = "info", duration = 4000) {
+        const container = document.getElementById("toastContainer");
+
+        const iconPaths = {
+          success:
+            '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
+          error:
+            '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',
+          info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+        };
+
+        const toast = document.createElement("div");
+        toast.className = `toast toast--${type}`;
+        toast.innerHTML = `
+          <span class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${iconPaths[type]}
+            </svg>
+          </span>
+          <span class="toast-message">${message}</span>
+          <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        const closeBtn = toast.querySelector(".toast-close");
+        closeBtn.addEventListener("click", () => removeToast(toast));
+
+        const timer = setTimeout(() => removeToast(toast), duration);
+
+        function removeToast(toastEl) {
+          clearTimeout(timer);
+          toastEl.classList.add("hide");
+          toastEl.addEventListener("transitionend", () => {
+            if (toastEl.parentNode) {
+              toastEl.parentNode.removeChild(toastEl);
+            }
+          });
+        }
+      }
+
       function hideSkeletons() {
-        // Hero section
         document.getElementById("heroAvatarSkeleton").classList.add("hidden");
         document.getElementById("heroNameSkeleton").classList.add("hidden");
         document
           .getElementById("actionButtonsSkeleton")
           .classList.add("hidden");
 
-        // Show actual content
         document
           .getElementById("profileImageContainer")
           .classList.remove("hidden");
@@ -464,7 +605,6 @@
         document.getElementById("actionButtons").classList.remove("hidden");
         document.getElementById("actionButtons").classList.add("flex");
 
-        // Profile details
         document
           .getElementById("detailsHeaderSkeleton")
           .classList.add("hidden");
@@ -474,12 +614,10 @@
         document.getElementById("detailsContent").classList.remove("hidden");
         document.getElementById("detailsContent").classList.add("grid");
 
-        // Activity card
         document.getElementById("activityCardSkeleton").classList.add("hidden");
         document.getElementById("activityCard").classList.remove("hidden");
         document.getElementById("activityCard").classList.add("flex");
 
-        // My Listings
         document.getElementById("myListingsSkeleton").classList.add("hidden");
         document.getElementById("myListingsCard").classList.remove("hidden");
         document.getElementById("myListingsCard").classList.add("flex");
@@ -487,12 +625,10 @@
         lucide.createIcons();
       }
 
-      // Render action buttons based on user role and application status
       function renderActionButtons(user, sellerApplication) {
         const container = document.getElementById("actionButtons");
         if (!container) return;
 
-        // 0. Admin role – show Admin Dashboard button
         if (user.role === "admin") {
           container.innerHTML = `
             <a href="admin.html" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2">
@@ -503,7 +639,6 @@
           return;
         }
 
-        // 1. Approved seller (role = seller and verified)
         const isApprovedSeller =
           user.role === "seller" && user.sellerVerified === true;
         if (isApprovedSeller) {
@@ -519,7 +654,6 @@
           return;
         }
 
-        // 2. Pending application (application exists and status = pending)
         if (sellerApplication && sellerApplication.status === "pending") {
           container.innerHTML = `
             <div class="bg-yellow-100 text-yellow-800 px-5 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 border border-yellow-300">
@@ -530,7 +664,6 @@
           return;
         }
 
-        // 3. Default: no application or rejected – show apply button
         container.innerHTML = `
           <a href="seller-register.html" class="bg-tertiary-container text-primary px-5 py-3 rounded-xl font-extrabold text-sm hover:bg-tertiary-fixed transition flex items-center justify-center gap-2">
             <i data-lucide="briefcase" class="w-4 h-4"></i> Apply as Seller/Landlord
@@ -542,22 +675,18 @@
       function updateProfileUI(user, sellerApplication) {
         if (!user) return;
 
-        // Set name
         document.getElementById("profileName").textContent =
           user.name || "User";
 
-        // Handle profile image or initials
         const initialsSpan = document.getElementById("profileInitials");
         const profileImg = document.getElementById("profileImage");
         const container = document.getElementById("profileImageContainer");
 
         if (user.profile && user.profile.trim() !== "") {
-          // Show image
           profileImg.src = user.profile;
           profileImg.classList.remove("hidden");
           initialsSpan.classList.add("hidden");
           profileImg.onerror = () => {
-            // fallback to initials if image fails to load
             profileImg.classList.add("hidden");
             initialsSpan.classList.remove("hidden");
             const initials = (user.name || "User")
@@ -569,7 +698,6 @@
             initialsSpan.textContent = initials || "--";
           };
         } else {
-          // Show initials
           profileImg.classList.add("hidden");
           initialsSpan.classList.remove("hidden");
           const initials = (user.name || "User")
@@ -581,7 +709,6 @@
           initialsSpan.textContent = initials || "--";
         }
 
-        // Details
         document.getElementById("detailName").textContent =
           user.name || "Not set";
         document.getElementById("detailEmail").textContent =
@@ -598,7 +725,6 @@
         else if (user.role === "seller") roleText = "Seller";
         document.getElementById("detailRole").textContent = roleText;
 
-        // Update stored user for other pages
         storeUser({
           _id: user._id,
           name: user.name,
@@ -616,7 +742,6 @@
 
         renderActionButtons(user, sellerApplication);
 
-        // Hide skeletons and show actual content
         hideSkeletons();
       }
 
@@ -642,15 +767,12 @@
           if (!user) throw new Error("No user data");
 
           let sellerApplication = null;
-          // Only fetch application if not admin (to avoid unnecessary call)
           if (user.role !== "admin") {
             try {
               const result = await getMyApplication();
-              // The API returns { success: true, application: {...} } or the application object directly
               if (result && result.application) {
                 sellerApplication = result.application;
               } else if (result && result.status) {
-                // Direct application object
                 sellerApplication = result;
               }
             } catch (err) {
@@ -661,11 +783,14 @@
           updateProfileUI(user, sellerApplication);
         } catch (err) {
           console.error(err);
-          alert(
+          showToast(
             "Session expired or failed to load profile. Please login again.",
+            "error",
           );
-          clearAuthData();
-          window.location.href = "login.html";
+          setTimeout(() => {
+            clearAuthData();
+            window.location.href = "login.html";
+          }, 2000);
         }
         document
           .getElementById("logoutBtn")

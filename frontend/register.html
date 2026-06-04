@@ -73,24 +73,6 @@
               headline: ["Manrope", "system-ui", "sans-serif"],
               body: ["Inter", "system-ui", "sans-serif"],
             },
-            animation: {
-              "toast-in":
-                "toastIn 0.3s cubic-bezier(0.21, 1.11, 0.35, 1) forwards",
-              "toast-out": "toastOut 0.2s ease-in forwards",
-            },
-            keyframes: {
-              toastIn: {
-                "0%": {
-                  opacity: "0",
-                  transform: "translateY(-20px) scale(0.95)",
-                },
-                "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
-              },
-              toastOut: {
-                "0%": { opacity: "1", transform: "translateY(0)" },
-                "100%": { opacity: "0", transform: "translateY(-15px)" },
-              },
-            },
           },
         },
       };
@@ -140,49 +122,114 @@
         transform: translateY(-2px);
         box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.2);
       }
-      .toast-stack {
+
+      /* Toast notification styles */
+      .toast-container {
         position: fixed;
-        top: 24px;
-        left: 0;
-        right: 0;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: 12px;
-        z-index: 1100;
         pointer-events: none;
       }
-      .toast-message {
-        pointer-events: auto;
-        max-width: 90%;
-        width: 380px;
-        background: #1e293b;
-        backdrop-filter: blur(12px);
-        color: white;
-        border-radius: 60px;
-        padding: 12px 20px;
-        font-weight: 500;
-        font-size: 0.9rem;
+
+      .toast {
         display: flex;
         align-items: center;
         gap: 12px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
-        border-left: 4px solid;
-        font-family: "Inter", system-ui;
+        padding: 14px 20px;
+        color: #ffffff;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        pointer-events: auto;
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.21, 1.02, 0.73, 1),
+          opacity 0.3s ease-out;
+        max-width: 420px;
+        word-break: break-word;
       }
-      .toast-success {
-        background: #0a2f1f;
-        border-left-color: #4ade80;
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
       }
-      .toast-error {
-        background: #4a1a1f;
-        border-left-color: #f87171;
+
+      .toast.hide {
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.25s ease-in,
+          opacity 0.25s ease-in;
       }
-      .toast-info {
-        background: #1e2a3e;
-        border-left-color: #60a5fa;
+
+      .toast--success {
+        background: #065f46;
       }
-      /* Google Button Styling - FIXED SIZE, NEVER CHANGES SHAPE */
+
+      .toast--error {
+        background: #991b1b;
+      }
+
+      .toast--info {
+        background: #001c4a;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toast-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .toast-message {
+        flex: 1;
+      }
+
+      .toast-close {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      .toast-close:hover {
+        opacity: 1;
+      }
+
+      .toast-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      /* Google Button Styling */
       #googleButtonWrapper {
         width: 100%;
         min-width: 100%;
@@ -210,7 +257,6 @@
         max-height: 52px !important;
       }
 
-      /* Target the Google button - FIXED DIMENSIONS */
       #googleButtonWrapper [role="button"] {
         border-radius: 12px !important;
         font-weight: 700 !important;
@@ -235,7 +281,6 @@
         box-sizing: border-box !important;
       }
 
-      /* NO hover effects - completely static */
       #googleButtonWrapper [role="button"]:hover {
         background: white !important;
         border-color: #e2e8f0 !important;
@@ -244,7 +289,6 @@
         height: 52px !important;
       }
 
-      /* Make the span text inside bold with correct color */
       #googleButtonWrapper [role="button"] span {
         font-weight: 700 !important;
         color: #001c4a !important;
@@ -254,7 +298,6 @@
         text-overflow: ellipsis !important;
       }
 
-      /* Force the container to have fixed dimensions */
       .google-signin-container,
       #googleButtonWrapper {
         width: 100%;
@@ -372,6 +415,9 @@
     </style>
   </head>
   <body class="bg-surface text-on-surface font-body antialiased relative">
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
     <!-- Privacy Policy Modal -->
     <div id="privacyModal" class="modal">
       <div class="modal-content">
@@ -685,8 +731,6 @@
       </div>
     </div>
 
-    <div id="toastStack" class="toast-stack"></div>
-
     <main
       class="min-h-screen relative flex items-center justify-center px-5 py-10 overflow-hidden"
     >
@@ -733,7 +777,7 @@
               </p>
             </div>
 
-            <!-- Google One-Tap Button (rendered by Google SDK) -->
+            <!-- Google One-Tap Button -->
             <div class="google-signin-container">
               <div id="googleButtonWrapper" class="google-btn-inner"></div>
             </div>
@@ -1031,9 +1075,58 @@
     <script type="module">
       import { authService } from "./js/authService.js";
 
-      // Google Client ID (same as before)
       const GOOGLE_CLIENT_ID =
         "139378208657-e640gtpqqljkrve8u7ho82q5v90k6jfl.apps.googleusercontent.com";
+
+      // ========== Toast notification function ==========
+      function showToast(message, type = "info", duration = 4000) {
+        const container = document.getElementById("toastContainer");
+
+        const iconPaths = {
+          success:
+            '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
+          error:
+            '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',
+          info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+        };
+
+        const toast = document.createElement("div");
+        toast.className = `toast toast--${type}`;
+        toast.innerHTML = `
+          <span class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${iconPaths[type]}
+            </svg>
+          </span>
+          <span class="toast-message">${message}</span>
+          <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        const closeBtn = toast.querySelector(".toast-close");
+        closeBtn.addEventListener("click", () => removeToast(toast));
+
+        const timer = setTimeout(() => removeToast(toast), duration);
+
+        function removeToast(toastEl) {
+          clearTimeout(timer);
+          toastEl.classList.add("hide");
+          toastEl.addEventListener("transitionend", () => {
+            if (toastEl.parentNode) {
+              toastEl.parentNode.removeChild(toastEl);
+            }
+          });
+        }
+      }
 
       // DOM elements
       const step1 = document.getElementById("signupStep1");
@@ -1048,22 +1141,6 @@
 
       let currentUserId = null;
       let currentEmail = null;
-
-      // ---------- FLOATING TOAST SYSTEM ----------
-      const toastStack = document.getElementById("toastStack");
-      function showToast(message, type = "info", duration = 4000) {
-        const toast = document.createElement("div");
-        toast.className = `toast-message toast-${type}`;
-        let icon = type === "success" ? "✓" : type === "error" ? "⚠️" : "ℹ️";
-        toast.innerHTML = `<span class="text-base font-bold">${icon}</span><span class="flex-1">${message}</span>`;
-        toast.style.animation =
-          "toastIn 0.3s cubic-bezier(0.21, 1.11, 0.35, 1) forwards";
-        toastStack.appendChild(toast);
-        setTimeout(() => {
-          toast.style.animation = "toastOut 0.2s ease-in forwards";
-          setTimeout(() => toast.remove(), 250);
-        }, duration);
-      }
 
       // ---------- MODAL FUNCTIONS ----------
       window.openModal = function (modalId) {
@@ -1086,7 +1163,6 @@
         }
       };
 
-      // Close modals on outside click
       document.addEventListener("click", function (event) {
         if (event.target.classList.contains("modal")) {
           event.target.classList.remove("active");
@@ -1094,7 +1170,6 @@
         }
       });
 
-      // Close modals on Escape key
       document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
           const activeModals = document.querySelectorAll(".modal.active");
@@ -1265,7 +1340,7 @@
           otpEmailDisplay.textContent = email;
           createOTPInputs();
           showToast(
-            `✨ Verification code sent to ${email}! Check your inbox.`,
+            `Verification code sent to ${email}! Check your inbox.`,
             "success",
             4500,
           );
@@ -1328,11 +1403,7 @@
         setResendButtonLoading(true);
         try {
           await authService.resendOTP({ userId: currentUserId });
-          showToast(
-            "📬 A new code has been sent to your email.",
-            "success",
-            4000,
-          );
+          showToast("A new code has been sent to your email.", "success", 4000);
           clearOtpFields();
         } catch (err) {
           showToast(
@@ -1352,8 +1423,7 @@
         setRegisterButtonLoading(false);
       });
 
-      // ---------- GOOGLE ONE-TAP / BUTTON (Option 2) ----------
-      // Initialize Google Identity Services when the library is ready
+      // ---------- GOOGLE ONE-TAP / BUTTON ----------
       function initGoogleSignup() {
         if (!window.google || !window.google.accounts) {
           setTimeout(initGoogleSignup, 100);
@@ -1363,13 +1433,11 @@
         window.google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
           callback: async (response) => {
-            // response.credential is the ID token
             const idToken = response.credential;
             if (!idToken) {
               showToast("Google sign-in failed: no token received", "error");
               return;
             }
-            // Show loading state on the button container (optional)
             const wrapper = document.getElementById("googleButtonWrapper");
             const originalContent = wrapper.innerHTML;
             wrapper.innerHTML = `<div class="flex items-center justify-center gap-2 py-3"><span class="spinner border-primary/60 mr-2"></span> Signing in...</div>`;
@@ -1386,7 +1454,6 @@
                 "error",
               );
               wrapper.innerHTML = originalContent;
-              // Re-render the Google button after error
               window.google.accounts.id.renderButton(wrapper, {
                 theme: "outline",
                 size: "large",
@@ -1398,22 +1465,19 @@
           },
         });
 
-        // Render the button inside the wrapper
         const wrapper = document.getElementById("googleButtonWrapper");
         window.google.accounts.id.renderButton(wrapper, {
           theme: "outline",
           size: "large",
           width: "100%",
-          text: "signup_with", // "signup_with" shows "Sign up with Google"
+          text: "signup_with",
           shape: "rectangular",
           logo_alignment: "left",
         });
 
-        // Optional: Also enable One-Tap (auto popup) for signed-in users
         window.google.accounts.id.prompt();
       }
 
-      // Start Google initialization after page load
       window.addEventListener("load", () => {
         initGoogleSignup();
       });
@@ -1421,7 +1485,6 @@
       // Initial icons
       lucide.createIcons();
 
-      // Auto-focus first OTP when step2 becomes visible
       const step2Observer = new MutationObserver(() => {
         if (!step2.classList.contains("hidden")) {
           const firstInput = otpInputGroup.querySelector("input");

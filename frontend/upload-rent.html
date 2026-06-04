@@ -129,6 +129,112 @@
           transform: rotate(360deg);
         }
       }
+
+      /* Toast notification styles */
+      .toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+      }
+
+      .toast {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: #ffffff;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        pointer-events: auto;
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.21, 1.02, 0.73, 1),
+          opacity 0.3s ease-out;
+        max-width: 420px;
+        word-break: break-word;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .toast.hide {
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.25s ease-in,
+          opacity 0.25s ease-in;
+      }
+
+      .toast--success {
+        background: #065f46;
+      }
+
+      .toast--error {
+        background: #991b1b;
+      }
+
+      .toast--info {
+        background: #001c4a;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toast-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .toast-message {
+        flex: 1;
+      }
+
+      .toast-close {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      .toast-close:hover {
+        opacity: 1;
+      }
+
+      .toast-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
     </style>
   </head>
 
@@ -141,11 +247,8 @@
       <div class="loader"></div>
     </div>
 
-    <!-- Toast message -->
-    <div
-      id="toast"
-      class="fixed top-20 right-5 z-50 hidden max-w-sm bg-white shadow-lg rounded-xl p-4 border-l-4 border-tertiary"
-    ></div>
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <header
       class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
@@ -727,8 +830,57 @@
       } from "./js/tokenStorage.js";
       import { authService } from "./js/authService.js";
 
+      // ========== Toast notification function ==========
+      function showToast(message, type = "info", duration = 4000) {
+        const container = document.getElementById("toastContainer");
+
+        const iconPaths = {
+          success:
+            '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
+          error:
+            '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',
+          info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+        };
+
+        const toast = document.createElement("div");
+        toast.className = `toast toast--${type}`;
+        toast.innerHTML = `
+          <span class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${iconPaths[type]}
+            </svg>
+          </span>
+          <span class="toast-message">${message}</span>
+          <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        const closeBtn = toast.querySelector(".toast-close");
+        closeBtn.addEventListener("click", () => removeToast(toast));
+
+        const timer = setTimeout(() => removeToast(toast), duration);
+
+        function removeToast(toastEl) {
+          clearTimeout(timer);
+          toastEl.classList.add("hide");
+          toastEl.addEventListener("transitionend", () => {
+            if (toastEl.parentNode) {
+              toastEl.parentNode.removeChild(toastEl);
+            }
+          });
+        }
+      }
+
       const loadingOverlay = document.getElementById("loadingOverlay");
-      const toast = document.getElementById("toast");
       const form = document.getElementById("rentForm");
       const userNameSpan = document.getElementById("userNameDisplay");
       const userInitialsLink = document.getElementById("userInitialsLink");
@@ -739,36 +891,25 @@
         "contactAlternatePhone",
       );
 
-      function showToast(message, isError = false) {
-        toast.textContent = message;
-        toast.classList.remove(
-          "hidden",
-          "border-l-tertiary",
-          "border-l-red-500",
-        );
-        toast.classList.add(isError ? "border-l-red-500" : "border-l-tertiary");
-        toast.style.display = "block";
-        setTimeout(() => toast.classList.add("hidden"), 5000);
-      }
-
       function showLoading(show) {
         loadingOverlay.classList.toggle("hidden", !show);
       }
 
-      // Authentication & seller approval check
       const token = getStoredToken();
       const user = getStoredUser();
       if (!token || !user) {
         window.location.href = "login.html";
       }
       if (user.role !== "seller" || !user.sellerVerified) {
-        showToast("You must be an approved seller to list properties.", true);
+        showToast(
+          "You must be an approved seller to list properties.",
+          "error",
+        );
         setTimeout(() => {
           window.location.href = "profile.html";
         }, 2000);
       }
 
-      // Update header
       userNameSpan.textContent = user.name || "User";
       const initials = (user.name || "User")
         .split(" ")
@@ -778,13 +919,11 @@
         .substring(0, 2);
       userInitialsLink.textContent = initials;
 
-      // Pre-fill seller contact
       contactName.value = user.name || "";
       contactEmail.value = user.email || "";
       contactPhone.value = user.phone || "";
       contactAlternatePhone.value = user.alternatePhone || "";
 
-      // Helper: get selected features
       function getSelectedFeatures() {
         const checkboxes = document.querySelectorAll(
           ".feature-checkbox:checked",
@@ -792,14 +931,13 @@
         return Array.from(checkboxes).map((cb) => cb.value);
       }
 
-      // Submit handler
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const confirmCheck = document.getElementById("confirmCheck");
         if (!confirmCheck.checked) {
           showToast(
             "Please confirm that the rental information is accurate.",
-            true,
+            "error",
           );
           return;
         }
@@ -807,7 +945,6 @@
         const formData = new FormData();
         formData.append("listingType", "rent");
 
-        // Text fields mapping (input names match backend expected fields)
         const textFields = [
           "title",
           "description",
@@ -838,26 +975,26 @@
           if (element && element.value) formData.append(field, element.value);
         }
 
-        // Features array
         const features = getSelectedFeatures();
         if (features.length) {
           features.forEach((f) => formData.append("features[]", f));
         }
 
-        // Images (multiple)
         const imagesInput = form.querySelector('input[name="images"]');
         if (imagesInput.files.length === 0) {
-          showToast("Please upload at least one property image.", true);
+          showToast("Please upload at least one property image.", "error");
           return;
         }
         for (let i = 0; i < imagesInput.files.length; i++) {
           formData.append("images", imagesInput.files[i]);
         }
 
-        // Proof of ownership
         const proofInput = form.querySelector('input[name="proofOfOwnership"]');
         if (proofInput.files.length === 0) {
-          showToast("Please upload proof of ownership or authorization.", true);
+          showToast(
+            "Please upload proof of ownership or authorization.",
+            "error",
+          );
           return;
         }
         formData.append("proofOfOwnership", proofInput.files[0]);
@@ -867,6 +1004,7 @@
           await createHouseListing(formData);
           showToast(
             "Rental listing submitted successfully! It will be reviewed shortly.",
+            "success",
           );
           setTimeout(() => {
             window.location.href = "profile.html";
@@ -875,16 +1013,15 @@
           console.error(err);
           showToast(
             err.message || "Failed to create rental listing. Please try again.",
-            true,
+            "error",
           );
         } finally {
           showLoading(false);
         }
       });
 
-      // Draft button placeholder
       document.getElementById("draftBtn").addEventListener("click", () => {
-        showToast("Draft saved locally (feature coming soon).");
+        showToast("Draft saved locally (feature coming soon).", "info");
       });
     </script>
   </body>

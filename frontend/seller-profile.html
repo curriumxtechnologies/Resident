@@ -123,27 +123,128 @@
         );
       }
 
-      /* === Mobile & responsive refinements (no layout/JS changes) === */
+      /* Toast notification styles */
+      .toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+      }
+
+      .toast {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: #ffffff;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        pointer-events: auto;
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.21, 1.02, 0.73, 1),
+          opacity 0.3s ease-out;
+        max-width: 420px;
+        word-break: break-word;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .toast.hide {
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.25s ease-in,
+          opacity 0.25s ease-in;
+      }
+
+      .toast--success {
+        background: #065f46;
+      }
+
+      .toast--error {
+        background: #991b1b;
+      }
+
+      .toast--info {
+        background: #001c4a;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toast-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .toast-message {
+        flex: 1;
+      }
+
+      .toast-close {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      .toast-close:hover {
+        opacity: 1;
+      }
+
+      .toast-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
       @media (max-width: 640px) {
         .container-padding {
           padding-left: 1rem;
           padding-right: 1rem;
         }
-        /* finer spacing for tight screens */
         .responsive-stack {
           flex-direction: column;
           align-items: flex-start;
         }
-        /* ensure images don't overflow */
         img {
           max-width: 100%;
           height: auto;
         }
-        /* card grid adjustments */
         .responsive-grid {
           grid-template-columns: 1fr;
         }
-        /* seller header adjustments */
         .seller-header-mobile {
           text-align: left;
         }
@@ -155,12 +256,10 @@
         }
       }
 
-      /* Ensure buttons have equal width on mobile */
       @media (max-width: 640px) {
         .bg-primary.rounded-3xl .flex.flex-row.gap-3 {
           width: 100%;
         }
-
         .bg-primary.rounded-3xl .flex.flex-row.gap-3 a,
         .bg-primary.rounded-3xl .flex.flex-row.gap-3 button {
           flex: 1;
@@ -168,7 +267,6 @@
         }
       }
 
-      /* Force report button to stay within padding */
       .bg-primary.rounded-3xl .flex.lg\:flex-col {
         max-width: fit-content;
         margin-right: 0;
@@ -191,7 +289,6 @@
           align-items: flex-end !important;
           margin-right: 0 !important;
         }
-
         .bg-primary.rounded-3xl > .relative.z-10 > div:last-child button,
         .bg-primary.rounded-3xl > .relative.z-10 > div:last-child a {
           width: auto !important;
@@ -201,6 +298,9 @@
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
     <header
       class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
     >
@@ -391,6 +491,56 @@
         addSellerReview,
       } from "./slices/sellerService.js";
 
+      // ========== Toast notification function ==========
+      function showToast(message, type = "info", duration = 4000) {
+        const container = document.getElementById("toastContainer");
+
+        const iconPaths = {
+          success:
+            '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
+          error:
+            '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',
+          info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+        };
+
+        const toast = document.createElement("div");
+        toast.className = `toast toast--${type}`;
+        toast.innerHTML = `
+          <span class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${iconPaths[type]}
+            </svg>
+          </span>
+          <span class="toast-message">${message}</span>
+          <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        const closeBtn = toast.querySelector(".toast-close");
+        closeBtn.addEventListener("click", () => removeToast(toast));
+
+        const timer = setTimeout(() => removeToast(toast), duration);
+
+        function removeToast(toastEl) {
+          clearTimeout(timer);
+          toastEl.classList.add("hide");
+          toastEl.addEventListener("transitionend", () => {
+            if (toastEl.parentNode) {
+              toastEl.parentNode.removeChild(toastEl);
+            }
+          });
+        }
+      }
+
       // ---------- Helper functions ----------
       function showLoading() {
         document.getElementById("loadingState").classList.remove("hidden");
@@ -436,7 +586,6 @@
         });
       }
 
-      // Render star rating (from number)
       function renderStars(rating) {
         const full = Math.floor(rating);
         const half = rating % 1 >= 0.5;
@@ -452,7 +601,6 @@
         return html;
       }
 
-      // Get the correct property details page URL based on listing type
       function getPropertyDetailsUrl(house) {
         if (house.listingType === "rent") {
           return `propertydetailsforrent.html?id=${house._id}`;
@@ -462,7 +610,6 @@
         return `property-details.html?id=${house._id}`;
       }
 
-      // ---------- Fetch seller houses ----------
       async function fetchSellerHouses(sellerId) {
         try {
           const token = localStorage.getItem("auth_token");
@@ -479,7 +626,6 @@
         }
       }
 
-      // Render property listing card (small for "latest houses" section)
       function renderSmallHouseCard(house) {
         const image = house.images?.[0]?.url || "images/hero.avif";
         const detailUrl = getPropertyDetailsUrl(house);
@@ -495,7 +641,6 @@
         `;
       }
 
-      // Build the full profile HTML
       async function buildProfileHTML() {
         const params = new URLSearchParams(window.location.search);
         const sellerId = params.get("id");
@@ -523,13 +668,11 @@
         const verificationBadge = seller.verificationBadge;
         const isSuspended = seller.isSuspended;
 
-        // Fetch seller's houses
         const houses = await fetchSellerHouses(seller._id);
         const totalListings = houses.length;
         const sold = houses.filter((h) => h.status === "sold").length;
         const rented = houses.filter((h) => h.status === "rented").length;
 
-        // Build address info
         let addressDisplay = "";
         let officeDisplay = "";
         if (application) {
@@ -544,7 +687,6 @@
         const sellerLogo =
           seller.profile || application?.logoUrl || "images/icon.png";
 
-        // Reviews section
         const reviewListHtml = reviewsData.list
           .slice(0, 3)
           .map(
@@ -565,7 +707,6 @@
             ? '<p class="text-center text-on-surface-variant py-6 text-sm">No reviews yet.</p>'
             : `<div class="space-y-4">${reviewListHtml}</div>`;
 
-        // Listings preview (first 3)
         const listingsHtml = houses
           .slice(0, 3)
           .map(renderSmallHouseCard)
@@ -575,7 +716,6 @@
             ? `<a href="seller-listings.html?id=${seller._id}" class="block text-center mt-4 text-sm font-bold text-primary hover:text-tertiary">View all ${totalListings} listings →</a>`
             : "";
 
-        // If seller is suspended, show message
         if (isSuspended) {
           document.getElementById("profileContent").innerHTML = `
             <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-8 text-center">
@@ -682,7 +822,6 @@
         return sellerData;
       }
 
-      // Initialize user header
       function initUserHeader() {
         const user = getStoredUser();
         const nameSpan = document.getElementById("userNameDisplay");
@@ -713,7 +852,6 @@
         }
       }
 
-      // Report modal logic
       function initReportModal(sellerId) {
         const modal = document.getElementById("reportModal");
         const closeBtn = document.getElementById("closeReportModal");
@@ -740,18 +878,21 @@
               sellerId,
               reason + (message ? `: ${message}` : ""),
             );
-            alert(
+            showToast(
               "Report submitted. Thank you for helping keep Rezident Homes safe.",
+              "success",
             );
             closeModal();
             form.reset();
           } catch (err) {
-            alert(err.message || "Failed to submit report. Please try again.");
+            showToast(
+              err.message || "Failed to submit report. Please try again.",
+              "error",
+            );
           }
         });
       }
 
-      // Review modal and submission
       function initReviewModal(sellerId) {
         const modal = document.getElementById("reviewModal");
         const openBtn = document.getElementById("writeReviewBtn");
@@ -792,24 +933,24 @@
           const rating = parseInt(ratingInput.value);
           const comment = document.getElementById("reviewComment").value.trim();
           if (!rating || rating < 1 || rating > 5) {
-            alert("Please select a rating.");
+            showToast("Please select a rating.", "error");
             return;
           }
           try {
             await addSellerReview(sellerId, rating, comment, false);
-            alert("Review submitted successfully!");
+            showToast("Review submitted successfully!", "success");
             closeModal();
-            window.location.reload();
+            setTimeout(() => window.location.reload(), 1500);
           } catch (err) {
-            alert(
+            showToast(
               err.message ||
                 "Failed to submit review. You may have already reviewed this seller.",
+              "error",
             );
           }
         });
       }
 
-      // Main entry
       (async function () {
         showLoading();
         initUserHeader();
