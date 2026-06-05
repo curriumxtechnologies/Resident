@@ -8,13 +8,21 @@ import {
   getUserById,
   updateUser,
   deleteUser,
+  changePassword,    // Import new functions
+  deleteAccount,
+  getSecurityInfo,
 } from "../controllers/userController.js";
 
 const router = Router();
 
 router.use(protect);
 
-// Profile routes – now accepts multipart/form-data with file field 'profile'
+// Security routes (place BEFORE /:id to avoid conflicts)
+router.get("/security", getSecurityInfo);
+router.put("/password", changePassword);
+router.delete("/account", deleteAccount);
+
+// Profile routes
 router.get("/profile", getUserProfile);
 router.put("/profile", uploadUserProfile, updateUserProfile);
 

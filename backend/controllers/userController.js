@@ -222,6 +222,121 @@ const deleteUser = asyncHandler(async (req, res) => {
   res.json({ success: true, message: "User deleted successfully" });
 });
 
+// @desc    Change user password
+// @route   PUT /api/users/password
+// @access  Private
+const changePassword = asyncHandler(async (req, res) => {
+  const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+  // Validation
+  if (!currentPassword || !newPassword || !confirmNewPassword) {
+    res.status(400);
+    throw new Error("Please provide all required fields");
+  }
+
+  if (newPassword.length < 6) {
+    res.status(400);
+    throw new Error("New password must be at least 6 characters");
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    res.status(400);
+    throw new Error("New passwords do not match");
+  }
+
+  if (currentPassword === newPassword) {
+    res.status(400);
+    throw new Error("New password must be different from current password");
+  }
+
+  // Get user with password field
+  const user = await User.findById(req.user._id).select("+password");
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // Check if user has local auth method
+  if (user.authMethod !== "local") {
+    res.status(400);
+    throw new Error(
+      "Password change is only available for local accounts. You signed up with Google."
+    );
+  }
+
+  // Verify current password
+  const isMatch = await user.comparePassword(currentPassword);
+  if (!isMatch) {
+    res.status(401);
+    throw new Error("Current password is incorrect");
+  }
+
+  // Update password
+  user.password = newPassword;
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Password updated successfully",
+  });
+});
+
+// @desc    Delete user account
+// @route   DELETE /api/users/account
+// @access  Private
+const deleteAccount = asyncHandler(async (req, res) => {
+  const { confirmation } = req.body;
+
+  // Validate confirmation text
+  if (confirmation !== "DELETE MY ACCOUNT") {
+    res.status(400);
+    throw new Error('Please type "DELETE MY ACCOUNT" to confirm');
+  }
+
+  // Get user with password
+  const user = await User.findById(req.user._id).select("+password");
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // Delete the user
+  await User.findByIdAndDelete(req.user._id);
+
+  // Clear the JWT cookie
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Your account has been permanently deleted",
+  });
+});
+
+// @desc    Get security settings info
+// @route   GET /api/users/security
+// @access  Private
+const getSecurityInfo = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  res.status(200).json({
+    authMethod: user.authMethod,
+    isVerified: user.isVerified,
+    lastPasswordChange: user.updatedAt,
+  });
+});
+
 export {
   getUserProfile,
   updateUserProfile,
@@ -229,4 +344,7 @@ export {
   getUserById,
   updateUser,
   deleteUser,
+  changePassword, 
+  deleteAccount, 
+  getSecurityInfo, 
 };

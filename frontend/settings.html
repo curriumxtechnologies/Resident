@@ -107,13 +107,71 @@
         box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
       }
 
+      .input-field.error {
+        border-color: #dc2626;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      }
+
       .hidden-section {
         display: none;
+      }
+
+      .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 0.75rem;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+        z-index: 1000;
+        animation: slideIn 0.3s ease-out;
+        max-width: 400px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .toast.success {
+        background: #059669;
+      }
+
+      .toast.error {
+        background: #dc2626;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .loading-spinner {
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.6s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
 
   <body class="bg-surface text-on-surface font-body antialiased">
+    <!-- Toast container -->
+    <div id="toastContainer"></div>
+
     <header
       class="sticky top-0 w-full z-50 bg-white/90 backdrop-blur-xl shadow-sm border-b border-outline/10"
     >
@@ -128,16 +186,25 @@
           </a>
 
           <div class="flex items-center gap-3">
-            <span class="hidden md:inline-block text-sm font-bold text-primary">
-              Joshua Sorochi
+            <span
+              id="userNameDisplay"
+              class="hidden md:inline-block text-sm font-bold text-primary"
+            >
+              Guest
             </span>
 
             <a
               href="profile.html"
-              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm"
+              id="userAvatar"
+              class="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-sm overflow-hidden"
               aria-label="Profile"
             >
-              JS
+              <span id="avatarInitials">G</span>
+              <img
+                id="avatarImage"
+                class="hidden w-full h-full object-cover"
+                alt="Profile"
+              />
             </a>
           </div>
         </div>
@@ -205,50 +272,91 @@
                 </button>
               </div>
 
+              <!-- Auth method info -->
+              <div id="authMethodInfo" class="mb-4 p-3 bg-blue-50 rounded-lg">
+                <p class="text-sm text-blue-800">
+                  <span class="font-bold">Auth Method:</span>
+                  <span id="authMethodDisplay">Loading...</span>
+                </p>
+              </div>
+
               <!-- Security form (hidden by default) -->
               <div id="securityFormContainer" class="hidden-section">
-                <form class="space-y-5">
+                <form id="passwordForm" class="space-y-5">
+                  <div
+                    id="googleAuthWarning"
+                    class="hidden-section p-3 bg-yellow-50 rounded-lg mb-4"
+                  >
+                    <p class="text-sm text-yellow-800">
+                      ⚠️ You signed up with Google. Password change is only
+                      available for email/password accounts.
+                    </p>
+                  </div>
+
                   <div>
-                    <label class="block text-sm font-bold text-primary mb-2">
+                    <label
+                      class="block text-sm font-bold text-primary mb-2"
+                      for="currentPassword"
+                    >
                       Current Password
                     </label>
                     <input
                       type="password"
+                      id="currentPassword"
                       class="input-field"
                       placeholder="Enter current password"
+                      required
                     />
                   </div>
 
                   <div class="grid sm:grid-cols-2 gap-5">
                     <div>
-                      <label class="block text-sm font-bold text-primary mb-2">
+                      <label
+                        class="block text-sm font-bold text-primary mb-2"
+                        for="newPassword"
+                      >
                         New Password
                       </label>
                       <input
                         type="password"
+                        id="newPassword"
                         class="input-field"
                         placeholder="Enter new password"
+                        minlength="6"
+                        required
                       />
                     </div>
 
                     <div>
-                      <label class="block text-sm font-bold text-primary mb-2">
+                      <label
+                        class="block text-sm font-bold text-primary mb-2"
+                        for="confirmNewPassword"
+                      >
                         Confirm New Password
                       </label>
                       <input
                         type="password"
+                        id="confirmNewPassword"
                         class="input-field"
                         placeholder="Confirm new password"
+                        minlength="6"
+                        required
                       />
                     </div>
                   </div>
 
+                  <div
+                    id="passwordError"
+                    class="text-red-600 text-sm hidden"
+                  ></div>
+
                   <div class="flex items-center gap-3 pt-2">
                     <button
                       type="submit"
+                      id="updatePasswordBtn"
                       class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
                     >
-                      Update Password
+                      <span id="passwordBtnText">Update Password</span>
                       <i data-lucide="check-circle" class="w-4 h-4"></i>
                     </button>
                     <button
@@ -292,12 +400,21 @@
 
                   <!-- Delete confirmation area (hidden by default) -->
                   <div id="deleteConfirmContainer" class="hidden-section mt-5">
+                    <div
+                      id="deleteError"
+                      class="text-red-600 text-sm mb-3 hidden"
+                    ></div>
+
                     <div>
-                      <label class="block text-sm font-bold text-primary mb-2">
+                      <label
+                        class="block text-sm font-bold text-primary mb-2"
+                        for="deleteConfirmation"
+                      >
                         Type DELETE MY ACCOUNT to confirm
                       </label>
                       <input
                         type="text"
+                        id="deleteConfirmation"
                         class="input-field"
                         placeholder="DELETE MY ACCOUNT"
                       />
@@ -305,9 +422,10 @@
 
                     <div class="flex items-center gap-3 mt-5">
                       <button
-                        class="bg-red-600 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition flex items-center justify-center gap-2"
+                        id="confirmDeleteBtn"
+                        class="bg-red-600 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Delete My Account
+                        <span id="deleteBtnText">Delete My Account</span>
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                       </button>
                       <button
@@ -336,86 +454,317 @@
       </div>
     </main>
 
-    <script>
-      (function () {
-        // Wait for Lucide icons to be available
-        function initWhenReady() {
-          if (window.lucide) {
-            lucide.createIcons();
-            setupInteractions();
+    <script type="module">
+      import {
+        getStoredToken,
+        getStoredUser,
+        clearAuthData,
+      } from "./js/tokenStorage.js";
+      import { getBaseURL, apiRequest } from "./js/apiConfig.js";
+
+      // ---------- Check authentication on load ----------
+      const token = getStoredToken();
+      if (!token) {
+        window.location.href = "login.html";
+      }
+
+      // ---------- Toast notification system ----------
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          toast.style.animation = "slideIn 0.3s ease-out reverse";
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
+      }
+
+      // ---------- Load user info in header ----------
+      function initUserHeader() {
+        const user = getStoredUser();
+        const nameSpan = document.getElementById("userNameDisplay");
+        const avatarInitials = document.getElementById("avatarInitials");
+        const avatarImage = document.getElementById("avatarImage");
+
+        if (user && user.name) {
+          nameSpan.textContent = user.name;
+          const initials = user.name
+            .split(" ")
+            .map((n) => n[0])
+            .join("")
+            .toUpperCase()
+            .substring(0, 2);
+          if (user.profile && user.profile.trim() !== "") {
+            avatarImage.src = user.profile;
+            avatarImage.classList.remove("hidden");
+            avatarInitials.classList.add("hidden");
           } else {
-            setTimeout(initWhenReady, 20);
+            avatarInitials.textContent = initials;
+            avatarInitials.classList.remove("hidden");
+            avatarImage.classList.add("hidden");
+          }
+        } else {
+          nameSpan.textContent = "Guest";
+          avatarInitials.textContent = "G";
+          avatarInitials.classList.remove("hidden");
+          avatarImage.classList.add("hidden");
+        }
+      }
+      initUserHeader();
+
+      // ---------- Load security information ----------
+      async function loadSecurityInfo() {
+        try {
+          const data = await apiRequest("/users/security");
+          const authMethodDisplay =
+            document.getElementById("authMethodDisplay");
+
+          if (authMethodDisplay) {
+            authMethodDisplay.textContent =
+              data.authMethod === "google"
+                ? "Google Account"
+                : "Email/Password";
+          }
+
+          // If Google auth, show warning when editing
+          if (data.authMethod === "google") {
+            const googleWarning = document.getElementById("googleAuthWarning");
+            if (googleWarning) {
+              googleWarning.style.display = "block";
+            }
+          }
+        } catch (error) {
+          console.error("Failed to load security info:", error);
+          // If unauthorized, redirect to login
+          if (error.message.includes("Not authorized")) {
+            clearAuthData();
+            window.location.href = "login.html";
           }
         }
+      }
 
-        function setupInteractions() {
-          // Security section elements
-          const editSecurityBtn = document.getElementById("editSecurityBtn");
-          const cancelSecurityBtn =
-            document.getElementById("cancelSecurityBtn");
-          const securityFormContainer = document.getElementById(
-            "securityFormContainer",
+      // ---------- Change Password Handler ----------
+      async function handlePasswordChange(e) {
+        e.preventDefault();
+
+        const currentPassword =
+          document.getElementById("currentPassword").value;
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmNewPassword =
+          document.getElementById("confirmNewPassword").value;
+        const errorDiv = document.getElementById("passwordError");
+        const submitBtn = document.getElementById("updatePasswordBtn");
+        const btnText = document.getElementById("passwordBtnText");
+
+        // Reset errors
+        errorDiv.classList.add("hidden");
+        errorDiv.textContent = "";
+
+        // Client-side validation
+        if (!currentPassword || !newPassword || !confirmNewPassword) {
+          errorDiv.textContent = "All fields are required";
+          errorDiv.classList.remove("hidden");
+          return;
+        }
+
+        if (newPassword.length < 6) {
+          errorDiv.textContent = "New password must be at least 6 characters";
+          errorDiv.classList.remove("hidden");
+          return;
+        }
+
+        if (newPassword !== confirmNewPassword) {
+          errorDiv.textContent = "New passwords do not match";
+          errorDiv.classList.remove("hidden");
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.innerHTML = '<span class="loading-spinner"></span> Updating...';
+
+        try {
+          const data = await apiRequest("/users/password", {
+            method: "PUT",
+            body: JSON.stringify({
+              currentPassword,
+              newPassword,
+              confirmNewPassword,
+            }),
+          });
+
+          showToast(
+            data.message || "Password updated successfully!",
+            "success",
           );
-          const securityDefaultMessage = document.getElementById(
-            "securityDefaultMessage",
-          );
 
-          // Delete account elements
-          const showDeleteBtn = document.getElementById("showDeleteBtn");
-          const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
-          const deleteConfirmContainer = document.getElementById(
-            "deleteConfirmContainer",
-          );
+          // Reset form
+          document.getElementById("passwordForm").reset();
+          document.getElementById("securityFormContainer").style.display =
+            "none";
+          document.getElementById("securityDefaultMessage").style.display =
+            "block";
+          document.getElementById("editSecurityBtn").style.display =
+            "inline-flex";
+        } catch (error) {
+          errorDiv.textContent = error.message;
+          errorDiv.classList.remove("hidden");
+          showToast(error.message, "error");
+        } finally {
+          submitBtn.disabled = false;
+          btnText.textContent = "Update Password";
+        }
+      }
 
-          // --- Security Edit Logic ---
-          if (
-            editSecurityBtn &&
-            securityFormContainer &&
-            securityDefaultMessage &&
-            cancelSecurityBtn
-          ) {
-            editSecurityBtn.addEventListener("click", function (e) {
-              e.preventDefault();
-              // Show form, hide default message
-              securityFormContainer.style.display = "block";
-              securityDefaultMessage.style.display = "none";
-              // Optionally hide the edit button itself while editing
-              editSecurityBtn.style.display = "none";
-            });
+      // ---------- Delete Account Handler ----------
+      async function handleDeleteAccount() {
+        const confirmationInput = document.getElementById("deleteConfirmation");
+        const errorDiv = document.getElementById("deleteError");
+        const deleteBtn = document.getElementById("confirmDeleteBtn");
+        const btnText = document.getElementById("deleteBtnText");
 
-            cancelSecurityBtn.addEventListener("click", function () {
-              // Hide form, show default message, bring back edit button
-              securityFormContainer.style.display = "none";
-              securityDefaultMessage.style.display = "block";
-              editSecurityBtn.style.display = "inline-flex";
-            });
-          }
+        // Reset errors
+        errorDiv.classList.add("hidden");
+        errorDiv.textContent = "";
 
-          // --- Delete Account Logic ---
-          if (showDeleteBtn && deleteConfirmContainer && cancelDeleteBtn) {
-            showDeleteBtn.addEventListener("click", function (e) {
-              e.preventDefault();
-              // Hide the initial delete button, show confirmation area
-              showDeleteBtn.style.display = "none";
-              deleteConfirmContainer.style.display = "block";
-            });
+        const confirmation = confirmationInput.value.trim();
 
-            cancelDeleteBtn.addEventListener("click", function () {
-              // Hide confirmation, show initial delete button again
-              deleteConfirmContainer.style.display = "none";
-              showDeleteBtn.style.display = "flex";
-            });
-          }
+        if (confirmation !== "DELETE MY ACCOUNT") {
+          errorDiv.textContent = 'Please type "DELETE MY ACCOUNT" to confirm';
+          errorDiv.classList.remove("hidden");
+          return;
+        }
 
-          // Ensure edit icon is visible as flex (inline-flex for button)
-          if (editSecurityBtn) {
+        // Double confirmation
+        const confirmed = confirm(
+          "Are you absolutely sure? This action cannot be undone. All your data will be permanently deleted.",
+        );
+
+        if (!confirmed) return;
+
+        // Show loading state
+        deleteBtn.disabled = true;
+        btnText.innerHTML = '<span class="loading-spinner"></span> Deleting...';
+
+        try {
+          const data = await apiRequest("/users/account", {
+            method: "DELETE",
+            body: JSON.stringify({ confirmation }),
+          });
+
+          showToast(data.message || "Account deleted successfully", "success");
+
+          // Clear auth data and redirect
+          setTimeout(() => {
+            clearAuthData();
+            window.location.href = "login.html";
+          }, 2000);
+        } catch (error) {
+          errorDiv.textContent = error.message;
+          errorDiv.classList.remove("hidden");
+          showToast(error.message, "error");
+          deleteBtn.disabled = false;
+          btnText.textContent = "Delete My Account";
+        }
+      }
+
+      // ---------- Setup UI interactions ----------
+      function setupInteractions() {
+        // Security section elements
+        const editSecurityBtn = document.getElementById("editSecurityBtn");
+        const cancelSecurityBtn = document.getElementById("cancelSecurityBtn");
+        const securityFormContainer = document.getElementById(
+          "securityFormContainer",
+        );
+        const securityDefaultMessage = document.getElementById(
+          "securityDefaultMessage",
+        );
+        const passwordForm = document.getElementById("passwordForm");
+
+        // Delete account elements
+        const showDeleteBtn = document.getElementById("showDeleteBtn");
+        const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+        const deleteConfirmContainer = document.getElementById(
+          "deleteConfirmContainer",
+        );
+        const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+        // --- Security Edit Logic ---
+        if (
+          editSecurityBtn &&
+          securityFormContainer &&
+          securityDefaultMessage &&
+          cancelSecurityBtn
+        ) {
+          editSecurityBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            securityFormContainer.style.display = "block";
+            securityDefaultMessage.style.display = "none";
+            editSecurityBtn.style.display = "none";
+          });
+
+          cancelSecurityBtn.addEventListener("click", function () {
+            securityFormContainer.style.display = "none";
+            securityDefaultMessage.style.display = "block";
             editSecurityBtn.style.display = "inline-flex";
-          }
+            passwordForm.reset();
+            const errorDiv = document.getElementById("passwordError");
+            if (errorDiv) {
+              errorDiv.classList.add("hidden");
+            }
+          });
         }
 
-        // Start checking
-        initWhenReady();
-      })();
+        // --- Password Form Submit ---
+        if (passwordForm) {
+          passwordForm.addEventListener("submit", handlePasswordChange);
+        }
+
+        // --- Delete Account Logic ---
+        if (showDeleteBtn && deleteConfirmContainer && cancelDeleteBtn) {
+          showDeleteBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            showDeleteBtn.style.display = "none";
+            deleteConfirmContainer.style.display = "block";
+          });
+
+          cancelDeleteBtn.addEventListener("click", function () {
+            deleteConfirmContainer.style.display = "none";
+            showDeleteBtn.style.display = "flex";
+            const confirmationInput =
+              document.getElementById("deleteConfirmation");
+            const errorDiv = document.getElementById("deleteError");
+            if (confirmationInput) confirmationInput.value = "";
+            if (errorDiv) errorDiv.classList.add("hidden");
+          });
+        }
+
+        // --- Confirm Delete Button ---
+        if (confirmDeleteBtn) {
+          confirmDeleteBtn.addEventListener("click", handleDeleteAccount);
+        }
+
+        // Ensure edit icon is visible as flex
+        if (editSecurityBtn) {
+          editSecurityBtn.style.display = "inline-flex";
+        }
+      }
+
+      // ---------- Initialize page ----------
+      function initWhenReady() {
+        if (window.lucide) {
+          lucide.createIcons();
+          setupInteractions();
+          loadSecurityInfo();
+        } else {
+          setTimeout(initWhenReady, 20);
+        }
+      }
+
+      initWhenReady();
     </script>
   </body>
 </html>
