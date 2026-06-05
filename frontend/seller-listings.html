@@ -421,12 +421,14 @@
               </a>
             </div>
             <div class="flex gap-3 md:self-start">
-              <button
+              <!-- Replace the current contactSellerBtn -->
+              <a
                 id="contactSellerBtn"
+                href="#"
                 class="inline-flex items-center gap-2 bg-white border border-outline/20 hover:bg-surface-container-low text-primary px-5 py-2.5 rounded-xl text-xs font-bold transition-colors shadow-sm"
               >
                 <i data-lucide="phone" class="w-3.5 h-3.5"></i> Contact
-              </button>
+              </a>
               <button
                 id="reportSellerBtn"
                 class="inline-flex items-center gap-2 border border-red-200 text-red-600 hover:bg-red-50 px-5 py-2.5 rounded-xl text-xs font-bold transition-colors"
@@ -964,22 +966,23 @@
 
       document
         .getElementById("contactSellerBtn")
-        ?.addEventListener("click", () => {
-          if (sellerData) {
-            const contactInfo = [];
-            if (sellerData.email)
-              contactInfo.push(`Email: ${sellerData.email}`);
-            if (sellerData.phone)
-              contactInfo.push(`Phone: ${sellerData.phone}`);
+        ?.addEventListener("click", (e) => {
+          e.preventDefault(); // Prevent default anchor behavior
 
-            if (contactInfo.length > 0) {
-              showToast(
-                `Contact Information\n${contactInfo.join(" · ")}`,
-                "info",
-                6000,
-              );
+          if (sellerData) {
+            // Check if seller has a phone number
+            if (sellerData.phone) {
+              // Clean the phone number (remove spaces, special chars)
+              const cleanPhone = sellerData.phone.replace(/[\s\-\(\)\.]/g, "");
+
+              // Use tel: protocol like the profile page does
+              window.location.href = `tel:${cleanPhone}`;
+            } else if (sellerData.email) {
+              // Fallback to email if no phone
+              window.location.href = `mailto:${sellerData.email}`;
+              showToast("Opening email client...", "info");
             } else {
-              showToast("Seller contact information not available.", "info");
+              showToast("Seller contact information not available.", "error");
             }
           }
         });
