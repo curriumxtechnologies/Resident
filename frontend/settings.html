@@ -106,6 +106,10 @@
         border-color: #001c4a;
         box-shadow: 0 0 0 3px rgba(0, 28, 74, 0.14);
       }
+
+      .hidden-section {
+        display: none;
+      }
     </style>
   </head>
 
@@ -176,65 +180,90 @@
           </aside>
 
           <div class="lg:col-span-2 space-y-8">
+            <!-- Security Section -->
             <section
               id="security"
               class="bg-white rounded-2xl shadow-sm border border-outline/10 p-6"
             >
-              <div class="mb-6">
-                <h2 class="font-headline text-2xl font-extrabold text-primary">
-                  Security
-                </h2>
-                <p class="text-sm text-on-surface-variant mt-1">
-                  Update your password and protect your account.
-                </p>
+              <div class="flex items-start justify-between mb-6">
+                <div>
+                  <h2
+                    class="font-headline text-2xl font-extrabold text-primary"
+                  >
+                    Security
+                  </h2>
+                  <p class="text-sm text-on-surface-variant mt-1">
+                    Update your password and protect your account.
+                  </p>
+                </div>
+                <button
+                  id="editSecurityBtn"
+                  class="p-2 rounded-full hover:bg-gray-100 transition text-primary"
+                  aria-label="Edit security settings"
+                >
+                  <i data-lucide="pencil" class="w-5 h-5"></i>
+                </button>
               </div>
 
-              <form class="space-y-5">
-                <div>
-                  <label class="block text-sm font-bold text-primary mb-2">
-                    Current Password
-                  </label>
-                  <input
-                    type="password"
-                    class="input-field"
-                    placeholder="Enter current password"
-                  />
-                </div>
-
-                <div class="grid sm:grid-cols-2 gap-5">
+              <!-- Security form (hidden by default) -->
+              <div id="securityFormContainer" class="hidden-section">
+                <form class="space-y-5">
                   <div>
                     <label class="block text-sm font-bold text-primary mb-2">
-                      New Password
+                      Current Password
                     </label>
                     <input
                       type="password"
                       class="input-field"
-                      placeholder="Enter new password"
+                      placeholder="Enter current password"
                     />
                   </div>
 
-                  <div>
-                    <label class="block text-sm font-bold text-primary mb-2">
-                      Confirm New Password
-                    </label>
-                    <input
-                      type="password"
-                      class="input-field"
-                      placeholder="Confirm new password"
-                    />
-                  </div>
-                </div>
+                  <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label class="block text-sm font-bold text-primary mb-2">
+                        New Password
+                      </label>
+                      <input
+                        type="password"
+                        class="input-field"
+                        placeholder="Enter new password"
+                      />
+                    </div>
 
-                <button
-                  type="submit"
-                  class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
-                >
-                  Update Password
-                  <i data-lucide="check-circle" class="w-4 h-4"></i>
-                </button>
-              </form>
+                    <div>
+                      <label class="block text-sm font-bold text-primary mb-2">
+                        Confirm New Password
+                      </label>
+                      <input
+                        type="password"
+                        class="input-field"
+                        placeholder="Confirm new password"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-3 pt-2">
+                    <button
+                      type="submit"
+                      class="bg-primary text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-primary-container transition flex items-center justify-center gap-2"
+                    >
+                      Update Password
+                      <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    </button>
+                    <button
+                      type="button"
+                      id="cancelSecurityBtn"
+                      class="text-sm font-medium text-on-surface-variant hover:text-on-surface transition px-3 py-2"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
             </section>
 
+            <!-- Delete Account Section -->
             <section
               id="account"
               class="bg-white rounded-2xl shadow-sm border border-red-100 p-6"
@@ -247,31 +276,56 @@
                 </div>
 
                 <div class="flex-1">
-                  <h2
-                    class="font-headline text-2xl font-extrabold text-red-600"
-                  >
-                    Delete Account
-                  </h2>
-                  <p class="text-sm text-on-surface-variant mt-1">
-                    This will remove your profile, saved homes, uploaded
-                    properties, and account history.
-                  </p>
-
-                  <div class="mt-5">
-                    <label class="block text-sm font-bold text-primary mb-2">
-                      Type DELETE MY ACCOUNT to confirm
-                    </label>
-                    <input
-                      type="text"
-                      class="input-field"
-                      placeholder="DELETE MY ACCOUNT"
-                    />
+                  <div class="flex items-start justify-between">
+                    <div>
+                      <h2
+                        class="font-headline text-2xl font-extrabold text-red-600"
+                      >
+                        Delete Account
+                      </h2>
+                      <p class="text-sm text-on-surface-variant mt-1">
+                        This will remove your profile, saved homes, uploaded
+                        properties, and account history.
+                      </p>
+                    </div>
                   </div>
 
+                  <!-- Delete confirmation area (hidden by default) -->
+                  <div id="deleteConfirmContainer" class="hidden-section mt-5">
+                    <div>
+                      <label class="block text-sm font-bold text-primary mb-2">
+                        Type DELETE MY ACCOUNT to confirm
+                      </label>
+                      <input
+                        type="text"
+                        class="input-field"
+                        placeholder="DELETE MY ACCOUNT"
+                      />
+                    </div>
+
+                    <div class="flex items-center gap-3 mt-5">
+                      <button
+                        class="bg-red-600 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition flex items-center justify-center gap-2"
+                      >
+                        Delete My Account
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                      </button>
+                      <button
+                        type="button"
+                        id="cancelDeleteBtn"
+                        class="text-sm font-medium text-on-surface-variant hover:text-on-surface transition px-3 py-2"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Initial delete button (visible by default) -->
                   <button
+                    id="showDeleteBtn"
                     class="mt-5 bg-red-600 text-white px-5 py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition flex items-center justify-center gap-2"
                   >
-                    Delete My Account
+                    Delete Account
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                   </button>
                 </div>
@@ -283,7 +337,85 @@
     </main>
 
     <script>
-      lucide.createIcons();
+      (function () {
+        // Wait for Lucide icons to be available
+        function initWhenReady() {
+          if (window.lucide) {
+            lucide.createIcons();
+            setupInteractions();
+          } else {
+            setTimeout(initWhenReady, 20);
+          }
+        }
+
+        function setupInteractions() {
+          // Security section elements
+          const editSecurityBtn = document.getElementById("editSecurityBtn");
+          const cancelSecurityBtn =
+            document.getElementById("cancelSecurityBtn");
+          const securityFormContainer = document.getElementById(
+            "securityFormContainer",
+          );
+          const securityDefaultMessage = document.getElementById(
+            "securityDefaultMessage",
+          );
+
+          // Delete account elements
+          const showDeleteBtn = document.getElementById("showDeleteBtn");
+          const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+          const deleteConfirmContainer = document.getElementById(
+            "deleteConfirmContainer",
+          );
+
+          // --- Security Edit Logic ---
+          if (
+            editSecurityBtn &&
+            securityFormContainer &&
+            securityDefaultMessage &&
+            cancelSecurityBtn
+          ) {
+            editSecurityBtn.addEventListener("click", function (e) {
+              e.preventDefault();
+              // Show form, hide default message
+              securityFormContainer.style.display = "block";
+              securityDefaultMessage.style.display = "none";
+              // Optionally hide the edit button itself while editing
+              editSecurityBtn.style.display = "none";
+            });
+
+            cancelSecurityBtn.addEventListener("click", function () {
+              // Hide form, show default message, bring back edit button
+              securityFormContainer.style.display = "none";
+              securityDefaultMessage.style.display = "block";
+              editSecurityBtn.style.display = "inline-flex";
+            });
+          }
+
+          // --- Delete Account Logic ---
+          if (showDeleteBtn && deleteConfirmContainer && cancelDeleteBtn) {
+            showDeleteBtn.addEventListener("click", function (e) {
+              e.preventDefault();
+              // Hide the initial delete button, show confirmation area
+              showDeleteBtn.style.display = "none";
+              deleteConfirmContainer.style.display = "block";
+            });
+
+            cancelDeleteBtn.addEventListener("click", function () {
+              // Hide confirmation, show initial delete button again
+              deleteConfirmContainer.style.display = "none";
+              showDeleteBtn.style.display = "flex";
+            });
+          }
+
+          // Ensure edit icon is visible as flex (inline-flex for button)
+          if (editSecurityBtn) {
+            editSecurityBtn.style.display = "inline-flex";
+          }
+        }
+
+        // Start checking
+        initWhenReady();
+      })();
     </script>
   </body>
 </html>
