@@ -2,7 +2,7 @@
 // Run with: node scripts/seedNewHouses.cjs
 
 const BASE_URL = "http://localhost:3000/api";
-const EMAIL = "homes@rezidenthomes.com";
+const EMAIL = "sorochijoshua22@gmail.com";
 
 const readline = require("readline");
 
@@ -55,11 +55,13 @@ async function login() {
 }
 
 const houses = [
+  // ==========================================
+  // RENT LISTINGS (6 Houses)
+  // ==========================================
   {
-    // House 1: RENT - Studio Apartment in D-Line
     listingType: "rent",
     title: "Fully Serviced Studio Apartment in D-Line",
-    description: "Modern studio apartment in the heart of D-Line, perfect for young professionals. Features an open-plan layout with premium finishes, built-in wardrobes, and a sleek kitchenette. Building amenities include a rooftop lounge, gym, and laundry service. Walking distance to Port Harcourt Mall and major bus stops.",
+    description: "Modern studio apartment in the heart of D-Line, perfect for young professionals. Features an open-plan layout with premium finishes, built-in wardrobes, and a sleek kitchenette. Building amenities include a rooftop lounge, gym, and laundry service.",
     propertyType: "Studio Apartment",
     price: 110,
     bedrooms: 1,
@@ -76,19 +78,16 @@ const houses = [
     state: "Rivers",
     lga: "Port Harcourt",
     address: "5 Bende Street, D-Line, Port Harcourt, Rivers State",
-    features: ["Rooftop Lounge", "Gym", "Laundry Service", "CCTV", "Elevator", "24/7 Power", "Intercom", "Furnished"],
+    features: ["Rooftop Lounge", "Gym", "Laundry Service", "CCTV", "Elevator", "24/7 Power"],
     images: [
       "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&fm=jpg"
+      "https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=800&fm=jpg"
     ]
   },
   {
-    // House 2: RENT - Duplex in Old GRA
     listingType: "rent",
     title: "Luxury 5-Bedroom Duplex in Old GRA",
-    description: "Exceptional 5-bedroom duplex in the serene Old GRA neighborhood. This grand residence features a double-volume living room, formal dining area, home office, and a modern kitchen with breakfast nook. The master suite includes a walk-in closet and spa-like bathroom. Staff quarters and mature garden complete this premium offering.",
+    description: "Exceptional 5-bedroom duplex in the serene Old GRA neighborhood. This grand residence features a double-volume living room, formal dining area, home office, and a modern kitchen. Staff quarters and mature garden complete this premium offering.",
     propertyType: "Duplex",
     price: 110,
     bedrooms: 5,
@@ -105,19 +104,124 @@ const houses = [
     state: "Rivers",
     lga: "Port Harcourt",
     address: "23 Evo Road, Old GRA, Port Harcourt, Rivers State",
-    features: ["Staff Quarters", "Home Office", "Mature Garden", "Double Living Room", "Walk-in Closet", "Security House", "Water Fountain", "CCTV"],
+    features: ["Staff Quarters", "Home Office", "Mature Garden", "Double Living Room", "Walk-in Closet", "CCTV"],
     images: [
       "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&fm=jpg"
+      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&fm=jpg"
     ]
   },
   {
-    // House 3: SALE - Bungalow in Ada George
+    listingType: "rent",
+    title: "Charming 3-Bedroom Apartment in Peter Odili",
+    description: "Beautifully presented 3-bedroom apartment located in a highly sought-after estate along Peter Odili Road. Offers spacious en-suite rooms, a massive kitchen with custom cabinets, and stable security structures.",
+    propertyType: "Apartment",
+    price: 110,
+    bedrooms: 3,
+    bathrooms: 3,
+    size: "180",
+    yearBuilt: 2023,
+    furnishing: "Semi-Furnished",
+    leaseTerm: "1 Year",
+    securityDeposit: "₦100,000",
+    serviceCharge: "₦15,000/month",
+    availability: "Immediate",
+    utilityTerms: "Shared prepaid",
+    petPolicy: "Cats only",
+    state: "Rivers",
+    lga: "Port Harcourt",
+    address: "Waterlines Estate, Peter Odili Road, Port Harcourt, Rivers State",
+    features: ["24/7 Security", "Water Treatment", "Paved Compound", "Balcony", "En-suite"],
+    images: [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&fm=jpg",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&fm=jpg"
+    ]
+  },
+  {
+    listingType: "rent",
+    title: "Cozy 2-Bedroom Flat near NTA Road",
+    description: "Affordable and perfectly located 2-bedroom flat just off NTA Road. Easy access to local transportation, shopping plazas, and schools. Secure gated compound with adequate vehicle parking space.",
+    propertyType: "Flat",
+    price: 110,
+    bedrooms: 2,
+    bathrooms: 2,
+    size: "120",
+    yearBuilt: 2022,
+    furnishing: "Unfurnished",
+    leaseTerm: "1 Year",
+    securityDeposit: "None",
+    serviceCharge: "₦10,000/month",
+    availability: "Ready to move in",
+    utilityTerms: "Individual Meter",
+    petPolicy: "Not allowed",
+    state: "Rivers",
+    lga: "Port Harcourt",
+    address: "44 Mgbuoba Link, Off NTA Road, Port Harcourt, Rivers State",
+    features: ["Gated Compound", "Gated Security", "Borehole", "Wardrobes", "Pop Ceiling"],
+    images: [
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&fm=jpg",
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&fm=jpg"
+    ]
+  },
+  {
+    listingType: "rent",
+    title: "Executive 1-Bedroom Mini-Flat in Woji",
+    description: "A premium mini-flat offering a vast living area and an expansive bedroom layout. Situated in a serene, flood-free residential street in Woji. Perfect for students or upwardly mobile singles.",
+    propertyType: "Mini-Flat",
+    price: 110,
+    bedrooms: 1,
+    bathrooms: 1,
+    size: "80",
+    yearBuilt: 2025,
+    furnishing: "Unfurnished",
+    leaseTerm: "1 Year",
+    securityDeposit: "1 month rent",
+    serviceCharge: "₦5,000/month",
+    availability: "Available instantly",
+    utilityTerms: "Prepaid",
+    petPolicy: "Allowed",
+    state: "Rivers",
+    lga: "Port Harcourt",
+    address: "12 Alcon Road, Woji, Port Harcourt, Rivers State",
+    features: ["Flood Free Area", "Clean Water", "Prepaid Meter", "Fenced Yard"],
+    images: [
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&fm=jpg",
+      "https://images.unsplash.com/photo-1502005229762-fc1b2b812ca5?w=800&fm=jpg"
+    ]
+  },
+  {
+    listingType: "rent",
+    title: "Serviced 4-Bedroom Terrace in Eliozu",
+    description: "Exquisite 4-bedroom terrace property with premium fittings. Features automated lighting, a state-of-the-art kitchen, and spacious family lounges. Located in a family-friendly security estate.",
+    propertyType: "Terrace",
+    price: 110,
+    bedrooms: 4,
+    bathrooms: 4,
+    size: "310",
+    yearBuilt: 2024,
+    furnishing: "Semi-Furnished",
+    leaseTerm: "2 Years",
+    securityDeposit: "₦200,000",
+    serviceCharge: "₦25,000/month",
+    availability: "Next Week",
+    utilityTerms: "Central Generator",
+    petPolicy: "Allowed",
+    state: "Rivers",
+    lga: "Port Harcourt",
+    address: "Plot 8, Chief G.U. Ake Road, Eliozu, Port Harcourt, Rivers State",
+    features: ["Family Lounge", "Inverter System", "Uniformed Security", "Water Heater"],
+    images: [
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&fm=jpg",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&fm=jpg"
+    ]
+  },
+
+  // ==========================================
+  // SALE LISTINGS (6 Houses)
+  // ==========================================
+  {
     listingType: "sale",
     title: "Newly Built 3-Bedroom Bungalow in Ada George",
-    description: "Brand new contemporary bungalow in the fast-developing Ada George area. Sitting on a 500sqm plot with room for expansion, this home features an open-plan living area, modern kitchen with island, 3 spacious bedrooms with en-suites, and a lovely veranda. Perfect for first-time home buyers or investors looking for growth potential.",
+    description: "Brand new contemporary bungalow in the fast-developing Ada George area. Sitting on a 500sqm plot with room for expansion, this home features an open-plan living area, modern kitchen with island, and 3 spacious en-suite bedrooms.",
     propertyType: "Bungalow",
     price: 110,
     bedrooms: 3,
@@ -128,19 +232,16 @@ const houses = [
     state: "Rivers",
     lga: "Port Harcourt",
     address: "17 Mgbuoba Road, Ada George, Port Harcourt, Rivers State",
-    features: ["New Building", "Open Plan", "Modern Kitchen", "En-suite Rooms", "Veranda", "Large Plot", "Paved Compound", "Borehole"],
+    features: ["New Building", "Open Plan", "Modern Kitchen", "En-suite Rooms", "Large Plot", "Borehole"],
     images: [
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1600585153490-76fb20a32601?w=800&fm=jpg"
+      "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&fm=jpg"
     ]
   },
   {
-    // House 4: SALE - Townhouse in GRA Phase 1
     listingType: "sale",
     title: "Elegant 4-Bedroom Townhouse in GRA Phase 1",
-    description: "Sophisticated 4-bedroom townhouse in a secure gated community in GRA Phase 1. This tri-level residence offers refined living with a ground-floor guest suite, open-plan second floor with living/dining/kitchen, and three bedrooms on the top floor including a luxurious master suite. Community amenities include a pool, tennis court, and children's playground.",
+    description: "Sophisticated 4-bedroom townhouse in a secure gated community in GRA Phase 1. This tri-level residence offers refined living with a ground-floor guest suite and top floor master layouts.",
     propertyType: "Townhouse",
     price: 110,
     bedrooms: 4,
@@ -151,12 +252,90 @@ const houses = [
     state: "Rivers",
     lga: "Port Harcourt",
     address: "Townhouse 12, Riviera Gardens Estate, GRA Phase 1, Port Harcourt, Rivers State",
-    features: ["Gated Community", "Swimming Pool", "Tennis Court", "Guest Suite", "Tri-level", "Smart Home", "Underground Parking", "Children's Playground"],
+    features: ["Gated Community", "Swimming Pool", "Tennis Court", "Smart Home", "Underground Parking"],
     images: [
       "https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1556909174-54557c7e4fb7?w=800&fm=jpg",
-      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&fm=jpg"
+      "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&fm=jpg"
+    ]
+  },
+  {
+    listingType: "sale",
+    title: "Contemporary 4-Bedroom Detached Duplex in Rumuibekwe",
+    description: "Stunning ultra-modern smart mansion. Features cinema room, automated fittings, high ceilings, custom carpentry, fitted kitchen appliances, and concrete stamped floors.",
+    propertyType: "Duplex",
+    price: 110,
+    bedrooms: 4,
+    bathrooms: 5,
+    size: "400",
+    yearBuilt: 2026,
+    furnishing: "Unfurnished",
+    state: "Rivers",
+    lga: "Port Harcourt",
+    address: "Avenue 3, Rumuibekwe Housing Estate, Port Harcourt, Rivers State",
+    features: ["Smart Automation", "Home Cinema", "Stamped Concrete", "Fully Fitted Kitchen", "Boy's Quarters"],
+    images: [
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&fm=jpg",
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&fm=jpg"
+    ]
+  },
+  {
+    listingType: "sale",
+    title: "Brand New 2-Bedroom Block of Flats in Choba",
+    description: "Excellent high-yield real estate investment setup. Clean structural multi-family development located right near UniPort university gate. High rental demand guarantees passive income.",
+    propertyType: "Apartment Block",
+    price: 110,
+    bedrooms: 8,
+    bathrooms: 8,
+    size: "600",
+    yearBuilt: 2025,
+    furnishing: "Unfurnished",
+    state: "Rivers",
+    lga: "Obio-Akpor",
+    address: "Uniport Gate Link Road, Choba, Port Harcourt, Rivers State",
+    features: ["Investment Property", "High Rental Yield", "Dedicated Transformer", "Spacious Parking"],
+    images: [
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&fm=jpg",
+      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&fm=jpg"
+    ]
+  },
+  {
+    listingType: "sale",
+    title: "Massive 6-Bedroom Mansion on Airport Road",
+    description: "Sprawling estate block sitting across two full plots of land. Includes detached security post, swimming pool framework, massive storage houses, and industrial capacity boreholes.",
+    propertyType: "Mansion",
+    price: 110,
+    bedrooms: 6,
+    bathrooms: 7,
+    size: "900",
+    yearBuilt: 2023,
+    furnishing: "Unfurnished",
+    state: "Rivers",
+    lga: "Ikwerre",
+    address: "Kilometer 4, Airport Road, Omagwa, Port Harcourt, Rivers State",
+    features: ["2 Plots Land", "Swimming Pool Space", "Security Outpost", "Industrial Borehole", "Penthouse Suite"],
+    images: [
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&fm=jpg",
+      "https://images.unsplash.com/photo-1598228723793-52759bba239c?w=800&fm=jpg"
+    ]
+  },
+  {
+    listingType: "sale",
+    title: "Premium 3-Bedroom Terrace Duplex in Trans Amadi",
+    description: "Located within an exclusive residential block inside Trans Amadi industrial layout. Highly secure perimeter fencing with standard multi-layered security gates.",
+    propertyType: "Terrace Duplex",
+    price: 110,
+    bedrooms: 3,
+    bathrooms: 4,
+    size: "240",
+    yearBuilt: 2024,
+    furnishing: "Semi-Furnished",
+    state: "Rivers",
+    lga: "Port Harcourt",
+    address: "Nkpogu Road, Trans Amadi, Port Harcourt, Rivers State",
+    features: ["Industrial Grid Power", "Tarred Access Road", "Corporate Security", "Fitted Kitchen Wardrobes"],
+    images: [
+      "https://images.unsplash.com/photo-1602941525421-8f8b81d3edbb?w=800&fm=jpg",
+      "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?w=800&fm=jpg"
     ]
   }
 ];
@@ -173,12 +352,9 @@ async function downloadImageBuffer(imageUrl) {
     const buffer = Buffer.from(arrayBuffer);
     
     let contentType = response.headers.get("content-type") || "image/jpeg";
-    
-    // Force JPEG content type regardless of what server returns
     const outputType = "image/jpeg";
     const extension = ".jpg";
     
-    // Log if the server returned something other than JPEG
     if (!contentType.includes("jpeg") && !contentType.includes("jpg")) {
       console.log(`  ⚠️ Server returned ${contentType}, forcing JPEG format`);
     }
@@ -192,7 +368,7 @@ async function downloadImageBuffer(imageUrl) {
     };
   } catch (err) {
     console.error("  ⚠️ Failed to download:", imageUrl.substring(0, 50) + "...");
-    console.error(`     Error: ${err.message}`);
+    console.error(`      Error: ${err.message}`);
     return null;
   }
 }

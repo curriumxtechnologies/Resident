@@ -613,7 +613,7 @@
       async function fetchSellerHouses(sellerId) {
         try {
           const token = localStorage.getItem("auth_token");
-          const url = `${getBaseURL()}/houses?user=${sellerId}&status=published&limit=20`;
+          const url = `${getBaseURL()}/houses?user=${sellerId}&limit=100`; // Remove status filter
           const res = await fetch(url, {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
           });

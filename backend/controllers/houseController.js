@@ -244,10 +244,13 @@ const updateHouse = asyncHandler(async (req, res) => {
     throw new Error("House not found");
   }
 
-  // Only the listing owner can update
-  if (house.user.toString() !== req.user._id.toString()) {
+  // ✅ NEW CODE - Allow owner OR admin to delete
+  if (
+    house.user.toString() !== req.user._id.toString() &&
+    req.user.role !== "admin"
+  ) {
     res.status(403);
-    throw new Error("Not authorized to update this listing");
+    throw new Error("Not authorized to delete this listing");
   }
 
   // Build update object
@@ -362,9 +365,13 @@ const deleteHouse = asyncHandler(async (req, res) => {
     throw new Error("House not found");
   }
 
-  if (house.user.toString() !== req.user._id.toString()) {
+  // ✅ Allow owner OR admin
+  if (
+    house.user.toString() !== req.user._id.toString() &&
+    req.user.role !== "admin"
+  ) {
     res.status(403);
-    throw new Error("Not authorized to delete this listing");
+    throw new Error("Not authorized to update this listing");
   }
 
   // Delete images from Cloudinary
