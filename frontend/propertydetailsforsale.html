@@ -393,12 +393,35 @@
     <!-- Fullscreen Gallery Modal -->
     <div id="imageModal" class="modal">
       <span class="close-modal">&times;</span>
-      <img
-        class="modal-img"
-        id="modalImage"
-        src=""
-        alt="Full size property image"
-      />
+
+      <button
+        id="prevModalBtn"
+        class="absolute left-4 md:left-8 text-white hover:text-tertiary text-4xl font-bold p-4 z-50 transition"
+        aria-label="Previous image"
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <div class="relative max-w-[90%] max-h-[85vh] flex flex-col items-center">
+        <img
+          class="modal-img shadow-2xl rounded-sm"
+          id="modalImage"
+          src=""
+          alt="Full size property image"
+        />
+        <div
+          id="modalCounter"
+          class="text-white/80 text-sm mt-4 font-medium tracking-wide bg-black/40 px-3 py-1 rounded-full"
+        ></div>
+      </div>
+
+      <button
+        id="nextModalBtn"
+        class="absolute right-4 md:left-auto md:right-8 text-white hover:text-tertiary text-4xl font-bold p-4 z-50 transition"
+        aria-label="Next image"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
 
     <!-- Payment Modal -->
@@ -572,6 +595,9 @@
       import { authService } from "./js/authService.js";
 
       let currentUser = null;
+      // Tracks target arrays and indices inside our modal container context globally
+      let allGalleryImages = [];
+      let currentImageIndex = 0;
 
       // ========== Toast notification function ==========
       function showToast(message, type = "info", duration = 4000) {
@@ -677,12 +703,21 @@
         throw new Error("No property ID in URL");
       }
 
+      // ---------- CAROUSEL MODAL ENGINE HANDLERS ----------
       window.openModal = function (imgSrc) {
         const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("modalImage");
-        if (modal && modalImg) {
-          modalImg.src = imgSrc;
+
+        // Dynamic search pointer map logic inside asset sets array
+        const idx = allGalleryImages.findIndex((img) => img.url === imgSrc);
+        if (idx !== -1) {
+          currentImageIndex = idx;
+        } else {
+          currentImageIndex = 0;
+        }
+
+        if (modal) {
           modal.classList.add("active");
+          updateModalImage();
         }
       };
 
@@ -691,6 +726,37 @@
         if (modal) modal.classList.remove("active");
       }
 
+      function updateModalImage() {
+        const modalImg = document.getElementById("modalImage");
+        const modalCounter = document.getElementById("modalCounter");
+
+        if (!modalImg || allGalleryImages.length === 0) return;
+
+        modalImg.src = allGalleryImages[currentImageIndex].url;
+
+        if (modalCounter) {
+          modalCounter.textContent = `${currentImageIndex + 1} of ${allGalleryImages.length}`;
+        }
+      }
+
+      function nextModalImage(e) {
+        if (e) e.stopPropagation();
+        if (allGalleryImages.length === 0) return;
+        currentImageIndex = (currentImageIndex + 1) % allGalleryImages.length;
+        updateModalImage();
+      }
+
+      // Cycle calculation structures
+      function prevModalImage(e) {
+        if (e) e.stopPropagation();
+        if (allGalleryImages.length === 0) return;
+        currentImageIndex =
+          (currentImageIndex - 1 + allGalleryImages.length) %
+          allGalleryImages.length;
+        updateModalImage();
+      }
+
+      // ---------- PAYMENT MODAL ----------
       let currentHouseForPayment = null;
 
       function openPaymentModal(house) {
@@ -929,12 +995,20 @@
         }
       }
 
+      // ---------- RENDER PROPERTY ----------
       async function renderProperty() {
         try {
           const house = await getHouseById(propertyId);
           if (!house) throw new Error("Property not found");
 
           const mainImage = house.images?.[0]?.url || "images/hero.avif";
+
+          // Map fetched schema array structures to global variables
+          allGalleryImages =
+            house.images && house.images.length > 0
+              ? house.images
+              : [{ url: mainImage }];
+
           const galleryImages = house.images || [];
           const features = house.features || [];
           const seller = house.user || {};
@@ -1014,13 +1088,20 @@
               <div class="grid lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2">
                   <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
-                    <div class="relative">
-                      <img id="mainGalleryImg" src="${mainImage}" alt="Main property view" class="w-full h-[360px] lg:h-[420px] object-cover cursor-pointer" onclick="openModal('${mainImage}')" />
+                    
+                    <div class="relative group">
+                      <img id="mainGalleryImg" src="${mainImage}" alt="Main property view" class="w-full h-[360px] lg:h-[420px] object-cover cursor-pointer" onclick="openModal(this.src)" />
+                      
+                      <div class="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-xs font-semibold flex items-center gap-2 shadow-lg tracking-wider pointer-events-none">
+                        <i class="fas fa-image text-tertiary"></i> 
+                        <span>${galleryImages.length} Photos</span>
+                      </div>
                     </div>
+
                     ${
                       galleryImages.length > 1
                         ? `
-                      <div class="flex gap-2 p-3 border-t border-gray-100">
+                      <div class="flex gap-2 p-3 border-t border-gray-100 overflow-x-auto scrollbar-none">
                         ${galleryImages
                           .map(
                             (img, idx) => `
@@ -1164,13 +1245,29 @@
             });
           });
 
+          // Core UI modal interaction triggers
           const imageModal = document.getElementById("imageModal");
           const closeBtn = document.querySelector(".close-modal");
+          const prevBtn = document.getElementById("prevModalBtn");
+          const nextBtn = document.getElementById("nextModalBtn");
+
           if (closeBtn) closeBtn.onclick = closeModal;
-          if (imageModal)
+          if (prevBtn) prevBtn.onclick = prevModalImage;
+          if (nextBtn) nextBtn.onclick = nextModalImage;
+
+          if (imageModal) {
             imageModal.onclick = (e) => {
               if (e.target === imageModal) closeModal();
             };
+          }
+
+          // Desktop arrow layout accessibility listener
+          document.onkeydown = function (e) {
+            if (!imageModal || !imageModal.classList.contains("active")) return;
+            if (e.key === "ArrowLeft") prevModalImage();
+            else if (e.key === "ArrowRight") nextModalImage();
+            else if (e.key === "Escape") closeModal();
+          };
 
           const paymentModal = document.getElementById("paymentModal");
           if (paymentModal)
