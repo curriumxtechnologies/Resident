@@ -805,6 +805,7 @@
 
         function getFiltered() {
           return allHouses.filter((house) => {
+            // State and LGA filters
             if (
               currentFilters.state !== "all" &&
               house.state !== currentFilters.state
@@ -815,11 +816,73 @@
               house.lga !== currentFilters.lga
             )
               return false;
-            if (
-              currentFilters.type !== "all" &&
-              house.propertyType !== currentFilters.type
-            )
-              return false;
+
+            // Type filter - intelligent matching
+            if (currentFilters.type !== "all") {
+              const propertyType = (house.propertyType || "")
+                .toLowerCase()
+                .trim();
+              const bedrooms = house.bedrooms || 0;
+
+              // Helper: extract bedroom count from string
+              const getBedCount = (str) => {
+                const match = str.match(/(\d+)/);
+                return match ? parseInt(match[1]) : 0;
+              };
+
+              switch (currentFilters.type) {
+                case "one-room":
+                  // Match: "one room", "1 room", "single room", "one-room", etc.
+                  if (
+                    !propertyType.includes("one") &&
+                    !propertyType.includes("1") &&
+                    !propertyType.includes("single") &&
+                    bedrooms !== 1
+                  )
+                    return false;
+                  break;
+
+                case "self-contain":
+                  // Match: "self contain", "self-contain", "selfcontain", etc.
+                  if (
+                    !propertyType.includes("self") &&
+                    !propertyType.includes("contain")
+                  )
+                    return false;
+                  break;
+
+                case "1-bed":
+                  // Match: "1 bed", "one bed", "1 bedroom"
+                  if (bedrooms !== 1 && getBedCount(propertyType) !== 1)
+                    return false;
+                  break;
+
+                case "2-bed":
+                  if (bedrooms !== 2 && getBedCount(propertyType) !== 2)
+                    return false;
+                  break;
+
+                case "3-bed":
+                  if (bedrooms !== 3 && getBedCount(propertyType) !== 3)
+                    return false;
+                  break;
+
+                case "4-bed-plus":
+                  // Match: 4+ bedrooms
+                  if (
+                    bedrooms < 4 &&
+                    getBedCount(propertyType) < 4 &&
+                    !propertyType.includes("4+") &&
+                    !propertyType.includes("4 plus")
+                  )
+                    return false;
+                  break;
+
+                default:
+                  return false;
+              }
+            }
+
             return true;
           });
         }
