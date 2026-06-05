@@ -613,7 +613,8 @@
       async function fetchSellerHouses(sellerId) {
         try {
           const token = localStorage.getItem("auth_token");
-          const url = `${getBaseURL()}/houses?user=${sellerId}&limit=100`; // Remove status filter
+          // ✅ Fetch only published, sorted by newest, limit to 3 for latest listings
+          const url = `${getBaseURL()}/houses?user=${sellerId}&status=published&sort=-createdAt&limit=3`;
           const res = await fetch(url, {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
           });
@@ -623,6 +624,47 @@
         } catch (err) {
           console.warn("Could not fetch seller houses", err);
           return [];
+        }
+      }
+
+      // ✅ NEW: Separate function for total count (all statuses)
+      async function fetchSellerTotalCount(sellerId) {
+        try {
+          const token = localStorage.getItem("auth_token");
+          // Fetch with a larger limit to get total count
+          const url = `${getBaseURL()}/houses?user=${sellerId}&limit=1`;
+          const res = await fetch(url, {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          });
+          if (!res.ok) return { total: 0, sold: 0, rented: 0 };
+          const data = await res.json();
+
+          // Get sold and rented counts
+          const soldUrl = `${getBaseURL()}/houses?user=${sellerId}&status=sold&limit=1`;
+          const rentedUrl = `${getBaseURL()}/houses?user=${sellerId}&status=rented&limit=1`;
+
+          const [soldRes, rentedRes] = await Promise.all([
+            fetch(soldUrl, {
+              headers: token ? { Authorization: `Bearer ${token}` } : {},
+            }),
+            fetch(rentedUrl, {
+              headers: token ? { Authorization: `Bearer ${token}` } : {},
+            }),
+          ]);
+
+          const soldData = soldRes.ok ? await soldRes.json() : { total: 0 };
+          const rentedData = rentedRes.ok
+            ? await rentedRes.json()
+            : { total: 0 };
+
+          return {
+            total: data.total || 0,
+            sold: soldData.total || 0,
+            rented: rentedData.total || 0,
+          };
+        } catch (err) {
+          console.warn("Could not fetch seller counts", err);
+          return { total: 0, sold: 0, rented: 0 };
         }
       }
 
@@ -668,10 +710,14 @@
         const verificationBadge = seller.verificationBadge;
         const isSuspended = seller.isSuspended;
 
+        // ✅ Get latest 3 published listings
         const houses = await fetchSellerHouses(seller._id);
-        const totalListings = houses.length;
-        const sold = houses.filter((h) => h.status === "sold").length;
-        const rented = houses.filter((h) => h.status === "rented").length;
+
+        // ✅ Get total counts separately
+        const counts = await fetchSellerTotalCount(seller._id);
+        const totalListings = counts.total;
+        const sold = counts.sold;
+        const rented = counts.rented;
 
         let addressDisplay = "";
         let officeDisplay = "";
@@ -707,10 +753,8 @@
             ? '<p class="text-center text-on-surface-variant py-6 text-sm">No reviews yet.</p>'
             : `<div class="space-y-4">${reviewListHtml}</div>`;
 
-        const listingsHtml = houses
-          .slice(0, 3)
-          .map(renderSmallHouseCard)
-          .join("");
+        // ✅ No need for .slice(0,3) since API already limits to 3
+        const listingsHtml = houses.map(renderSmallHouseCard).join("");
         const viewAllLink =
           houses.length > 0
             ? `<a href="seller-listings.html?id=${seller._id}" class="block text-center mt-4 text-sm font-bold text-primary hover:text-tertiary">View all ${totalListings} listings →</a>`

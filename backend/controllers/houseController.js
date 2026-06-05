@@ -149,6 +149,7 @@ const getHouses = asyncHandler(async (req, res) => {
     bathrooms,
     status,
     search,
+    user, // ✅ ADDED: filter by specific seller/user
     page = 1,
     limit = 10,
     sort = "-createdAt",
@@ -156,6 +157,11 @@ const getHouses = asyncHandler(async (req, res) => {
 
   // ✅ FIX: Only filter by status if explicitly provided
   const filter = {};
+  
+  // ✅ ADDED: Filter by user/seller ID if provided
+  if (user) {
+    filter.user = user;
+  }
   
   // If status is provided, use it; otherwise show ALL statuses
   if (status) {
@@ -191,6 +197,17 @@ const getHouses = asyncHandler(async (req, res) => {
   // EXCLUDE HOUSES FROM SUSPENDED SELLERS
   const suspendedSellers = await User.find({ isSuspended: true, role: "seller" }).distinct("_id");
   if (suspendedSellers.length) {
+    // If filtering by specific user and that user is suspended, return empty
+    if (filter.user && suspendedSellers.some(id => id.toString() === filter.user.toString())) {
+      return res.json({
+        success: true,
+        count: 0,
+        total: 0,
+        page: Number(page),
+        pages: 0,
+        houses: [],
+      });
+    }
     filter.user = { $nin: suspendedSellers };
   }
 
