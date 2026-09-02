@@ -1,122 +1,2458 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!doctype html>
+<html class="scroll-smooth" lang="en">
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Account Suspended – Xynix Technologies</title>
-    <script src="https://cdn.tailwindcss.com">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Rezident Homes | Nigeria's Finest Real Estate</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind CSS + GSAP -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#001c4a",
+              "primary-container": "#0d316d",
+              tertiary: "#6e5d00",
+              "tertiary-container": "#c5aa23",
+              "tertiary-fixed": "#ffe260",
+              surface: "#f9f9fc",
+              "surface-container-low": "#f3f3f6",
+              "surface-container-lowest": "#ffffff",
+              "on-surface": "#1a1c1e",
+              "on-surface-variant": "#444650",
+              outline: "#747781",
+            },
+            fontFamily: {
+              headline: ["Manrope", "system-ui", "sans-serif"],
+              body: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="images/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/android-chrome-512x512.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <meta name="theme-color" content="#0D316D" />
+
     <style>
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+      }
+      @media (max-width: 768px) {
+        html {
+          scroll-padding-top: 70px;
         }
+      }
+      .hero-radial-mask {
+        background: radial-gradient(
+          circle at 70% 30%,
+          rgba(0, 28, 74, 0.2) 0%,
+          rgba(0, 28, 74, 0.7) 90%,
+          #001c4a 100%
+        );
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+      .hover-lift {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+      }
+      .lucide {
+        width: 1.25rem;
+        height: 1.25rem;
+        stroke-width: 1.75;
+      }
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+          transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      }
+      .fade-up.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Updated Property Card Styles */
+      .property-card {
+        border-radius: 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(0, 28, 74, 0.06);
+      }
 
-        .pulse-dot {
-            animation: pulse-dot 1.8s ease-in-out infinite;
-        }
+      .property-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px -12px rgba(0, 28, 74, 0.18);
+        border-color: rgba(197, 170, 35, 0.2);
+      }
 
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.4;
-                transform: scale(0.85);
-            }
+      .property-card .line-clamp-1 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+      }
+      @media (max-width: 768px) {
+        .property-card img {
+          height: 260px !important;
         }
+        .property-card h3 {
+          font-size: 0.85rem;
+        }
+        .property-card p {
+          font-size: 0.7rem;
+        }
+        .property-card .text-xl {
+          font-size: 0.95rem !important;
+        }
+        .property-card .flex.gap-4 {
+          gap: 8px;
+          font-size: 0.65rem;
+        }
+      }
+      .gradient-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.6) 50%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+      }
+      .badge-sold {
+        background-color: #2c2c2e;
+        color: white;
+        font-weight: 600;
+        backdrop-filter: blur(4px);
+      }
+      .badge-new {
+        background-color: #c5aa23;
+        color: #001c4a;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+      }
+      .badge-price-slash {
+        background-color: #e31b23;
+        color: white;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+      }
+      @media (max-width: 768px) {
+        .property-card img {
+          height: 260px !important;
+        }
+        .property-card .gradient-overlay {
+          padding: 12px !important;
+        }
+        .property-card h3 {
+          font-size: 0.85rem;
+        }
+        .property-card p {
+          font-size: 0.7rem;
+        }
+        .property-card .text-xl {
+          font-size: 0.95rem !important;
+        }
+        .property-card .flex.gap-4 {
+          gap: 8px;
+          font-size: 0.65rem;
+        }
+        .property-card a {
+          padding: 6px 8px;
+          font-size: 0.7rem;
+          border-radius: 0.6rem;
+        }
+      }
 
-        .card-hover {
-            transition: transform 0.2s ease;
+      /* Wireframe skeleton animation */
+      @keyframes shimmer {
+        0% {
+          background-position: -400px 0;
         }
-        .card-hover:hover {
-            transform: translateY(-2px);
+        100% {
+          background-position: 400px 0;
         }
+      }
 
-        /* extra tiny screens */
-        @media (max-width: 380px) {
-            .card-pad {
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
-            }
-            .heading-size {
-                font-size: 1.4rem !important;
-            }
-            .subhead-size {
-                font-size: 0.9rem !important;
-            }
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          #e0e0e0 25%,
+          #f0f0f0 50%,
+          #e0e0e0 75%
+        );
+        background-size: 800px 100%;
+        animation: shimmer 1.5s infinite linear;
+        border-radius: 8px;
+      }
+
+      .skeleton-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid rgba(0, 28, 74, 0.06);
+      }
+
+      .skeleton-image {
+        width: 100%;
+        height: 260px;
+        background: linear-gradient(
+          90deg,
+          #e0e0e0 25%,
+          #f0f0f0 50%,
+          #e0e0e0 75%
+        );
+        background-size: 800px 100%;
+        animation: shimmer 1.5s infinite linear;
+      }
+
+      .skeleton-badge {
+        width: 60px;
+        height: 24px;
+        border-radius: 6px;
+      }
+
+      .skeleton-price {
+        width: 100px;
+        height: 24px;
+        border-radius: 6px;
+      }
+
+      .skeleton-title {
+        height: 20px;
+        margin-bottom: 8px;
+        width: 80%;
+      }
+
+      .skeleton-text {
+        height: 14px;
+        width: 60%;
+        margin-bottom: 12px;
+      }
+
+      .skeleton-feature {
+        height: 16px;
+        width: 50px;
+        border-radius: 4px;
+      }
+
+      .skeleton-button {
+        height: 28px;
+        width: 60px;
+        border-radius: 6px;
+      }
+
+      @media (max-width: 768px) {
+        .skeleton-image {
+          height: 260px;
         }
+      }
+
+      .nav-link {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #444650;
+        transition: color 0.2s ease;
+        padding-bottom: 0.25rem;
+        border-bottom: 2px solid transparent;
+      }
+
+      .nav-link:hover {
+        color: #001c4a;
+        border-bottom-color: #6e5d00;
+      }
+
+      .mobile-nav-link {
+        color: #001c4a;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(116, 119, 129, 0.18);
+      }
+      .nav-link {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #444650;
+        transition: color 0.2s ease;
+        padding-bottom: 0.25rem;
+        border-bottom: 2px solid transparent;
+      }
+
+      .nav-link:hover {
+        color: #001c4a;
+        border-bottom-color: #6e5d00;
+      }
+
+      .mobile-nav-link {
+        color: #001c4a;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(116, 119, 129, 0.18);
+      }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 20px;
+      }
+
+      .modal.active {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 16px;
+        max-width: 800px;
+        width: 100%;
+        margin: 40px auto;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .modal-header {
+        padding: 24px 32px;
+        border-bottom: 1px solid #f3f3f6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 10;
+        border-radius: 16px 16px 0 0;
+      }
+
+      .modal-body {
+        padding: 32px;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      .modal-body::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .modal-body::-webkit-scrollbar-track {
+        background: #f3f3f6;
+        border-radius: 3px;
+      }
+
+      .modal-body::-webkit-scrollbar-thumb {
+        background: #c5aa23;
+        border-radius: 3px;
+      }
+
+      .close-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: #f3f3f6;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        font-size: 20px;
+        color: #001c4a;
+      }
+
+      .close-btn:hover {
+        background: #e31b23;
+        color: white;
+        transform: rotate(90deg);
+      }
+
+      @media (max-width: 768px) {
+        .modal-content {
+          margin: 20px auto;
+        }
+        .modal-header {
+          padding: 20px;
+        }
+        .modal-body {
+          padding: 20px;
+        }
+      }
+      .user-avatar {
+        transition: all 0.2s ease;
+      }
+
+      .user-avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(0, 28, 74, 0.15);
+      }
+
+      #desktopAuthArea,
+      #mobileAuthArea {
+        transition: opacity 0.3s ease;
+      }
+
+      /* Toast notification styles */
+      .toast-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+      }
+
+      .toast {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: #ffffff;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        pointer-events: auto;
+        transform: translateY(100px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.21, 1.02, 0.73, 1),
+          opacity 0.3s ease-out;
+        max-width: 420px;
+        word-break: break-word;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .toast.hide {
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+          transform 0.25s ease-in,
+          opacity 0.25s ease-in;
+      }
+
+      .toast--success {
+        background: #065f46;
+      }
+
+      .toast--error {
+        background: #991b1b;
+      }
+
+      .toast--info {
+        background: #001c4a;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toast-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .toast-message {
+        flex: 1;
+      }
+
+      .toast-close {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      .toast-close:hover {
+        opacity: 1;
+      }
+
+      .toast-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body
+    class="bg-surface text-on-surface font-body antialiased overflow-x-hidden"
+  >
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
-    <div class="min-h-screen flex items-center justify-center bg-[#0b0d10] px-4 py-6">
-
-        <div class="w-full max-w-[620px] bg-[#14181c] rounded-[2.25rem] px-6 sm:px-8 md:px-10 py-8 sm:py-10 md:py-12 border border-[#2a2f35] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] card-hover card-pad">
-
-            <!-- badge -->
-            <div class="inline-flex items-center gap-2 bg-[#1f262c] px-3 py-1.5 rounded-full border border-[#2d343b] mb-5 sm:mb-6">
-                <span class="w-2 h-2 bg-[#f9735c] rounded-full pulse-dot"></span>
-                <span class="text-[0.7rem] sm:text-xs font-semibold tracking-wide uppercase text-[#b6c4d0]">Suspension notice</span>
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="text-2xl font-headline font-extrabold text-primary">
+            Privacy Policy
+          </h2>
+          <button class="close-btn" onclick="closeModal('privacyModal')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="space-y-6 text-on-surface-variant">
+            <div>
+              <p class="text-sm mb-4">Last updated: January 2026</p>
             </div>
 
-            <!-- icon -->
-            <div class="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#2a1c1a] rounded-xl sm:rounded-2xl border border-[#4d2e28] mb-5 sm:mb-6">
-                <svg class="w-7 h-7 sm:w-8 sm:h-8 stroke-[#f9735c] stroke-[1.8] fill-none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                </svg>
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                1. Introduction
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Rezident Homes ("we," "our," or "us") is committed to protecting
+                your privacy. This Privacy Policy explains how we collect, use,
+                disclose, and safeguard your information when you visit our
+                website or use our real estate services. Please read this
+                privacy policy carefully. If you do not agree with the terms of
+                this privacy policy, please do not access the site.
+              </p>
             </div>
 
-            <!-- heading -->
-            <h1 class="heading-size text-[1.6rem] sm:text-[1.8rem] md:text-[1.9rem] font-bold tracking-[-0.02em] text-[#f0f4f8] leading-tight mb-2">
-                Account suspended
-            </h1>
-
-            <!-- subhead -->
-            <p class="subhead-size text-sm sm:text-base text-[#a7b8c7] leading-relaxed mb-5 sm:mb-6">
-                Your account has been suspended because of
-                <strong class="text-[#e8edf2] font-semibold">failure to renew payment</strong>.
-                Renew your payment to keep your website alive.
-            </p>
-
-            <!-- detail box – simplified -->
-            <div class="bg-[#1a2025] rounded-2xl p-4 sm:p-5 border border-[#293035] mb-6 sm:mb-7">
-                <div class="flex justify-between items-center text-sm sm:text-[0.9rem]">
-                    <span class="text-[#8d9fae] font-medium">Account status</span>
-                    <span class="text-[#f9735c] font-semibold">● Suspended</span>
-                </div>
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                2. Information We Collect
+              </h3>
+              <p class="text-sm leading-relaxed mb-2">
+                We may collect information about you in a variety of ways:
+              </p>
+              <ul class="list-disc pl-5 text-sm space-y-2">
+                <li>
+                  <strong>Personal Data:</strong> Name, email address, phone
+                  number, and other contact information you provide when
+                  registering or contacting us.
+                </li>
+                <li>
+                  <strong>Financial Data:</strong> Payment information for
+                  property transactions, including bank details and transaction
+                  history.
+                </li>
+                <li>
+                  <strong>Property Preferences:</strong> Information about your
+                  real estate interests, budget, and location preferences.
+                </li>
+                <li>
+                  <strong>Automatically Collected Data:</strong> IP address,
+                  browser type, operating system, access times, and pages viewed
+                  directly before and after accessing the site.
+                </li>
+              </ul>
             </div>
 
-            <!-- Contact support – primary action (opens Gmail) -->
-            <a href="mailto:xynix.technologies@gmail.com?subject=Account%20Suspension%20-%20Renew%20Payment&body=Hello%20Xynix%20Technologies%2C%0A%0AI%20would%20like%20to%20renew%20my%20payment%20and%20reactivate%20my%20account.%20Please%20guide%20me%20through%20the%20process.%0A%0AThank%20you."
-            class="inline-flex items-center justify-center gap-2.5 w-full py-3.5 sm:py-4 px-5 bg-[#f9735c] hover:bg-[#ff8a75] active:scale-[0.97] rounded-[60px] text-sm sm:text-[1.05rem] font-semibold text-[#0b0d10] transition-all duration-200 shadow-[0_8px_24px_-6px_rgba(249,115,92,0.25)] hover:shadow-[0_12px_32px_-8px_rgba(249,115,92,0.35)] no-underline">
-            <svg class="w-5 h-5 stroke-current stroke-[2.2] fill-none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-            </svg>
-            Contact support
-        </a>
-
-        <!-- footer brand -->
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mt-6 sm:mt-7 pt-4 sm:pt-5 border-t border-[#232a30]">
-            <div class="flex items-center gap-2 text-[#cbd8e3] font-medium text-[0.75rem] sm:text-[0.8rem]">
-                <svg class="w-[18px] h-[18px] stroke-current stroke-2 fill-none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="4" />
-                    <path d="M8 12h8" />
-                    <path d="M12 8v8" />
-                </svg>
-                <span>Xynix</span>
-                <span class="text-[#5f737f] font-normal">Technologies</span>
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                3. How We Use Your Information
+              </h3>
+              <p class="text-sm leading-relaxed mb-2">
+                We use the information we collect for the following purposes:
+              </p>
+              <ul class="list-disc pl-5 text-sm space-y-2">
+                <li>
+                  To process property purchases, rentals, and transactions
+                </li>
+                <li>To provide personalized property recommendations</li>
+                <li>
+                  To communicate with you about our services and respond to
+                  inquiries
+                </li>
+                <li>To verify your identity and prevent fraud</li>
+                <li>
+                  To comply with legal and regulatory obligations in Nigeria
+                </li>
+                <li>To improve our website and service offerings</li>
+              </ul>
             </div>
-            <span class="text-[0.65rem] sm:text-[0.7rem] text-[#5f737f]">© 2026 · All rights reserved</span>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                4. Data Protection & Security
+              </h3>
+              <p class="text-sm leading-relaxed">
+                We implement appropriate technical and organizational security
+                measures to protect your personal information against
+                unauthorized access, alteration, disclosure, or destruction.
+                These include encryption, secure servers, and restricted access
+                protocols. However, no method of transmission over the Internet
+                is 100% secure, and we cannot guarantee absolute security.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                5. Sharing Your Information
+              </h3>
+              <p class="text-sm leading-relaxed">
+                We do not sell, trade, or rent your personal information to
+                third parties. We may share your information with trusted
+                partners who assist us in operating our website, conducting our
+                business, or servicing you, provided those parties agree to keep
+                this information confidential. We may also release information
+                when required by law or to protect our rights.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                6. Your Rights
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Under the Nigeria Data Protection Regulation (NDPR), you have
+                the right to access, correct, or delete your personal
+                information. You may also object to processing, request data
+                portability, and withdraw consent at any time. To exercise these
+                rights, contact us at privacy@rezidenthomes.com.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                7. Contact Us
+              </h3>
+              <p class="text-sm leading-relaxed">
+                If you have questions about this Privacy Policy, please contact
+                us at:<br />
+                <strong>Email:</strong> privacy@rezidenthomes.com<br />
+                <strong>Address:</strong> 15 Adeola Odeku Street, Victoria
+                Island, Lagos, Nigeria<br />
+                <strong>Phone:</strong> +234 800 000 0000
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="termsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="text-2xl font-headline font-extrabold text-primary">
+            Terms of Service
+          </h2>
+          <button class="close-btn" onclick="closeModal('termsModal')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="space-y-6 text-on-surface-variant">
+            <div>
+              <p class="text-sm mb-4">Last updated: January 2026</p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                1. Acceptance of Terms
+              </h3>
+              <p class="text-sm leading-relaxed">
+                By accessing and using the Rezident Homes website and services,
+                you accept and agree to be bound by the terms and provisions of
+                this agreement. If you do not agree to these terms, please do
+                not use our services.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                2. Description of Services
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Rezident Homes provides a premium real estate platform
+                connecting buyers, sellers, landlords, and tenants in Nigeria.
+                Our services include property listings, property management,
+                concierge services, and transaction facilitation. All property
+                listings are subject to availability and verification.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                3. User Obligations
+              </h3>
+              <p class="text-sm leading-relaxed mb-2">
+                As a user of our services, you agree to:
+              </p>
+              <ul class="list-disc pl-5 text-sm space-y-2">
+                <li>
+                  Provide accurate and complete information when registering or
+                  transacting
+                </li>
+                <li>
+                  Maintain the confidentiality of your account credentials
+                </li>
+                <li>
+                  Use our services only for lawful purposes and in compliance
+                  with Nigerian law
+                </li>
+                <li>
+                  Not engage in fraudulent or misleading activities on our
+                  platform
+                </li>
+                <li>
+                  Respect the intellectual property rights of Rezident Homes and
+                  third parties
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                4. Property Transactions
+              </h3>
+              <p class="text-sm leading-relaxed">
+                All property transactions conducted through Rezident Homes are
+                subject to verification, due diligence, and legal compliance. We
+                reserve the right to refuse or cancel any transaction that
+                appears suspicious or violates our policies. Property prices,
+                rental rates, and availability are subject to change without
+                notice.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                5. Fees and Payments
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Rezident Homes charges service fees for premium listings,
+                concierge services, and transaction facilitation. All fees are
+                non-refundable unless otherwise stated. Payment terms will be
+                disclosed before any transaction is initiated. We use secure
+                payment processors and comply with all applicable financial
+                regulations in Nigeria.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                6. Limitation of Liability
+              </h3>
+              <p class="text-sm leading-relaxed">
+                Rezident Homes acts as an intermediary between buyers, sellers,
+                landlords, and tenants. While we verify listings to the best of
+                our ability, we do not guarantee the accuracy of all property
+                information provided by third parties. Rezident Homes shall not
+                be liable for any indirect, incidental, or consequential damages
+                arising from the use of our services.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                7. Intellectual Property
+              </h3>
+              <p class="text-sm leading-relaxed">
+                All content on the Rezident Homes website, including logos,
+                text, images, and software, is the property of Rezident Homes
+                and protected by Nigerian and international copyright laws. You
+                may not reproduce, distribute, or create derivative works
+                without express written permission.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                8. Termination
+              </h3>
+              <p class="text-sm leading-relaxed">
+                We reserve the right to terminate or suspend your account and
+                access to our services at our sole discretion, without prior
+                notice, for conduct that we believe violates these Terms or is
+                harmful to other users, us, or third parties.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                9. Governing Law
+              </h3>
+              <p class="text-sm leading-relaxed">
+                These Terms shall be governed and construed in accordance with
+                the laws of the Federal Republic of Nigeria. Any disputes
+                arising from these terms shall be subject to the exclusive
+                jurisdiction of the courts in Lagos, Nigeria.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-bold text-primary mb-2 font-headline">
+                10. Contact Information
+              </h3>
+              <p class="text-sm leading-relaxed">
+                For any questions regarding these Terms of Service, please
+                contact:<br />
+                <strong>Email:</strong> legal@rezidenthomes.com<br />
+                <strong>Address:</strong> 15 Adeola Odeku Street, Victoria
+                Island, Lagos, Nigeria<br />
+                <strong>Phone:</strong> +234 800 000 0000
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <header
+      class="sticky top-0 w-full z-50 bg-white/85 backdrop-blur-xl shadow-sm transition-all duration-300 border-b border-surface-container/50"
+    >
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+          <div class="flex-shrink-0">
+            <img
+              src="images/logo.png"
+              alt="Rezident Homes Logo"
+              class="h-9 lg:h-11 w-auto object-contain"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML =
+                  '<span class=\'text-xl font-black tracking-tighter text-primary\'>REZIDENT HOMES</span>';
+              "
+            />
+          </div>
+
+          <div class="hidden lg:flex items-center space-x-8">
+            <a href="#discover" class="nav-link">Discover</a>
+            <a href="#portfolio" class="nav-link">Portfolio</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#journey" class="nav-link">Journey</a>
+            <a href="#connect" class="nav-link">Connect</a>
+          </div>
+
+          <!-- Desktop Auth Area - Will be dynamically updated -->
+          <div id="desktopAuthArea" class="hidden lg:flex items-center gap-3">
+            <a
+              href="login.html"
+              class="text-sm font-bold text-primary hover:text-tertiary transition"
+            >
+              Login
+            </a>
+            <a
+              href="register.html"
+              class="bg-tertiary-container text-primary px-5 py-2.5 rounded-full text-sm font-extrabold hover:bg-tertiary-fixed transition shadow-sm"
+            >
+              Register
+            </a>
+          </div>
+
+          <button
+            id="mobileMenuBtn"
+            class="lg:hidden w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center"
+            aria-label="Open menu"
+          >
+            <i data-lucide="menu"></i>
+          </button>
         </div>
 
-    </div>
-</div>
+        <!-- Mobile Menu -->
+        <div
+          id="mobileMenu"
+          class="hidden lg:hidden pb-5 pt-2 border-t border-surface-container/60"
+        >
+          <nav class="flex flex-col gap-3">
+            <a href="#discover" class="mobile-nav-link">Discover</a>
+            <a href="#portfolio" class="mobile-nav-link">Portfolio</a>
+            <a href="#experience" class="mobile-nav-link">Experience</a>
+            <a href="#journey" class="mobile-nav-link">Journey</a>
+            <a href="#connect" class="mobile-nav-link">Connect</a>
 
-</body>
+            <!-- Mobile Auth Area - Will be dynamically updated -->
+            <div id="mobileAuthArea" class="grid grid-cols-2 gap-3 pt-3">
+              <a
+                href="login.html"
+                class="border border-primary/20 text-primary text-center py-3 rounded-xl font-bold text-sm"
+              >
+                Login
+              </a>
+              <a
+                href="register.html"
+                class="bg-tertiary-container text-primary text-center py-3 rounded-xl font-extrabold text-sm"
+              >
+                Register
+              </a>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ========== HERO ========= -->
+      <section
+        id="discover"
+        class="relative min-h-[85vh] lg:min-h-[90vh] flex items-center overflow-hidden"
+      >
+        <div class="absolute inset-0 z-0">
+          <img
+            src="images/hero.avif"
+            alt="Lagos Skyline"
+            class="w-full h-full object-cover brightness-[0.65] saturate-110"
+          />
+          <div
+            class="absolute inset-0 hero-radial-mask mix-blend-multiply"
+          ></div>
+        </div>
+        <div
+          class="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-8 py-16 lg:py-24"
+        >
+          <div class="max-w-2xl lg:max-w-xl">
+            <div class="flex items-center gap-2 hero-anim">
+              <i
+                data-lucide="gem"
+                class="text-yellow-400 w-4 h-4 fill-yellow-400/20"
+              ></i>
+              <span class="text-[11px] font-semibold text-white tracking-wide"
+                >PREMIUM PROPERTY EXPERIENCE</span
+              >
+            </div>
+            <h1
+              class="font-headline text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.15] mb-5 hero-anim"
+            >
+              Where <span class="text-tertiary-fixed">Legacy</span><br />Meets
+              Horizon
+            </h1>
+            <p
+              class="text-white/85 text-base md:text-lg max-w-lg mb-8 leading-relaxed hero-anim"
+            >
+              Premium rezidences curated for visionaries, connoisseurs & those
+              who demand the exceptional.
+            </p>
+            <!-- BUY / RENT TOGGLE -->
+            <div class="mb-3 max-w-xl hero-anim">
+              <div
+                class="bg-white/10 backdrop-blur-md rounded-full p-1 flex gap-1 border border-white/20 w-fit"
+              >
+                <button
+                  id="buyBtn"
+                  onclick="setMode('buy')"
+                  class="px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition"
+                >
+                  Buy
+                </button>
+                <button
+                  id="rentBtn"
+                  onclick="setMode('rent')"
+                  class="px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition"
+                >
+                  Rent
+                </button>
+              </div>
+            </div>
+            <div
+              class="glass-card rounded-xl p-1.5 flex flex-col md:flex-row items-stretch gap-1.5 shadow-2xl max-w-xl hero-anim"
+            >
+              <div
+                class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
+              >
+                <i
+                  data-lucide="map-pin"
+                  class="text-tertiary-fixed w-5 h-5"
+                ></i>
+                <select
+                  id="stateSelect"
+                  class="w-full bg-transparent border-none focus:ring-0 text-[#0D316D] font-medium text-sm outline-none"
+                >
+                  <option value="">Select State</option>
+                  <option value="Rivers">Rivers</option>
+                </select>
+              </div>
+              <div class="hidden md:block w-px h-6 bg-white/30"></div>
+              <div
+                class="flex-1 flex items-center gap-2 px-4 py-2.5 bg-white/10 rounded-lg"
+              >
+                <i data-lucide="map" class="text-tertiary-fixed w-5 h-5"></i>
+                <select
+                  id="lgaSelect"
+                  class="w-full bg-transparent border-none focus:ring-0 text-[#0D316D] font-medium text-sm outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled
+                >
+                  <option value="">Select a state first</option>
+                </select>
+              </div>
+              <button
+                id="searchBtn"
+                class="bg-tertiary-container text-primary px-6 py-2.5 rounded-lg font-bold hover:bg-tertiary-fixed transition-all shadow-md flex items-center justify-center gap-1 text-sm"
+              >
+                Search <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== DUAL PATH (Buy/Rent) ========= -->
+      <section id="portfolio" class="py-20 lg:py-28 bg-surface px-5 md:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="text-center lg:text-left lg:flex lg:justify-between lg:items-end mb-12 gap-6 fade-up"
+          >
+            <div>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+                >Curated portfolio</span
+              >
+              <h2
+                class="text-3xl md:text-4xl lg:text-5xl font-headline font-extrabold text-primary mt-2 leading-tight"
+              >
+                Invest or Indulge
+              </h2>
+            </div>
+            <p class="text-on-surface-variant text-sm max-w-md mt-3 lg:mt-0">
+              Two paths, one promise of uncompromised quality.
+            </p>
+          </div>
+          <div class="grid lg:grid-cols-2 gap-7 lg:gap-10">
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 h-[460px] lg:h-[520px] fade-up"
+            >
+              <img
+                src="images/forsale.avif"
+                alt="Luxury Villa"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent"
+              ></div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-7 lg:p-9 text-white"
+              >
+                <div class="mb-2">
+                  <span
+                    class="bg-tertiary-container/90 text-primary text-[11px] font-bold px-2.5 py-0.5 rounded-full"
+                    >ACQUISITION</span
+                  >
+                </div>
+                <h3 class="text-2xl lg:text-3xl font-headline font-bold mb-1">
+                  Investment Legacy
+                </h3>
+                <p class="text-white/80 text-sm max-w-md mb-5">
+                  Own architectural masterpieces & penthouses in prime
+                  districts.
+                </p>
+                <a
+                  href="#"
+                  onclick="
+                    event.preventDefault();
+                    window.navigateToProtectedPage('forsale.html');
+                  "
+                  class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/40 px-5 py-2 rounded-full font-semibold text-sm hover:bg-white hover:text-primary transition"
+                  >Explore Houses
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 h-[460px] lg:h-[520px] fade-up"
+            >
+              <img
+                src="images/forrent.avif"
+                alt="Luxury Rental"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent"
+              ></div>
+              <div
+                class="absolute bottom-0 left-0 right-0 p-7 lg:p-9 text-white"
+              >
+                <div class="mb-2">
+                  <span
+                    class="bg-tertiary-container/90 text-primary text-[11px] font-bold px-2.5 py-0.5 rounded-full"
+                    >LIFESTYLE</span
+                  >
+                </div>
+                <h3 class="text-2xl lg:text-3xl font-headline font-bold mb-1">
+                  Curated Rentals
+                </h3>
+                <p class="text-white/80 text-sm max-w-md mb-5">
+                  Live luxuriously with flexible terms and white-glove
+                  concierge.
+                </p>
+                <a
+                  href="#"
+                  onclick="
+                    event.preventDefault();
+                    window.navigateToProtectedPage('forrent.html');
+                  "
+                  class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/40 px-5 py-2 rounded-full font-semibold text-sm hover:bg-white hover:text-primary transition"
+                  >Discover Rentals
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FEATURED REZIDENCES ========= -->
+      <section class="py-20 lg:py-28 bg-surface-container-low px-5 md:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-3 fade-up"
+          >
+            <div>
+              <span
+                class="text-tertiary font-bold uppercase tracking-widest text-xs"
+                >The Signature Collection</span
+              >
+              <h2
+                class="text-3xl md:text-4xl font-headline font-extrabold text-primary mt-1"
+              >
+                New Listings
+              </h2>
+            </div>
+          </div>
+          <div
+            id="featuredPropertiesGrid"
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-8"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ========== WHY REZIDENT HOMES ========= -->
+      <section id="experience" class="py-20 lg:py-28 px-5 md:px-8 bg-surface">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div class="order-2 lg:order-1 fade-up">
+            <span
+              class="text-tertiary font-bold uppercase tracking-widest text-xs"
+              >The Rezident Homes standard</span
+            >
+            <h2
+              class="text-3xl md:text-4xl lg:text-5xl font-headline font-extrabold text-primary mt-3 mb-5 leading-tight"
+            >
+              Beyond property. A legacy of trust.
+            </h2>
+            <p class="text-on-surface-variant text-base mb-8">
+              We don't just list homes, we engineer experiences where prestige
+              meets transparency.
+            </p>
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <i
+                  data-lucide="shield-check"
+                  class="text-tertiary w-6 h-6 mb-2"
+                ></i>
+                <h4 class="font-bold text-primary mb-0.5 text-base">
+                  Verified Listings
+                </h4>
+                <p class="text-xs text-on-surface-variant">
+                  Authenticated title deeds and lease agreements for your peace
+                  of mind.
+                </p>
+              </div>
+              <div>
+                <i
+                  data-lucide="briefcase"
+                  class="text-tertiary w-6 h-6 mb-2"
+                ></i>
+                <h4 class="font-bold text-primary mb-0.5 text-base">
+                  End-to-End Support
+                </h4>
+                <p class="text-xs text-on-surface-variant">
+                  Dedicated specialists assisting you from the first tour to the
+                  keys.
+                </p>
+              </div>
+              <div>
+                <i data-lucide="lock" class="text-tertiary w-6 h-6 mb-2"></i>
+                <h4 class="font-bold text-primary mb-0.5 text-base">
+                  Secure Transactions
+                </h4>
+                <p class="text-xs text-on-surface-variant">
+                  Protected payment handling for both deposits and full
+                  acquisitions.
+                </p>
+              </div>
+              <div>
+                <i
+                  data-lucide="key-round"
+                  class="text-tertiary w-6 h-6 mb-2"
+                ></i>
+                <h4 class="font-bold text-primary mb-0.5 text-base">
+                  Private Collection
+                </h4>
+                <p class="text-xs text-on-surface-variant">
+                  Access to exclusive sale and rental properties not found on
+                  public portals.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="order-1 lg:order-2 relative rounded-xl overflow-hidden shadow-xl min-h-[420px] fade-up"
+          >
+            <img
+              class="w-full h-full object-cover absolute inset-0 grayscale-[0.2]"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCacIRNLzMfGyyPpaIu2t5qpOQXFqI_CfMGgdrq1Xwgh6XbdgLmYIGKjBLjfvfxKRE_6OfaiASKwDIIwQM86RzJ6Z257kHRaNW_D2eG1Y2QtnLJQgrD_kV2I9C0dukYg2Tu6e8gtCu8IXdKjGw-MM01FMMK2fiCxb9Wjwk4Z7mVM5mBLE77IpVEoiF3pc_IfApTgyfKIIyRoYvEJndNav7IEnKbcrbCTYvx3CL-5OktPqh6xElKPN8uzuSVWzyv-Hp_83QDn8Moex4"
+              alt="Luxury Consult"
+            />
+            <div
+              class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-5 rounded-lg shadow-lg"
+            >
+              <p class="font-headline italic text-primary text-sm mb-2">
+                "Flawless curation. Rezident Homes turned my real estate vision
+                into a tangible, appreciating asset."
+              </p>
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs"
+                >
+                  SO
+                </div>
+                <div>
+                  <h5 class="font-bold text-primary text-sm">Segun Olusegun</h5>
+                  <p class="text-[11px] text-on-surface-variant">
+                    Founder, Olusegun Holdings
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <div class="bg-primary py-14 lg:py-20">
+        <div
+          class="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+        >
+          <div class="stat fade-up">
+            <div
+              class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
+              data-value="1000"
+            >
+              0
+            </div>
+            <div
+              class="text-tertiary-fixed text-[11px] font-semibold tracking-wider mt-1"
+            >
+              PREMIUM HOMES
+            </div>
+          </div>
+          <div class="stat fade-up">
+            <div
+              class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
+              data-value="500"
+            >
+              0
+            </div>
+            <div
+              class="text-tertiary-fixed text-[11px] font-semibold tracking-wider mt-1"
+            >
+              HAPPY CLIENTS
+            </div>
+          </div>
+          <div class="stat fade-up">
+            <div
+              class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
+              data-value="450"
+              data-prefix="₦"
+              data-suffix="B"
+            >
+              0
+            </div>
+            <div
+              class="text-tertiary-fixed text-[11px] font-semibold tracking-wider mt-1"
+            >
+              ASSETS MANAGED
+            </div>
+          </div>
+          <div class="stat fade-up">
+            <div
+              class="stat-number text-3xl lg:text-4xl font-headline font-black text-white"
+              data-value="12"
+            >
+              0
+            </div>
+            <div
+              class="text-tertiary-fixed text-[11px] font-semibold tracking-wider mt-1"
+            >
+              CITY CENTERS
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== JOURNEY SECTION ========= -->
+      <section
+        id="journey"
+        class="py-20 lg:py-28 px-5 md:px-8 bg-surface-container-low"
+      >
+        <div class="max-w-7xl mx-auto text-center mb-12 fade-up">
+          <h2
+            class="text-3xl md:text-4xl font-headline font-extrabold text-primary mb-2"
+          >
+            The Rezident Homes Journey
+          </h2>
+          <p class="text-on-surface-variant text-sm">
+            Effortless, elevated, secure, from discovery to closing.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-10 lg:gap-12">
+          <div class="text-center group fade-up">
+            <div
+              class="w-16 h-16 mx-auto rounded-full bg-white shadow-md flex items-center justify-center mb-4 group-hover:bg-primary-container transition-all duration-300"
+            >
+              <i data-lucide="search" class="text-primary w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-primary mb-1">
+              1. Curated Discovery
+            </h3>
+            <p class="text-on-surface-variant text-sm">
+              Bespoke property matches & exclusive off-market previews.
+            </p>
+          </div>
+          <div class="text-center group fade-up">
+            <div
+              class="w-16 h-16 mx-auto rounded-full bg-white shadow-md flex items-center justify-center mb-4 group-hover:bg-primary-container transition-all"
+            >
+              <i data-lucide="handshake" class="text-primary w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-primary mb-1">
+              2. Private Concierge
+            </h3>
+            <p class="text-on-surface-variant text-sm">
+              Tailored viewings, negotiation, and legal support.
+            </p>
+          </div>
+          <div class="text-center group fade-up">
+            <div
+              class="w-16 h-16 mx-auto rounded-full bg-white shadow-md flex items-center justify-center mb-4 group-hover:bg-primary-container transition-all"
+            >
+              <i data-lucide="shield-check" class="text-primary w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold text-primary mb-1">
+              3. Seamless Transfer
+            </h3>
+            <p class="text-on-surface-variant text-sm">
+              Digital closing, title insurance & key handover.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FINAL CTA ========= -->
+      <section
+        id="connect"
+        class="py-20 lg:py-28 px-5 md:px-8 relative overflow-hidden"
+      >
+        <div class="absolute inset-0">
+          <img
+            class="w-full h-full object-cover brightness-50"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVdyTehyTsonbnBpEDpnQg_xYbXvRaQf26OdNLtkdZnoWqWE-Su_pdJUHLIp4HLhL1ydvs5Hy7eOQdbkyxh_LQH4YZ-5LSwNmwjX5UBbOHQk4xfAcNJOqg9wkhSYF-QRxlFoFpVeLa1Mqrs8p21TnEKnii8YtMV5A3_tFzpq6aNehTA2hkHJDrLT_sDnMDw6kzNPHkFmBxGAptMwpugopcV-7Y-D8qO-L1dv0xLw-SyaPkx_cSpPzf9qUUaBZ9v_swPmGrsdI3T9w"
+            alt="Luxury Estate"
+          />
+        </div>
+        <div class="relative z-10 max-w-3xl mx-auto text-center fade-up">
+          <span
+            class="inline-block bg-white/10 backdrop-blur px-3 py-0.5 rounded-full text-white text-xs mb-4"
+            >Begin your chapter</span
+          >
+          <h2
+            class="text-3xl md:text-5xl font-headline font-extrabold text-white mb-4 leading-tight"
+          >
+            Reserve Your Legacy
+          </h2>
+          <p class="text-white/80 text-sm mb-8 max-w-xl mx-auto">
+            Speak with a senior estate curator or schedule a private tour of our
+            signature portfolio.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="register.html">
+              <button
+                class="bg-tertiary-container text-primary px-6 py-3 rounded-lg font-bold hover:bg-tertiary-fixed transition shadow-md text-sm"
+              >
+                Start Your Search
+              </button> </a
+            ><button
+              onclick="window.open('https://wa.me/2349032280032', '_blank')"
+              class="bg-white/10 backdrop-blur border border-white/40 text-white px-6 py-3 rounded-lg font-bold hover:bg-white hover:text-primary transition text-sm"
+            >
+              Speak to an Agent
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========== FOOTER ========= -->
+    <footer
+      class="bg-white border-t border-surface-container pt-12 pb-6 px-5 md:px-8"
+    >
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
+      >
+        <div>
+          <img
+            src="images/logo.png"
+            alt="Rezident Homes Logo"
+            class="h-8 mb-3"
+            onerror="
+              this.style.display = 'none';
+              this.parentElement.innerHTML +=
+                '<span class=\'text-xl font-black text-primary\'>REZIDENT HOMES</span>';
+            "
+          />
+          <p class="text-xs text-on-surface-variant max-w-xs">
+            Redefining luxury real estate through precision, trust and an
+            uncompromising standard.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Discover</h4>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a
+                href="#"
+                onclick="
+                  event.preventDefault();
+                  window.navigateToProtectedPage('forsale.html');
+                "
+                class="text-on-surface-variant hover:text-primary transition"
+                >Buy Properties</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="
+                  event.preventDefault();
+                  window.navigateToProtectedPage('forrent.html');
+                "
+                class="text-on-surface-variant hover:text-primary transition"
+                >Rent Properties</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Company</h4>
+          <ul class="space-y-2 text-xs">
+            <li>
+              <a
+                href="#"
+                onclick="
+                  event.preventDefault();
+                  window.navigateToSellerRegister();
+                "
+                class="text-on-surface-variant hover:text-primary transition"
+              >
+                Register as a Seller
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-primary mb-4 text-sm">Insights</h4>
+          <p class="text-xs text-on-surface-variant mb-2">
+            Access exclusive off-market opportunities
+          </p>
+          <div class="flex">
+            <input
+              type="email"
+              placeholder="Email address"
+              class="bg-surface-container-high border-none px-3 py-2 text-xs rounded-l-lg w-full focus:ring-1 focus:ring-primary"
+            /><button
+              class="bg-primary text-white px-4 rounded-r-lg text-xs font-semibold"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="max-w-7xl mx-auto pt-8 mt-6 border-t border-surface-container flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-on-surface-variant"
+      >
+        <p>© 2026 Rezident Homes. All rights reserved.</p>
+        <div class="flex gap-5">
+          <a
+            href="#"
+            onclick="
+              openModal('privacyModal');
+              return false;
+            "
+            class="hover:text-primary transition"
+            >Privacy Policy</a
+          ><a
+            href="#"
+            onclick="
+              openModal('termsModal');
+              return false;
+            "
+            class="hover:text-primary transition"
+            >Terms of Service</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script type="module">
+      import { getBaseURL, apiRequest } from "./js/apiConfig.js";
+      import { getStoredToken, getStoredUser } from "./js/tokenStorage.js";
+
+      // ========== Toast notification function ==========
+      function showToast(message, type = "info", duration = 4000) {
+        const container = document.getElementById("toastContainer");
+
+        const iconPaths = {
+          success:
+            '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
+          error:
+            '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',
+          info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+        };
+
+        const toast = document.createElement("div");
+        toast.className = `toast toast--${type}`;
+        toast.innerHTML = `
+          <span class="toast-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${iconPaths[type]}
+            </svg>
+          </span>
+          <span class="toast-message">${message}</span>
+          <button class="toast-close" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        const closeBtn = toast.querySelector(".toast-close");
+        closeBtn.addEventListener("click", () => removeToast(toast));
+
+        const timer = setTimeout(() => removeToast(toast), duration);
+
+        function removeToast(toastEl) {
+          clearTimeout(timer);
+          toastEl.classList.add("hide");
+          toastEl.addEventListener("transitionend", () => {
+            if (toastEl.parentNode) {
+              toastEl.parentNode.removeChild(toastEl);
+            }
+          });
+        }
+      }
+
+      // ============================================
+      // CONFIGURATION
+      // ============================================
+      let currentListingType = "sale";
+      let locationsData = {
+        states: ["Rivers"],
+        lgAs: {
+          Rivers: ["Port Harcourt"],
+        },
+      };
+
+      const API_BASE_URL = getBaseURL();
+      console.log("API Base URL:", API_BASE_URL);
+
+      // ============================================
+      // AUTHENTICATION CHECK
+      // ============================================
+
+      function isAuthenticated() {
+        const token = getStoredToken();
+        const user = getStoredUser();
+        console.log("Auth check - Token:", !!token, "User:", !!user);
+        return !!(token && user);
+      }
+
+      function getUserData() {
+        try {
+          const user = getStoredUser();
+          console.log("User data from storage:", user);
+          return user;
+        } catch (error) {
+          console.error("Error getting user data:", error);
+          return null;
+        }
+      }
+
+      function redirectToLogin() {
+        const stateSelect = document.getElementById("stateSelect");
+        const lgaSelect = document.getElementById("lgaSelect");
+
+        const searchParams = new URLSearchParams();
+        if (stateSelect?.value) searchParams.set("state", stateSelect.value);
+        if (lgaSelect?.value) searchParams.set("lga", lgaSelect.value);
+        searchParams.set("listingType", currentListingType);
+
+        const targetPage =
+          currentListingType === "sale" ? "forsale.html" : "forrent.html";
+        const targetUrl = `${targetPage}?${searchParams.toString()}`;
+
+        window.location.href = `login.html?returnTo=${encodeURIComponent(targetUrl)}`;
+      }
+
+      function checkReturnedSearchParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.has("state") || urlParams.has("listingType")) {
+          const state = urlParams.get("state");
+          const lga = urlParams.get("lga");
+          const listingType = urlParams.get("listingType");
+
+          if (listingType) {
+            const mode = listingType === "sale" ? "buy" : "rent";
+            window.setMode(mode);
+          }
+
+          if (state) {
+            setTimeout(() => {
+              const stateSelect = document.getElementById("stateSelect");
+              if (stateSelect) {
+                stateSelect.value = state;
+                populateLGADropdown(state);
+
+                if (lga) {
+                  setTimeout(() => {
+                    const lgaSelect = document.getElementById("lgaSelect");
+                    if (lgaSelect) {
+                      lgaSelect.value = lga;
+                    }
+                  }, 100);
+                }
+
+                setTimeout(() => {
+                  searchWithFilters();
+                }, 300);
+              }
+            }, 500);
+          }
+
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname,
+          );
+        }
+      }
+
+      // ============================================
+      // USER INTERFACE FUNCTIONS
+      // ============================================
+
+      function getUserInitials(userData) {
+        if (!userData) return "U";
+        const name = userData.name || "";
+        const firstName = userData.firstName || userData.firstname || "";
+        const lastName = userData.lastName || userData.lastname || "";
+        const email = userData.email || "";
+        const username = userData.username || "";
+
+        if (name) {
+          const nameParts = name.split(" ");
+          if (nameParts.length >= 2) {
+            return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+          }
+          return nameParts[0][0].toUpperCase();
+        }
+
+        if (firstName && lastName) {
+          return (firstName[0] + lastName[0]).toUpperCase();
+        } else if (firstName) {
+          return firstName[0].toUpperCase();
+        } else if (username) {
+          return username[0].toUpperCase();
+        } else if (email) {
+          return email[0].toUpperCase();
+        }
+
+        return "U";
+      }
+
+      function getUserDisplayName(userData) {
+        if (!userData) return "User";
+        const name = userData.name || "";
+        const firstName = userData.firstName || userData.firstname || "";
+        const lastName = userData.lastName || userData.lastname || "";
+        const username = userData.username || "";
+        const email = userData.email || "";
+
+        if (name) return name;
+        if (firstName && lastName) return `${firstName} ${lastName}`;
+        if (firstName) return firstName;
+        if (username) return username;
+        if (email) return email.split("@")[0];
+
+        return "User";
+      }
+
+      function navigateToProtectedPage(page) {
+        if (isAuthenticated()) {
+          window.location.href = page;
+        } else {
+          const currentPath = window.location.pathname.substring(
+            0,
+            window.location.pathname.lastIndexOf("/") + 1,
+          );
+          const returnTo = currentPath + page;
+          window.location.href = `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+        }
+      }
+
+      function navigateToSellerRegister() {
+        const userData = getUserData();
+
+        if (isAuthenticated() && userData) {
+          if (userData.role === "seller") {
+            window.location.href = "profile.html";
+          } else {
+            window.location.href = "seller-register.html";
+          }
+        } else {
+          const currentPath = window.location.pathname.substring(
+            0,
+            window.location.pathname.lastIndexOf("/") + 1,
+          );
+          const returnTo = currentPath + "seller-register.html";
+          window.location.href = `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+        }
+      }
+
+      window.navigateToSellerRegister = navigateToSellerRegister;
+      window.navigateToProtectedPage = navigateToProtectedPage;
+
+      function updateNavigation() {
+        const desktopAuthArea = document.getElementById("desktopAuthArea");
+        const mobileAuthArea = document.getElementById("mobileAuthArea");
+
+        if (!desktopAuthArea || !mobileAuthArea) {
+          console.error("Auth areas not found in DOM");
+          return;
+        }
+
+        if (isAuthenticated()) {
+          const userData = getUserData();
+          const displayName = getUserDisplayName(userData);
+          const initials = getUserInitials(userData);
+          const avatarUrl =
+            userData?.profile?.avatar ||
+            userData?.avatar ||
+            userData?.profilePicture ||
+            userData?.image ||
+            null;
+
+          console.log("Updating nav for authenticated user:", displayName);
+
+          desktopAuthArea.innerHTML = `
+        <a href="profile.html" class="flex items-center gap-2 group">
+          <div class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm overflow-hidden border-2 border-transparent group-hover:border-tertiary transition-all user-avatar">
+            ${
+              avatarUrl
+                ? `<img src="${avatarUrl}" alt="${displayName}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.textContent='${initials}';">`
+                : initials
+            }
+          </div>
+          <span class="text-sm font-bold text-primary group-hover:text-tertiary transition hidden xl:inline">
+            ${displayName}
+          </span>
+        </a>
+        <button 
+          onclick="window.handleLogout()" 
+          class="text-xs font-semibold text-on-surface-variant hover:text-red-600 transition ml-2 hidden xl:inline"
+          title="Logout"
+        >
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      `;
+
+          mobileAuthArea.innerHTML = `
+          <div class="col-span-2 grid grid-cols-2 gap-3">
+            <a href="profile.html" class="flex items-center justify-center gap-2 bg-primary/5 text-primary py-3 rounded-xl font-bold text-sm">
+              <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs overflow-hidden">
+                ${
+                  avatarUrl
+                    ? `<img src="${avatarUrl}" alt="${displayName}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.textContent='${initials}';">`
+                    : initials
+                }
+              </div>
+              <span class="truncate max-w-[100px]">${displayName}</span>
+            </a>
+            <button 
+              onclick="window.handleLogout()" 
+              class="flex items-center justify-center gap-2 border border-red-200 text-red-600 py-3 rounded-xl font-bold text-sm hover:bg-red-50 transition"
+            >
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+              <span>Logout</span>
+            </button>
+          </div>
+        `;
+        } else {
+          console.log("Updating nav for unauthenticated user");
+
+          desktopAuthArea.innerHTML = `
+        <a
+          href="login.html"
+          class="text-sm font-bold text-primary hover:text-tertiary transition"
+        >
+          Login
+        </a>
+        <a
+          href="register.html"
+          class="bg-tertiary-container text-primary px-5 py-2.5 rounded-full text-sm font-extrabold hover:bg-tertiary-fixed transition shadow-sm"
+        >
+          Register
+        </a>
+      `;
+
+          mobileAuthArea.innerHTML = `
+        <a
+          href="login.html"
+          class="border border-primary/20 text-primary text-center py-3 rounded-xl font-bold text-sm"
+        >
+          Login
+        </a>
+        <a
+          href="register.html"
+          class="bg-tertiary-container text-primary text-center py-3 rounded-xl font-extrabold text-sm"
+        >
+          Register
+        </a>
+      `;
+        }
+
+        if (typeof lucide !== "undefined") {
+          setTimeout(() => lucide.createIcons(), 50);
+        }
+      }
+
+      async function handleLogout() {
+        try {
+          const { authService } = await import("./js/authService.js");
+          await authService.logout();
+        } catch (error) {
+          console.error("Logout error:", error);
+          const { clearAuthData } = await import("./js/tokenStorage.js");
+          clearAuthData();
+        }
+
+        updateNavigation();
+        showToast("Logged out successfully", "success");
+
+        if (typeof loadFeaturedProperties === "function") {
+          loadFeaturedProperties();
+        }
+      }
+
+      window.handleLogout = handleLogout;
+      window.updateNavigation = updateNavigation;
+      window.getUserData = getUserData;
+      window.isAuthenticated = isAuthenticated;
+
+      // ============================================
+      // SKELETON LOADING FUNCTIONS
+      // ============================================
+
+      function createSkeletonCards(count = 3) {
+        let skeletons = "";
+        for (let i = 0; i < count; i++) {
+          skeletons += `
+            <div class="skeleton-card">
+              <div class="skeleton-image"></div>
+              <div class="p-4 md:p-5">
+                <div class="flex justify-between items-center mb-3">
+                  <div class="skeleton skeleton-badge"></div>
+                  <div class="skeleton skeleton-price"></div>
+                </div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="flex items-center justify-between mt-4">
+                  <div class="flex items-center gap-4">
+                    <div class="skeleton skeleton-feature"></div>
+                    <div class="skeleton skeleton-feature"></div>
+                  </div>
+                  <div class="skeleton skeleton-button"></div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        return skeletons;
+      }
+
+      // ============================================
+      // CORE FILTER FUNCTIONS
+      // ============================================
+
+      function populateLGADropdown(selectedState) {
+        const lgaSelect = document.getElementById("lgaSelect");
+        if (!lgaSelect) return;
+
+        if (
+          !selectedState ||
+          !locationsData ||
+          !locationsData.lgAs[selectedState]
+        ) {
+          lgaSelect.innerHTML =
+            '<option value="">Select a state first</option>';
+          lgaSelect.disabled = true;
+          return;
+        }
+
+        const lgas = locationsData.lgAs[selectedState];
+
+        if (!lgas || lgas.length === 0) {
+          lgaSelect.innerHTML = '<option value="">No LGAs available</option>';
+          lgaSelect.disabled = true;
+          return;
+        }
+
+        let html = '<option value="">Select LGA</option>';
+        lgas.forEach((lga) => {
+          html += `<option value="${lga}">${lga}</option>`;
+        });
+
+        lgaSelect.innerHTML = html;
+        lgaSelect.disabled = false;
+      }
+
+      async function searchWithFilters() {
+        if (!isAuthenticated()) {
+          showToast("Please login to search for properties", "info");
+          setTimeout(() => redirectToLogin(), 1500);
+          return;
+        }
+
+        const stateSelect = document.getElementById("stateSelect");
+        const lgaSelect = document.getElementById("lgaSelect");
+
+        const selectedState = stateSelect?.value;
+        const selectedLGA = lgaSelect?.value;
+
+        if (!selectedState) {
+          showToast("Please select a state first", "info");
+          stateSelect?.focus();
+          return;
+        }
+
+        const queryParams = new URLSearchParams();
+        queryParams.set("state", selectedState);
+        if (selectedLGA && selectedLGA !== "") {
+          queryParams.set("lga", selectedLGA);
+        }
+        queryParams.set("listingType", currentListingType);
+
+        const targetPage =
+          currentListingType === "sale" ? "forsale.html" : "forrent.html";
+
+        const redirectUrl = `${targetPage}?${queryParams.toString()}`;
+
+        console.log("Redirecting to:", redirectUrl);
+
+        window.location.href = redirectUrl;
+      }
+
+      async function loadFeaturedProperties() {
+        const gridContainer = document.getElementById("featuredPropertiesGrid");
+        if (!gridContainer) return;
+
+        gridContainer.innerHTML = createSkeletonCards(3);
+
+        try {
+          const result = await apiRequest(
+            `/houses?status=published&limit=3&sort=createdAt:desc`,
+          );
+
+          if (result.success && result.houses && result.houses.length > 0) {
+            renderFeaturedProperties(result.houses, gridContainer);
+          } else {
+            gridContainer.innerHTML = `
+        <div class="col-span-full text-center py-12">
+          <i data-lucide="home" class="w-12 h-12 mx-auto text-gray-400 mb-4"></i>
+          <p class="text-on-surface-variant">No listings available yet.</p>
+        </div>
+      `;
+            if (typeof lucide !== "undefined") lucide.createIcons();
+          }
+        } catch (error) {
+          console.error("Error loading recent properties:", error);
+          gridContainer.innerHTML = `
+      <div class="col-span-full text-center py-12">
+        <i data-lucide="alert-circle" class="w-12 h-12 mx-auto text-gray-400 mb-4"></i>
+        <p class="text-on-surface-variant">Failed to load listings.</p>
+      </div>
+    `;
+          if (typeof lucide !== "undefined") lucide.createIcons();
+        }
+      }
+
+      function renderFeaturedProperties(properties, container) {
+        container.innerHTML = properties
+          .map((property) => {
+            const image =
+              property.images?.[0]?.url || "/images/placeholder.jpg";
+            const badge = property.listingType === "sale" ? "SALE" : "RENT";
+            const priceLabel = property.listingType === "rent" ? "/yr" : "";
+
+            return `
+      <div class="property-card relative rounded-2xl overflow-hidden shadow-lg hover-lift group fade-up bg-white">
+        <div class="relative h-[260px] md:h-[300px] overflow-hidden">
+          <img 
+            class="w-full h-full object-cover group-hover:scale-105 transition duration-700" 
+            src="${image}" 
+            alt="${escapeHtml(property.title || "Property")}"
+            loading="lazy"
+            onerror="this.src='/images/placeholder.jpg'"
+          />
+          <div class="absolute top-0 left-0 right-0 p-4 flex justify-between items-start">
+            <span class="bg-primary/90 backdrop-blur-sm text-white text-[10px] tracking-wider px-3 py-1 rounded-md font-semibold uppercase">
+              ${badge}
+            </span>
+            <span class="bg-white/95 backdrop-blur-sm text-primary font-bold text-sm px-3 py-1 rounded-md shadow-md">
+              ₦${(property.price || 0).toLocaleString()}${priceLabel}
+            </span>
+          </div>
+        </div>
+        <div class="p-4 md:p-5">
+          <h3 class="font-headline font-bold text-primary text-sm md:text-base mb-1 line-clamp-1">${escapeHtml(property.title || "Luxury Property")}</h3>
+          <p class="text-xs text-on-surface-variant/70 mb-3 flex items-center gap-1">
+            <i data-lucide="map-pin" class="w-3 h-3 text-tertiary"></i>
+            ${escapeHtml(property.lga || "")}, ${escapeHtml(property.state || "")}
+          </p>
+          
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4 text-xs">
+              <span class="flex items-center gap-1 text-on-surface-variant">
+                <i data-lucide="bed-single" class="w-3.5 h-3.5 text-tertiary"></i>
+                <span class="font-semibold text-primary">${property.bedrooms || 0}</span> bed
+              </span>
+              <span class="flex items-center gap-1 text-on-surface-variant">
+                <i data-lucide="bath" class="w-3.5 h-3.5 text-tertiary"></i>
+                <span class="font-semibold text-primary">${property.bathrooms || 0}</span> bath
+              </span>
+            </div>
+            <a href="#" 
+               onclick="event.preventDefault(); window.navigateToProtectedProperty('${property._id}', '${property.listingType}');"
+               class="text-xs font-bold text-tertiary hover:text-primary transition-colors flex items-center gap-1">
+              View <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+          })
+          .join("");
+
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+
+        const newFadeElements = container.querySelectorAll(
+          ".fade-up:not(.revealed)",
+        );
+        const fadeObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                fadeObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 },
+        );
+        newFadeElements.forEach((el) => fadeObserver.observe(el));
+      }
+
+      function navigateToProtectedProperty(propertyId, listingType) {
+        const targetPage =
+          listingType === "rent"
+            ? "propertydetailsforrent.html"
+            : "propertydetailsforsale.html";
+
+        if (isAuthenticated()) {
+          window.location.href = `${targetPage}?id=${propertyId}`;
+        } else {
+          const currentPath = window.location.pathname.substring(
+            0,
+            window.location.pathname.lastIndexOf("/") + 1,
+          );
+          const returnTo = `${currentPath}${targetPage}?id=${propertyId}`;
+          window.location.href = `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+        }
+      }
+
+      window.navigateToProtectedProperty = navigateToProtectedProperty;
+
+      function escapeHtml(text) {
+        if (!text) return "";
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // ============================================
+      // BUY/RENT MODE TOGGLE
+      // ============================================
+
+      window.setMode = async function (selected) {
+        currentListingType = selected === "buy" ? "sale" : "rent";
+
+        const buyBtn = document.getElementById("buyBtn");
+        const rentBtn = document.getElementById("rentBtn");
+
+        if (selected === "buy") {
+          if (buyBtn) {
+            buyBtn.className =
+              "px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition";
+          }
+          if (rentBtn) {
+            rentBtn.className =
+              "px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition";
+          }
+        } else {
+          if (rentBtn) {
+            rentBtn.className =
+              "px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-[#0D316D] transition";
+          }
+          if (buyBtn) {
+            buyBtn.className =
+              "px-4 py-1.5 rounded-full text-sm font-semibold text-white/80 transition";
+          }
+        }
+
+        const lgaSelect = document.getElementById("lgaSelect");
+        if (lgaSelect) {
+          lgaSelect.innerHTML =
+            '<option value="">Select a state first</option>';
+          lgaSelect.disabled = true;
+        }
+      };
+
+      // ============================================
+      // MODAL FUNCTIONS
+      // ============================================
+
+      window.openModal = function (modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add("active");
+          document.body.style.overflow = "hidden";
+          const modalBody = modal.querySelector(".modal-body");
+          if (modalBody) {
+            modalBody.scrollTop = 0;
+          }
+        }
+      };
+
+      window.closeModal = function (modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+      };
+
+      window.searchWithFilters = searchWithFilters;
+
+      // ============================================
+      // INITIALIZATION
+      // ============================================
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        console.log("DOM loaded, initializing...");
+        console.log("API Base URL from config:", API_BASE_URL);
+
+        const gridContainer = document.getElementById("featuredPropertiesGrid");
+        if (gridContainer) {
+          gridContainer.innerHTML = createSkeletonCards(3);
+        }
+
+        updateNavigation();
+
+        await window.setMode("buy");
+
+        checkReturnedSearchParams();
+
+        loadFeaturedProperties();
+
+        const stateSelect = document.getElementById("stateSelect");
+        if (stateSelect) {
+          stateSelect.addEventListener("change", (e) => {
+            populateLGADropdown(e.target.value);
+          });
+        }
+
+        const searchBtn = document.getElementById("searchBtn");
+        if (searchBtn) {
+          searchBtn.addEventListener("click", searchWithFilters);
+        }
+
+        const lgaSelect = document.getElementById("lgaSelect");
+        if (lgaSelect) {
+          lgaSelect.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+              searchWithFilters();
+            }
+          });
+        }
+
+        document.addEventListener("click", function (event) {
+          if (event.target.classList.contains("modal")) {
+            event.target.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") {
+            const activeModals = document.querySelectorAll(".modal.active");
+            activeModals.forEach((modal) => {
+              modal.classList.remove("active");
+            });
+            document.body.style.overflow = "";
+          }
+        });
+
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        if (mobileMenuBtn && mobileMenu) {
+          mobileMenuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+            const isOpen = !mobileMenu.classList.contains("hidden");
+            mobileMenuBtn.innerHTML = isOpen
+              ? '<i data-lucide="x"></i>'
+              : '<i data-lucide="menu"></i>';
+            if (typeof lucide !== "undefined") lucide.createIcons();
+          });
+
+          mobileMenu.addEventListener("click", (e) => {
+            if (e.target.closest("a") || e.target.closest("button")) {
+              setTimeout(() => {
+                mobileMenu.classList.add("hidden");
+                mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+                if (typeof lucide !== "undefined") lucide.createIcons();
+              }, 150);
+            }
+          });
+
+          document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+            link.addEventListener("click", () => {
+              mobileMenu.classList.add("hidden");
+              mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+              if (typeof lucide !== "undefined") lucide.createIcons();
+            });
+          });
+        }
+
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons();
+          setTimeout(() => lucide.createIcons(), 100);
+          setTimeout(() => lucide.createIcons(), 300);
+        }
+
+        if (typeof gsap !== "undefined") {
+          gsap.registerPlugin(ScrollTrigger);
+
+          gsap.from(".hero-anim", {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.15,
+            delay: 0.2,
+          });
+        }
+
+        const fadeElements = document.querySelectorAll(".fade-up");
+        const fadeObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                fadeObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -30px 0px" },
+        );
+        fadeElements.forEach((el) => fadeObserver.observe(el));
+
+        const statNumbers = document.querySelectorAll(".stat-number");
+        const counterObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target;
+                const targetValue = parseInt(el.getAttribute("data-value"), 10);
+                const hasPrefix = el.hasAttribute("data-prefix");
+                const prefix = el.getAttribute("data-prefix") || "";
+                const suffix = el.getAttribute("data-suffix") || "";
+                let current = 0;
+                const duration = 2000;
+                const step = Math.ceil(targetValue / (duration / 16));
+                const timer = setInterval(() => {
+                  current += step;
+                  if (current >= targetValue) {
+                    current = targetValue;
+                    if (hasPrefix && targetValue === 450)
+                      el.innerText = prefix + current.toLocaleString() + suffix;
+                    else if (targetValue >= 1000)
+                      el.innerText = current.toLocaleString() + "+";
+                    else el.innerText = current + "+";
+                    clearInterval(timer);
+                  } else {
+                    if (hasPrefix && targetValue === 450)
+                      el.innerText = prefix + current.toLocaleString() + suffix;
+                    else if (targetValue >= 1000)
+                      el.innerText = current.toLocaleString() + "+";
+                    else el.innerText = current + "+";
+                  }
+                }, 16);
+                counterObserver.unobserve(el);
+              }
+            });
+          },
+          { threshold: 0.5 },
+        );
+        statNumbers.forEach((el) => counterObserver.observe(el));
+
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+            if (href === "#" || !href) return;
+            if (href.startsWith("#") && document.querySelector(href)) {
+              e.preventDefault();
+              document
+                .querySelector(href)
+                .scrollIntoView({ behavior: "smooth" });
+            }
+          });
+        });
+
+        const { authService } = await import("./js/authService.js");
+        authService.onAuthChange(({ token, user }) => {
+          console.log("Auth state changed:", !!token, !!user);
+          updateNavigation();
+          if (typeof loadFeaturedProperties === "function") {
+            loadFeaturedProperties();
+          }
+        });
+
+        window.addEventListener("pageshow", function (event) {
+          updateNavigation();
+        });
+
+        console.log("Initialization complete");
+      });
+    </script>
+  </body>
 </html>
